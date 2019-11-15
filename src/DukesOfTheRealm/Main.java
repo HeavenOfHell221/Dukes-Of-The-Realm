@@ -20,24 +20,28 @@ import javafx.scene.text.Text;
 import javafx.scene.shape.*;
 
 import Soldiers.Knight;
+import Soldiers.Soldier;
 
 public class Main extends Application {
+	
+	private Random rand;
 	
 	private Image CastleImage;
 	private Image PikerImage;
 	private Image OnagerImage;
 	private Image KnightImage;
 
-	Knight knight;
+	private Knight knight;
 	
 	private Pane playfieldLayer;
 	private Scene scene;
 	private AnimationTimer gameLoop;
-	Group root;
+	private Group root;
 	
-	int[][] grid = new int[((int)Settings.SCENE_WIDTH) / 10][((int)Settings.SCENE_HEIGHT) / 10];
+	private int gridX = (int) Settings.SCENE_WIDTH / 10;
+	private int gridY = (int)Settings.SCENE_HEIGHT / 10;
 	
-	Input input;
+	public Input input;
 
 	public void start(Stage primaryStage) 
 	{
@@ -85,11 +89,15 @@ public class Main extends Application {
 		
 		input = new Input(scene);
 		input.addListeners();
-		
-		knight = new Knight(playfieldLayer, KnightImage, 150, 150);
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public void spawnAtRandomCoordinate(Sprite sprite)
+	{
+		int x = (int) (rand.nextDouble() * gridX) % gridX;
+		int y = (int) (rand.nextDouble() * gridY) % gridY;
 	}
 }

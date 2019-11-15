@@ -2,18 +2,22 @@ package DukesOfTheRealm;
 
 public class Castle {
 	
-	int totalFlorin;
-	int level;
+	private int totalFlorin;
+	private int level;
+	private ReserveOfSoldiers reserveOfSoldiers;
+	private Duke duke;
 	
-	Castle(int level)
+	Castle(int level, Duke duke)
 	{
 		this.level = level;
-		totalFlorin = 0;
+		this.totalFlorin = 0;
+		this.reserveOfSoldiers = new ReserveOfSoldiers();
+		this.duke = duke;
 	}
 	
 	public boolean CanLevelUp() 
 	{
-		if(totalFlorin > Settings.LEVEL_UP_COST_FACTOR * (level + 1))
+		if(totalFlorin >= Settings.LEVEL_UP_COST_FACTOR * (level + 1))
 		{
 			return true;
 		}
@@ -23,6 +27,7 @@ public class Castle {
 	public void LevelUp()
 	{
 		level++;
+		RemoveFlorin(Settings.LEVEL_UP_COST_FACTOR * level);
 	}
 	
 	public void UpdateFlorin()
@@ -35,13 +40,34 @@ public class Castle {
 		totalFlorin += amount;
 	}
 	
-	public boolean RemoveFlorin(int amount)
+	public void RemoveFlorin(int amount)
 	{
-		if(totalFlorin >= amount)
+		if(EnoughOfFlorin(amount))
 		{
 			totalFlorin -= amount;
-			return true;
 		}
-		return false;
 	}
+	
+	public boolean EnoughOfFlorin(int amount)
+	{
+		return (amount <= totalFlorin);
+	}
+
+	public int GetTotalFlorin() {
+		return totalFlorin;
+	}
+
+	public ReserveOfSoldiers GetReserveOfSoldiers() {
+		return reserveOfSoldiers;
+	}
+
+	public Duke GetDuke() {
+		return duke;
+	}
+
+	public void SetDuke(Duke duke) {
+		this.duke = duke;
+	}
+	
+	
 }
