@@ -1,45 +1,47 @@
 package DukesOfTheRealm;
 
 public class Castle {
-
-	final int factorCostLevelUp = 1000;
 	
-	Treasure treasure;
+	int totalFlorin;
 	int level;
 	
 	Castle(int level)
 	{
 		this.level = level;
-		treasure = new Treasure(level);
+		totalFlorin = 0;
 	}
 	
-	public void UpdateTotalFlorin()
+	public boolean CanLevelUp() 
 	{
-		treasure.UpdateTotalFlorin();
-	}
-	
-	public boolean canLevelUp() 
-	{
-		if(treasure.getFlorin() > factorCostLevelUp * (level + 1))
+		if(totalFlorin > Settings.LEVEL_UP_COST_FACTOR * (level + 1))
 		{
 			return true;
 		}
 		return false;
 	}
 	
-	public void levelUp()
+	public void LevelUp()
 	{
 		level++;
-		treasure.UpdateFlorinPerTurn(level);
 	}
 	
-	public void addFlorin(int amount)
+	public void UpdateFlorin()
 	{
-		treasure.addFlorin(amount);
+		AddFlorin(Settings.FLORIN_FACTOR * level);
 	}
 	
-	public boolean removeFlorin(int amount)
+	public void AddFlorin(int amount)
 	{
-		return treasure.removeFlorin(amount);
+		totalFlorin += amount;
+	}
+	
+	public boolean RemoveFlorin(int amount)
+	{
+		if(totalFlorin >= amount)
+		{
+			totalFlorin -= amount;
+			return true;
+		}
+		return false;
 	}
 }

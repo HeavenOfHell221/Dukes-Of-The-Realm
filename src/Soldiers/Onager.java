@@ -2,10 +2,11 @@ package Soldiers;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
-public class Onagre extends Soldier {
+public class Onager extends Soldier {
 
-	public Onagre(Pane layer, Image image, double x, double y)
+	public Onager(Pane layer, Image image, double x, double y)
 	{
 		super(layer, image, x, y, 1000, 50, 1, 5, 10);
 	}
