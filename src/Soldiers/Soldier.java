@@ -1,6 +1,7 @@
 package Soldiers;
 
 import DukesOfTheRealm.Sprite;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,4 +21,14 @@ public abstract class Soldier extends Sprite {
 		this.health = health;
 		this.damage = damage;
 	}
+	
+	public Soldier(Pane layer, Image image, Point2D p, int productionCost, int productionTime, int speed, int health, int damage)
+	{
+		super(layer, image, p.getX(), p.getY(), speed);
+		this.productionCost = productionCost;
+		this.productionTime = productionTime;
+		this.health = health;
+		this.damage = damage;
+	}
+
 }

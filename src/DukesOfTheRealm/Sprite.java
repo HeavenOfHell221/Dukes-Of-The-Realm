@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
+import javafx.geometry.Point2D;
 
 public abstract class Sprite {
 
@@ -38,6 +39,13 @@ public abstract class Sprite {
     	//addToLayerImageView();
     }
     
+    public Sprite (Pane layer, Image image, Point2D p, double speed)
+    {
+    	this.layer = layer;
+    	this.x = p.getX();
+    	this.y = p.getY();
+    	this.speed = speed;
+    }
     
     private void addToLayerImageView()
     {

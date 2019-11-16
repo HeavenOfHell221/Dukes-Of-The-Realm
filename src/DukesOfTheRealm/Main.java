@@ -21,6 +21,7 @@ import javafx.scene.shape.*;
 
 import Soldiers.Knight;
 import Soldiers.Soldier;
+import javafx.geometry.Point2D;
 
 public class Main extends Application {
 	
@@ -38,8 +39,7 @@ public class Main extends Application {
 	private AnimationTimer gameLoop;
 	private Group root;
 	
-	private int gridX = (int) Settings.SCENE_WIDTH / 10;
-	private int gridY = (int)Settings.SCENE_HEIGHT / 10;
+	public Grid grid;
 	
 	public Input input;
 
@@ -63,6 +63,7 @@ public class Main extends Application {
 			public void handle(long now) 
 			{
 				processInput(input, now);
+				
 			}
 			
 			private void processInput(Input input, long now)
@@ -76,7 +77,7 @@ public class Main extends Application {
 				{
 					System.out.println("j'appuie sur espace");
 				}
-			}
+			}		
 		};
 		
 		gameLoop.start();
@@ -89,15 +90,11 @@ public class Main extends Application {
 		
 		input = new Input(scene);
 		input.addListeners();
+		
+		grid = new Grid((int)Settings.SCENE_WIDTH, (int)Settings.SCENE_HEIGHT);
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
-	}
-	
-	public void spawnAtRandomCoordinate(Sprite sprite)
-	{
-		int x = (int) (rand.nextDouble() * gridX) % gridX;
-		int y = (int) (rand.nextDouble() * gridY) % gridY;
 	}
 }
