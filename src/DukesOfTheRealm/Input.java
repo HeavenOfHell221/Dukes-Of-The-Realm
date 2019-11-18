@@ -30,19 +30,21 @@ public class Input {
 		scene.removeEventFilter(KeyEvent.KEY_RELEASED, keyReleasedEventHandler);
 	}
 	
-	private EventHandler<KeyEvent> keyPressedEventHandler = event -> 
-	{
-		// register key down
-		keyboardBitSet.set(event.getCode().ordinal(), true);
-		event.consume();
-	};
+	private EventHandler<KeyEvent> keyPressedEventHandler = 
+		event -> 
+		{
+			// register key down
+			keyboardBitSet.set(event.getCode().ordinal(), true);
+			event.consume();
+		};
 	
-	private EventHandler<KeyEvent> keyReleasedEventHandler = event ->
-	{
-		// register key up
-		keyboardBitSet.set(event.getCode().ordinal(), false);
-		event.consume();
-	};
+	private EventHandler<KeyEvent> keyReleasedEventHandler = 
+		event ->
+		{
+			// register key up
+			keyboardBitSet.set(event.getCode().ordinal(), false);
+			event.consume();
+		};
 	
 	private boolean is(KeyCode key) 
 	{

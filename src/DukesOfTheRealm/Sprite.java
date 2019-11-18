@@ -45,7 +45,7 @@ public abstract class Sprite {
     
 	private void AddToLayerImageView()
     {
-    	layer.getChildren().add(imageView);
+    	layer.getChildren().add(this.imageView);
     }
 
     private void AddToLayerShape(Shape shape)
@@ -53,6 +53,11 @@ public abstract class Sprite {
     	this.shape = shape;
 		layer.getChildren().add(shape);
 	}
+    
+    public void removeFromLayerShape() 
+    {
+        this.layer.getChildren().remove(this.shape);
+    }
     
     protected void AddRectangle(double width, double height)
 	{

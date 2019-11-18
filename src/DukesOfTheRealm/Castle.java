@@ -1,23 +1,35 @@
 package DukesOfTheRealm;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import Duke.Duke;
+import Soldiers.Soldier;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Castle extends Sprite {
+public class Castle extends Sprite implements ProductionUnit {
 	
 	private int totalFlorin;
 	private int level;
-	private ReserveOfSoldiers reserveOfSoldiers;
+	private ArrayList<Soldier> reserveOfSoldiers;
+
 	private Duke duke;
+	private ProductionUnit productionUnit;
+	private int productionTime;
 	
 	Castle(Pane layer, Image image, double x, double y, int level, Duke duke)
 	{
 		super(layer, image, x, y);
 		this.level = level;
 		this.totalFlorin = 0;
-		this.reserveOfSoldiers = new ReserveOfSoldiers();
 		this.duke = duke;
+		this.productionUnit = null;
+		this.productionTime = 0;
+		this.reserveOfSoldiers = new ArrayList<Soldier>();
 	}
 	
 
@@ -35,15 +47,9 @@ public class Castle extends Sprite {
 		return false;
 	}
 	
-	public double DistanceWith(Castle castle)
-	{
-		return 0;
-	}
-	
 	public void LevelUp()
 	{
-		level++;
-		RemoveFlorin(Settings.LEVEL_UP_COST_FACTOR * level);
+		this.level++;
 	}
 	
 	private void UpdateFlorin()
@@ -54,6 +60,7 @@ public class Castle extends Sprite {
 	public void Update()
 	{
 		UpdateFlorin();
+		UpdateProduction();
 	}
 	
 	public void AddFlorin(int amount)
@@ -74,14 +81,47 @@ public class Castle extends Sprite {
 	{
 		return (amount <= totalFlorin);
 	}
+	
+	public void AddProduction(ProductionUnit newProduction)
+	{
+		if(this.productionUnit != null)
+		{	
+			RemoveFlorin(newProduction.GetCost());
+			this.productionUnit = newProduction;
+			this.productionTime = GetProductionTime(newProduction);	
+		}
+	}
+	
+	public int GetCost()
+	{
+		return Settings.LEVEL_UP_COST_FACTOR * level;
+	}
+	
+	private void UpdateProduction()
+	{
+		if(this.productionUnit != null)
+		{
+			this.productionTime--;
+			if(this.productionTime == 0)
+			{
+				if(this.productionUnit.getClass() == Castle.class)
+					LevelUp();
+				// TODO
+				
+				this.productionUnit = null;
+			}
+		}
+	}
+
+	private int GetProductionTime(ProductionUnit production)
+	{
+		return production.GetTime();
+	}
 
 	public int GetTotalFlorin() {
 		return totalFlorin;
 	}
 
-	public ReserveOfSoldiers GetReserveOfSoldiers() {
-		return reserveOfSoldiers;
-	}
 
 	public Duke GetDuke() {
 		return duke;
@@ -91,5 +131,8 @@ public class Castle extends Sprite {
 		this.duke = duke;
 	}
 	
-	
+	public int GetTime()
+	{
+		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
+	}
 }

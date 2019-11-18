@@ -72,6 +72,7 @@ public class Main extends Application {
 			
 			private void processInput(Input input, long now)
 			{
+				
 				if(input.isExit())
 				{
 					Platform.exit();
@@ -79,7 +80,8 @@ public class Main extends Application {
 				}
 				if(input.isSpace())
 				{
-					System.out.println("j'appuie sur espace");
+					//kingdom.DeleteAllCastle();
+					CreateCastle();
 				}
 			}		
 		};
@@ -94,11 +96,9 @@ public class Main extends Application {
 		
 		input = new Input(scene);
 		input.addListeners();
-		
+		rand = new Random();
 		kingdom = new Kingdom();
-		kingdom.CreateCastle(playfieldLayer, KnightImage, 50, 50, 1, new Player("Player 1"));
-		kingdom.CreateCastle(playfieldLayer, KnightImage, 600, 50, 1, new Player("Player 2"));
-
+		CreateCastle();
 	}
 	
 	private void Timer(long now)
@@ -109,6 +109,13 @@ public class Main extends Application {
 			lastUpdate = now;
 			kingdom.Update();
 		}
+	}
+	
+	private void CreateCastle()
+	{
+		kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 1"));
+		kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 2"));
+		kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 3"));
 	}
 	
 	public static void main(String[] args) {

@@ -10,7 +10,6 @@ public class Knight extends Soldier {
 	public Knight(Pane layer, Image image, double x, double y) 
 	{
 		super(layer, image, x, y, 500, 20, 6, 3, 5);
-		addRectangle(10.0, 10.0);
 	}
 	
 	public Knight(Pane layer, Image image, Point2D p)

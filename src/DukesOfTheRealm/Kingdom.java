@@ -15,7 +15,7 @@ public class Kingdom {
 	/* Attributs */
 	private ArrayList<Castle> castles; // Liste des châteaux
 	private Grid grid; // Grille de jeu
-	private final double minimalDistanceBetweenTwoCastles = 300; // Distance minimal autorisé entre deux châteaux
+	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE * Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autorisé entre deux châteaux
 	
 	public Kingdom()
 	{
@@ -24,7 +24,7 @@ public class Kingdom {
 	}
 	
 	
-	public Boolean CreateCastle(Pane layer, Image image, double x, double y, int level, Duke duke)
+	public boolean CreateCastle(Pane layer, Image image, double x, double y, int level, Duke duke)
 	{
 		if(!IsCastleIsToCloser(x , y))
 		{
@@ -33,6 +33,26 @@ public class Kingdom {
 			return AddCastle(newCastle);
 		}
 		return false;
+	}
+	
+	public void DeleteCastle(Castle castle)
+	{
+		if(castle != null)
+		{
+			castle.removeFromLayerShape();
+			castles.remove(castle);
+		}
+	}
+	
+	public void DeleteAllCastle()
+	{
+		Iterator<Castle> it = castles.iterator();
+		while(it.hasNext())
+		{
+			Castle castle = it.next();
+			castle.removeFromLayerShape();
+			castle.remove();
+		}	
 	}
 	
 	private boolean AddCastle(Castle castle)
@@ -62,7 +82,7 @@ public class Kingdom {
 
 	private double DistanceBetween(Castle castle, double x, double y)
 	{
-		return Point2D.distance(x, y, castle.getX(), castle.getY());
+		return Point2D.distanceSq(x, y, castle.getX(), castle.getY());
 	}
 	
 	public boolean RemoveCastle(Castle castle)
@@ -88,6 +108,13 @@ public class Kingdom {
 	public ArrayList<Castle> GetCastles()
 	{
 		return castles;
+	}
+	
+	public Castle GetCastle(int i)
+	{
+		if(i < castles.size())
+			return castles.get(i);
+		return null;
 	}
 	
 	public Grid GetGrid()
