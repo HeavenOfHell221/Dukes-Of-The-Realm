@@ -16,19 +16,16 @@ public abstract class Sprite {
 	protected double x;
     protected double y;
 
-    protected double speed;
-
 	private boolean removable = false;
 
     private double w;
     private double h;
     
-    public Sprite (Pane layer, Image image, double x, double y, double speed)
+    public Sprite (Pane layer, Image image, double x, double y)
     {
     	this.layer = layer;
     	this.x = x;
     	this.y = y;
-    	this.speed = speed;
     	
     	//this.imageView = new ImageView(image);
     	//this.imageView.relocate(x , y);
@@ -44,44 +41,38 @@ public abstract class Sprite {
     	this.layer = layer;
     	this.x = p.getX();
     	this.y = p.getY();
-    	this.speed = speed;
     }
     
-    private void addToLayerImageView()
+	private void AddToLayerImageView()
     {
     	layer.getChildren().add(imageView);
     }
 
-    private void addToLayerShape(Shape shape)
+    private void AddToLayerShape(Shape shape)
 	{
     	this.shape = shape;
 		layer.getChildren().add(shape);
 	}
     
-    protected void addRectangle(double width, double height)
+    protected void AddRectangle(double width, double height)
 	{
 		Shape rectangle = new Rectangle(this.x, this.y, width, height);
-		addToLayerShape(rectangle);
+		AddToLayerShape(rectangle);
 		this.w = width;
 		this.h = height;
 		
 	}
 	
-	protected void addCircle(double r)
+	protected void AddCircle(double r)
 	{
 		Shape circle = new Circle(this.x, this.y, r);
-		addToLayerShape(circle);
+		AddToLayerShape(circle);
 		this.w = 2 * r;
 		this.h = 2 * r;
 		
 	}
     
-    public void move() 
-    {
-        x += speed;
-    }
-    
-    public void updateUIImageView() 
+    public void UpdateUIImageView() 
     {
         imageView.relocate(x, y);
     }
@@ -98,11 +89,6 @@ public abstract class Sprite {
     public double getY() 
     {
         return y;
-    }
-    
-    public double getSpeed() 
-    {
-        return speed;
     }
     
     protected ImageView getView() 
@@ -135,11 +121,7 @@ public abstract class Sprite {
     {
         this.y = y;
     }  
-    public void setSpeed(double speed)
-    {
-    	this.speed = speed;
-    }
-    
+
     public boolean isRemovable() 
     {
         return removable;

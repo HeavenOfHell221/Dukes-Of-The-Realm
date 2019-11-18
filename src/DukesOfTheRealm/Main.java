@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import Duke.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,8 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.shape.*;
 
-import Soldiers.Knight;
-import Soldiers.Soldier;
+import Soldiers.*;
 import javafx.geometry.Point2D;
 
 public class Main extends Application {
@@ -39,9 +39,13 @@ public class Main extends Application {
 	private AnimationTimer gameLoop;
 	private Group root;
 	
-	public Grid grid;
+	public Kingdom kingdom;
 	
 	public Input input;
+	
+	private long lastUpdate = 0;
+	private long timeScale = Settings.GAME_FREQUENCY; // => 1 second
+	private long timePerTurn = timeScale * Settings.TIME_FACTOR;
 
 	public void start(Stage primaryStage) 
 	{
@@ -63,7 +67,7 @@ public class Main extends Application {
 			public void handle(long now) 
 			{
 				processInput(input, now);
-				
+				Timer(now);
 			}
 			
 			private void processInput(Input input, long now)
@@ -91,7 +95,20 @@ public class Main extends Application {
 		input = new Input(scene);
 		input.addListeners();
 		
-		grid = new Grid((int)Settings.SCENE_WIDTH, (int)Settings.SCENE_HEIGHT);
+		kingdom = new Kingdom();
+		kingdom.CreateCastle(playfieldLayer, KnightImage, 50, 50, 1, new Player("Player 1"));
+		kingdom.CreateCastle(playfieldLayer, KnightImage, 600, 50, 1, new Player("Player 2"));
+
+	}
+	
+	private void Timer(long now)
+	{
+		//System.out.println("now: " + now + " | lastUpdate: " + lastUpdate + " | " + "timePerTurn: " + timePerTurn);
+		if((now - lastUpdate >= timePerTurn))
+		{
+			lastUpdate = now;
+			kingdom.Update();
+		}
 	}
 	
 	public static void main(String[] args) {
