@@ -35,7 +35,7 @@ public class Castle extends Sprite implements ProductionUnit {
 
 	public void AddRectangle()
 	{
-		AddRectangle((Settings.CASE_WIDTH * 5) - 2, (Settings.CASE_HEIGHT * 5) - 2);
+		AddRectangle(Settings.CASE_WIDTH, Settings.CASE_HEIGHT);
 	}
 	
 	public boolean CanLevelUp() 
@@ -65,7 +65,7 @@ public class Castle extends Sprite implements ProductionUnit {
 	
 	public void AddFlorin(int amount)
 	{
-		System.out.println(totalFlorin);
+		//System.out.println(totalFlorin);
 		totalFlorin += amount;
 	}
 	

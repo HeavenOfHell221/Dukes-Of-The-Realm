@@ -30,16 +30,9 @@ public class Grid {
 		//System.out.println("sizeX:" + this.sizeX + ", sizeY:" + this.sizeY);
 	}
 	
-	private Point2D GetCoodinatesWithCase(int x, int y)
+	public Point2D GetCoodinatesWithCase(int x, int y)
 	{
-		return new Point2D(x * caseWidth, y * caseHeight);
-	}
-	
-	public Point2D GetCenterOfCase(int x, int y)
-	{
-		Point2D p = GetCoodinatesWithCase(x, y);
-		p = p.add(((caseWidth - 1)/ 2) + 1, ((caseHeight - 1)/ 2) + 1);
-		return p;
+		return new Point2D((x * caseWidth) + (((caseWidth - 1) / 2) + 1), (y * caseHeight) + (((caseHeight - 1) / 2) + 1));
 	}
 
 	public int[][] GetGrid() 

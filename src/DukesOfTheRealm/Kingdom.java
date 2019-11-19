@@ -1,9 +1,11 @@
 package DukesOfTheRealm;
 
-import java.awt.geom.Point2D;
+//import java.awt.geom.Point2D;
+import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.ArrayList;
 
 import Duke.*;
@@ -15,7 +17,7 @@ public class Kingdom {
 	/* Attributs */
 	private ArrayList<Castle> castles; // Liste des châteaux
 	private Grid grid; // Grille de jeu
-	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE * Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autorisé entre deux châteaux
+	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autorisé entre deux châteaux
 	
 	public Kingdom()
 	{
@@ -24,11 +26,12 @@ public class Kingdom {
 	}
 	
 	
-	public boolean CreateCastle(Pane layer, Image image, double x, double y, int level, Duke duke)
+	public boolean CreateCastle(Pane layer, Image image, Point2D p, int level, Duke duke)
 	{
-		if(!IsCastleIsToCloser(x , y))
+		//System.out.println("x: " + p.getX() + ", y: " + p.getY());
+		if(!IsCastleIsToCloser(p.getX() , p.getY()))
 		{
-			Castle newCastle = new Castle(layer, image, x, y, level, duke);
+			Castle newCastle = new Castle(layer, image, p.getX(), p.getY(), level, duke);
 			newCastle.AddRectangle();
 			return AddCastle(newCastle);
 		}
@@ -71,18 +74,24 @@ public class Kingdom {
 		{
 			Castle currentCastle = it.next();
 			double d = DistanceBetween(currentCastle, x, y);
+			
 			if(d < minimalDistance)
 			{
 				minimalDistance = d;
 				closerCastle = currentCastle;
+				if(minimalDistance < minimalDistanceBetweenTwoCastles)
+				{
+					return true;
+				}
 			}			
 		}
-		return (minimalDistance < minimalDistanceBetweenTwoCastles);
+		return false;
 	}
 
 	private double DistanceBetween(Castle castle, double x, double y)
 	{
-		return Point2D.distanceSq(x, y, castle.getX(), castle.getY());
+		//System.out.println(x + ", " + y + ", " + castle.getX() + ", " + castle.getY());
+		return Math.sqrt((y - castle.getY()) * (y - castle.getY()) + (x - castle.getX()) * (x - castle.getX()));
 	}
 	
 	public boolean RemoveCastle(Castle castle)
@@ -130,5 +139,11 @@ public class Kingdom {
 				castle.Update();
 			}
 		);
+	}
+	
+	public Point2D GetRandomGridCell(Random rand)
+	{
+		Point2D p = new Point2D(rand.nextInt(grid.GetSizeX()), rand.nextInt(grid.GetSizeY()));
+		return grid.GetCoodinatesWithCase((int)p.getX(), (int)p.getY());
 	}
 }

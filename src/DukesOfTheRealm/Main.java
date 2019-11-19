@@ -117,7 +117,7 @@ public class Main extends Application {
 		
 		while(numberValid != count)
 		{
-			if(kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 1")))
+			if(kingdom.CreateCastle(playfieldLayer, KnightImage, kingdom.GetRandomGridCell(rand), 1, new Player("Player 1")))
 			{
 				numberValid++;
 			}

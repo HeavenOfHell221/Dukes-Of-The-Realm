@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 
-public abstract class Soldier extends Sprite implements ProductionUnit {
+public abstract class Soldier implements ProductionUnit {
 	protected int productionCost;
 	protected int productionTime;
 	protected int health;
@@ -16,7 +16,7 @@ public abstract class Soldier extends Sprite implements ProductionUnit {
 	
 	public Soldier(Pane layer, Image image, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
 	{
-		super(layer, image, x , y);
+		//super(layer, image, x , y);
 		this.productionCost = productionCost;
 		this.productionTime = productionTime;
 		this.health = health;
@@ -26,7 +26,7 @@ public abstract class Soldier extends Sprite implements ProductionUnit {
 	
 	public Soldier(Pane layer, Image image, Point2D p, int productionCost, int productionTime, int speed, int health, int damage)
 	{
-		super(layer, image, p.getX(), p.getY());
+		//super(layer, image, p.getX(), p.getY());
 		this.productionCost = productionCost;
 		this.productionTime = productionTime;
 		this.health = health;
