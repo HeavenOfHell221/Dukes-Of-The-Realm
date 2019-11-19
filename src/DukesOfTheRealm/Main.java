@@ -42,6 +42,7 @@ public class Main extends Application {
 	public Kingdom kingdom;
 	
 	public Input input;
+	public FPS fps;
 	
 	private long lastUpdate = 0;
 	private long timeScale = Settings.GAME_FREQUENCY; // => 1 second
@@ -81,7 +82,7 @@ public class Main extends Application {
 				if(input.isSpace())
 				{
 					//kingdom.DeleteAllCastle();
-					CreateCastle();
+					//CreateCastle();
 				}
 			}		
 		};
@@ -98,12 +99,11 @@ public class Main extends Application {
 		input.addListeners();
 		rand = new Random();
 		kingdom = new Kingdom();
-		CreateCastle();
+		CreateCastle(10);
 	}
 	
 	private void Timer(long now)
 	{
-		//System.out.println("now: " + now + " | lastUpdate: " + lastUpdate + " | " + "timePerTurn: " + timePerTurn);
 		if((now - lastUpdate >= timePerTurn))
 		{
 			lastUpdate = now;
@@ -111,11 +111,17 @@ public class Main extends Application {
 		}
 	}
 	
-	private void CreateCastle()
+	private void CreateCastle(int count)
 	{
-		kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 1"));
-		kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 2"));
-		kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 3"));
+		int numberValid = 0;
+		
+		while(numberValid != count)
+		{
+			if(kingdom.CreateCastle(playfieldLayer, KnightImage, rand.nextDouble()*Settings.SCENE_WIDTH, rand.nextDouble()*(Settings.SCENE_HEIGHT - Settings.CASE_HEIGHT), 1, new Player("Player 1")))
+			{
+				numberValid++;
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
