@@ -28,7 +28,7 @@ public class Kingdom {
 	
 	public boolean CreateCastle(Pane layer, Image image, Point2D p, int level, Duke duke)
 	{
-		if(!IsCastleIsToCloser(p.getX() , p.getY()))
+		if(!IsCastleToClose(p.getX() , p.getY()))
 		{
 			Castle newCastle = new Castle(layer, image, p.getX(), p.getY(), level, duke);
 			newCastle.AddRectangle();

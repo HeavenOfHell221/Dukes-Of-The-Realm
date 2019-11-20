@@ -22,7 +22,7 @@ public class Grid {
 	
 	public Point2D GetCoordinatesWithCell(int x, int y)
 	{
-		return new Point2D(x * caseWidth, y * caseHeight);
+		return new Point2D(x * cellWidth, y * cellHeight);
 	}
 
 	public int[][] GetGrid() 
