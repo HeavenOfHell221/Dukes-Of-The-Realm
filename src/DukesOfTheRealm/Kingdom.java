@@ -28,7 +28,6 @@ public class Kingdom {
 	
 	public boolean CreateCastle(Pane layer, Image image, Point2D p, int level, Duke duke)
 	{
-		//System.out.println("x: " + p.getX() + ", y: " + p.getY());
 		if(!IsCastleIsToCloser(p.getX() , p.getY()))
 		{
 			Castle newCastle = new Castle(layer, image, p.getX(), p.getY(), level, duke);
@@ -90,7 +89,6 @@ public class Kingdom {
 
 	private double DistanceBetween(Castle castle, double x, double y)
 	{
-		//System.out.println(x + ", " + y + ", " + castle.getX() + ", " + castle.getY());
 		return Math.sqrt((y - castle.getY()) * (y - castle.getY()) + (x - castle.getX()) * (x - castle.getX()));
 	}
 	

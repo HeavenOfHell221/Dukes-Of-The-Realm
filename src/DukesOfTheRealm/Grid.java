@@ -22,9 +22,7 @@ public class Grid {
 	
 	public Point2D GetCoodinatesWithCase(int x, int y)
 	{
-		int centerX = ((caseWidth - 1) / 2) + 1;
-		int centerY = ((caseHeight - 1) / 2) + 1;
-		return new Point2D((x * caseWidth) + centerX, (y * caseHeight) + centerY);
+		return new Point2D(x * caseWidth, y * caseHeight);
 	}
 
 	public int[][] GetGrid() 

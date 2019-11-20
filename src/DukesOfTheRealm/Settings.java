@@ -16,5 +16,5 @@ public class Settings {
 	public static final int GAME_FREQUENCY = 1000 * 1000 * 1000; // 1 second
 	public static final int TIME_FACTOR = 10;
 	
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 300;
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 200;
 }

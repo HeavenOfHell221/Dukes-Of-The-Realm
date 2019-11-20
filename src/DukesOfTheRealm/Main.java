@@ -99,9 +99,9 @@ public class Main extends Application {
 		input = new Input(scene);
 		input.addListeners();
 		rand = new Random();
-		fps = new FPS(true);
+		fps = new FPS(false);
 		kingdom = new Kingdom();
-		CreateCastle(10);
+		CreateCastle(100);
 	}
 	
 	private void Timer(long now)
@@ -116,13 +116,15 @@ public class Main extends Application {
 	private void CreateCastle(int count)
 	{
 		int numberValid = 0;
+		int numberTest = 0;
 		
-		while(numberValid != count)
+		while(numberValid != count && numberTest < count * 100)
 		{
 			if(kingdom.CreateCastle(playfieldLayer, KnightImage, kingdom.GetRandomGridCell(rand), 1, new Player("Player 1")))
 			{
 				numberValid++;
 			}
+			numberTest++;
 		}
 	}
 	
