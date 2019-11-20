@@ -69,6 +69,7 @@ public class Main extends Application {
 			{
 				processInput(input, now);
 				Timer(now);
+				fps.Update(now);
 			}
 			
 			private void processInput(Input input, long now)
@@ -82,7 +83,7 @@ public class Main extends Application {
 				if(input.isSpace())
 				{
 					//kingdom.DeleteAllCastle();
-					//CreateCastle();
+					//CreateCastle(10);
 				}
 			}		
 		};
@@ -98,6 +99,7 @@ public class Main extends Application {
 		input = new Input(scene);
 		input.addListeners();
 		rand = new Random();
+		fps = new FPS(true);
 		kingdom = new Kingdom();
 		CreateCastle(10);
 	}

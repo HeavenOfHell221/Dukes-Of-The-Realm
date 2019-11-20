@@ -7,13 +7,8 @@ import javafx.scene.layout.Pane;
 
 public class Knight extends Soldier {
 
-	public Knight(Pane layer, Image image, double x, double y) 
+	public Knight() 
 	{
-		super(layer, image, x, y, 500, 20, 6, 3, 5);
-	}
-	
-	public Knight(Pane layer, Image image, Point2D p)
-	{
-		super(layer, image, p.getX(), p.getY(), 100, 5, 2, 1, 1);
+		super(500, 20, 6, 3, 5);
 	}
 }

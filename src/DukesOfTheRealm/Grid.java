@@ -16,23 +16,15 @@ public class Grid {
 		this.sizeX = sizeX / caseWidth;
 		this.sizeY = sizeY / caseHeight;
 		
-		if(this.sizeX * caseWidth < sizeX)
-		{
-			this.sizeX += 1;
-		}
-		
-		if(this.sizeY * caseHeight < sizeY)
-		{
-			this.sizeY += 1;
-		}
-		
 		this.grid = new int[this.sizeX][this.sizeY];
 		//System.out.println("sizeX:" + this.sizeX + ", sizeY:" + this.sizeY);
 	}
 	
 	public Point2D GetCoodinatesWithCase(int x, int y)
 	{
-		return new Point2D((x * caseWidth) + (((caseWidth - 1) / 2) + 1), (y * caseHeight) + (((caseHeight - 1) / 2) + 1));
+		int centerX = ((caseWidth - 1) / 2) + 1;
+		int centerY = ((caseHeight - 1) / 2) + 1;
+		return new Point2D((x * caseWidth) + centerX, (y * caseHeight) + centerY);
 	}
 
 	public int[][] GetGrid() 

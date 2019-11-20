@@ -14,9 +14,8 @@ public abstract class Soldier implements ProductionUnit {
 	protected int damage;
 	protected int speed;
 	
-	public Soldier(Pane layer, Image image, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
+	public Soldier(int productionCost, int productionTime, int speed, int health, int damage)
 	{
-		//super(layer, image, x , y);
 		this.productionCost = productionCost;
 		this.productionTime = productionTime;
 		this.health = health;
@@ -24,14 +23,9 @@ public abstract class Soldier implements ProductionUnit {
 		this.speed = speed;
 	}
 	
-	public Soldier(Pane layer, Image image, Point2D p, int productionCost, int productionTime, int speed, int health, int damage)
+	public void InflictDamage()
 	{
-		//super(layer, image, p.getX(), p.getY());
-		this.productionCost = productionCost;
-		this.productionTime = productionTime;
-		this.health = health;
-		this.damage = damage;
-		this.speed = speed;
+		health--;
 	}
 
 	public int GetTime()
