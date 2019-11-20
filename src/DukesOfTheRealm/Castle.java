@@ -20,6 +20,7 @@ public class Castle extends Sprite implements ProductionUnit {
 	private Duke duke; // Le propri�taire du ch�teau 
 	private ProductionUnit productionUnit; // L'unit� de production. C'est une am�lioration ou un soldat en cours de production
 	private int productionTime; // Le temps restant � la production de l'unit� de production
+	private ArrayList<Ost> ostsDeployment;
 	
 	/* Constructeur */
 	Castle(Pane layer, Image image, double x, double y, int level, Duke duke)
@@ -31,6 +32,8 @@ public class Castle extends Sprite implements ProductionUnit {
 		this.productionUnit = null;
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
+		this.ostsDeployment = new ArrayList<Ost>();
+		ostsDeployment.add(new Ost(layer, image, x, y, this, this));
 	}
 	
 	/* Ajoute un rectangle au layer */
@@ -61,10 +64,15 @@ public class Castle extends Sprite implements ProductionUnit {
 		AddFlorin(Settings.FLORIN_FACTOR * level);
 	}
 	
-	public void Update()
+	public void UpdateTurn()
 	{
 		UpdateFlorin();
 		UpdateProduction();
+	}
+	
+	public void UpdateAtEachFrame()
+	{		
+		UpdateOst();
 	}
 	
 	public void AddFlorin(int amount)
@@ -153,5 +161,10 @@ public class Castle extends Sprite implements ProductionUnit {
 	public int GetTime()
 	{
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
+	}
+	
+	private void UpdateOst()
+	{
+		ostsDeployment.forEach(ost -> ost.UpdateAtEachFrame());
 	}
 }

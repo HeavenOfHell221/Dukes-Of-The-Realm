@@ -10,8 +10,8 @@ public class Settings {
 	public static final int LEVEL_UP_DURATION_OFFSET = 100;
 	public static final int LEVEL_UP_DURATION_FACTOR = 50;
 	
-	public static final int CASE_HEIGHT = 41;
-	public static final int CASE_WIDTH = 41;
+	public static final int CASE_HEIGHT = 42;
+	public static final int CASE_WIDTH = 42;
 	
 	public static final int GAME_FREQUENCY = 1000 * 1000 * 1000; // 1 second
 	public static final int TIME_FACTOR = 10;

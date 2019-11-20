@@ -70,6 +70,7 @@ public class Main extends Application {
 				processInput(input, now);
 				Timer(now);
 				fps.Update(now);
+				kingdom.UpdateAtEachFrame();
 			}
 			
 			private void processInput(Input input, long now)
@@ -84,6 +85,15 @@ public class Main extends Application {
 				{
 					//kingdom.DeleteAllCastle();
 					//CreateCastle(10);
+				}
+			}
+				
+			private void Timer(long now)
+			{
+				if((now - lastUpdate >= timePerTurn))
+				{
+					lastUpdate = now;
+					kingdom.UpdateTurn();
 				}
 			}		
 		};
@@ -104,14 +114,7 @@ public class Main extends Application {
 		CreateCastle(100);
 	}
 	
-	private void Timer(long now)
-	{
-		if((now - lastUpdate >= timePerTurn))
-		{
-			lastUpdate = now;
-			kingdom.Update();
-		}
-	}
+	
 	
 	private void CreateCastle(int count)
 	{

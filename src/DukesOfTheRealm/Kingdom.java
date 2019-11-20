@@ -119,14 +119,14 @@ public class Kingdom {
 		return grid;
 	}
 	
-	public void Update()
+	public void UpdateTurn()
 	{
-		castles.forEach(
-			castle -> 
-			{
-				castle.Update();
-			}
-		);
+		castles.forEach(castle -> castle.UpdateTurn());
+	}
+	
+	public void UpdateAtEachFrame()
+	{
+		castles.forEach(castle -> castle.UpdateAtEachFrame());
 	}
 	
 	public Point2D GetRandomGridCell(Random rand)

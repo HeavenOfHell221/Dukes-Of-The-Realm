@@ -3,6 +3,7 @@ package DukesOfTheRealm;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.geometry.Point2D;
 
@@ -52,6 +53,7 @@ public abstract class Sprite {
 	{
     	this.shape = shape;
 		layer.getChildren().add(shape);
+		shape.toBack();
 	}
     
     public void removeFromLayerShape() 
@@ -71,7 +73,10 @@ public abstract class Sprite {
 	protected void AddCircle(double r)
 	{
 		Shape circle = new Circle(this.x, this.y, r);
-		AddToLayerShape(circle);
+		circle.setFill(Color.DARKGOLDENROD);
+		this.shape = circle;
+		layer.getChildren().add(circle);
+		circle.toFront();
 		this.w = 2 * r;
 		this.h = 2 * r;
 		
@@ -82,7 +87,7 @@ public abstract class Sprite {
         imageView.relocate(x, y);
     }
     
-    public void updateUIShape()
+    public void UpdateUIShape()
     {
     	shape.relocate(x, y);
     }
@@ -116,6 +121,10 @@ public abstract class Sprite {
     public double getCenterY() 
     {
         return y + h * 0.5;
+    }
+    public Pane getLayer() 
+    {
+        return layer;
     }
     
     public void setX(double x) 
