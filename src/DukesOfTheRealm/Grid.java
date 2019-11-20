@@ -4,27 +4,27 @@ import javafx.geometry.Point2D;
 
 public class Grid {
 	private int[][] grid;
-	private int sizeX;
-	private int sizeY;
-	private final int caseWidth;
-	private final int caseHeight;
+	private int nbCellX;
+	private int nbCellY;
+	private final int cellWidth;
+	private final int cellHeight;
 	
 	public Grid(int sizeX, int sizeY)
 	{
-		this.caseWidth = Settings.CASE_WIDTH;
-		this.caseHeight = Settings.CASE_HEIGHT;
-		this.sizeX = sizeX / caseWidth;
-		this.sizeY = sizeY / caseHeight;
+		this.cellWidth = Settings.CASE_WIDTH;
+		this.cellHeight = Settings.CASE_HEIGHT;
+		this.nbCellX = sizeX / cellWidth;
+		this.nbCellY = sizeY / cellHeight;
 		
-		this.grid = new int[this.sizeX][this.sizeY];
+		this.grid = new int[this.nbCellX][this.nbCellY];
 		//System.out.println("sizeX:" + this.sizeX + ", sizeY:" + this.sizeY);
 	}
 	
-	public Point2D GetCoodinatesWithCase(int x, int y)
+	public Point2D GetCoordinatesWithCell(int x, int y)
 	{
-		int centerX = ((caseWidth - 1) / 2) + 1;
-		int centerY = ((caseHeight - 1) / 2) + 1;
-		return new Point2D((x * caseWidth) + centerX, (y * caseHeight) + centerY);
+		int centerX = ((cellWidth - 1) / 2) + 1;
+		int centerY = ((cellHeight - 1) / 2) + 1;
+		return new Point2D((x * cellWidth) + centerX, (y * cellHeight) + centerY);
 	}
 
 	public int[][] GetGrid() 
@@ -34,21 +34,21 @@ public class Grid {
 
 	public int GetSizeX() 
 	{
-		return sizeX;
+		return nbCellX;
 	}
 
 	public int GetSizeY() 
 	{
-		return sizeY;
+		return nbCellY;
 	}
 
 	public int GetCaseWidth() 
 	{
-		return caseWidth;
+		return cellWidth;
 	}
 
 	public int GetCaseHeight() 
 	{
-		return caseHeight;
+		return cellHeight;
 	}
 }

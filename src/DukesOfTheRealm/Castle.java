@@ -14,12 +14,12 @@ import javafx.scene.layout.Pane;
 
 public class Castle extends Sprite implements ProductionUnit {
 	
-	private int totalFlorin; // L'argent que contient le château
-	private int level; // Le niveau du château
-	private ArrayList<Soldier> reserveOfSoldiers; // La réserve de soldat du château. Contient des Piker, des Onager et des Knight
-	private Duke duke; // Le propriétaire du château 
-	private ProductionUnit productionUnit; // L'unité de production. C'est une amélioration ou un soldat en cours de production
-	private int productionTime; // Le temps restant à la production de l'unité de production
+	private int totalFlorin; // L'argent que contient le chï¿½teau
+	private int level; // Le niveau du chï¿½teau
+	private ArrayList<Soldier> reserveOfSoldiers; // La rï¿½serve de soldat du chï¿½teau. Contient des Piker, des Onager et des Knight
+	private Duke duke; // Le propriï¿½taire du chï¿½teau 
+	private ProductionUnit productionUnit; // L'unitï¿½ de production. C'est une amï¿½lioration ou un soldat en cours de production
+	private int productionTime; // Le temps restant ï¿½ la production de l'unitï¿½ de production
 	
 	/* Constructeur */
 	Castle(Pane layer, Image image, double x, double y, int level, Duke duke)
@@ -39,7 +39,7 @@ public class Castle extends Sprite implements ProductionUnit {
 		AddRectangle(Settings.CASE_WIDTH, Settings.CASE_HEIGHT);
 	}
 	
-	/* Test si le château a assez d'argent pour augmenter d'un niveau */
+	/* Test si le chï¿½teau a assez d'argent pour augmenter d'un niveau */
 	public boolean CanLevelUp() 
 	{
 		if(totalFlorin >= Settings.LEVEL_UP_COST_FACTOR * (level + 1))
@@ -49,13 +49,13 @@ public class Castle extends Sprite implements ProductionUnit {
 		return false;
 	}
 	
-	/* Augemente le château d'un niveau */
+	/* Augemente le chï¿½teau d'un niveau */
 	public void LevelUp()
 	{
 		this.level++;
 	}
 	
-	/* Met à jour l'argent total du château */
+	/* Met ï¿½ jour l'argent total du chï¿½teau */
 	private void UpdateFlorin()
 	{
 		AddFlorin(Settings.FLORIN_FACTOR * level);
@@ -99,13 +99,10 @@ public class Castle extends Sprite implements ProductionUnit {
 		}
 	}
 	
-	public void InflictDamage()
-	{
-		Random rand = new Random();
-		int n = rand.nextInt(3);
-		
+	public void InflictDamage(SoldiersType type)
+	{		
 		this.reserveOfSoldiers.stream()
-			.filter(soldier -> soldier.getClass() == Knight.class)
+			.filter(soldier -> soldier.GetType() == type)
 			.limit(1)
 			.forEach(soldier -> soldier.InflictDamage());
 	}

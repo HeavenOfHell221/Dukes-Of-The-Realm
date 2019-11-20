@@ -15,9 +15,9 @@ import javafx.scene.layout.Pane;
 public class Kingdom {
 
 	/* Attributs */
-	private ArrayList<Castle> castles; // Liste des châteaux
+	private ArrayList<Castle> castles; // Liste des chï¿½teaux
 	private Grid grid; // Grille de jeu
-	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autorisé entre deux châteaux
+	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autorisï¿½ entre deux chï¿½teaux
 	
 	public Kingdom()
 	{
@@ -29,7 +29,7 @@ public class Kingdom {
 	public boolean CreateCastle(Pane layer, Image image, Point2D p, int level, Duke duke)
 	{
 		//System.out.println("x: " + p.getX() + ", y: " + p.getY());
-		if(!IsCastleIsToCloser(p.getX() , p.getY()))
+		if(!IsCastleToClose(p.getX() , p.getY()))
 		{
 			Castle newCastle = new Castle(layer, image, p.getX(), p.getY(), level, duke);
 			newCastle.AddRectangle();
@@ -47,7 +47,7 @@ public class Kingdom {
 		}
 	}
 	
-	public void DeleteAllCastle()
+	public void DeleteAllCastles()
 	{
 		Iterator<Castle> it = castles.iterator();
 		while(it.hasNext())
@@ -63,27 +63,17 @@ public class Kingdom {
 		return castles.add(castle);
 	}
 	
-	private boolean IsCastleIsToCloser(double x, double y)
-	{
-		Castle closerCastle = null;
-		double minimalDistance = Double.POSITIVE_INFINITY;
-		
+	private boolean IsCastleToClose(double x, double y)
+	{		
 		Iterator<Castle> it = castles.iterator();
-		
 		while(it.hasNext())
 		{
 			Castle currentCastle = it.next();
 			double d = DistanceBetween(currentCastle, x, y);
-			
-			if(d < minimalDistance)
+			if(d < minimalDistanceBetweenTwoCastles)
 			{
-				minimalDistance = d;
-				closerCastle = currentCastle;
-				if(minimalDistance < minimalDistanceBetweenTwoCastles)
-				{
-					return true;
-				}
-			}			
+				return true;
+			}		
 		}
 		return false;
 	}
@@ -99,7 +89,7 @@ public class Kingdom {
 		return castles.remove(castle);
 	}
 	
-	public ArrayList<Castle> GetCastlesOfThisDuke(Duke duke)
+	public ArrayList<Castle> GetAllCastlesOfThisDuke(Duke duke)
 	{
 		ArrayList<Castle> list = new ArrayList<Castle>();
 		
@@ -114,7 +104,7 @@ public class Kingdom {
 		return list;
 	}
 	
-	public ArrayList<Castle> GetCastles()
+	public ArrayList<Castle> GetAllCastles()
 	{
 		return castles;
 	}
@@ -144,6 +134,6 @@ public class Kingdom {
 	public Point2D GetRandomGridCell(Random rand)
 	{
 		Point2D p = new Point2D(rand.nextInt(grid.GetSizeX()), rand.nextInt(grid.GetSizeY()));
-		return grid.GetCoodinatesWithCase((int)p.getX(), (int)p.getY());
+		return grid.GetCoordinatesWithCell((int)p.getX(), (int)p.getY());
 	}
 }

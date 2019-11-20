@@ -17,4 +17,6 @@ public class Settings {
 	public static final int TIME_FACTOR = 10;
 	
 	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 300;
+	
+	public static final int NB_TYPES_OF_TROOPS = 3;
 }

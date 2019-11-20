@@ -10,6 +10,7 @@ public class Piker extends Soldier {
 	public Piker()
 	{
 		super(100, 5, 2, 1, 1);
+		this.type = SoldiersType.Piker;
 	}
 
 }
