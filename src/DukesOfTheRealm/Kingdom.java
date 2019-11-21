@@ -1,6 +1,5 @@
 package DukesOfTheRealm;
 
-//import java.awt.geom.Point2D;
 import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,52 +11,47 @@ import Duke.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Kingdom {
+public class Kingdom implements IUpdateTurn, IUpdateAtEachFrame{
 
-	/* Attributs */
-	private ArrayList<Castle> castles; // Liste des ch�teaux
-	public static Grid grid; // Grille de jeu
-	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autoris� entre deux ch�teaux
-	private HashMap<int[][], Sprite> hashMapGrid;
+	
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
 	
 	
-	public Kingdom()
+	private ArrayList<Castle> castles; // Liste des chateaux
+	private ArrayList<Actor> actors; // Liste des acteurs
+	
+	private final Pane playfieldLayer; // Le layer du jeu (groupe de base)
+	
+	
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
+	
+	
+	public Kingdom(Pane playfieldLayer)
 	{
-		this.hashMapGrid = new HashMap<int[][], Sprite>();
+		this.playfieldLayer = playfieldLayer;
 		this.castles = new ArrayList<Castle>();
-		this.grid = new Grid((int)Settings.SCENE_WIDTH, (int)Settings.SCENE_HEIGHT);
+		this.actors = new ArrayList<Actor>();
 	}
 	
 	
-	public boolean CreateCastle(Pane layer, Image image, Point2D p, int level, Duke duke)
+	/*************************************************/
+	/******************** METHODES *******************/
+	/*************************************************/
+
+	
+	public boolean CreateCastle(Pane layer, Point2D p, int level, Duke duke)
 	{
 		if(!IsCastleToClose(p.getX() , p.getY()))
 		{
-			Castle newCastle = new Castle(layer, image, p.getX(), p.getY(), level, duke);
+			Castle newCastle = new Castle(layer, p.getX(), p.getY(), level, duke);
 			newCastle.AddRectangle();
 			return AddCastle(newCastle);
 		}
 		return false;
-	}
-	
-	public void DeleteCastle(Castle castle)
-	{
-		if(castle != null)
-		{
-			castle.removeFromLayerShape();
-			castles.remove(castle);
-		}
-	}
-	
-	public void DeleteAllCastles()
-	{
-		Iterator<Castle> it = castles.iterator();
-		while(it.hasNext())
-		{
-			Castle castle = it.next();
-			castle.removeFromLayerShape();
-			castle.remove();
-		}	
 	}
 	
 	private boolean AddCastle(Castle castle)
@@ -72,7 +66,7 @@ public class Kingdom {
 		{
 			Castle currentCastle = it.next();
 			double d = DistanceBetween(currentCastle, x, y);
-			if(d < minimalDistanceBetweenTwoCastles)
+			if(d < Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE)
 			{
 				return true;
 			}		
@@ -82,7 +76,7 @@ public class Kingdom {
 
 	private double DistanceBetween(Castle castle, double x, double y)
 	{
-		return Math.sqrt((y - castle.getY()) * (y - castle.getY()) + (x - castle.getX()) * (x - castle.getX()));
+		return Math.sqrt((y - castle.GetY()) * (y - castle.GetY()) + (x - castle.GetX()) * (x - castle.GetX()));
 	}
 	
 	public boolean RemoveCastle(Castle castle)
@@ -117,24 +111,19 @@ public class Kingdom {
 		return null;
 	}
 	
-	public Grid GetGrid()
-	{
-		return grid;
-	}
-	
 	public void UpdateTurn()
 	{
 		castles.forEach(castle -> castle.UpdateTurn());
 	}
 	
-	public void UpdateAtEachFrame()
+	public void UpdateAtEachFrame(long now)
 	{
-		castles.forEach(castle -> castle.UpdateAtEachFrame());
+		castles.forEach(castle -> castle.UpdateAtEachFrame(now));
 	}
 	
 	public Point2D GetRandomGridCell(Random rand)
 	{
-		Point2D p = new Point2D(rand.nextInt(grid.GetSizeX()), rand.nextInt(grid.GetSizeY()));
-		return grid.GetCoordinatesWithCell((int)p.getX(), (int)p.getY());
+		Point2D p = new Point2D(rand.nextInt(Grid.GetSizeX()), rand.nextInt(Grid.GetSizeY()));
+		return Grid.GetCoordinatesWithCell((int)p.getX(), (int)p.getY());
 	}
 }

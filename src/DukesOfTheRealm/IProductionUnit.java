@@ -1,6 +1,6 @@
 package DukesOfTheRealm;
 
-public interface ProductionUnit {
+public interface IProductionUnit {
 
 	public int GetTime();
 	public int GetCost();

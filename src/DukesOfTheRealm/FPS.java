@@ -43,7 +43,6 @@ public class FPS {
 		this.deltaTime = (now - this.oldTime);
 		this.deltaTime /= (double)Settings.GAME_FREQUENCY;
 		this.oldTime = now;
-		//System.out.println(deltaTime);
 	}
 	
 }

@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 
-public abstract class Soldier implements ProductionUnit {
+public abstract class Soldier implements IProductionUnit {
 	protected SoldiersType type;
 	protected int productionCost;
 	protected int productionTime;

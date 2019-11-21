@@ -27,22 +27,14 @@ public class Main extends Application {
 	
 	private Random rand;
 	
-	private Image CastleImage;
-	private Image PikerImage;
-	private Image OnagerImage;
-	private Image KnightImage;
-
-	private Knight knight;
-	
 	private Pane playfieldLayer;
 	private Scene scene;
 	private AnimationTimer gameLoop;
 	private Group root;
 	
-	public Kingdom kingdom;
-	
-	public Input input;
-	public FPS fps;
+	private Input input;
+	private FPS fps;
+	private Kingdom kingdom;
 	
 	private long lastUpdate = 0;
 	private long timeScale = Settings.GAME_FREQUENCY; // => 1 second
@@ -71,7 +63,7 @@ public class Main extends Application {
 				processInput(input, now);
 				Timer(now);
 				fps.UpdateAtEachFrame(now);
-				kingdom.UpdateAtEachFrame();
+				kingdom.UpdateAtEachFrame(now);
 			}
 			
 			private void processInput(Input input, long now)
@@ -104,15 +96,20 @@ public class Main extends Application {
 	
 	private void loadGame()
 	{
-		/* Load images */
-		KnightImage = new Image(getClass().getResource("/images/alien.png").toExternalForm(), 100, 100, true, true);
-		
+		/* INPUT */
 		input = new Input(scene);
 		input.addListeners();
+		
+		/* RANDOM */
 		rand = new Random();
+		
+		/* FPS MANAGER */
 		fps = new FPS(true);
-		kingdom = new Kingdom();
-		CreateCastle(30);
+		
+		/* KINGDOM */
+		kingdom = new Kingdom(playfieldLayer);
+		
+		CreateCastle(10);
 	}
 	
 	
@@ -124,7 +121,7 @@ public class Main extends Application {
 		
 		while(numberValid != count && numberTest < count * 100)
 		{
-			if(kingdom.CreateCastle(playfieldLayer, KnightImage, kingdom.GetRandomGridCell(rand), 1, new Player("Player 1")))
+			if(kingdom.CreateCastle(playfieldLayer, kingdom.GetRandomGridCell(rand), 1, new Player("Player 1")))
 			{
 				numberValid++;
 			}

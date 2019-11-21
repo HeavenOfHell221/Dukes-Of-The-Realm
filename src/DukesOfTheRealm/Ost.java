@@ -4,65 +4,77 @@ import Duke.Duke;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Ost extends Sprite {
+public class Ost extends Sprite implements IUpdateTurn {
 	
 	private Castle origin;
 	private Castle destination;
-	private int speed;
+	private double speed;
 	private double movement;
 	private boolean isArrived;
-	private boolean canStart;
+	private boolean newTurn;
+	private long timeForMove = Settings.GAME_FREQUENCY;
+	private long lastTurn;
+
 	
-	public Ost(Pane layer, Image image, double x, double y, Castle origin, Castle destination, int speed)
+	public Ost(Pane layer, double x, double y, Castle origin, Castle destination, int speed)
 	{
-		super(layer, image, x + (Settings.CELL_SIZE-2)/4 +1, y + (Settings.CELL_SIZE-2)/4 +1);
-//		super(layer, image, x, y);
+		super(layer, x + (Settings.CELL_SIZE-2)/4 +1, y + (Settings.CELL_SIZE-2)/4 +1);
+		this.timeForMove *= 2;
 		this.origin = origin;
 		this.destination = destination;
-		this.speed = 10;
-		this.movement = (speed * Settings.CELL_SIZE) / Settings.TIME_FACTOR;
+		this.speed = speed;
+		this.movement = (this.speed * (double) Settings.CELL_SIZE) / (double) Settings.TIME_FACTOR;
+		Start();
 	}
 	
-	public void UpdateAtEachFrame()
+	public void UpdateTurn()
 	{	
-		if(canStart && !isArrived)
+		newTurn = true;
+	}
+	
+	public void UpdateAtEachFrame(long now)
+	{
+		if(newTurn)
+		{
+			lastTurn = now;
+			newTurn = false;
+		}
+		
+		if(now - lastTurn < timeForMove)
 		{
 			Move();
 			UpdateUIShape();
-		}
-			
+		}	
 	}
 	
 	private void Move()
 	{
-		int horizontalDirection = destination.getX() > origin.getX() ? 1 : -1;
-		int verticalDirection = destination.getY() > origin.getX() ? 1 : -1;
+		int horizontalDirection = destination.GetX() > origin.GetX() ? 1 : -1;
+		int verticalDirection = destination.GetY() > origin.GetX() ? 1 : -1;
 		boolean toggleXMovement = true;
 		boolean toggleYMovement = true;
-		while(toggleXMovement)
+		
+		toggleXMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getX() 
+				== Grid.GetCellWithCoordinates(destination.GetX(), destination.GetY()).getX() ? false : true;
+		 
+		
+		toggleYMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getY()
+				== Grid.GetCellWithCoordinates(destination.GetX(), destination.GetY()).getY() ? false : true;
+		
+		if(toggleXMovement)
 		{
-			this.x += this.movement * FPS.deltaTime * horizontalDirection;
-			double x = Kingdom.grid.GetCellWithCoordinates((int) this.x, (int) this.y).getX();
-			double xx = Kingdom.grid.GetCellWithCoordinates((int) destination.getX(), (int) destination.getY()).getX();
-			if (x == xx)
-			{
-				toggleXMovement = false;
-			}
+			AddDx(this.movement * FPS.deltaTime * horizontalDirection);
 		}
-		while(toggleYMovement)
+		
+		else if(toggleYMovement)
 		{
-			this.y += this.movement * FPS.deltaTime * verticalDirection;
-			double y = Kingdom.grid.GetCellWithCoordinates((int) this.x, (int) this.y).getY();
-			double yy = Kingdom.grid.GetCellWithCoordinates((int) destination.getX(), (int) destination.getY()).getY();
-			if(y == yy)
-			{
-				toggleYMovement = false;
-			}
+			AddDy(this.movement * FPS.deltaTime * verticalDirection);
 		}
 	}
+	
 	private void Start()
 	{
 		AddCircle(10);
-		canStart = true;
+		newTurn = true;
 	}
 }

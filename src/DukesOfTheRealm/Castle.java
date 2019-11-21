@@ -12,7 +12,7 @@ import Soldiers.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Castle extends Sprite implements ProductionUnit {
+public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpdateAtEachFrame {
 	
 	private enum Orientation
 	{
@@ -27,24 +27,24 @@ public class Castle extends Sprite implements ProductionUnit {
 	private int level; // Le niveau du ch�teau
 	private ArrayList<Soldier> reserveOfSoldiers; // La r�serve de soldat du ch�teau. Contient des Piker, des Onager et des Knight
 	private Duke duke; // Le propri�taire du ch�teau 
-	private ProductionUnit productionUnit; // L'unit� de production. C'est une am�lioration ou un soldat en cours de production
-	private int productionTime; // Le temps restant � la production de l'unit� de production
-	private ArrayList<Ost> ostsDeployment;
+	private IProductionUnit productionUnit; // L'unite de production. C'est une am�lioration ou un soldat en cours de production
+	private int productionTime; // Le temps restant a la production de l'unit� de production
+	private Ost ostsDeployment;
 	private Orientation orientation;
 	
 	/* Constructeur */
-	Castle(Pane layer, Image image, double x, double y, int level, Duke duke)
+	Castle(Pane layer, double x, double y, int level, Duke duke)
 	{
-		super(layer, image, x, y);
+		super(layer, x, y);
 		this.level = level;
 		this.totalFlorin = 0;
 		this.duke = duke;
 		this.productionUnit = null;
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
-		this.ostsDeployment = new ArrayList<Ost>();
+		this.ostsDeployment = null;
 		this.orientation = SetOrientation();
-		ostsDeployment.add(new Ost(layer, image, x, y, this, this, 2));
+		this.ostsDeployment = new Ost(layer, x, y, this, this, 2);
 	}
 	
 	private Orientation SetOrientation()
@@ -69,7 +69,7 @@ public class Castle extends Sprite implements ProductionUnit {
 		AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
 	}
 	
-	/* Test si le ch�teau a assez d'argent pour augmenter d'un niveau */
+	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
 	public boolean CanLevelUp() 
 	{
 		if(totalFlorin >= Settings.LEVEL_UP_COST_FACTOR * (level + 1))
@@ -97,9 +97,9 @@ public class Castle extends Sprite implements ProductionUnit {
 		UpdateProduction();
 	}
 	
-	public void UpdateAtEachFrame()
+	public void UpdateAtEachFrame(long now)
 	{		
-		UpdateOst();
+		UpdateOst(now);
 	}
 	
 	public void AddFlorin(int amount)
@@ -122,7 +122,7 @@ public class Castle extends Sprite implements ProductionUnit {
 		return (amount <= totalFlorin);
 	}
 	
-	public void AddProduction(ProductionUnit newProduction)
+	public void AddProduction(IProductionUnit newProduction)
 	{
 		if(this.productionUnit != null)
 		{	
@@ -168,7 +168,7 @@ public class Castle extends Sprite implements ProductionUnit {
 		}
 	}
 
-	private int GetProductionTime(ProductionUnit production)
+	private int GetProductionTime(IProductionUnit production)
 	{
 		return production.GetTime();
 	}
@@ -190,8 +190,8 @@ public class Castle extends Sprite implements ProductionUnit {
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
 	}
 	
-	private void UpdateOst()
+	private void UpdateOst(long now)
 	{
-		ostsDeployment.forEach(ost -> ost.UpdateAtEachFrame());
+		this.ostsDeployment.UpdateAtEachFrame(now);
 	}
 }

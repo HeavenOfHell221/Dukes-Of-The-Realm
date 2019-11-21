@@ -9,64 +9,61 @@ import javafx.geometry.Point2D;
 
 public abstract class Sprite {
 
-	private ImageView imageView;
-    private Pane layer;
-    
+    private Pane canvas;
     private Shape shape;
 	
-	protected double x;
-    protected double y;
+	private double x;
+    private double y;
+    private int cellX;
+    private int cellY;
 
-	private boolean removable = false;
-
-    private double w;
-    private double h;
+    private double width;
+    private double height;
+ 
     
-    public Sprite (Pane layer, Image image, double x, double y)
+    public Sprite (Pane canvas, double x, double y)
     {
-    	this.layer = layer;
+    	this.canvas = canvas;
     	this.x = x;
     	this.y = y;
-    	
-    	//this.imageView = new ImageView(image);
-    	//this.imageView.relocate(x , y);
-    	
-    	//this.w = image.getWidth();
-    	//this.h = image.getHeight();
-    	
-    	//addToLayerImageView();
+    	Point2D p = Grid.GetCellWithCoordinates(x, y);
+    	this.cellX = (int) p.getX();
+    	this.cellY = (int) p.getX();
     }
     
-    public Sprite (Pane layer, Image image, Point2D p, double speed)
+    public Sprite (Pane canvas)
     {
-    	this.layer = layer;
+    	this.canvas = canvas;
+    }
+    
+    public Sprite (Pane canvas, Point2D p, double speed)
+    {
+    	this.canvas = canvas;
     	this.x = p.getX();
     	this.y = p.getY();
-    }
-    
-	private void AddToLayerImageView()
-    {
-    	layer.getChildren().add(this.imageView);
+    	Point2D p2 = Grid.GetCellWithCoordinates(p.getX(), p.getY());
+    	this.cellX = (int) p2.getX();
+    	this.cellY = (int) p2.getX();
     }
 
     private void AddToLayerShape(Shape shape)
 	{
     	this.shape = shape;
-		layer.getChildren().add(shape);
+		canvas.getChildren().add(shape);
 		shape.toBack();
 	}
     
     public void removeFromLayerShape() 
     {
-        this.layer.getChildren().remove(this.shape);
+        this.canvas.getChildren().remove(this.shape);
     }
     
     protected void AddRectangle(double width, double height)
 	{
 		Shape rectangle = new Rectangle(this.x, this.y, width, height);
 		AddToLayerShape(rectangle);
-		this.w = width;
-		this.h = height;
+		this.width = width;
+		this.height = height;
 		
 	}
 	
@@ -75,109 +72,84 @@ public abstract class Sprite {
 		Shape circle = new Circle(this.x, this.y, r);
 		circle.setFill(Color.DARKGOLDENROD);
 		this.shape = circle;
-		layer.getChildren().add(circle);
+		canvas.getChildren().add(circle);
 		circle.toFront();
-		this.w = 2 * r;
-		this.h = 2 * r;
+		this.width = 2 * r;
+		this.height = 2 * r;
 		
 	}
-    
-    public void UpdateUIImageView() 
-    {
-        imageView.relocate(x, y);
-    }
     
     public void UpdateUIShape()
     {
     	shape.relocate(x, y);
     }
     
-    public double getX() 
+    public double GetX() 
     {
         return x;
     }
-    public double getY() 
+    public double GetY() 
     {
         return y;
     }
     
-    protected ImageView getView() 
-    {
-        return imageView;
-    }
-    
     public double getWidth() 
     {
-        return w;
+        return width;
     }
     public double getHeight() 
     {
-        return h;
+        return height;
     }
     public double getCenterX() 
     {
-        return x + w * 0.5;
+        return x + width * 0.5;
     }
     public double getCenterY() 
     {
-        return y + h * 0.5;
+        return y + height * 0.5;
     }
     public Pane getLayer() 
     {
-        return layer;
+        return canvas;
     }
     
-    public void setX(double x) 
+    public void SetX(int x) 
     {
         this.x = x;
     }
-    public void setY(double y) 
+    public void SetY(int y) 
     {
         this.y = y;
-    }  
-
-    public boolean isRemovable() 
-    {
-        return removable;
-    }
-
-    public void remove()
-    {
-    	removable = true;
     }
     
-    public boolean isCollisionWith(Sprite other)
+    public void SetCellX(int cellX)
     {
-		double leftA = this.x;
-	    double rightA = this.x + this.w;
-	    double topA = this.y;
-	    double bottomA = this.y + this.h;
-	 
-	    double leftB = other.x;
-	    double rightB = other.x + other.w;
-	    double topB = other.y;
-	    double bottomB = other.y + other.h;
-	    
-	    if( bottomA <= topB )
-	    {
-	        return false;
-	    }
-	 
-	    if( topA >= bottomB )
-	    {
-	        return false;
-	    }
-	 
-	    if( rightA <= leftB )
-	    {
-	        return false;
-	    }
-	 
-	    if( leftA >= rightB )
-	    {
-	        return false;
-	    }
-	    
-	    return true;
+    	this.cellX = cellX;
+    }
+    
+    public void SetCellY(int cellY)
+    {
+    	this.cellY = cellY;
+    }
+    
+    public void AddDx(double dx)
+    {
+    	this.x += dx;
+    }
+    
+    public void AddDy(double dy)
+    {
+    	this.y += dy;
+    }
+    
+    public int GetCellX()
+    {
+    	return cellX;
+    }
+    
+    public int GetCellY()
+    {
+    	return cellY;
     }
 }
