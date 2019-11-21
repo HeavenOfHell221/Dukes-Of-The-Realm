@@ -11,18 +11,23 @@ public class Grid {
 	
 	public Grid(int sizeX, int sizeY)
 	{
-		this.cellWidth = Settings.CASE_WIDTH;
-		this.cellHeight = Settings.CASE_HEIGHT;
+		this.cellWidth = Settings.CELL_SIZE;
+		this.cellHeight = Settings.CELL_SIZE;
 		this.nbCellX = sizeX / cellWidth;
 		this.nbCellY = sizeY / cellHeight;
 		
 		this.grid = new int[this.nbCellX][this.nbCellY];
-		//System.out.println("sizeX:" + this.sizeX + ", sizeY:" + this.sizeY);
 	}
 	
 	public Point2D GetCoordinatesWithCell(int x, int y)
 	{
 		return new Point2D(x * cellWidth, y * cellHeight);
+	}
+	
+	public Point2D GetCellWithCoordinates(int x, int y)
+	{
+		//System.out.println("x: "+ (x/cellWidth) + ", y: " + (y/cellWidth));
+		return new Point2D(x / cellWidth, y / cellHeight);
 	}
 
 	public int[][] GetGrid() 

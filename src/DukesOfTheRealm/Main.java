@@ -67,9 +67,10 @@ public class Main extends Application {
 			@Override
 			public void handle(long now) 
 			{
+				fps.FrameStart(now);
 				processInput(input, now);
 				Timer(now);
-				fps.Update(now);
+				fps.UpdateAtEachFrame(now);
 				kingdom.UpdateAtEachFrame();
 			}
 			
@@ -109,9 +110,9 @@ public class Main extends Application {
 		input = new Input(scene);
 		input.addListeners();
 		rand = new Random();
-		fps = new FPS(false);
+		fps = new FPS(true);
 		kingdom = new Kingdom();
-		CreateCastle(100);
+		CreateCastle(30);
 	}
 	
 	

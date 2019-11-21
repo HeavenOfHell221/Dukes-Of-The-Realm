@@ -9,20 +9,50 @@ public class Ost extends Sprite {
 	private Castle origin;
 	private Castle destination;
 	private int speed;
+	private double movement;
+	private boolean isArrived;
+	private boolean canStart;
 	
 	public Ost(Pane layer, Image image, double x, double y, Castle origin, Castle destination, int speed)
 	{
-		super(layer, image, x + (Settings.CASE_WIDTH-2)/4 +1, y + (Settings.CASE_HEIGHT-2)/4 +1);
+		super(layer, image, x + (Settings.CELL_SIZE-2)/4 +1, y + (Settings.CELL_SIZE-2)/4 +1);
 //		super(layer, image, x, y);
 		this.origin = origin;
 		this.destination = destination;
-		this.speed = speed;
-		AddCircle(10);
+		this.speed = 10;
+		this.movement = (speed * Settings.CELL_SIZE) / Settings.TIME_FACTOR;
 	}
 	
 	public void UpdateAtEachFrame()
+	{	
+		if(canStart && !isArrived)
+		{
+			Move();
+			UpdateUIShape();
+		}
+			
+	}
+	
+	private void Move()
 	{
-		this.x +=3;
-		UpdateUIShape();
+		int horizontalDirection = destination.getX() > origin.getX() ? 1 : -1;
+		int verticalDirection = destination.getY() > origin.getX() ? 1 : -1;
+		boolean toggleXMovement = true;
+		boolean toggleYMovement = true;
+		while(toggleXMovement)
+		{
+			this.x += this.movement * FPS.deltaTime * horizontalDirection;
+			double x = Kingdom.grid.GetCellWithCoordinates((int) this.x, (int) this.y).getX();
+			double xx = Kingdom.grid.GetCellWithCoordinates((int) destination.getX(), (int) destination.getY()).getX();
+			if (x == xx)
+			{
+				toggleXMovement = false;
+			}
+		}
+	}
+	private void Start()
+	{
+		AddCircle(10);
+		canStart = true;
 	}
 }

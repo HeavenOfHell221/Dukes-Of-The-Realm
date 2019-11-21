@@ -14,6 +14,15 @@ import javafx.scene.layout.Pane;
 
 public class Castle extends Sprite implements ProductionUnit {
 	
+	private enum Orientation
+	{
+		North,
+		South,
+		West,
+		East,
+		None;
+	}
+	
 	private int totalFlorin; // L'argent que contient le ch�teau
 	private int level; // Le niveau du ch�teau
 	private ArrayList<Soldier> reserveOfSoldiers; // La r�serve de soldat du ch�teau. Contient des Piker, des Onager et des Knight
@@ -21,6 +30,7 @@ public class Castle extends Sprite implements ProductionUnit {
 	private ProductionUnit productionUnit; // L'unit� de production. C'est une am�lioration ou un soldat en cours de production
 	private int productionTime; // Le temps restant � la production de l'unit� de production
 	private ArrayList<Ost> ostsDeployment;
+	private Orientation orientation;
 	
 	/* Constructeur */
 	Castle(Pane layer, Image image, double x, double y, int level, Duke duke)
@@ -33,13 +43,30 @@ public class Castle extends Sprite implements ProductionUnit {
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
 		this.ostsDeployment = new ArrayList<Ost>();
-		ostsDeployment.add(new Ost(layer, image, x, y, this, this));
+		this.orientation = SetOrientation();
+		ostsDeployment.add(new Ost(layer, image, x, y, this, this, 2));
+	}
+	
+	private Orientation SetOrientation()
+	{
+		Random rand = new Random();
+		Orientation orientation;
+		
+		switch(rand.nextInt(4))
+		{
+			case 0: orientation = Orientation.North; break;
+			case 1: orientation = Orientation.South; break;
+			case 2: orientation = Orientation.West; break;
+			case 3: orientation = Orientation.East; break;
+			default: orientation = Orientation.None; break;
+		}
+		return orientation;
 	}
 	
 	/* Ajoute un rectangle au layer */
 	public void AddRectangle()
 	{
-		AddRectangle(Settings.CASE_WIDTH, Settings.CASE_HEIGHT);
+		AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
 	}
 	
 	/* Test si le ch�teau a assez d'argent pour augmenter d'un niveau */

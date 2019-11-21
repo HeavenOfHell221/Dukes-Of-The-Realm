@@ -16,11 +16,14 @@ public class Kingdom {
 
 	/* Attributs */
 	private ArrayList<Castle> castles; // Liste des ch�teaux
-	private Grid grid; // Grille de jeu
+	public static Grid grid; // Grille de jeu
 	private final double minimalDistanceBetweenTwoCastles = Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE; // Distance minimal autoris� entre deux ch�teaux
+	private HashMap<int[][], Sprite> hashMapGrid;
+	
 	
 	public Kingdom()
 	{
+		this.hashMapGrid = new HashMap<int[][], Sprite>();
 		this.castles = new ArrayList<Castle>();
 		this.grid = new Grid((int)Settings.SCENE_WIDTH, (int)Settings.SCENE_HEIGHT);
 	}
