@@ -49,6 +49,16 @@ public class Ost extends Sprite {
 				toggleXMovement = false;
 			}
 		}
+		while(toggleYMovement)
+		{
+			this.y += this.movement * FPS.deltaTime * verticalDirection;
+			double y = Kingdom.grid.GetCellWithCoordinates((int) this.x, (int) this.y).getY();
+			double yy = Kingdom.grid.GetCellWithCoordinates((int) destination.getX(), (int) destination.getY()).getY();
+			if(y == yy)
+			{
+				toggleYMovement = false;
+			}
+		}
 	}
 	private void Start()
 	{
