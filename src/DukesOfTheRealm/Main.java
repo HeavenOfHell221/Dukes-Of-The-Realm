@@ -26,7 +26,7 @@ import Utility.Input;
 import Utility.Settings;
 import javafx.geometry.Point2D;
 
-public class Main extends Application {
+public class Main extends Application implements IUpdate{
 	
 	private Random rand;
 	
@@ -62,16 +62,12 @@ public class Main extends Application {
 			@Override
 			public void handle(long now) 
 			{
-				fps.FrameStart(now);
 				processInput(input, now);
-				Timer(now);
-				fps.Update(now);
-				kingdom.Update(now);
+				Update(now);
 			}
 			
 			private void processInput(Input input, long now)
 			{
-				
 				if(input.isExit())
 				{
 					Platform.exit();
@@ -81,16 +77,7 @@ public class Main extends Application {
 				{
 					
 				}
-			}
-				
-			private void Timer(long now)
-			{
-				if((now - lastUpdate >= timePerTurn))	// Nouveau tour
-				{
-					System.out.println("Nouveau tour");
-					lastUpdate = now;
-				}
-			}		
+			}	
 		};
 		
 		gameLoop.start();
@@ -114,6 +101,11 @@ public class Main extends Application {
 		kingdom.CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
 	}
 	
+	public void Update(long now)
+	{
+		fps.Update(now);
+		kingdom.Update(now);
+	}
 	
 	public static void main(String[] args) {
 		launch(args);

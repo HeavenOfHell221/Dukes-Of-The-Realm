@@ -24,6 +24,7 @@ public class FPS implements IUpdate{
 	
 	public void Update(long now)
 	{
+		FrameStart(now);
 		if((now - lastUpdate) >= cooldown)
 		{
 			lastUpdate = now;

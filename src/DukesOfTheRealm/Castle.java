@@ -48,7 +48,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
 		this.ostDeployment = null;
 		this.orientation = SetOrientation();
-		AddOst(this, 2);
+		//AddOst(this, 2);
 		Grid.AddCastle(this);
 		this.actor.AddCastle(this);
 	}
@@ -97,15 +97,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		AddFlorin(Settings.FLORIN_FACTOR * level);
 	}
 	
-	public void UpdateTurn()
-	{
+	public void Update(long now)
+	{	
 		UpdateFlorin();
 		UpdateProduction();
-	}
-	
-	public void Update(long now)
-	{		
-		UpdateOst(now);
+		if(this.ostDeployment != null) UpdateOst(now);
 	}
 	
 	public void AddFlorin(int amount)
