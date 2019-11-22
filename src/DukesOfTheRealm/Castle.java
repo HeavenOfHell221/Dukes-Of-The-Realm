@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpdateAtEachFrame {
+public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	private enum Orientation
 	{
@@ -27,12 +27,12 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		None;
 	}
 	
-	private int totalFlorin; // L'argent que contient le ch�teau
-	private int level; // Le niveau du ch�teau
-	private ArrayList<Soldier> reserveOfSoldiers; // La r�serve de soldat du ch�teau. Contient des Piker, des Onager et des Knight
-	private Actor actor; // Le propri�taire du ch�teau 
-	private IProductionUnit productionUnit; // L'unite de production. C'est une am�lioration ou un soldat en cours de production
-	private int productionTime; // Le temps restant a la production de l'unit� de production
+	private int totalFlorin; // L'argent que contient le chateau
+	private int level; // Le niveau du chateau
+	private ArrayList<Soldier> reserveOfSoldiers; // La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
+	private Actor actor; // Le proprietaire du chateau 
+	private IProductionUnit productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
+	private int productionTime; // Le temps restant a la production de l'unite de production
 	private Ost ostDeployment;
 	private Orientation orientation;
 	
@@ -50,6 +50,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		this.orientation = SetOrientation();
 		AddOst(this, 2);
 		Grid.AddCastle(this);
+		this.actor.AddCastle(this);
 	}
 	
 	private Orientation SetOrientation()
@@ -84,13 +85,13 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		return false;
 	}
 	
-	/* Augemente le ch�teau d'un niveau */
+	/* Augemente le chateau d'un niveau */
 	public void LevelUp()
 	{
 		this.level++;
 	}
 	
-	/* Met � jour l'argent total du ch�teau */
+	/* Met a jour l'argent total du chateau */
 	private void UpdateFlorin()
 	{
 		AddFlorin(Settings.FLORIN_FACTOR * level);
@@ -102,7 +103,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		UpdateProduction();
 	}
 	
-	public void UpdateAtEachFrame(long now)
+	public void Update(long now)
 	{		
 		UpdateOst(now);
 	}

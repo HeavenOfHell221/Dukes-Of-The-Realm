@@ -1,6 +1,8 @@
 package Utility;
 
-public class FPS {
+import DukesOfTheRealm.IUpdate;
+
+public class FPS implements IUpdate{
 
 	private final long cooldown;
 	private int counter;
@@ -20,7 +22,7 @@ public class FPS {
 		this.firstFrame = true;
 	}
 	
-	public void UpdateAtEachFrame(long now)
+	public void Update(long now)
 	{
 		if((now - lastUpdate) >= cooldown)
 		{

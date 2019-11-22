@@ -65,8 +65,8 @@ public class Main extends Application {
 				fps.FrameStart(now);
 				processInput(input, now);
 				Timer(now);
-				fps.UpdateAtEachFrame(now);
-				kingdom.UpdateAtEachFrame(now);
+				fps.Update(now);
+				kingdom.Update(now);
 			}
 			
 			private void processInput(Input input, long now)
@@ -88,7 +88,6 @@ public class Main extends Application {
 				if((now - lastUpdate >= timePerTurn))
 				{
 					lastUpdate = now;
-					kingdom.UpdateTurn();
 				}
 			}		
 		};
@@ -106,7 +105,7 @@ public class Main extends Application {
 		rand = new Random();
 		
 		/* FPS MANAGER */
-		fps = new FPS(true);
+		fps = new FPS(false);
 		
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);

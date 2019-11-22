@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-public class Kingdom extends Parent implements IUpdateTurn, IUpdateAtEachFrame{
+public class Kingdom extends Parent implements IUpdate{
 
 	
 	/*************************************************/
@@ -89,7 +89,7 @@ public class Kingdom extends Parent implements IUpdateTurn, IUpdateAtEachFrame{
 			
 			while(numberTest < 100)
 			{
-				if(CreateCastle(playfieldLayer, GetRandomGridCell(rand), 1, a))
+				if(CreateCastle(playfieldLayer, GetRandomGridCell(rand), rand.nextInt(6) + 1, a))
 				{
 					break;
 				}
@@ -139,15 +139,10 @@ public class Kingdom extends Parent implements IUpdateTurn, IUpdateAtEachFrame{
 			return castles.get(i);
 		return null;
 	}
-	
-	public void UpdateTurn()
+
+	public void Update(long now)
 	{
-		castles.forEach(castle -> castle.UpdateTurn());
-	}
-	
-	public void UpdateAtEachFrame(long now)
-	{
-		castles.forEach(castle -> castle.UpdateAtEachFrame(now));
+		castles.forEach(castle -> castle.Update(now));
 	}
 	
 	public Point2D GetRandomGridCell(Random rand)

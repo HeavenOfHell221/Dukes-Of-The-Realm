@@ -6,7 +6,7 @@ import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Ost extends Sprite implements IUpdateTurn {
+public class Ost extends Sprite {
 	
 	private Castle origin;
 	private Castle destination;
@@ -27,11 +27,6 @@ public class Ost extends Sprite implements IUpdateTurn {
 		this.speed = speed;
 		this.movement = (this.speed * (double) Settings.CELL_SIZE) / (double) Settings.TIME_FACTOR;
 		Start();
-	}
-	
-	public void UpdateTurn()
-	{	
-		newTurn = true;
 	}
 	
 	public void UpdateAtEachFrame(long now)
