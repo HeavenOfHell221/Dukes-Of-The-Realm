@@ -1,5 +1,6 @@
 package DukesOfTheRealm;
 
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -7,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.geometry.Point2D;
 
-public abstract class Sprite {
+public abstract class Sprite extends Parent{
 
     private Pane canvas;
     private Shape shape;
@@ -53,25 +54,24 @@ public abstract class Sprite {
         this.canvas.getChildren().remove(this.shape);
     }
     
-    protected void AddRectangle(double width, double height)
+    protected Rectangle AddRectangle(double width, double height)
 	{
-		Shape rectangle = new Rectangle(GetX(), GetY(), width, height);
-		AddToLayerShape(rectangle);
+		Rectangle rectangle = new Rectangle(GetX(), GetY(), width, height);
+		this.shape = rectangle;
 		this.width = width;
 		this.height = height;
-		
+		this.shape.toBack();
+		return rectangle;
 	}
 	
-	protected void AddCircle(double r)
+	protected Circle AddCircle(double r)
 	{
-		Shape circle = new Circle(GetY(), GetX(), r);
+		Circle circle = new Circle(GetY(), GetX(), r);
 		circle.setFill(Color.DARKGOLDENROD);
 		this.shape = circle;
-		canvas.getChildren().add(circle);
-		circle.toFront();
 		this.width = 2 * r;
 		this.height = 2 * r;
-		
+		return circle;
 	}
     
     public void UpdateUIShape()

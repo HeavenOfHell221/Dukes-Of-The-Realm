@@ -36,17 +36,17 @@ public class Ost extends Sprite implements IUpdateTurn {
 	
 	public void UpdateAtEachFrame(long now)
 	{
-		if(newTurn)
+		/*if(newTurn)
 		{
 			lastTurn = now;
 			newTurn = false;
 		}
 		
 		if(now - lastTurn < timeForMove)
-		{
+		{*/
 			Move();
 			UpdateUIShape();
-		}	
+		//}	
 	}
 	
 	private void Move()

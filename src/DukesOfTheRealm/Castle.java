@@ -12,6 +12,8 @@ import Soldiers.*;
 import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpdateAtEachFrame {
 	
@@ -30,7 +32,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 	private Duke duke; // Le propri�taire du ch�teau 
 	private IProductionUnit productionUnit; // L'unite de production. C'est une am�lioration ou un soldat en cours de production
 	private int productionTime; // Le temps restant a la production de l'unit� de production
-	private Ost ostsDeployment;
+	private Ost ostDeployment;
 	private Orientation orientation;
 	
 	/* Constructeur */
@@ -43,9 +45,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		this.productionUnit = null;
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
-		this.ostsDeployment = null;
+		this.ostDeployment = null;
 		this.orientation = SetOrientation();
-		this.ostsDeployment = new Ost(layer, x, y, this, this, 2);
+		AddOst(this, 2);
 		Grid.AddCastle(this);
 	}
 	
@@ -66,9 +68,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 	}
 	
 	/* Ajoute un rectangle au layer */
-	public void AddRectangle()
+	public Rectangle AddRectangle()
 	{
-		AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
+		return AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
@@ -194,6 +196,22 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 	
 	private void UpdateOst(long now)
 	{
-		this.ostsDeployment.UpdateAtEachFrame(now);
+		this.ostDeployment.UpdateAtEachFrame(now);
+	}
+	
+	public boolean AddOst(Castle destination, int speed)
+	{
+		if(this.ostDeployment == null)
+		{
+			this.ostDeployment = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
+			if(this.ostDeployment != null)
+			{
+				Circle c = this.ostDeployment.AddCircle(10);
+				this.getChildren().add(c);
+				c.toFront();
+			}
+			return true;
+		}
+		return false;
 	}
 }

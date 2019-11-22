@@ -2,9 +2,9 @@ package Duke;
 
 import DukesOfTheRealm.Castle;
 
-public class Baron extends Actor {
+public class DukeAI extends Duke{
 
-	public Baron(Castle castle)
+	public DukeAI(Castle castle)
 	{
 		super(castle);
 	}

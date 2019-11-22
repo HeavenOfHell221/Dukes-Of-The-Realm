@@ -9,10 +9,12 @@ import java.util.ArrayList;
 
 import Duke.*;
 import Utility.Settings;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
-public class Kingdom implements IUpdateTurn, IUpdateAtEachFrame{
+public class Kingdom extends Parent implements IUpdateTurn, IUpdateAtEachFrame{
 
 	
 	/*************************************************/
@@ -49,7 +51,9 @@ public class Kingdom implements IUpdateTurn, IUpdateAtEachFrame{
 		if(!IsCastleToClose(p.getX() , p.getY()))
 		{
 			Castle newCastle = new Castle(layer, p.getX(), p.getY(), level, duke);
-			newCastle.AddRectangle();
+			Rectangle r = newCastle.AddRectangle();
+			this.getChildren().add(r);
+			
 			return AddCastle(newCastle);
 		}
 		return false;

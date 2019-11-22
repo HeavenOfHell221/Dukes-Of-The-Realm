@@ -111,6 +111,7 @@ public class Main extends Application {
 		
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);
+		playfieldLayer.getChildren().add(kingdom);
 		
 		CreateCastle(10);
 	}
@@ -124,7 +125,7 @@ public class Main extends Application {
 		
 		while(numberValid != count && numberTest < count * 100)
 		{
-			if(kingdom.CreateCastle(playfieldLayer, kingdom.GetRandomGridCell(rand), 1, new Player("Player 1")))
+			if(kingdom.CreateCastle(playfieldLayer, kingdom.GetRandomGridCell(rand), 1, new Player(null)))
 			{
 				numberValid++;
 			}
