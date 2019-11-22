@@ -54,24 +54,27 @@ public abstract class Sprite extends Parent{
         this.canvas.getChildren().remove(this.shape);
     }
     
-    protected Rectangle AddRectangle(double width, double height)
+    protected void AddRectangle(double width, double height)
 	{
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), width, height);
 		this.shape = rectangle;
 		this.width = width;
 		this.height = height;
 		this.shape.toBack();
-		return rectangle;
 	}
 	
-	protected Circle AddCircle(double r)
+	protected void AddCircle(double r)
 	{
 		Circle circle = new Circle(GetY(), GetX(), r);
 		circle.setFill(Color.DARKGOLDENROD);
 		this.shape = circle;
 		this.width = 2 * r;
 		this.height = 2 * r;
-		return circle;
+	}
+	
+	public Shape GetShape()
+	{
+		return shape;
 	}
     
     public void UpdateUIShape()

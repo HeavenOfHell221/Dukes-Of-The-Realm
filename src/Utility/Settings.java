@@ -17,4 +17,7 @@ public class Settings {
 	
 	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = CELL_SIZE * 4;
 	public static final int NB_TYPES_OF_TROOPS = 3;
+	
+	public static final int AI_NUMBER = 3;
+	public static final int BARON_NUMBER = 6;
 }

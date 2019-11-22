@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
+import Duke.Actor;
 import Duke.Duke;
 import Soldiers.*;
 import Utility.Settings;
@@ -29,19 +30,19 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 	private int totalFlorin; // L'argent que contient le ch�teau
 	private int level; // Le niveau du ch�teau
 	private ArrayList<Soldier> reserveOfSoldiers; // La r�serve de soldat du ch�teau. Contient des Piker, des Onager et des Knight
-	private Duke duke; // Le propri�taire du ch�teau 
+	private Actor actor; // Le propri�taire du ch�teau 
 	private IProductionUnit productionUnit; // L'unite de production. C'est une am�lioration ou un soldat en cours de production
 	private int productionTime; // Le temps restant a la production de l'unit� de production
 	private Ost ostDeployment;
 	private Orientation orientation;
 	
 	/* Constructeur */
-	Castle(Pane layer, double x, double y, int level, Duke duke)
+	Castle(Pane layer, double x, double y, int level, Actor actor)
 	{
 		super(layer, x, y);
 		this.level = level;
 		this.totalFlorin = 0;
-		this.duke = duke;
+		this.actor = actor;
 		this.productionUnit = null;
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
@@ -68,9 +69,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 	}
 	
 	/* Ajoute un rectangle au layer */
-	public Rectangle AddRectangle()
+	public void AddRectangle()
 	{
-		return AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
+		AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
@@ -181,12 +182,12 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		return totalFlorin;
 	}
 
-	public Duke GetDuke() {
-		return duke;
+	public Actor GetActor() {
+		return actor;
 	}
 
 	public void SetDuke(Duke duke) {
-		this.duke = duke;
+		this.actor = duke;
 	}
 	
 	public int GetProductionTime()
@@ -206,9 +207,8 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 			this.ostDeployment = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
 			if(this.ostDeployment != null)
 			{
-				Circle c = this.ostDeployment.AddCircle(10);
-				this.getChildren().add(c);
-				c.toFront();
+				this.ostDeployment.AddCircle(10);
+				this.getLayer().getChildren().add(this.ostDeployment.GetShape());
 			}
 			return true;
 		}

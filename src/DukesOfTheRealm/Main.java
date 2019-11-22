@@ -79,8 +79,7 @@ public class Main extends Application {
 				}
 				if(input.isSpace())
 				{
-					//kingdom.DeleteAllCastle();
-					//CreateCastle(10);
+					
 				}
 			}
 				
@@ -112,26 +111,9 @@ public class Main extends Application {
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);
 		playfieldLayer.getChildren().add(kingdom);
-		
-		CreateCastle(10);
+		kingdom.CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
 	}
 	
-	
-	
-	private void CreateCastle(int count)
-	{
-		int numberValid = 0;
-		int numberTest = 0;
-		
-		while(numberValid != count && numberTest < count * 100)
-		{
-			if(kingdom.CreateCastle(playfieldLayer, kingdom.GetRandomGridCell(rand), 1, new Player(null)))
-			{
-				numberValid++;
-			}
-			numberTest++;
-		}
-	}
 	
 	public static void main(String[] args) {
 		launch(args);

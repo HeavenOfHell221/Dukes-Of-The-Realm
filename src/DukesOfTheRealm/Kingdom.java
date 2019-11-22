@@ -46,17 +46,56 @@ public class Kingdom extends Parent implements IUpdateTurn, IUpdateAtEachFrame{
 	/*************************************************/
 
 	
-	public boolean CreateCastle(Pane layer, Point2D p, int level, Duke duke)
+	public boolean CreateCastle(Pane layer, Point2D p, int level, Actor actor)
 	{
 		if(!IsCastleToClose(p.getX() , p.getY()))
 		{
-			Castle newCastle = new Castle(layer, p.getX(), p.getY(), level, duke);
-			Rectangle r = newCastle.AddRectangle();
-			this.getChildren().add(r);
+			Castle newCastle = new Castle(layer, p.getX(), p.getY(), level, actor);
+			newCastle.AddRectangle();
+			this.getChildren().add(newCastle.GetShape());
 			
 			return AddCastle(newCastle);
 		}
 		return false;
+	}
+	
+	public void CreateWorld(int AINumber, int baronNumber)
+	{
+		Random rand = new Random();
+		
+		for(int i = 0; i < AINumber; i++)
+		{
+			Actor a = new DukeAI();
+			actors.add(a);
+			
+			int numberTest = 0;
+			
+			while(numberTest < 100)
+			{
+				if(CreateCastle(playfieldLayer, GetRandomGridCell(rand), 1, a))
+				{
+					break;
+				}
+				numberTest++;
+			}
+		}
+		
+		for(int i = 0; i < baronNumber; i++)
+		{
+			Actor a = new Baron();
+			actors.add(a);
+			
+			int numberTest = 0;
+			
+			while(numberTest < 100)
+			{
+				if(CreateCastle(playfieldLayer, GetRandomGridCell(rand), 1, a))
+				{
+					break;
+				}
+				numberTest++;
+			}
+		}
 	}
 	
 	private boolean AddCastle(Castle castle)
@@ -87,21 +126,6 @@ public class Kingdom extends Parent implements IUpdateTurn, IUpdateAtEachFrame{
 	public boolean RemoveCastle(Castle castle)
 	{
 		return castles.remove(castle);
-	}
-	
-	public ArrayList<Castle> GetAllCastlesOfThisDuke(Duke duke)
-	{
-		ArrayList<Castle> list = new ArrayList<Castle>();
-		
-		castles.forEach(
-			castle -> 
-			{ 
-				if(castle.GetDuke().equals(duke)) 
-					list.add(castle); 
-			} 
-		);
-		
-		return list;
 	}
 	
 	public ArrayList<Castle> GetAllCastles()

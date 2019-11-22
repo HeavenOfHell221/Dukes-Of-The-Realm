@@ -4,8 +4,8 @@ import DukesOfTheRealm.Castle;
 
 public class DukeAI extends Duke{
 
-	public DukeAI(Castle castle)
+	public DukeAI()
 	{
-		super(castle);
+
 	}
 }

@@ -4,8 +4,8 @@ import DukesOfTheRealm.Castle;
 
 public class Player extends Duke {
 
-	public Player(Castle castle)
+	public Player()
 	{
-		super(castle);
+
 	}
 }
