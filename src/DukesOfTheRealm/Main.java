@@ -41,7 +41,7 @@ public class Main extends Application {
 	
 	private long lastUpdate = 0;
 	private long timeScale = Settings.GAME_FREQUENCY; // => 1 second
-	private long timePerTurn = timeScale * Settings.TIME_FACTOR;
+	private long timePerTurn = timeScale * Settings.TURN_DURATION;
 
 	public void start(Stage primaryStage) 
 	{
@@ -85,8 +85,9 @@ public class Main extends Application {
 				
 			private void Timer(long now)
 			{
-				if((now - lastUpdate >= timePerTurn))
+				if((now - lastUpdate >= timePerTurn))	// Nouveau tour
 				{
+					System.out.println("Nouveau tour");
 					lastUpdate = now;
 				}
 			}		

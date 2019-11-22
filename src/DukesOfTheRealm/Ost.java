@@ -14,34 +14,46 @@ public class Ost extends Sprite {
 	private double movement;
 	private boolean isArrived;
 	private boolean newTurn;
-	private long timeForMove = Settings.GAME_FREQUENCY;
-	private long lastTurn;
+	private boolean canMove = false;;
+	private long timeForMove = Settings.GAME_FREQUENCY * 2;
+	private long lastTurn = 0;
 
 	
 	public Ost(Pane layer, double x, double y, Castle origin, Castle destination, int speed)
 	{
 		super(layer, x + (Settings.CELL_SIZE-2)/4 +1, y + (Settings.CELL_SIZE-2)/4 +1);
-		this.timeForMove *= 2;
 		this.origin = origin;
 		this.destination = destination;
 		this.speed = speed;
-		this.movement = (this.speed * (double) Settings.CELL_SIZE) / (double) Settings.TIME_FACTOR;
+		this.movement = (this.speed * (double) Settings.CELL_SIZE) / (double) this.timeForMove; //Settings.TIME_FACTOR;
 		Start();
 	}
 	
 	public void UpdateAtEachFrame(long now)
 	{
-		/*if(newTurn)
+//		if(newTurn)
+//		{
+//			lastTurn = now;
+//			newTurn = false;
+//		}
+//		
+//		if(now - lastTurn < timeForMove)
+//		{
+//			Move();
+//			UpdateUIShape();
+//		}
+		
+		if (now - lastTurn >= Settings.TURN_DURATION)
 		{
+			canMove = true;
 			lastTurn = now;
-			newTurn = false;
 		}
 		
-		if(now - lastTurn < timeForMove)
-		{*/
+		if (canMove)
+		{
 			Move();
 			UpdateUIShape();
-		//}	
+		}
 	}
 	
 	private void Move()
