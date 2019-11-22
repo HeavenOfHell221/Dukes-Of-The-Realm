@@ -47,7 +47,7 @@ public abstract class Sprite extends Parent{
         this.canvas.getChildren().remove(this.shape);
     }
     
-    protected void AddRectangle(double width, double height)
+    protected void AddCastleRepresentation(double width, double height)
 	{
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), width, height);
 		this.shape = rectangle;
@@ -56,13 +56,38 @@ public abstract class Sprite extends Parent{
 		this.shape.toBack();
 	}
 	
-	protected void AddCircle(double r)
+	protected void AddPikerRepresentation()
 	{
-		Circle circle = new Circle(GetY(), GetX(), r);
+		double r = Settings.PIKER_REPRESENTATION_RADIUS;
+		Circle circle = new Circle(GetX(), GetY(), r);
 		circle.setFill(Color.DARKGOLDENROD);
+		circle.toFront();
 		this.shape = circle;
 		this.width = 2 * r;
 		this.height = 2 * r;
+	}
+	
+	protected void AddKnightRepresentation()
+	{
+		double s = Settings.KNIGHT_REPRESENTATION_SIZE;
+		Rectangle rectangle = new Rectangle(GetX(), GetY(), s, s);
+		rectangle.setFill(Color.DARKGOLDENROD);
+		rectangle.toFront();
+		this.shape = rectangle;
+		this.width = s;
+		this.height = s;
+	}
+	
+	protected void AddOnagerRepresentation()
+	{
+		double w = Settings.ONAGER_REPRESENTATION_WIDTH;
+		double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
+		Rectangle rectangle = new Rectangle(GetX(), GetY(), w, h);
+		rectangle.setFill(Color.DARKGOLDENROD);
+		rectangle.toFront();
+		this.shape = rectangle;
+		this.width = w;
+		this.height = h;
 	}
 	
 	public Shape GetShape()

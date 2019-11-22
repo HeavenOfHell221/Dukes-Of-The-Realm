@@ -7,10 +7,15 @@ import javafx.scene.shape.Rectangle;
 
 public class Piker extends Soldier {
 
-	public Piker()
+	public Piker(Pane layer, double x, double y)
 	{
-		super(100, 5, 2, 1, 1);
+		super(layer, x, y, 100, 5, 2, 1, 1);
 		this.type = SoldierEnum.Piker;
 	}
 
+	public void Start()
+	{
+		AddPikerRepresentation();
+		canMove = true;
+	}
 }
