@@ -219,7 +219,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		{
 			this.firstSoldier = new Piker(this.getLayer(), GetX(), GetY());
 			this.firstSoldier.Start();
-			this.getLayer().getChildren().add(this.firstSoldier.GetShape());
 			return true;
 		}
 		return false;

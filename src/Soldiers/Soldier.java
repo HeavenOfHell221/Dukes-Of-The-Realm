@@ -23,7 +23,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 	
 	public Soldier(Pane layer, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
 	{
-		super(layer, x + (Settings.CELL_SIZE-1)/2 +1, y + (Settings.CELL_SIZE-1)/2 +1);
+		super(layer, x + (Settings.CELL_SIZE-1)/2 +1 + Settings.CELL_SIZE, y + (Settings.CELL_SIZE-1)/2 +1 + Settings.CELL_SIZE);
 		this.productionCost = productionCost;
 		this.productionTime = productionTime;
 		this.health = health;
@@ -86,5 +86,24 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 		}
 	}
 	
-	public abstract void Start();
+	public void Start()
+	{
+		switch (this.type)
+		{
+		case Piker:
+			AddPikerRepresentation();
+			break;
+		case Knight:
+			AddKnightRepresentation();
+			break;
+		case Onager:
+			AddOnagerRepresentation();
+			break;
+		default:
+			break;
+		}
+		
+		canMove = true;
+		this.getLayer().getChildren().add(this.GetShape());
+	}
 }

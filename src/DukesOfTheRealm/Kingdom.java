@@ -65,7 +65,7 @@ public class Kingdom extends Parent implements IUpdate{
 	{
 		Random rand = new Random();
 		
-		/*for(int i = 0; i < AINumber; i++)
+		for(int i = 0; i < AINumber; i++)
 		{
 			Actor a = new DukeAI();
 			actors.add(a);
@@ -97,11 +97,7 @@ public class Kingdom extends Parent implements IUpdate{
 				}
 				numberTest++;
 			}
-		}*/
-		
-		Actor a = new DukeAI();
-		actors.add(a);
-		CreateCastle(playfieldLayer, Grid.GetCoordinatesWithCell(0, 0), rand.nextInt(6) + 1, a);
+		}
 	}
 	
 	private boolean AddCastle(Castle castle)
