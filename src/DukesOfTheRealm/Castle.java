@@ -34,6 +34,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private IProductionUnit productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
 	private int productionTime; // Le temps restant a la production de l'unite de production
 	private Ost ostDeployment;
+	private Soldier firstSoldier = null;	// ***** PROVISOIRE *****
 	private Orientation orientation;
 	
 	/* Constructeur */
@@ -72,7 +73,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/* Ajoute un rectangle au layer */
 	public void AddRectangle()
 	{
-		AddRectangle(Settings.CELL_SIZE, Settings.CELL_SIZE);
+		AddCastleRepresentation(Settings.CELL_SIZE, Settings.CELL_SIZE);
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
@@ -159,11 +160,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 				if(this.productionUnit.getClass() == Castle.class)
 					LevelUp();
 				else if(this.productionUnit.getClass() == Piker.class)
-					this.reserveOfSoldiers.add(new Piker());
+					this.reserveOfSoldiers.add(new Piker(this.getLayer(), GetX(), GetY()));
 				else if(this.productionUnit.getClass() == Onager.class)
-					this.reserveOfSoldiers.add(new Onager());
+					this.reserveOfSoldiers.add(new Onager(this.getLayer(), GetX(), GetY()));
 				else if(this.productionUnit.getClass() == Knight.class)
-					this.reserveOfSoldiers.add(new Knight());
+					this.reserveOfSoldiers.add(new Knight(this.getLayer(), GetX(), GetY()));
 				
 				this.productionUnit = null;
 			}
@@ -197,16 +198,28 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.ostDeployment.UpdateAtEachFrame(now);
 	}
 	
-	public boolean AddOst(Castle destination, int speed)
+//	public boolean AddOst(Castle destination, int speed)
+//	{
+//		if(this.ostDeployment == null)
+//		{
+//			this.ostDeployment = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
+//			if(this.ostDeployment != null)
+//			{
+//				this.ostDeployment.AddPikerRepresentation(10);
+//				this.getLayer().getChildren().add(this.ostDeployment.GetShape());
+//			}
+//			return true;
+//		}
+//		return false;
+//	}
+	
+	public boolean AddFirstSoldier()
 	{
-		if(this.ostDeployment == null)
+		if (this.firstSoldier == null)
 		{
-			this.ostDeployment = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
-			if(this.ostDeployment != null)
-			{
-				this.ostDeployment.AddCircle(10);
-				this.getLayer().getChildren().add(this.ostDeployment.GetShape());
-			}
+			this.firstSoldier = new Piker(this.getLayer(), GetX(), GetY());
+			this.firstSoldier.Start();
+			this.getLayer().getChildren().add(this.firstSoldier.GetShape());
 			return true;
 		}
 		return false;

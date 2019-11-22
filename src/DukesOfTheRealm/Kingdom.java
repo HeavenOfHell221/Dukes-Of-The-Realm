@@ -53,6 +53,7 @@ public class Kingdom extends Parent implements IUpdate{
 			Castle newCastle = new Castle(layer, p.getX(), p.getY(), level, actor);
 			newCastle.AddRectangle();
 			this.getChildren().add(newCastle.GetShape());
+			newCastle.AddFirstSoldier(); // ***** PROVISOIRE *****
 			
 			return AddCastle(newCastle);
 		}
