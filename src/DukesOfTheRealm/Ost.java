@@ -1,6 +1,8 @@
 package DukesOfTheRealm;
 
 import Duke.Duke;
+import Utility.FPS;
+import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 

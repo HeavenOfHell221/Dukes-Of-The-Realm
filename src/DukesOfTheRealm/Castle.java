@@ -9,6 +9,7 @@ import java.util.Random;
 
 import Duke.Duke;
 import Soldiers.*;
+import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
@@ -45,6 +46,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		this.ostsDeployment = null;
 		this.orientation = SetOrientation();
 		this.ostsDeployment = new Ost(layer, x, y, this, this, 2);
+		Grid.AddCastle(this);
 	}
 	
 	private Orientation SetOrientation()
@@ -126,7 +128,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 	{
 		if(this.productionUnit != null)
 		{	
-			if(RemoveFlorin(newProduction.GetCost()))
+			if(RemoveFlorin(newProduction.GetProductionCost()))
 			{
 				this.productionUnit = newProduction;
 				this.productionTime = GetProductionTime(newProduction);
@@ -134,7 +136,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		}
 	}
 	
-	public void InflictDamage(SoldiersType type)
+	public void InflictDamage(SoldierEnum type)
 	{		
 		this.reserveOfSoldiers.stream()
 			.filter(soldier -> soldier.GetType() == type)
@@ -142,7 +144,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 			.forEach(soldier -> soldier.InflictDamage());
 	}
 	
-	public int GetCost()
+	public int GetProductionCost()
 	{
 		return Settings.LEVEL_UP_COST_FACTOR * level;
 	}
@@ -170,7 +172,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 
 	private int GetProductionTime(IProductionUnit production)
 	{
-		return production.GetTime();
+		return production.GetProductionTime();
 	}
 
 	public int GetTotalFlorin() {
@@ -185,7 +187,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdateTurn, IUpd
 		this.duke = duke;
 	}
 	
-	public int GetTime()
+	public int GetProductionTime()
 	{
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
 	}

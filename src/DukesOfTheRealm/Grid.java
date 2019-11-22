@@ -3,11 +3,13 @@ package DukesOfTheRealm;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Utility.Settings;
 import javafx.geometry.Point2D;
 
 public class Grid {
 	
-	private ArrayList<ArrayList<ArrayList<Sprite>>> grid;
+	private Point2D[][] grid;
+	private HashMap<Point2D, Castle> castleHashMap;
 	
 	private final int nbCellX;
 	private final int nbCellY;
@@ -17,23 +19,34 @@ public class Grid {
 	
 	private static Grid instance = new Grid(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 	
+	
 	private Grid(int sizeX, int sizeY)
 	{
 		this.cellWidth = Settings.CELL_SIZE;
 		this.cellHeight = Settings.CELL_SIZE;
 		this.nbCellX = (int) (sizeX / cellWidth);
 		this.nbCellY = (int) (sizeY / cellHeight);
-
-		this.grid = new ArrayList<ArrayList<ArrayList<Sprite>>>();
+		this.grid = new Point2D[nbCellX][nbCellY];
 		
 		for(int x = 0; x < nbCellX; x++)
 		{
-			grid.add(new ArrayList<ArrayList<Sprite>>());
 			for(int y = 0; y < nbCellY; y++)
 			{
-				grid.get(x).add(new ArrayList<Sprite>());
+				grid[x][y] = new Point2D(x, y);
 			}
 		}
+		
+		this.castleHashMap = new HashMap<Point2D, Castle>();
+	}
+	
+	public static void AddCastle(Castle castle)
+	{
+		instance.castleHashMap.put(instance.grid[castle.GetCellX()][castle.GetCellY()], castle);
+	}
+	
+	public static Castle GetCastleAtThisCellIfExist(int cellX, int cellY)
+	{
+		return instance.castleHashMap.get(instance.grid[cellX][cellY]);
 	}
 	
 	public static Point2D GetCoordinatesWithCell(int x, int y)
@@ -64,90 +77,5 @@ public class Grid {
 	public static double GetCaseHeight() 
 	{
 		return instance.cellHeight;
-	}
-	
-	public static boolean AddSpriteInGrid(Sprite sprite, int cellX, int cellY)
-	{
-		if(cellX >= instance.nbCellX || cellY >= instance.nbCellY || cellX < 0 || cellY < 0)
-			return false;
-		
-		if(!instance.grid.get(cellX).get(cellY).add(sprite))
-			return false;
-		
-		sprite.SetCellX(cellX);
-		sprite.SetCellY(cellY);
-		
-		return true;
-	}
-	
-	public static boolean RemoveSpriteInGrid(Sprite sprite, int cellX, int cellY)
-	{
-		if(cellX >= instance.nbCellX || cellY >= instance.nbCellY || cellX < 0 || cellY < 0)
-			return false;
-		
-		if(!instance.grid.get(cellX).get(cellY).remove(sprite))
-			return false;
-		
-		sprite.SetCellX(-1);
-		sprite.SetCellY(-1);
-		
-		return true;
-	}
-	
-	public static ArrayList<Sprite> GetSprites(int cellX, int cellY)
-	{
-		if(cellX >= instance.nbCellX || cellY >= instance.nbCellY || cellX < 0 || cellY < 0) // Probleme avec les indices des cells
-			return null;
-			
-		return instance.grid.get(cellX).get(cellY);
-	}
-	
-	public static ArrayList<Sprite> GetNextSpritesX(int cellX, int cellY)
-	{
-		return GetSprites(cellX + 1, cellY);
-	}
-	
-	public static ArrayList<Sprite> GetNextSpritesY(int cellX, int cellY)
-	{
-		return GetSprites(cellX, cellY + 1);
-	}
-	
-	public static ArrayList<Sprite> GetPreviousSpritesX(int cellX, int cellY)
-	{
-		return GetSprites(cellX - 1, cellY);
-	}
-	
-	public static ArrayList<Sprite> GetPreviousSpritesY(int cellX, int cellY)
-	{
-		return GetSprites(cellX, cellY - 1);
-	}
-	
-	public static boolean MoveSpriteInGrid(Sprite sprite, Direction direction, Sprite destination)
-	{
-		int oldCellX = sprite.GetCellX();
-		int oldCellY = sprite.GetCellY();
-		int newCellX;
-		int newCellY;
-		
-		switch(direction)
-		{
-			case Up: newCellX = oldCellX; newCellY = oldCellY - 1; break;
-			case Down: newCellX = oldCellX; newCellY = oldCellY + 1; break;
-			case Left: newCellX = oldCellX - 1; newCellY = oldCellY; break;
-			case Right: newCellX = oldCellX + 1; newCellY = oldCellY; break;
-			default: return false;
-		}
-		
-		ArrayList<Sprite> spritesInNewCell = GetSprites(newCellX, newCellY);
-		int size = spritesInNewCell.size();
-		
-		if(size > 0)
-		{
-			for(int i = 0; i < size; i++)
-				if(spritesInNewCell.get(i).getClass() == Castle.class && spritesInNewCell.get(i) != destination)
-					return false;
-		}
-		
-		return RemoveSpriteInGrid(sprite, oldCellX, oldCellY) && AddSpriteInGrid(sprite, newCellX, newCellY);
 	}
 }

@@ -1,6 +1,6 @@
 package Soldiers;
 
-public enum SoldiersType
+public enum SoldierEnum
 {
 	Piker,
 	Knight,

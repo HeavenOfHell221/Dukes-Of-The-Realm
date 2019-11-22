@@ -1,4 +1,4 @@
-package DukesOfTheRealm;
+package Utility;
 
 import java.util.BitSet;
 import javafx.event.EventHandler;

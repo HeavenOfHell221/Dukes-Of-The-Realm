@@ -10,6 +10,6 @@ public class Knight extends Soldier {
 	public Knight() 
 	{
 		super(500, 20, 6, 3, 5);
-		this.type = SoldiersType.Knight;
+		this.type = SoldierEnum.Knight;
 	}
 }

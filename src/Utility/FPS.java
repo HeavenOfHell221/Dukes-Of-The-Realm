@@ -1,4 +1,4 @@
-package DukesOfTheRealm;
+package Utility;
 
 public class FPS {
 
@@ -10,7 +10,7 @@ public class FPS {
 	public static double deltaTime;
 	private boolean firstFrame;
 	
-	FPS(boolean print)
+	public FPS(boolean print)
 	{
 		this.cooldown = Settings.GAME_FREQUENCY;
 		this.lastUpdate = 0;

@@ -1,6 +1,6 @@
 package DukesOfTheRealm;
 
-public enum Direction {
+public enum DirectionEnum {
 
 	Up,
 	Down,

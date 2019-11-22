@@ -1,4 +1,4 @@
-package DukesOfTheRealm;
+package Utility;
 
 public class Settings {
 	public static final int SCENE_WIDTH = 1600;

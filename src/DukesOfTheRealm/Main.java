@@ -21,6 +21,9 @@ import javafx.scene.text.Text;
 import javafx.scene.shape.*;
 
 import Soldiers.*;
+import Utility.FPS;
+import Utility.Input;
+import Utility.Settings;
 import javafx.geometry.Point2D;
 
 public class Main extends Application {

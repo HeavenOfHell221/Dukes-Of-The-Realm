@@ -10,6 +10,6 @@ public class Onager extends Soldier {
 	public Onager()
 	{
 		super(1000, 50, 1, 5, 10);
-		this.type = SoldiersType.Onager;
+		this.type = SoldierEnum.Onager;
 	}
 }

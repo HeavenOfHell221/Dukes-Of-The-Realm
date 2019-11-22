@@ -12,10 +12,8 @@ public abstract class Sprite {
     private Pane canvas;
     private Shape shape;
 	
-	private double x;
-    private double y;
-    private int cellX;
-    private int cellY;
+	private Point2D coordinate;
+    private Point2D cell;
 
     private double width;
     private double height;
@@ -24,26 +22,23 @@ public abstract class Sprite {
     public Sprite (Pane canvas, double x, double y)
     {
     	this.canvas = canvas;
-    	this.x = x;
-    	this.y = y;
-    	Point2D p = Grid.GetCellWithCoordinates(x, y);
-    	this.cellX = (int) p.getX();
-    	this.cellY = (int) p.getX();
+    	//this.x = x;
+    	//this.y = y;
+    	this.coordinate = new Point2D(x, y);
+    	this.cell = Grid.GetCellWithCoordinates(x, y);
+    	//this.cellX = (int) p.getX();
+    	//this.cellY = (int) p.getX();
     }
     
-    public Sprite (Pane canvas)
+    public Sprite (Pane canvas, Point2D point2D, double speed)
     {
     	this.canvas = canvas;
-    }
-    
-    public Sprite (Pane canvas, Point2D p, double speed)
-    {
-    	this.canvas = canvas;
-    	this.x = p.getX();
-    	this.y = p.getY();
-    	Point2D p2 = Grid.GetCellWithCoordinates(p.getX(), p.getY());
-    	this.cellX = (int) p2.getX();
-    	this.cellY = (int) p2.getX();
+    	//this.x = p.getX();
+    	//this.y = p.getY();
+    	this.coordinate = new Point2D(point2D.getX(), point2D.getY());
+    	this.cell = Grid.GetCellWithCoordinates(this.coordinate.getX(), this.coordinate.getY());
+    	//this.cellX = (int) p2.getX();
+    	//this.cellY = (int) p2.getX();
     }
 
     private void AddToLayerShape(Shape shape)
@@ -60,7 +55,7 @@ public abstract class Sprite {
     
     protected void AddRectangle(double width, double height)
 	{
-		Shape rectangle = new Rectangle(this.x, this.y, width, height);
+		Shape rectangle = new Rectangle(GetX(), GetY(), width, height);
 		AddToLayerShape(rectangle);
 		this.width = width;
 		this.height = height;
@@ -69,7 +64,7 @@ public abstract class Sprite {
 	
 	protected void AddCircle(double r)
 	{
-		Shape circle = new Circle(this.x, this.y, r);
+		Shape circle = new Circle(GetY(), GetX(), r);
 		circle.setFill(Color.DARKGOLDENROD);
 		this.shape = circle;
 		canvas.getChildren().add(circle);
@@ -81,16 +76,16 @@ public abstract class Sprite {
     
     public void UpdateUIShape()
     {
-    	shape.relocate(x, y);
+    	shape.relocate(coordinate.getX(), coordinate.getY());
     }
     
-    public double GetX() 
+    public int GetX() 
     {
-        return x;
+        return (int) coordinate.getX();
     }
-    public double GetY() 
+    public int GetY() 
     {
-        return y;
+        return (int) coordinate.getY();
     }
     
     public double getWidth() 
@@ -101,14 +96,7 @@ public abstract class Sprite {
     {
         return height;
     }
-    public double getCenterX() 
-    {
-        return x + width * 0.5;
-    }
-    public double getCenterY() 
-    {
-        return y + height * 0.5;
-    }
+
     public Pane getLayer() 
     {
         return canvas;
@@ -116,40 +104,64 @@ public abstract class Sprite {
     
     public void SetX(int x) 
     {
-        this.x = x;
+    	double oldX = coordinate.getX();
+    	coordinate.add(x - oldX, 0);
     }
     public void SetY(int y) 
     {
-        this.y = y;
+    	double oldY = coordinate.getY();
+    	coordinate.add(0, y - oldY);
     }
     
     public void SetCellX(int cellX)
     {
-    	this.cellX = cellX;
+    	double oldCellX = cell.getX();
+    	cell.add(cellX - oldCellX, 0);
     }
     
     public void SetCellY(int cellY)
     {
-    	this.cellY = cellY;
+    	double oldCellY = cell.getY();
+    	cell.add(0, cellY - oldCellY);
     }
     
     public void AddDx(double dx)
     {
-    	this.x += dx;
+    	coordinate.add(dx, 0);
     }
     
     public void AddDy(double dy)
     {
-    	this.y += dy;
+    	coordinate.add(0, dy);
     }
     
     public int GetCellX()
     {
-    	return cellX;
+    	return (int) this.cell.getX();
     }
     
     public int GetCellY()
     {
-    	return cellY;
+    	return (int) this.cell.getY();
+    }
+    
+    public Point2D GetCell()
+    {
+    	return this.cell;
+    }
+    
+    public Point2D GetCoordinate()
+    {
+    	return this.coordinate;
+    }
+    
+    public void SetCell(Point2D cell)
+    {
+    	this.cell = cell;
+    }
+    
+    public void SetCoordinate(Point2D coordinate)
+    {
+    	this.coordinate = coordinate;
     }
 }

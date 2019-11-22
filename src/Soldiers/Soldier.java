@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 
 public abstract class Soldier implements IProductionUnit {
-	protected SoldiersType type;
+	protected SoldierEnum type;
 	protected int productionCost;
 	protected int productionTime;
 	protected int health;
@@ -29,17 +29,17 @@ public abstract class Soldier implements IProductionUnit {
 		health--;
 	}
 
-	public int GetTime()
+	public int GetProductionTime()
 	{
 		return productionTime;
 	}
 	
-	public int GetCost()
+	public int GetProductionCost()
 	{
 		return productionCost;
 	}
 
-	public SoldiersType GetType()
+	public SoldierEnum GetType()
 	{
 		return type;
 	}

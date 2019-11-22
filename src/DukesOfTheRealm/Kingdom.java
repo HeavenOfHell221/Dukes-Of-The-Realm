@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 import Duke.*;
+import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
