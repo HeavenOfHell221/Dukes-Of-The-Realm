@@ -40,8 +40,19 @@ public class Grid {
 	}
 	
 	public static void AddCastle(Castle castle)
-	{
+	{	
 		instance.castleHashMap.put(instance.grid[castle.GetCellX()][castle.GetCellY()], castle);
+		
+		instance.castleHashMap.put(instance.grid[castle.GetCellX()][castle.GetCellY() - 1], castle);
+		instance.castleHashMap.put(instance.grid[castle.GetCellX()][castle.GetCellY() + 1], castle);
+		instance.castleHashMap.put(instance.grid[castle.GetCellX() - 1][castle.GetCellY()], castle);
+		instance.castleHashMap.put(instance.grid[castle.GetCellX() + 1][castle.GetCellY()], castle);
+		
+		instance.castleHashMap.put(instance.grid[castle.GetCellX() - 1][castle.GetCellY() + 1], castle);
+		instance.castleHashMap.put(instance.grid[castle.GetCellX() - 1][castle.GetCellY() - 1], castle);
+		
+		instance.castleHashMap.put(instance.grid[castle.GetCellX() + 1][castle.GetCellY() + 1], castle);
+		instance.castleHashMap.put(instance.grid[castle.GetCellX() + 1][castle.GetCellY() - 1], castle);
 	}
 	
 	public static Castle GetCastleAtThisCellIfExist(int cellX, int cellY)
@@ -51,7 +62,7 @@ public class Grid {
 	
 	public static Point2D GetCoordinatesWithCell(int x, int y)
 	{
-		return new Point2D(x * instance.cellWidth, y * instance.cellHeight);
+		return new Point2D(x * instance.cellWidth + Settings.CELL_SIZE, y * instance.cellHeight + Settings.CELL_SIZE);
 	}
 	
 	public static Point2D GetCellWithCoordinates(double x, double y)

@@ -15,9 +15,9 @@ public class Settings {
 	public static final int GAME_FREQUENCY = 1000 * 1000 * 1000; // 1 second
 	public static final int TURN_DURATION = 4;
 	
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = CELL_SIZE * 4;
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = CELL_SIZE * 3 * 6;
 	public static final int NB_TYPES_OF_TROOPS = 3;
 	
-	public static final int AI_NUMBER = 3;
-	public static final int BARON_NUMBER = 6;
+	public static final int AI_NUMBER = 6;
+	public static final int BARON_NUMBER = 12;
 }

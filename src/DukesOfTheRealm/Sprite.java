@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import Utility.Settings;
 import javafx.geometry.Point2D;
 
 public abstract class Sprite extends Parent{
@@ -23,23 +24,15 @@ public abstract class Sprite extends Parent{
     public Sprite (Pane canvas, double x, double y)
     {
     	this.canvas = canvas;
-    	//this.x = x;
-    	//this.y = y;
     	this.coordinate = new Point2D(x, y);
     	this.cell = Grid.GetCellWithCoordinates(x, y);
-    	//this.cellX = (int) p.getX();
-    	//this.cellY = (int) p.getX();
     }
     
     public Sprite (Pane canvas, Point2D point2D, double speed)
     {
     	this.canvas = canvas;
-    	//this.x = p.getX();
-    	//this.y = p.getY();
     	this.coordinate = new Point2D(point2D.getX(), point2D.getY());
     	this.cell = Grid.GetCellWithCoordinates(this.coordinate.getX(), this.coordinate.getY());
-    	//this.cellX = (int) p2.getX();
-    	//this.cellY = (int) p2.getX();
     }
 
     private void AddToLayerShape(Shape shape)
@@ -107,25 +100,25 @@ public abstract class Sprite extends Parent{
     
     public void SetX(int x) 
     {
-    	double oldX = coordinate.getX();
-    	coordinate.add(x - oldX, 0);
+    	Point2D p = new Point2D(x, this.coordinate.getY());
+    	this.coordinate = p;
     }
     public void SetY(int y) 
     {
-    	double oldY = coordinate.getY();
-    	coordinate.add(0, y - oldY);
+    	Point2D p = new Point2D(this.coordinate.getX(), y);
+    	this.coordinate = p;
     }
     
     public void SetCellX(int cellX)
     {
-    	double oldCellX = cell.getX();
-    	cell.add(cellX - oldCellX, 0);
+    	Point2D p = new Point2D(cellX, this.cell.getY());
+    	this.cell = p;
     }
     
     public void SetCellY(int cellY)
     {
-    	double oldCellY = cell.getY();
-    	cell.add(0, cellY - oldCellY);
+    	Point2D p = new Point2D(this.cell.getX(), cellY);
+    	this.cell = p;
     }
     
     public void AddDx(double dx)

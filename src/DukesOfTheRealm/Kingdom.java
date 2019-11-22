@@ -46,11 +46,12 @@ public class Kingdom extends Parent implements IUpdate{
 	/*************************************************/
 
 	
-	public boolean CreateCastle(Pane layer, Point2D p, int level, Actor actor)
+	public boolean CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
 	{
-		if(!IsCastleToClose(p.getX() , p.getY()))
+		System.out.println(coordinate);
+		if(!IsCastleToClose(coordinate.getX(), coordinate.getY()))
 		{
-			Castle newCastle = new Castle(layer, p.getX(), p.getY(), level, actor);
+			Castle newCastle = new Castle(layer, coordinate.getX(), coordinate.getY(), level, actor);
 			newCastle.AddRectangle();
 			this.getChildren().add(newCastle.GetShape());
 			
@@ -63,7 +64,7 @@ public class Kingdom extends Parent implements IUpdate{
 	{
 		Random rand = new Random();
 		
-		for(int i = 0; i < AINumber; i++)
+		/*for(int i = 0; i < AINumber; i++)
 		{
 			Actor a = new DukeAI();
 			actors.add(a);
@@ -95,7 +96,11 @@ public class Kingdom extends Parent implements IUpdate{
 				}
 				numberTest++;
 			}
-		}
+		}*/
+		
+		Actor a = new DukeAI();
+		actors.add(a);
+		CreateCastle(playfieldLayer, Grid.GetCoordinatesWithCell(0, 0), rand.nextInt(6) + 1, a);
 	}
 	
 	private boolean AddCastle(Castle castle)
@@ -147,7 +152,7 @@ public class Kingdom extends Parent implements IUpdate{
 	
 	public Point2D GetRandomGridCell(Random rand)
 	{
-		Point2D p = new Point2D(rand.nextInt(Grid.GetSizeX()), rand.nextInt(Grid.GetSizeY()));
+		Point2D p = new Point2D(rand.nextInt(Grid.GetSizeX() - 2) + 1, rand.nextInt(Grid.GetSizeY() - 2) + 1);
 		return Grid.GetCoordinatesWithCell((int)p.getX(), (int)p.getY());
 	}
 }
