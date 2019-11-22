@@ -23,7 +23,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 	
 	public Soldier(Pane layer, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
 	{
-		super(layer, x + (Settings.CELL_SIZE-1)/2 +1 + Settings.CELL_SIZE, y + (Settings.CELL_SIZE-1)/2 +1 + Settings.CELL_SIZE);
+		super(layer, x, y);
 		this.productionCost = productionCost;
 		this.productionTime = productionTime;
 		this.health = health;
@@ -68,7 +68,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 		boolean toggleXMovement = true;
 		boolean toggleYMovement = true;
 		
-		toggleXMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getX() 
+		/*toggleXMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getX() 
 				== Grid.GetCellWithCoordinates(itsOst.getDestination().GetX(), itsOst.getDestination().GetY()).getX() ? false : true;
 		 
 		
@@ -83,7 +83,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 		else if(toggleYMovement)
 		{
 			AddDy(this.speed * verticalDirection);
-		}
+		}*/
 	}
 	
 	public void Start()
@@ -105,5 +105,6 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 		
 		canMove = true;
 		this.getLayer().getChildren().add(this.GetShape());
+		UpdateUIShape();
 	}
 }

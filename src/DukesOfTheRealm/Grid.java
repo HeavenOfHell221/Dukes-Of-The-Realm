@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
 
 public class Grid {
 	
-	private Point2D[][] grid;
+	/*private Point2D[][] grid;
 	private HashMap<Point2D, Castle> castleHashMap;
 	
 	private final int nbCellX;
@@ -88,5 +88,5 @@ public class Grid {
 	public static double GetCaseHeight() 
 	{
 		return instance.cellHeight;
-	}
+	}*/
 }

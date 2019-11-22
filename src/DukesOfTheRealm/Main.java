@@ -99,6 +99,7 @@ public class Main extends Application implements IUpdate{
 		kingdom = new Kingdom(playfieldLayer);
 		playfieldLayer.getChildren().add(kingdom);
 		kingdom.CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
+		kingdom.Start();
 	}
 	
 	public void Update(long now)

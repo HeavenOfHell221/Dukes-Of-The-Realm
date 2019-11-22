@@ -15,8 +15,7 @@ public abstract class Sprite extends Parent{
     private Shape shape;
 	
 	private Point2D coordinate;
-    private Point2D cell;
-
+    //private Point2D cell;
     private double width;
     private double height;
  
@@ -25,14 +24,14 @@ public abstract class Sprite extends Parent{
     {
     	this.canvas = canvas;
     	this.coordinate = new Point2D(x, y);
-    	this.cell = Grid.GetCellWithCoordinates(x, y);
+    	//this.cell = Grid.GetCellWithCoordinates(x, y);
     }
     
     public Sprite (Pane canvas, Point2D point2D, double speed)
     {
     	this.canvas = canvas;
     	this.coordinate = new Point2D(point2D.getX(), point2D.getY());
-    	this.cell = Grid.GetCellWithCoordinates(this.coordinate.getX(), this.coordinate.getY());
+    	//this.cell = Grid.GetCellWithCoordinates(this.coordinate.getX(), this.coordinate.getY());
     }
 
     private void AddToLayerShape(Shape shape)
@@ -97,7 +96,7 @@ public abstract class Sprite extends Parent{
     
     public void UpdateUIShape()
     {
-    	shape.relocate(coordinate.getX(), coordinate.getY());
+    	shape.relocate(GetX(), GetY());
     }
     
     public int GetX() 
@@ -108,6 +107,12 @@ public abstract class Sprite extends Parent{
     {
         return (int) coordinate.getY();
     }
+    
+    public Point2D GetCenter()
+    {
+    	return new Point2D(GetX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), GetY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
+    }
+    
     
     public double getWidth() 
     {
@@ -134,7 +139,7 @@ public abstract class Sprite extends Parent{
     	this.coordinate = p;
     }
     
-    public void SetCellX(int cellX)
+    /*public void SetCellX(int cellX)
     {
     	Point2D p = new Point2D(cellX, this.cell.getY());
     	this.cell = p;
@@ -144,7 +149,7 @@ public abstract class Sprite extends Parent{
     {
     	Point2D p = new Point2D(this.cell.getX(), cellY);
     	this.cell = p;
-    }
+    }*/
     
     public void AddDx(double dx)
     {
@@ -156,7 +161,7 @@ public abstract class Sprite extends Parent{
     	coordinate.add(0, dy);
     }
     
-    public int GetCellX()
+    /*public int GetCellX()
     {
     	return (int) this.cell.getX();
     }
@@ -179,7 +184,7 @@ public abstract class Sprite extends Parent{
     public void SetCell(Point2D cell)
     {
     	this.cell = cell;
-    }
+    }*/
     
     public void SetCoordinate(Point2D coordinate)
     {

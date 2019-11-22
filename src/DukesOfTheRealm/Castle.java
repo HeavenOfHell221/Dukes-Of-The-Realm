@@ -49,9 +49,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
 		this.ostDeployment = null;
 		this.orientation = SetOrientation();
-		//AddOst(this, 2);
-		Grid.AddCastle(this);
-		this.actor.AddCastle(this);
 	}
 	
 	private Orientation SetOrientation()
@@ -70,10 +67,15 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return orientation;
 	}
 	
+	public void Start()
+	{
+		actor.AddCastle(this);
+	}
+	
 	/* Ajoute un rectangle au layer */
 	public void AddRectangle()
 	{
-		AddCastleRepresentation(Settings.CELL_SIZE, Settings.CELL_SIZE);
+		AddCastleRepresentation(Settings.CASTLE_SIZE, Settings.CASTLE_SIZE);
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
@@ -217,7 +219,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	{
 		if (this.firstSoldier == null)
 		{
-			this.firstSoldier = new Piker(this.getLayer(), GetX(), GetY());
+			this.firstSoldier = new Knight(this.getLayer(), GetX(), GetY());
 			this.firstSoldier.Start();
 			return true;
 		}
