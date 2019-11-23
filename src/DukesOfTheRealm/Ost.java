@@ -9,7 +9,7 @@ import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
-public class Ost {
+public class Ost implements IUpdate{
 	
 	private Castle origin;
 	private Castle destination;
@@ -31,8 +31,8 @@ public class Ost {
 		this.speed = SetOstSpeed();
 		//DeploySoldiers();
 	}
-	
-	public void Update(long now)
+
+	public void Update(long now, boolean pause)
 	{
 		//TO DO
 	}
@@ -45,6 +45,7 @@ public class Ost {
 		return minimalSpeed;
 	}
 	
+	
 	private void DeploySoldiers()
 	{
 		int nb_soldier = this.nb_piker + this.nb_knight + this.nb_onager;
@@ -55,13 +56,13 @@ public class Ost {
 			switch (currentSpawn)
 			{
 			case 0:
-				SpawnSoldier(/** coord x **/, /** coord y **/);
+				//SpawnSoldier(/** coord x **/, /** coord y **/);
 				break;
 			case 1:
-				SpawnSoldier(/** coord x **/, /** coord y **/);
+				//SpawnSoldier(/** coord x **/, /** coord y **/);
 				break;
 			case 2:
-				SpawnSoldier(/** coord x **/, /** coord y **/);
+				//SpawnSoldier(/** coord x **/, /** coord y **/);
 				break;
 			}
 		}

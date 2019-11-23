@@ -22,7 +22,7 @@ public class FPS implements IUpdate{
 		this.firstFrame = true;
 	}
 	
-	public void Update(long now)
+	public void Update(long now, boolean pause)
 	{
 		FrameStart(now);
 		if((now - lastUpdate) >= cooldown)

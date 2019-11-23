@@ -56,8 +56,6 @@ public class Main extends Application implements IUpdate{
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 		
-		System.out.println(Settings.SCENE_WIDTH);
-		
 		// create layers
 		playfieldLayer = new Pane();
 		root.getChildren().add(playfieldLayer);
@@ -70,8 +68,7 @@ public class Main extends Application implements IUpdate{
 			public void handle(long now) 
 			{
 				processInput(input, now);
-				if(!pause)
-					Update(now);
+				Update(now, pause);
 			}
 			
 			private void processInput(Input input, long now)
@@ -113,10 +110,10 @@ public class Main extends Application implements IUpdate{
 		CastleUI.GetInstance().SetPlayfieldLayer(playfieldLayer);
 	}
 	
-	public void Update(long now)
+	public void Update(long now, boolean pause)
 	{
-		fps.Update(now);
-		kingdom.Update(now);
+		fps.Update(now, pause);
+		kingdom.Update(now, pause);
 	}
 	
 	private boolean Time(long now)

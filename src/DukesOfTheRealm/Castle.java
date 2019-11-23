@@ -11,6 +11,7 @@ import java.util.Random;
 
 import Duke.*;
 import Soldiers.*;
+import Utility.FPS;
 import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -102,11 +103,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		AddFlorin(Settings.FLORIN_FACTOR * level);
 	}
 	
-	public void Update(long now)
+	public void Update(long now, boolean pause)
 	{	
 		UpdateFlorin();
 		UpdateProduction();
-		if(this.ost != null) UpdateOst(now);
+		if(this.ost != null) UpdateOst(now, pause);
 	}
 	
 	public void AddFlorin(int amount)
@@ -198,9 +199,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
 	}
 	
-	private void UpdateOst(long now)
+	private void UpdateOst(long now, boolean pause)
 	{
-		this.ost.Update(now);
+		this.ost.Update(now, pause);
 	}
 	
 //	public boolean AddOst(Castle destination, int speed)
@@ -222,7 +223,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	{
 		if (this.ost == null)
 		{
-			this.ost = new Ost(this, this, soldiers);
+			//this.ost = new Ost(this, this, soldiers);
 			return true;
 		}
 		return false;

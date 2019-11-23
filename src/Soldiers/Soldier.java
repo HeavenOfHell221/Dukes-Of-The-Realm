@@ -63,7 +63,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		return onField;
 	}
 
-	public void Update(long now)
+	public void Update(long now, boolean pause)
 	{		
 		if (canMove)
 		{

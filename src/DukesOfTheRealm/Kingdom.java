@@ -163,9 +163,10 @@ public class Kingdom extends Parent implements IUpdate{
 		return Math.sqrt((y - castle.GetY()) * (y - castle.GetY()) + (x - castle.GetX()) * (x - castle.GetX()));
 	}
 
-	public void Update(long now)
+	public void Update(long now, boolean pause)
 	{
-		castles.forEach(castle -> castle.Update(now));
+		if(!pause)
+			castles.forEach(castle -> castle.Update(now, pause));
 		UpdateUI();
 	}
 	
