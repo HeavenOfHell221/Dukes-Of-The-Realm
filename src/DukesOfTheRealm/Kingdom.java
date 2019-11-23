@@ -27,6 +27,7 @@ public class Kingdom extends Parent implements IUpdate{
 	private ArrayList<Castle> castles; // Liste des chateaux
 	private ArrayList<Actor> actors; // Liste des acteurs
 	private ArrayList<Color> colors;
+	private static Player player;
 	
 	private final Pane playfieldLayer; // Le layer du jeu (groupe de base)
 	
@@ -81,13 +82,13 @@ public class Kingdom extends Parent implements IUpdate{
 		Random rand = new Random();
 		
 		Color c = colors.get(rand.nextInt(colors.size() - 1));
-		Actor player = new Player(c);
-		actors.add(player);
+		this.player = new Player(c);
+		actors.add(this.player);
 		colors.remove(c);
 		
 		int numberTest = 0;
 		
-		while(numberTest < 1000)
+		while(numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
 		{
 			if(CreateCastle(playfieldLayer, GetRandomCoordinates(rand), 1, player))
 			{
@@ -96,16 +97,16 @@ public class Kingdom extends Parent implements IUpdate{
 			numberTest++;
 		}
 		
+		c = colors.get(rand.nextInt(colors.size() - 1));
 		for(int i = 0; i < AINumber; i++)
 		{
-			c = colors.get(rand.nextInt(colors.size() - 1));
 			Actor a = new DukeAI(c);
 			actors.add(a);
 			colors.remove(c);
 			
 			numberTest = 0;
 			
-			while(numberTest < 1000)
+			while(numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
 			{
 				if(CreateCastle(playfieldLayer, GetRandomCoordinates(rand), 1, a))
 				{
@@ -118,7 +119,6 @@ public class Kingdom extends Parent implements IUpdate{
 		c = colors.get(rand.nextInt(colors.size() - 1));
 		for(int i = 0; i < baronNumber; i++)
 		{
-			
 			Actor a = new Baron(c);
 			actors.add(a);
 
@@ -164,37 +164,19 @@ public class Kingdom extends Parent implements IUpdate{
 	{
 		return Math.sqrt((y - castle.GetY()) * (y - castle.GetY()) + (x - castle.GetX()) * (x - castle.GetX()));
 	}
-	
-	public boolean RemoveCastle(Castle castle)
-	{
-		return castles.remove(castle);
-	}
-	
-	public ArrayList<Castle> GetAllCastles()
-	{
-		return castles;
-	}
-	
-	public Castle GetCastle(int i)
-	{
-		if(i < castles.size())
-			return castles.get(i);
-		return null;
-	}
 
 	public void Update(long now)
 	{
 		castles.forEach(castle -> castle.Update(now));
 	}
 	
-	/*public Point2D GetRandomGridCell(Random rand)
-	{
-		Point2D p = new Point2D(rand.nextInt(Grid.GetSizeX() - 3) + 1, rand.nextInt(Grid.GetSizeY() - 3) + 1);
-		return Grid.GetCoordinatesWithCell((int)p.getX(), (int)p.getY());
-	}*/
-	
 	public Point2D GetRandomCoordinates(Random rand)
 	{
 		return new Point2D(rand.nextInt(Settings.SCENE_WIDTH - Settings.CASTLE_SIZE), rand.nextInt(Settings.SCENE_HEIGHT - Settings.CASTLE_SIZE));
+	}
+	
+	public static Player GetPlayer()
+	{
+		return player;
 	}
 }

@@ -1,14 +1,15 @@
 package DukesOfTheRealm;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
 import java.util.Random;
 
-import Duke.Actor;
-import Duke.Duke;
+import Duke.*;
 import Soldiers.*;
 import Utility.Settings;
 import javafx.scene.image.Image;
@@ -31,7 +32,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private int level; // Le niveau du chateau
 	private ArrayList<Soldier> reserveOfSoldiers; // La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
 	private Actor actor; // Le proprietaire du chateau 
-	private IProductionUnit productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
+	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
 	private int productionTime; // Le temps restant a la production de l'unite de production
 	private Ost ostDeployment;
 	private Soldier firstSoldier = null;	// ***** PROVISOIRE *****
@@ -48,6 +49,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
 		this.ostDeployment = null;
+		this.productionUnit = new ArrayDeque<IProductionUnit>();
 		this.orientation = SetOrientation();
 	}
 	
@@ -129,14 +131,10 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	public void AddProduction(IProductionUnit newProduction)
 	{
-		if(this.productionUnit != null)
-		{	
-			if(RemoveFlorin(newProduction.GetProductionCost()))
-			{
-				this.productionUnit = newProduction;
-				this.productionTime = GetProductionTime(newProduction);
-			}
-		}
+		if(newProduction == null || !RemoveFlorin(newProduction.GetProductionCost()))
+			return;
+		
+		this.productionUnit.addLast(newProduction);
 	}
 	
 	public void InflictDamage(SoldierEnum type)
@@ -154,21 +152,26 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	private void UpdateProduction()
 	{
-		if(this.productionUnit != null)
+		if(this.productionUnit.size() > 0)
 		{
 			this.productionTime--;
 			if(this.productionTime == 0)
 			{
-				if(this.productionUnit.getClass() == Castle.class)
-					LevelUp();
-				else if(this.productionUnit.getClass() == Piker.class)
-					this.reserveOfSoldiers.add(new Piker(this.getLayer(), GetX(), GetY()));
-				else if(this.productionUnit.getClass() == Onager.class)
-					this.reserveOfSoldiers.add(new Onager(this.getLayer(), GetX(), GetY()));
-				else if(this.productionUnit.getClass() == Knight.class)
-					this.reserveOfSoldiers.add(new Knight(this.getLayer(), GetX(), GetY()));
+				IProductionUnit p = this.productionUnit.pollFirst();
 				
-				this.productionUnit = null;
+				if(p.getClass() == Castle.class)
+					LevelUp();
+				else if(p.getClass() == Piker.class)
+					this.reserveOfSoldiers.add((Piker)p);
+				else if(p.getClass() == Onager.class)
+					this.reserveOfSoldiers.add((Onager)p);
+				else if(p.getClass() == Knight.class)
+					this.reserveOfSoldiers.add((Knight)p);
+				
+				if(this.productionUnit.size() > 0)
+				{
+					this.productionTime = this.productionUnit.getFirst().GetProductionTime();
+				}
 			}
 		}
 	}
@@ -186,8 +189,8 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return actor;
 	}
 
-	public void SetDuke(Duke duke) {
-		this.actor = duke;
+	public void SetDuke(Actor actor) {
+		this.actor = actor;
 	}
 	
 	public int GetProductionTime()
@@ -197,7 +200,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	private void UpdateOst(long now)
 	{
-		this.ostDeployment.UpdateAtEachFrame(now);
+		this.ostDeployment.Update(now);
 	}
 	
 //	public boolean AddOst(Castle destination, int speed)

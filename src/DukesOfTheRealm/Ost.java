@@ -1,6 +1,5 @@
 package DukesOfTheRealm;
 
-import Duke.Duke;
 import Utility.FPS;
 import Utility.Settings;
 import javafx.scene.image.Image;
@@ -20,22 +19,22 @@ public class Ost {
 		this.ostSpeed = ostSpeed;
 	}
 	
-	public void UpdateAtEachFrame(long now)
+	public void Update(long now)
 	{
 		//TO DO
 	}
 	
-	public Castle getOrigin()
+	public Castle GetOrigin()
 	{
 		return origin;
 	}
 
-	public Castle getDestination()
+	public Castle GetDestination()
 	{
 		return destination;
 	}
 
-	public double getOstSpeed()
+	public double GetOstSpeed()
 	{
 		return ostSpeed;
 	}

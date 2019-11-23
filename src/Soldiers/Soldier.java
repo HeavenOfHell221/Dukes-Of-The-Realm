@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 
-public abstract class Soldier extends Sprite implements IProductionUnit {
+public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate {
 	protected SoldierEnum type;
 	protected int productionCost;
 	protected int productionTime;
@@ -52,7 +52,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 		return type;
 	}
 	
-	public void UpdateAtEachFrame(long now)
+	public void Update(long now)
 	{		
 		if (canMove)
 		{
@@ -63,8 +63,8 @@ public abstract class Soldier extends Sprite implements IProductionUnit {
 	
 	private void Move()
 	{
-		int horizontalDirection = itsOst.getDestination().GetX() > itsOst.getOrigin().GetX() ? 1 : -1;
-		int verticalDirection = itsOst.getDestination().GetY() > itsOst.getOrigin().GetX() ? 1 : -1;
+		int horizontalDirection = itsOst.GetDestination().GetX() > itsOst.GetOrigin().GetX() ? 1 : -1;
+		int verticalDirection = itsOst.GetDestination().GetY() > itsOst.GetOrigin().GetX() ? 1 : -1;
 		boolean toggleXMovement = true;
 		boolean toggleYMovement = true;
 		

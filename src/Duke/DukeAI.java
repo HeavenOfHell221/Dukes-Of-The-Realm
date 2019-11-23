@@ -1,7 +1,11 @@
 package Duke;
 
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Kingdom;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class DukeAI extends Duke {
 
@@ -12,7 +16,7 @@ public class DukeAI extends Duke {
 	
 	@Override
 	public boolean AddCastle(Castle castle) {
-		castle.GetShape().setFill(myColor);
+		castle.GetShape().setFill(GetMyColor());
 		return super.AddCastle(castle);
 	}
 }
