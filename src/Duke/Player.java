@@ -9,6 +9,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class Player extends Actor {
 	
@@ -37,6 +40,12 @@ public class Player extends Actor {
 							if(GetLastOtherCastleClicked() == null)
 							{
 								System.out.println("OUVERTURE " + castle);
+								Text t = new Text();
+								t.setFont(new Font(20));
+								t.setWrappingWidth(200);
+								t.setTextAlignment(TextAlignment.JUSTIFY);
+								t.setText("The quick brown fox jumps over the lazy dog");
+								castle.getLayer().getChildren().add(t);
 							}
 								
 							else

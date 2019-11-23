@@ -68,7 +68,7 @@ public class Kingdom extends Parent implements IUpdate{
 		if(!IsCastleToClose(coordinate.getX(), coordinate.getY()))
 		{
 			Castle newCastle = new Castle(layer, coordinate.getX(), coordinate.getY(), level, actor);
-			newCastle.AddRectangle();
+			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
 			//newCastle.AddFirstSoldier(); // ***** PROVISOIRE *****
 			
@@ -172,7 +172,7 @@ public class Kingdom extends Parent implements IUpdate{
 	
 	public Point2D GetRandomCoordinates(Random rand)
 	{
-		return new Point2D(rand.nextInt(Settings.SCENE_WIDTH - Settings.CASTLE_SIZE), rand.nextInt(Settings.SCENE_HEIGHT - Settings.CASTLE_SIZE));
+		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE) - Settings.CASTLE_SIZE), rand.nextInt(Settings.SCENE_HEIGHT - (int)(1.5 * Settings.CASTLE_SIZE)));
 	}
 	
 	public static Player GetPlayer()

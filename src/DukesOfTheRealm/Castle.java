@@ -75,9 +75,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	}
 	
 	/* Ajoute un rectangle au layer */
-	public void AddRectangle()
+	public void AddRepresentation()
 	{
-		AddCastleRepresentation(Settings.CASTLE_SIZE, Settings.CASTLE_SIZE);
+		AddCastleRepresentation(Settings.CASTLE_SIZE);
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */

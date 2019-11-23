@@ -9,6 +9,7 @@ import Duke.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.shape.*;
 
@@ -25,6 +27,7 @@ import Utility.FPS;
 import Utility.Input;
 import Utility.Settings;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 
 public class Main extends Application implements IUpdate{
 	
@@ -46,10 +49,14 @@ public class Main extends Application implements IUpdate{
 	public void start(Stage primaryStage) 
 	{
 		root = new Group();
-		scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT + Settings.STATUS_BAR_HEIGHT);
+		scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(true);
+		primaryStage.setMaximized(true);
 		primaryStage.show();
+		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();
+		Settings.SCENE_WIDTH = (int) primaryStage.getWidth();
+		scene.setFill(Color.DARKGREEN);
 		
 		// create layers
 		playfieldLayer = new Pane();

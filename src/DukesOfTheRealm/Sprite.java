@@ -46,12 +46,12 @@ public abstract class Sprite extends Parent{
         this.canvas.getChildren().remove(this.shape);
     }
     
-    protected void AddCastleRepresentation(double width, double height)
+    protected void AddCastleRepresentation(double size)
 	{
-		Rectangle rectangle = new Rectangle(GetX(), GetY(), width, height);
+		Rectangle rectangle = new Rectangle(GetX(), GetY(), size, size);
 		this.shape = rectangle;
-		this.width = width;
-		this.height = height;
+		this.width = size;
+		this.height = size;
 		this.shape.toBack();
 	}
 	

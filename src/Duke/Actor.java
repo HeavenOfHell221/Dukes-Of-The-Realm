@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public abstract class Actor {
+public abstract class Actor extends Parent{
 	
 	private ArrayList<Castle> myCastles;
 	private Color myColor;
@@ -36,7 +37,7 @@ public abstract class Actor {
 	public boolean AddCastle(Castle castle)
 	{
 		castle.GetShape().setFill(GetMyColor());
-		castle.GetShape().addEventFilter(MouseEvent.MOUSE_CLICKED, CastleEventHandle);
+		castle.GetShape().addEventFilter(MouseEvent.MOUSE_PRESSED, CastleEventHandle);
 		return this.myCastles.add(castle);
 	}
 	
