@@ -28,14 +28,14 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		None;
 	}
 	
-	private int totalFlorin; // L'argent que contient le chateau
-	private int level; // Le niveau du chateau
-	private ArrayList<Soldier> reserveOfSoldiers; // La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
-	private Actor actor; // Le proprietaire du chateau 
+	private int totalFlorin; 							// L'argent que contient le chateau
+	private int level; 									// Le niveau du chateau
+	private ArrayList<Soldier> reserveOfSoldiers; 		// La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
+	private Actor actor; 								// Le proprietaire du chateau 
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
-	private int productionTime; // Le temps restant a la production de l'unite de production
-	private Ost ostDeployment;
-	private Soldier firstSoldier = null;	// ***** PROVISOIRE *****
+	private int productionTime; 						// Le temps restant a la production de l'unite de production
+	private Ost ost = null;
+	private Soldier firstSoldier = null;				// ***** PROVISOIRE *****
 	private Orientation orientation;
 	
 	/* Constructeur */
@@ -48,7 +48,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.productionUnit = null;
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ArrayList<Soldier>();
-		this.ostDeployment = null;
+		this.ost = null;
 		this.productionUnit = new ArrayDeque<IProductionUnit>();
 		this.orientation = SetOrientation();
 	}
@@ -106,7 +106,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	{	
 		UpdateFlorin();
 		UpdateProduction();
-		if(this.ostDeployment != null) UpdateOst(now);
+		if(this.ost != null) UpdateOst(now);
 	}
 	
 	public void AddFlorin(int amount)
@@ -200,23 +200,33 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	private void UpdateOst(long now)
 	{
-		this.ostDeployment.Update(now);
+		this.ost.Update(now);
 	}
 	
 //	public boolean AddOst(Castle destination, int speed)
 //	{
-//		if(this.ostDeployment == null)
+//		if(this.ost == null)
 //		{
-//			this.ostDeployment = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
-//			if(this.ostDeployment != null)
+//			this.ost = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
+//			if(this.ost != null)
 //			{
-//				this.ostDeployment.AddPikerRepresentation(10);
-//				this.getLayer().getChildren().add(this.ostDeployment.GetShape());
+//				this.ost.AddPikerRepresentation(10);
+//				this.getLayer().getChildren().add(this.ost.GetShape());
 //			}
 //			return true;
 //		}
 //		return false;
 //	}
+	
+	public boolean CreateOst(ArrayList<Soldier> soldiers)
+	{
+		if (this.ost == null)
+		{
+			this.ost = new Ost(this, this, soldiers);
+			return true;
+		}
+		return false;
+	}
 	
 	public boolean AddFirstSoldier()
 	{

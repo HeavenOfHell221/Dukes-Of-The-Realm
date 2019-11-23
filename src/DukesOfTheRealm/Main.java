@@ -49,14 +49,13 @@ public class Main extends Application implements IUpdate{
 	public void start(Stage primaryStage) 
 	{
 		root = new Group();
-		scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT, Color.DARKGREEN);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);
 		primaryStage.show();
-		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();
-		Settings.SCENE_WIDTH = (int) primaryStage.getWidth();
-		scene.setFill(Color.DARKGREEN);
+		
+		System.out.println(Settings.SCENE_WIDTH);
 		
 		// create layers
 		playfieldLayer = new Pane();

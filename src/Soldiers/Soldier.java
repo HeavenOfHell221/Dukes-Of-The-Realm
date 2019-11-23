@@ -18,6 +18,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected int speed;
 	protected Ost itsOst = null; 
 //	protected double movement;
+	protected boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived;
 	
@@ -52,6 +53,16 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		return type;
 	}
 	
+	public int getSpeed()
+	{
+		return speed;
+	}
+
+	public boolean isOnField()
+	{
+		return onField;
+	}
+
 	public void Update(long now)
 	{		
 		if (canMove)
