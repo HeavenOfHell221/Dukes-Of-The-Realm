@@ -1,8 +1,8 @@
 package Utility;
 
 public class Settings {
-	public static int SCENE_WIDTH = 720;
-    public static int SCENE_HEIGHT = 480;
+	public static int SCENE_WIDTH = 1920;
+    public static int SCENE_HEIGHT = 1080;
 	
 	public static final int FLORIN_FACTOR = 1;
 	public static final int LEVEL_UP_COST_FACTOR = 1000;
@@ -26,6 +26,12 @@ public class Settings {
 	public static final int KNIGHT_REPRESENTATION_SIZE = 21;
 	public static final int ONAGER_REPRESENTATION_WIDTH = 39;
 	public static final int ONAGER_REPRESENTATION_HEIGHT = 19;
+
+	public static final int PIKER_SPEED = 2;
+	public static final int KNIGHT_SPEED = 6;
+	public static final int ONAGER_SPEED = 6;
+
+	public static final int SIMULTANEOUS_SPAWNS = 3;
 	
 	public static final double MARGIN_PERCENTAGE = 0.75;
 }

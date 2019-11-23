@@ -15,7 +15,6 @@ public abstract class Sprite extends Parent{
     private Shape shape;
 	
 	private Point2D coordinate;
-    //private Point2D cell;
     private double width;
     private double height;
  
@@ -24,14 +23,12 @@ public abstract class Sprite extends Parent{
     {
     	this.canvas = canvas;
     	this.coordinate = new Point2D(x, y);
-    	//this.cell = Grid.GetCellWithCoordinates(x, y);
     }
     
     public Sprite (Pane canvas, Point2D point2D, double speed)
     {
     	this.canvas = canvas;
     	this.coordinate = new Point2D(point2D.getX(), point2D.getY());
-    	//this.cell = Grid.GetCellWithCoordinates(this.coordinate.getX(), this.coordinate.getY());
     }
 
     private void AddToLayerShape(Shape shape)
