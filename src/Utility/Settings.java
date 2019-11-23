@@ -4,7 +4,7 @@ public class Settings {
 	public static int SCENE_WIDTH = 720;
     public static int SCENE_HEIGHT = 480;
 	
-	public static final int FLORIN_FACTOR = 10;
+	public static final int FLORIN_FACTOR = 1;
 	public static final int LEVEL_UP_COST_FACTOR = 1000;
 	public static final int LEVEL_UP_DURATION_OFFSET = 100;
 	public static final int LEVEL_UP_DURATION_FACTOR = 50;
@@ -27,5 +27,5 @@ public class Settings {
 	public static final int ONAGER_REPRESENTATION_WIDTH = 39;
 	public static final int ONAGER_REPRESENTATION_HEIGHT = 19;
 	
-	public static final double MARGIN_PERCENTAGE = 0.7;
+	public static final double MARGIN_PERCENTAGE = 0.75;
 }

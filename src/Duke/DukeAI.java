@@ -13,10 +13,4 @@ public class DukeAI extends Duke {
 	{
 		super(myColor);
 	}
-	
-	@Override
-	public boolean AddCastle(Castle castle) {
-		castle.GetShape().setFill(GetMyColor());
-		return super.AddCastle(castle);
-	}
 }

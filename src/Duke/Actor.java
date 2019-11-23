@@ -34,11 +34,11 @@ public abstract class Actor extends Parent{
 	   } 
 	}; 
 	
-	public boolean AddCastle(Castle castle)
+	public void AddCastle(Castle castle)
 	{
 		castle.GetShape().setFill(GetMyColor());
 		castle.GetShape().addEventFilter(MouseEvent.MOUSE_PRESSED, CastleEventHandle);
-		return this.myCastles.add(castle);
+		this.myCastles.add(castle);
 	}
 	
 	public boolean RemoveCastle(Castle castle)

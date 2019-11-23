@@ -14,10 +14,9 @@ public class Baron extends Duke {
 	}
 
 	@Override
-	public boolean AddCastle(Castle castle) {
+	public void AddCastle(Castle castle) {
 		Random rand = new Random();
 		castle.AddFlorin(rand.nextInt(801) + 200);
-		castle.GetShape().setFill(GetMyColor());
-		return super.AddCastle(castle);
+		super.AddCastle(castle);
 	}
 }

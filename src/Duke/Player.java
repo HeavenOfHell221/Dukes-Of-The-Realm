@@ -22,6 +22,13 @@ public class Player extends Actor {
 		super(myColor);
 	}
 	
+	@Override
+	public void AddCastle(Castle castle) {
+		super.AddCastle(castle);
+		lastCastleClicked = castle;
+		CastleUI.GetInstance().SwitchCastle(castle);
+	}
+
 	protected void CastleHandle(MouseEvent e)
 	{
 		if(e.getButton() == MouseButton.PRIMARY) // Clique gauche
@@ -33,32 +40,8 @@ public class Player extends Actor {
 			.filter(castle -> castle.GetShape() == rectangle)
 			.limit(1)
 			.forEach( castle -> {
-						if(GetLastPlayerCastleClicked() == null)
-						{
-							SetLastPlayerCastleClicked(castle);
-							
-							if(GetLastOtherCastleClicked() == null)
-							{
-								System.out.println("OUVERTURE " + castle);
-								Text t = new Text();
-								t.setFont(new Font(20));
-								t.setWrappingWidth(200);
-								t.setTextAlignment(TextAlignment.JUSTIFY);
-								t.setText("The quick brown fox jumps over the lazy dog");
-								castle.getLayer().getChildren().add(t);
-							}
-								
-							else
-							{
-								SetLastOtherCastleClicked(null);
-								System.out.println("FERMETURE + OUVERTURE " + castle);
-							}
-						}
-						else
-						{
-							SetLastPlayerCastleClicked(null); 
-							System.out.println("FERMETURE " + castle);
-						}
+						SetLastPlayerCastleClicked(castle); 
+						CastleUI.GetInstance().SwitchCastle(castle);
 					});
 		}
 	}

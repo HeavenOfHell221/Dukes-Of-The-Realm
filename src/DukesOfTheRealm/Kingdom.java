@@ -70,8 +70,6 @@ public class Kingdom extends Parent implements IUpdate{
 			Castle newCastle = new Castle(layer, coordinate.getX(), coordinate.getY(), level, actor);
 			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
-			//newCastle.AddFirstSoldier(); // ***** PROVISOIRE *****
-			
 			return AddCastle(newCastle);
 		}
 		return false;
@@ -82,8 +80,8 @@ public class Kingdom extends Parent implements IUpdate{
 		Random rand = new Random();
 		
 		Color c = colors.get(rand.nextInt(colors.size() - 1));
-		this.player = new Player(c);
-		actors.add(this.player);
+		Kingdom.player = new Player(c);
+		actors.add(Kingdom.player);
 		colors.remove(c);
 		
 		int numberTest = 0;
@@ -168,6 +166,16 @@ public class Kingdom extends Parent implements IUpdate{
 	public void Update(long now)
 	{
 		castles.forEach(castle -> castle.Update(now));
+		UpdateUI();
+	}
+	
+	private void UpdateUI()
+	{
+		CastleUI instance = CastleUI.GetInstance();
+		if(instance != null)
+		{
+			instance.Update();
+		}
 	}
 	
 	public Point2D GetRandomCoordinates(Random rand)

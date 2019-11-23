@@ -42,9 +42,10 @@ public class Main extends Application implements IUpdate{
 	private FPS fps;
 	private Kingdom kingdom;
 	
-	private long lastUpdate = 0;
-	private long timeScale = Settings.GAME_FREQUENCY; // => 1 second
-	private long timePerTurn = timeScale * Settings.TURN_DURATION;
+	private CastleUI castleUI;
+	
+	private long lastTime = 0;
+	private boolean pause = false;
 
 	public void start(Stage primaryStage) 
 	{
@@ -70,7 +71,8 @@ public class Main extends Application implements IUpdate{
 			public void handle(long now) 
 			{
 				processInput(input, now);
-				Update(now);
+				if(!pause)
+					Update(now);
 			}
 			
 			private void processInput(Input input, long now)
@@ -80,9 +82,9 @@ public class Main extends Application implements IUpdate{
 					Platform.exit();
 					System.exit(0);
 				}
-				if(input.isSpace())
+				if(input.isSpace() && Time(now))
 				{
-					
+					pause = !pause;
 				}
 			}	
 		};
@@ -107,12 +109,25 @@ public class Main extends Application implements IUpdate{
 		playfieldLayer.getChildren().add(kingdom);
 		kingdom.CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
 		kingdom.Start();
+		
+		/* UI */
+		CastleUI.GetInstance().SetPlayfieldLayer(playfieldLayer);
 	}
 	
 	public void Update(long now)
 	{
 		fps.Update(now);
 		kingdom.Update(now);
+	}
+	
+	private boolean Time(long now)
+	{
+		if(now - lastTime > Settings.GAME_FREQUENCY)
+		{
+			lastTime = now;
+			return true;
+		}
+		return false;
 	}
 	
 	public static void main(String[] args) {

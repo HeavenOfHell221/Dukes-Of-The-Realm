@@ -228,4 +228,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		}
 		return false;
 	}
+	
+	public int GetLevel()
+	{
+		return level;
+	}
 }
