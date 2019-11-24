@@ -72,7 +72,7 @@ public class Kingdom extends Parent implements IUpdate{
 			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
 			if (newCastle.GetActor() == player)
-				newCastle.CreateOst(18, 18, 0);
+				newCastle.CreateOst(7, 5, 2);
 			return AddCastle(newCastle);
 		}
 		return false;
@@ -168,8 +168,7 @@ public class Kingdom extends Parent implements IUpdate{
 
 	public void Update(long now, boolean pause)
 	{
-		if(!pause)
-			castles.forEach(castle -> castle.Update(now, pause));
+		castles.forEach(castle -> castle.Update(now, pause));
 		UpdateUI();
 	}
 	

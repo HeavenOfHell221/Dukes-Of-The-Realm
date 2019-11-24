@@ -102,8 +102,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	public void Update(long now, boolean pause)
 	{	
-		UpdateFlorin();
-		UpdateProduction();
+		if(!pause)
+		{
+			UpdateFlorin();
+			UpdateProduction();
+		}
 		if(this.ost != null)
 			UpdateOst(now, pause);
 	}
