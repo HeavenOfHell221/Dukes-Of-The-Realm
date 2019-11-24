@@ -72,7 +72,7 @@ public class Kingdom extends Parent implements IUpdate{
 			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
 			if (newCastle.GetActor() == player)
-				newCastle.CreateOst(1, 1, 1);
+				newCastle.CreateOst(18, 18, 0);
 			return AddCastle(newCastle);
 		}
 		return false;
@@ -101,7 +101,7 @@ public class Kingdom extends Parent implements IUpdate{
 		c = colors.get(rand.nextInt(colors.size() - 1));
 		for(int i = 0; i < AINumber; i++)
 		{
-			Actor a = new DukeAI("Duke " + i, c);
+			Actor a = new DukeAI("Duke " + (i+1), c);
 			actors.add(a);
 			colors.remove(c);
 			
@@ -120,7 +120,7 @@ public class Kingdom extends Parent implements IUpdate{
 		c = colors.get(rand.nextInt(colors.size() - 1));
 		for(int i = 0; i < baronNumber; i++)
 		{
-			Actor a = new Baron("Baron " + i ,c);
+			Actor a = new Baron("Baron " + (i+1),c);
 			actors.add(a);
 
 			numberTest = 0;
@@ -184,7 +184,7 @@ public class Kingdom extends Parent implements IUpdate{
 	
 	public Point2D GetRandomCoordinates(Random rand)
 	{
-		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE) - Settings.CASTLE_SIZE), rand.nextInt(Settings.SCENE_HEIGHT - (int)(1.5 * Settings.CASTLE_SIZE)));
+		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE)), rand.nextInt(Settings.SCENE_HEIGHT - (2 * Settings.CASTLE_SIZE)));
 	}
 	
 	public static Player GetPlayer()

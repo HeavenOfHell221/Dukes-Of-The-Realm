@@ -65,6 +65,11 @@ public class Settings {
 	public static final int PIKER_SPEED = 2;
 	public static final int KNIGHT_SPEED = 6;
 	public static final int ONAGER_SPEED = 6;
+	
+	/* Production time in second */
+	public static final int PIKER_TIME_PRODUCTION = 10;
+	public static final int KNIGHT_TIME_PRODUCTION = 30;
+	public static final int ONAGER_TIME_PRODUCTION = 60;
 
 	/* Graphics */
 	public static final int PIKER_REPRESENTATION_RADIUS = 10;

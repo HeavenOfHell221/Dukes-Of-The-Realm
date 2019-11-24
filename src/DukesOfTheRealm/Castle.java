@@ -36,8 +36,8 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private Actor actor; 								// Le proprietaire du chateau 
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
 	private int productionTime; 						// Le temps restant a la production de l'unite de production
-	private Ost ost = null;
-	private Soldier firstSoldier = null;				// ***** PROVISOIRE *****
+	private Ost ost;
+	//private Soldier firstSoldier = null;				// ***** PROVISOIRE *****
 	private Orientation orientation;
 	private Color myColor;
 	
@@ -204,7 +204,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	{
 		if (this.ost == null)
 		{
-			this.ost = new Ost(this, this, nbPikers, nbKnights, nbOnagers, myColor);
+			this.ost = new Ost(this, this, nbPikers, nbKnights, nbOnagers, this.myColor);
 			return true;
 		}
 		return false;

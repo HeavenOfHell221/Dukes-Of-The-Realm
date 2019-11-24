@@ -21,6 +21,7 @@ public class Ost implements IUpdate{
 	private boolean fullyDeployed = false;
 	private int speed;
 	private Color color;
+	private long lastTime;
 	
 	public Ost(Castle origin, Castle destination, int nbPikers, int nbKnights, int nbOnagers, Color color)
 	{
@@ -36,7 +37,7 @@ public class Ost implements IUpdate{
 
 	public void Update(long now, boolean pause)
 	{
-		if (!this.fullyDeployed)
+		if (!this.fullyDeployed && Time(now))
 			DeployOneSoldiersWave();
 		else
 			soldiers.forEach(soldier -> soldier.Update(now, pause));
@@ -113,5 +114,15 @@ public class Ost implements IUpdate{
 	public double GetSpeed()
 	{
 		return speed;
+	}
+	
+	private boolean Time(long now)
+	{
+		if(now - lastTime > Settings.GAME_FREQUENCY)
+		{
+			lastTime = now;
+			return true;
+		}
+		return false;
 	}
 }

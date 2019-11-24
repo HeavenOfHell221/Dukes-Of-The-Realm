@@ -21,7 +21,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 //	protected double movement;
 	protected boolean onField = false;
 	protected boolean canMove = true;
-	protected boolean isArrived;
+	protected boolean isArrived = false;
 	
 	public Soldier(Pane layer, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
 	{

@@ -1,5 +1,6 @@
 package Soldiers;
 
+import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -10,7 +11,7 @@ public class Onager extends Soldier {
 
 	public Onager(Pane layer, double x, double y, Color color)
 	{
-		super(layer, x, y, 1000, 50, 1, 5, 10);
+		super(layer, x, y, Settings.ONAGER_COST, Settings.ONAGER_TIME_PRODUCTION, Settings.ONAGER_SPEED, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 		this.type = SoldierEnum.Onager;
 		Start(color);
 	}

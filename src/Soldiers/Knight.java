@@ -1,5 +1,6 @@
 package Soldiers;
 
+import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.*;
@@ -10,7 +11,7 @@ public class Knight extends Soldier {
 
 	public Knight(Pane layer, double x, double y, Color color) 
 	{
-		super(layer, x, y, 500, 20, 6, 3, 5);
+		super(layer, x, y, Settings.KNIGHT_COST, Settings.KNIGHT_TIME_PRODUCTION, Settings.KNIGHT_SPEED, Settings.KNIGHT_HP, Settings.PIKER_DAMAGE);
 		this.type = SoldierEnum.Knight;
 		Start(color);
 	}
