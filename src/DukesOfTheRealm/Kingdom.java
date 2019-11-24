@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 import Duke.*;
+import UI.CastleUI;
 import Utility.Settings;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -82,7 +83,7 @@ public class Kingdom extends Parent implements IUpdate{
 		Random rand = new Random();
 		
 		Color c = colors.get(rand.nextInt(colors.size() - 1));
-		Kingdom.player = new Player(c);
+		Kingdom.player = new Player("Player", c);
 		actors.add(Kingdom.player);
 		colors.remove(c);
 		
@@ -100,7 +101,7 @@ public class Kingdom extends Parent implements IUpdate{
 		c = colors.get(rand.nextInt(colors.size() - 1));
 		for(int i = 0; i < AINumber; i++)
 		{
-			Actor a = new DukeAI(c);
+			Actor a = new DukeAI("Duke " + i, c);
 			actors.add(a);
 			colors.remove(c);
 			
@@ -119,7 +120,7 @@ public class Kingdom extends Parent implements IUpdate{
 		c = colors.get(rand.nextInt(colors.size() - 1));
 		for(int i = 0; i < baronNumber; i++)
 		{
-			Actor a = new Baron(c);
+			Actor a = new Baron("Baron " + i ,c);
 			actors.add(a);
 
 			numberTest = 0;

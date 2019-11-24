@@ -56,7 +56,6 @@ public abstract class Sprite extends Parent{
 	{
 		double r = Settings.PIKER_REPRESENTATION_RADIUS;
 		Circle circle = new Circle(GetX(), GetY(), r);
-		circle.setFill(Color.DARKGOLDENROD);
 		circle.toFront();
 		this.shape = circle;
 		this.width = 2 * r;
@@ -67,7 +66,6 @@ public abstract class Sprite extends Parent{
 	{
 		double s = Settings.KNIGHT_REPRESENTATION_SIZE;
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), s, s);
-		rectangle.setFill(Color.DARKGOLDENROD);
 		rectangle.toFront();
 		this.shape = rectangle;
 		this.width = s;
@@ -79,7 +77,6 @@ public abstract class Sprite extends Parent{
 		double w = Settings.ONAGER_REPRESENTATION_WIDTH;
 		double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), w, h);
-		rectangle.setFill(Color.DARKGOLDENROD);
 		rectangle.toFront();
 		this.shape = rectangle;
 		this.width = w;
@@ -136,52 +133,16 @@ public abstract class Sprite extends Parent{
     	this.coordinate = p;
     }
     
-    /*public void SetCellX(int cellX)
-    {
-    	Point2D p = new Point2D(cellX, this.cell.getY());
-    	this.cell = p;
-    }
-    
-    public void SetCellY(int cellY)
-    {
-    	Point2D p = new Point2D(this.cell.getX(), cellY);
-    	this.cell = p;
-    }*/
-    
     public void AddDx(double dx)
     {
-    	coordinate.add(dx, 0);
+    	coordinate = coordinate.add(dx, 0);
     }
     
     public void AddDy(double dy)
     {
-    	coordinate.add(0, dy);
+    	coordinate = coordinate.add(0, dy);
     }
-    
-    /*public int GetCellX()
-    {
-    	return (int) this.cell.getX();
-    }
-    
-    public int GetCellY()
-    {
-    	return (int) this.cell.getY();
-    }
-    
-    public Point2D GetCell()
-    {
-    	return this.cell;
-    }
-    
-    public Point2D GetCoordinate()
-    {
-    	return this.coordinate;
-    }
-    
-    public void SetCell(Point2D cell)
-    {
-    	this.cell = cell;
-    }*/
+ 
     
     public void SetCoordinate(Point2D coordinate)
     {

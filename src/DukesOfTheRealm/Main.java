@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.shape.*;
 
 import Soldiers.*;
+import UI.CastleUI;
 import Utility.FPS;
 import Utility.Input;
 import Utility.Settings;

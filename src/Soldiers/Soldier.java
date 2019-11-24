@@ -7,6 +7,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate {
@@ -19,7 +20,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected Ost itsOst = null; 
 //	protected double movement;
 	protected boolean onField = false;
-	protected boolean canMove = false;
+	protected boolean canMove = true;
 	protected boolean isArrived;
 	
 	public Soldier(Pane layer, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
@@ -74,10 +75,11 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void Move()
 	{
-		int horizontalDirection = itsOst.GetDestination().GetX() > itsOst.GetOrigin().GetX() ? 1 : -1;
+		/*int horizontalDirection = itsOst.GetDestination().GetX() > itsOst.GetOrigin().GetX() ? 1 : -1;
 		int verticalDirection = itsOst.GetDestination().GetY() > itsOst.GetOrigin().GetX() ? 1 : -1;
 		boolean toggleXMovement = true;
-		boolean toggleYMovement = true;
+		boolean toggleYMovement = true;*/
+		this.AddDx(1);
 		
 		/*toggleXMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getX() 
 				== Grid.GetCellWithCoordinates(itsOst.getDestination().GetX(), itsOst.getDestination().GetY()).getX() ? false : true;
@@ -97,7 +99,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		}*/
 	}
 	
-	public void Start()
+	public void Start(Color color)
 	{
 		switch (this.type)
 		{
@@ -115,6 +117,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		}
 		
 		canMove = true;
+		this.GetShape().setFill(color);
 		this.getLayer().getChildren().add(this.GetShape());
 		UpdateUIShape();
 	}

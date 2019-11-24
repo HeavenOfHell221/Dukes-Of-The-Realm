@@ -8,6 +8,7 @@ import Utility.FPS;
 import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 public class Ost implements IUpdate{
 	
@@ -19,9 +20,9 @@ public class Ost implements IUpdate{
 	private ArrayList<Soldier> soldiers;
 	private boolean fullyDeployed = false;
 	private int speed;
-
+	private Color color;
 	
-	public Ost(Castle origin, Castle destination, int nbPikers, int nbKnights, int nbOnagers)
+	public Ost(Castle origin, Castle destination, int nbPikers, int nbKnights, int nbOnagers, Color color)
 	{
 		this.origin = origin;
 		this.destination = destination;
@@ -30,12 +31,15 @@ public class Ost implements IUpdate{
 		this.nbOnagers = nbOnagers;
 		this.soldiers = new ArrayList<Soldier>();
 		this.speed = SetOstSpeed();
+		this.color = color;
 	}
 
 	public void Update(long now, boolean pause)
 	{
 		if (!this.fullyDeployed)
 			DeployOneSoldiersWave();
+		else
+			soldiers.forEach(soldier -> soldier.Update(now, pause));
 	}
 	
 	private int SetOstSpeed()
@@ -70,9 +74,9 @@ public class Ost implements IUpdate{
 		Pane layer = this.origin.getLayer();
 		switch (soldierType.get())
 		{
-		case Piker: this.soldiers.add(new Piker(layer, x, y)); break;
-		case Knight: this.soldiers.add(new Knight(layer, x, y)); break;
-		case Onager: this.soldiers.add(new Onager(layer, x, y)); break;
+		case Piker: this.soldiers.add(new Piker(layer, x, y, color)); break;
+		case Knight: this.soldiers.add(new Knight(layer, x, y, color)); break;
+		case Onager: this.soldiers.add(new Onager(layer, x, y, color)); break;
 		default: break;
 		}
 	}

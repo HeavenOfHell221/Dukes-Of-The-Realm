@@ -9,8 +9,8 @@ import javafx.scene.shape.Rectangle;
 
 public class DukeAI extends Duke {
 
-	public DukeAI(Color myColor)
+	public DukeAI(String name, Color myColor)
 	{
-		super(myColor);
+		super(name, myColor);
 	}
 }

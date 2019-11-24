@@ -1,6 +1,7 @@
-package Duke;
+package UI;
 
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Kingdom;
 import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
@@ -22,14 +23,29 @@ public class CastleUI {
 		this.t = new Text();
 		this.t.setFont(new Font(20));
 		this.t.setWrappingWidth(500);
-		this.t.setTextAlignment(TextAlignment.JUSTIFY);
-		this.t.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.05), 200);
+		this.t.setTextAlignment(TextAlignment.CENTER);
+		this.t.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.05), 150);
 	}
 	
 	public void Update()
 	{
 		if(this.castle != null)
-			this.t.setText("Florin : " + this.castle.GetTotalFlorin() +  " | level : " + this.castle.GetLevel());
+		{
+			if(this.castle.GetActor() == Kingdom.GetPlayer())
+				this.t.setText(
+					"Name : " + castle.GetActor().GetName() + "\n" + 
+					"Level : " + this.castle.GetLevel() + "\n" +
+					Settings.FLORIN_PER_SECOND*this.castle.GetLevel() + " Florin(s) / s" + "\n" +
+					"Florin : " + (int)this.castle.GetTotalFlorin() + "\n\n" +
+					"Piker : " + this.castle.GetReserveOfSoldiers().getNbPikers() + "\n" +
+					"Knights : " + this.castle.GetReserveOfSoldiers().getNbKnights() + "\n" +
+					"Onager : " + this.castle.GetReserveOfSoldiers().getNbOnagers() + "\n");
+			else
+				this.t.setText(
+						"Name : " + castle.GetActor().GetName() + "\n" + 
+						"Florin : " + (int)this.castle.GetTotalFlorin() +  " | level : " + this.castle.GetLevel());
+		}
+			
 	}
 	
 	public void SwitchCastle(Castle castle)

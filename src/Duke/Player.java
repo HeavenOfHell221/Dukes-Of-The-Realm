@@ -3,6 +3,7 @@ package Duke;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
+import UI.CastleUI;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
@@ -17,9 +18,9 @@ public class Player extends Actor {
 	
 	private Castle lastCastleClicked;
 	
-	public Player(Color myColor)
+	public Player(String name, Color myColor)
 	{
-		super(myColor);
+		super(name, myColor);
 	}
 	
 	@Override

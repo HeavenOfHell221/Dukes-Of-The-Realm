@@ -15,6 +15,7 @@ import Utility.FPS;
 import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
@@ -29,15 +30,16 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		None;
 	}
 	
-	private int totalFlorin; 							// L'argent que contient le chateau
+	private double totalFlorin; 							// L'argent que contient le chateau
 	private int level; 									// Le niveau du chateau
-	private ArrayList<Soldier> reserveOfSoldiers; 		// La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
+	private ReserveOfSoldiers reserveOfSoldiers; 		// La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
 	private Actor actor; 								// Le proprietaire du chateau 
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
 	private int productionTime; 						// Le temps restant a la production de l'unite de production
 	private Ost ost = null;
 	private Soldier firstSoldier = null;				// ***** PROVISOIRE *****
 	private Orientation orientation;
+	private Color myColor;
 	
 	/* Constructeur */
 	Castle(Pane layer, double x, double y, int level, Actor actor)
@@ -48,10 +50,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.actor = actor;
 		this.productionUnit = null;
 		this.productionTime = 0;
-		this.reserveOfSoldiers = new ArrayList<Soldier>();
+		this.reserveOfSoldiers = new ReserveOfSoldiers();
 		this.ost = null;
 		this.productionUnit = new ArrayDeque<IProductionUnit>();
 		this.orientation = SetOrientation();
+		this.myColor = actor.GetMyColor();
 	}
 	
 	private Orientation SetOrientation()
@@ -108,15 +111,15 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/* Met a jour l'argent total du chateau */
 	private void UpdateFlorin()
 	{
-		AddFlorin(Settings.FLORIN_FACTOR * level);
+		AddFlorin(Settings.FLORIN_PER_SECOND * level * FPS.deltaTime);
 	}
 	
-	public void AddFlorin(int amount)
+	public void AddFlorin(double amount)
 	{
 		totalFlorin += amount;
 	}
 	
-	public boolean RemoveFlorin(int amount)
+	public boolean RemoveFlorin(double amount)
 	{
 		if(EnoughOfFlorin(amount))
 		{
@@ -126,7 +129,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return false;
 	}
 	
-	public boolean EnoughOfFlorin(int amount)
+	public boolean EnoughOfFlorin(double amount)
 	{
 		return (amount <= totalFlorin);
 	}
@@ -137,14 +140,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 			return;
 		
 		this.productionUnit.addLast(newProduction);
-	}
-	
-	public void InflictDamage(SoldierEnum type)
-	{		
-		this.reserveOfSoldiers.stream()
-			.filter(soldier -> soldier.GetType() == type)
-			.limit(1)
-			.forEach(soldier -> soldier.InflictDamage());
 	}
 	
 	public int GetProductionCost()
@@ -164,11 +159,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 				if(p.getClass() == Castle.class)
 					LevelUp();
 				else if(p.getClass() == Piker.class)
-					this.reserveOfSoldiers.add((Piker)p);
+					this.reserveOfSoldiers.AddPiker();
 				else if(p.getClass() == Onager.class)
-					this.reserveOfSoldiers.add((Onager)p);
+					this.reserveOfSoldiers.AddOnager();
 				else if(p.getClass() == Knight.class)
-					this.reserveOfSoldiers.add((Knight)p);
+					this.reserveOfSoldiers.AddKnight();
 				
 				if(this.productionUnit.size() > 0)
 				{
@@ -183,7 +178,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return production.GetProductionTime();
 	}
 
-	public int GetTotalFlorin() {
+	public double GetTotalFlorin() {
 		return totalFlorin;
 	}
 
@@ -209,13 +204,13 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	{
 		if (this.ost == null)
 		{
-			this.ost = new Ost(this, this, nbPikers, nbKnights, nbOnagers);
+			this.ost = new Ost(this, this, nbPikers, nbKnights, nbOnagers, myColor);
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean AddFirstSoldier()
+	/*public boolean AddFirstSoldier()
 	{
 		if (this.firstSoldier == null)
 		{
@@ -223,10 +218,15 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 			return true;
 		}
 		return false;
-	}
+	}*/
 	
 	public int GetLevel()
 	{
 		return level;
+	}
+	
+	public ReserveOfSoldiers GetReserveOfSoldiers()
+	{
+		return reserveOfSoldiers;
 	}
 }

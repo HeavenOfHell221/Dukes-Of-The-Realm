@@ -8,9 +8,9 @@ import javafx.scene.paint.Color;
 
 public class Baron extends Duke {
 
-	public Baron(Color myColor)
+	public Baron(String name, Color myColor)
 	{
-		super(myColor);
+		super(name, myColor);
 	}
 
 	@Override

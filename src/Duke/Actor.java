@@ -14,13 +14,15 @@ public abstract class Actor extends Parent{
 	private Color myColor;
 	static private Castle lastPlayerCastleClicked;
 	static private Castle lastOtherCastleClicked;
+	private String name = "";
 
 	
-	Actor(Color myColor)
+	Actor(String name, Color myColor)
 	{
 		this.myColor = myColor;
 		this.myCastles = new ArrayList<Castle>();
 		Actor.lastPlayerCastleClicked = null;
+		this.name = name;
 	}
 	
 	protected abstract void CastleHandle(MouseEvent e);
@@ -74,5 +76,10 @@ public abstract class Actor extends Parent{
 	public void SetLastOtherCastleClicked(Castle lastOtherCastleClcked) 
 	{
 		Actor.lastOtherCastleClicked = lastOtherCastleClcked;
+	}
+	
+	public String GetName()
+	{
+		return name;
 	}
 }
