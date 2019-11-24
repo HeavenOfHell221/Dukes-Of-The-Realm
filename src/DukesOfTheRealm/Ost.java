@@ -13,63 +13,59 @@ public class Ost implements IUpdate{
 	
 	private Castle origin;
 	private Castle destination;
-	private int nb_piker;
-	private int nb_knight;
-	private int nb_onager;
+	private int nbPikers;
+	private int nbKnights;
+	private int nbOnagers;
 	private ArrayList<Soldier> soldiers;
+	private boolean fullyDeployed = false;
 	private int speed;
 
 	
-	public Ost(Castle origin, Castle destination, int nb_piker, int nb_knight, int nb_onager)
+	public Ost(Castle origin, Castle destination, int nbPikers, int nbKnights, int nbOnagers)
 	{
 		this.origin = origin;
 		this.destination = destination;
-		this.nb_piker = nb_piker;
-		this.nb_knight = nb_knight;
-		this.nb_onager = nb_onager;
+		this.nbPikers = nbPikers;
+		this.nbKnights = nbKnights;
+		this.nbOnagers = nbOnagers;
 		this.soldiers = new ArrayList<Soldier>();
 		this.speed = SetOstSpeed();
-		//DeploySoldiers();
 	}
 
 	public void Update(long now, boolean pause)
 	{
-		//TO DO
+		if (!this.fullyDeployed)
+			DeployOneSoldiersWave();
 	}
 	
 	private int SetOstSpeed()
 	{
 		int minimalSpeed = Settings.KNIGHT_SPEED;
-		minimalSpeed = (this.nb_piker > 0) ? Settings.PIKER_SPEED : minimalSpeed;
-		minimalSpeed = (this.nb_onager > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
+		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
+		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
 		return minimalSpeed;
 	}
 	
-	
-	private void DeploySoldiers()
+	// Pour le moment les unités apparaissent toutes à droite du château
+	private void DeployOneSoldiersWave()
 	{
-		int nb_soldier = this.nb_piker + this.nb_knight + this.nb_onager;
-		int currentSpawn = 0;
+		int nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
+		int nbSpawn = (this.soldiers.size() <= (nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS : (nbSoldiers - this.soldiers.size());
+		int thirdOfCastle = Settings.CASTLE_SIZE / 3;
 		
-		while (nb_soldier > 0 && currentSpawn < Settings.SIMULTANEOUS_SPAWNS)
+		for (int i = 0; i < nbSpawn; i++)
 		{
-			switch (currentSpawn)
-			{
-			case 0:
-				//SpawnSoldier(/** coord x **/, /** coord y **/);
-				break;
-			case 1:
-				//SpawnSoldier(/** coord x **/, /** coord y **/);
-				break;
-			case 2:
-				//SpawnSoldier(/** coord x **/, /** coord y **/);
-				break;
-			}
+			SpawnSoldier(this.origin.GetX() + Settings.CASTLE_SIZE, this.origin.GetY() + (thirdOfCastle * i));
+		}
+		
+		if (this.soldiers.size() == nbSoldiers) {
+			this.fullyDeployed = true;
 		}
 	}
 	
 	private void SpawnSoldier(int x, int y)
 	{
+		System.out.println("x = " + x + " et y = " + y);
 		AtomicReference<SoldierEnum> soldierType = GetNextAvailableSoldier();
 		Pane layer = this.origin.getLayer();
 		switch (soldierType.get())
@@ -84,19 +80,19 @@ public class Ost implements IUpdate{
 	private AtomicReference<SoldierEnum> GetNextAvailableSoldier()
 	{
 		AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
-		slowestType.set(SoldierEnum.Knight);
-		this.soldiers.stream()
-			.filter(soldier -> soldier.GetType() == SoldierEnum.Onager)
-			.forEach(soldier -> {
-				if (!soldier.isOnField())
-					slowestType.set(SoldierEnum.Onager);
-				});
-		this.soldiers.stream()
-		.filter(soldier -> soldier.GetType() == SoldierEnum.Piker)
-		.forEach(soldier -> {
-			if (!soldier.isOnField())
-				slowestType.set(SoldierEnum.Piker);
-			});
+		long nbCreatedPikers = this.soldiers.stream()
+				.filter(soldier -> soldier.GetType() == SoldierEnum.Piker)
+				.count();
+		long nbCreatedOnagers = this.soldiers.stream()
+				.filter(soldier -> soldier.GetType() == SoldierEnum.Onager)
+				.count();
+		
+		if (nbCreatedOnagers < this.nbOnagers)
+			slowestType.set(SoldierEnum.Onager);
+		else if (nbCreatedPikers < this.nbPikers)
+			slowestType.set(SoldierEnum.Piker);
+		else
+			slowestType.set(SoldierEnum.Knight);
 		return slowestType;
 	}
 	

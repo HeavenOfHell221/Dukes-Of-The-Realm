@@ -11,5 +11,6 @@ public class Onager extends Soldier {
 	{
 		super(layer, x, y, 1000, 50, 1, 5, 10);
 		this.type = SoldierEnum.Onager;
+		Start();
 	}
 }

@@ -11,5 +11,6 @@ public class Knight extends Soldier {
 	{
 		super(layer, x, y, 500, 20, 6, 3, 5);
 		this.type = SoldierEnum.Knight;
+		Start();
 	}
 }

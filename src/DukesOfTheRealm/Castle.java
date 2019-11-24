@@ -91,23 +91,24 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return false;
 	}
 	
-	/* Augemente le chateau d'un niveau */
+	/* Augmente le chateau d'un niveau */
 	public void LevelUp()
 	{
 		this.level++;
-	}
-	
-	/* Met a jour l'argent total du chateau */
-	private void UpdateFlorin()
-	{
-		AddFlorin(Settings.FLORIN_FACTOR * level);
 	}
 	
 	public void Update(long now, boolean pause)
 	{	
 		UpdateFlorin();
 		UpdateProduction();
-		if(this.ost != null) UpdateOst(now, pause);
+		if(this.ost != null)
+			UpdateOst(now, pause);
+	}
+	
+	/* Met a jour l'argent total du chateau */
+	private void UpdateFlorin()
+	{
+		AddFlorin(Settings.FLORIN_FACTOR * level);
 	}
 	
 	public void AddFlorin(int amount)
@@ -204,26 +205,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.ost.Update(now, pause);
 	}
 	
-//	public boolean AddOst(Castle destination, int speed)
-//	{
-//		if(this.ost == null)
-//		{
-//			this.ost = new Ost(this.getLayer(), GetX(), GetY(), this, destination, speed);
-//			if(this.ost != null)
-//			{
-//				this.ost.AddPikerRepresentation(10);
-//				this.getLayer().getChildren().add(this.ost.GetShape());
-//			}
-//			return true;
-//		}
-//		return false;
-//	}
-	
-	public boolean CreateOst(ArrayList<Soldier> soldiers)
+	public boolean CreateOst(int nbPikers, int nbKnights, int nbOnagers)
 	{
 		if (this.ost == null)
 		{
-			//this.ost = new Ost(this, this, soldiers);
+			this.ost = new Ost(this, this, nbPikers, nbKnights, nbOnagers);
 			return true;
 		}
 		return false;
@@ -234,7 +220,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		if (this.firstSoldier == null)
 		{
 			this.firstSoldier = new Knight(this.getLayer(), GetX(), GetY());
-			this.firstSoldier.Start();
 			return true;
 		}
 		return false;

@@ -11,5 +11,6 @@ public class Piker extends Soldier {
 	{
 		super(layer, x, y, 100, 5, 2, 1, 1);
 		this.type = SoldierEnum.Piker;
+		Start();
 	}
 }
