@@ -14,4 +14,11 @@ public class Piker extends Soldier {
 		super(layer, x, y, Settings.PIKER_COST, Settings.PIKER_TIME_PRODUCTION, speed, Settings.PIKER_HP, Settings.PIKER_DAMAGE);
 		this.type = SoldierEnum.Piker;
 	}
+	
+	@Override
+	public void Start(Color color) 
+	{
+		AddKnightRepresentation();
+		super.Start(color);
+	}
 }

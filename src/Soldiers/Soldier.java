@@ -45,23 +45,13 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	/********************* START *********************/
 	/*************************************************/
 	
+	public void Start()
+	{
+		
+	}
+	
 	public void Start(Color color)
 	{
-		switch (this.type)
-		{
-		case Piker:
-			AddPikerRepresentation();
-			break;
-		case Knight:
-			AddKnightRepresentation();
-			break;
-		case Onager:
-			AddOnagerRepresentation();
-			break;
-		default:
-			break;
-		}
-		
 		canMove = true;
 		this.GetShape().setFill(color);
 		this.getLayer().getChildren().add(this.GetShape());

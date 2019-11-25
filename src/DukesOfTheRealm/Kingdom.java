@@ -2,20 +2,14 @@ package DukesOfTheRealm;
 
 import javafx.geometry.Point2D;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Queue;
 import java.util.Random;
-import java.util.ArrayList;
-
 import Duke.*;
 import UI.CastleUI;
 import Utility.Settings;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class Kingdom extends Parent implements IUpdate{
 
@@ -57,7 +51,7 @@ public class Kingdom extends Parent implements IUpdate{
 		colors.add(Color.DEEPPINK);
 		colors.add(Color.KHAKI);
 		colors.add(Color.LINEN);
-		colors.add(Color.OLIVE);
+		colors.add(Color.DARKOLIVEGREEN);
 	}
 	
 	
@@ -65,6 +59,7 @@ public class Kingdom extends Parent implements IUpdate{
 	/********************* START *********************/
 	/*************************************************/
 	
+	@Override
 	public void Start()
 	{
 		castleUIInstance = CastleUI.GetInstance();
@@ -79,20 +74,21 @@ public class Kingdom extends Parent implements IUpdate{
 	/******************** UPDATE *********************/
 	/*************************************************/
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{
 		if(canUpdate)
 		{
 			castles.forEach(castle -> castle.Update(now, pause));
-			UpdateUI();
+			UpdateUI(now, pause);
 		}
 	}
 	
-	private void UpdateUI()
+	private void UpdateUI(long now, boolean pause)
 	{
 		if(castleUIInstance != null)
 		{
-			castleUIInstance.Update();
+			castleUIInstance.Update(now, pause);
 		}
 	}
 	
@@ -108,7 +104,7 @@ public class Kingdom extends Parent implements IUpdate{
 			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
 			if (newCastle.GetActor() == player)
-				newCastle.CreateOst(7, 5, 2);
+				newCastle.CreateOst(4, 1, 4);
 			return AddCastle(newCastle);
 		}
 		return false;

@@ -1,23 +1,14 @@
 package DukesOfTheRealm;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Queue;
 import java.util.Random;
 
 import Duke.*;
 import Soldiers.*;
 import Utility.Time;
 import Utility.Settings;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
@@ -68,15 +59,28 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/********************* START *********************/
 	/*************************************************/
 	
+	@Override
 	public void Start()
 	{
 		actor.AddCastle(this);
+		
+		if(actor.getClass() == Baron.class)
+		{
+			RandomSoldier();
+			RandomFlorin();
+		}
+		else
+		{
+			StartSoldier();
+			StartFlorin();
+		}
 	}
 	
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{	
 		if(!pause)
@@ -90,7 +94,10 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	private void UpdateFlorin()
 	{
-		AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime);
+		if(actor.getClass() != Baron.class)
+			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime);
+		else
+			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime * 0.1);
 	}
 	
 	private void UpdateProduction()
@@ -127,6 +134,32 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
+	
+	private void RandomSoldier()
+	{
+		Random rand = new Random();
+		this.reserveOfSoldiers.setNbKnights(rand.nextInt(5) * level);
+		this.reserveOfSoldiers.setNbPikers(rand.nextInt(10) * level);
+		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(5) + level);
+	}
+	
+	private void StartSoldier()
+	{
+		this.reserveOfSoldiers.setNbKnights(10);
+		this.reserveOfSoldiers.setNbPikers(30);
+		this.reserveOfSoldiers.setNbOnagers(5);
+	}
+	
+	private void StartFlorin()
+	{
+		this.totalFlorin += 500;
+	}
+	
+	private void RandomFlorin()
+	{
+		Random rand = new Random();
+		this.totalFlorin += (rand.nextInt(1000) * level);
+	}
 	
 	private Orientation SetOrientation()
 	{
@@ -210,6 +243,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 	
+	@Override
 	public int GetProductionCost()
 	{
 		return Settings.LEVEL_UP_COST_FACTOR * level;
@@ -232,6 +266,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.actor = actor;
 	}
 	
+	@Override
 	public int GetProductionTime()
 	{
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
@@ -246,4 +281,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	{
 		return reserveOfSoldiers;
 	}
+	
+	
 }

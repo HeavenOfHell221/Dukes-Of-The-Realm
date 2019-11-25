@@ -1,80 +1,126 @@
 package UI;
 
-
-
+import Duke.Baron;
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.IUpdate;
 import DukesOfTheRealm.Kingdom;
 import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class CastleUI extends Parent{
+public class CastleUI extends Parent implements IUpdate{
 
 	private Castle castle;
 	private Text text;
 	private Pane playfieldLayer;
+	private Rectangle backgroundText;
 	private Rectangle background;
 	
 	private static CastleUI instance = new CastleUI();
 	
 	private CastleUI()
 	{	
-		this.playfieldLayer = playfieldLayer;
 		this.text = new Text();
+		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
+		this.backgroundText = new Rectangle(200, 0);
+
+	    this.background.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.05), 0);
+		this.backgroundText.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 125);
+		this.text.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 150);
+	}
+	
+	public void Start()
+	{
+		StartText();
+		StartBackgroundText();
+		StartBackground();
+	}
+	
+	private void StartText()
+	{
 		this.text.setFont(new Font(20));
 		this.text.setWrappingWidth(200);
 		this.text.setTextAlignment(TextAlignment.CENTER);
-		this.text.setFill(Color.FLORALWHITE);
-		
-		this.background = new Rectangle(200, 0);
-		this.background.setArcHeight(60);
-		this.background.setArcWidth(60);
-		
-		DropShadow e = new DropShadow();
-	    e.setWidth(10);
-	    e.setHeight(10);
-	    e.setOffsetX(3);
-	    e.setOffsetY(3);
-	    e.setRadius(10);
-	    
-	    background.setEffect(e);
-		
-		this.background.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 25);
-		this.text.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 50);
+		this.text.setFill(Color.WHITE);
 	}
 	
-	public void Update()
+	private void StartBackgroundText()
+	{
+		Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.BLACK)};
+	    LinearGradient lg2 = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
+		this.backgroundText.setStroke(lg2);
+		
+		this.backgroundText.setStrokeWidth(3);
+		this.backgroundText.setArcHeight(60);
+		this.backgroundText.setArcWidth(60);
+	}
+	
+	private void StartBackground()
+	{
+		Stop[] stops = new Stop[] { new Stop(0, Color.web("#753F0B")), new Stop(1, Color.web("#4F2E0F"))};
+	    LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.REFLECT, stops);
+	    this.background.setFill(lg1);
+	     
+		DropShadow a = new DropShadow();
+		a.setOffsetX(-2);
+		a.setOffsetY(0);
+		a.setSpread(0.1);
+		a.setRadius(5);
+		a.setColor(Color.BLACK);
+		this.background.setEffect(a);
+	}
+	
+	public void Update(long now, boolean pause)
 	{
 		if(this.castle != null)
 		{
-			if(this.castle.GetActor() == Kingdom.GetPlayer())
+			if(this.castle.GetActor().getClass() == Baron.class)
 			{
-				this.text.setText(
-					"Name : " + castle.GetActor().GetName() + "\n" + 
-					"Level : " + this.castle.GetLevel() + "\n" +
-					Settings.FLORIN_PER_SECOND*this.castle.GetLevel() + " Florin(s) / s" + "\n" +
-					"Florin : " + (int)this.castle.GetTotalFlorin() + "\n\n" +
-					"Piker : " + this.castle.GetReserveOfSoldiers().getNbPikers() + "\n" +
-					"Knights : " + this.castle.GetReserveOfSoldiers().getNbKnights() + "\n" +
-					"Onager : " + this.castle.GetReserveOfSoldiers().getNbOnagers() + "\n");
-				this.background.setHeight(280);
+				TextBaron();
 			}
 			else
 			{
-				this.text.setText(
-						"Name : " + castle.GetActor().GetName() + "\n" + 
-						"Level : " + this.castle.GetLevel());
-				this.background.setHeight(100);
+				TextPlayerOrDuke();
 			}
 		}
 			
+	}
+	
+	private void TextPlayerOrDuke()
+	{
+		this.text.setText(
+				"Name : " + castle.GetActor().GetName() + "\n" + 
+				"Level : " + this.castle.GetLevel() + "\n" +
+				Settings.FLORIN_PER_SECOND * this.castle.GetLevel() + " Florin(s) / s" + "\n" +
+				"Florin : " + (int)this.castle.GetTotalFlorin() + "\n\n" +
+				"Piker : " + this.castle.GetReserveOfSoldiers().getNbPikers() + "\n" +
+				"Knights : " + this.castle.GetReserveOfSoldiers().getNbKnights() + "\n" +
+				"Onager : " + this.castle.GetReserveOfSoldiers().getNbOnagers() + "\n");
+		this.backgroundText.setHeight(280);
+	}
+	
+	private void TextBaron()
+	{
+		this.text.setText(
+				"Name : " + castle.GetActor().GetName() + "\n" + 
+				"Level : " + this.castle.GetLevel() + "\n" +
+				String.format("%.1f" , 0.1 * Settings.FLORIN_PER_SECOND * this.castle.GetLevel()) + " Florin(s) / s" + "\n" +
+				"Florin : " + (int)this.castle.GetTotalFlorin() + "\n\n" +
+				"Piker : " + this.castle.GetReserveOfSoldiers().getNbPikers() + "\n" +
+				"Knights : " + this.castle.GetReserveOfSoldiers().getNbKnights() + "\n" +
+				"Onager : " + this.castle.GetReserveOfSoldiers().getNbOnagers() + "\n");
+		this.backgroundText.setHeight(280);
 	}
 	
 	public void SwitchCastle(Castle castle)
@@ -101,9 +147,11 @@ public class CastleUI extends Parent{
 	{
 		this.playfieldLayer = playfieldLayer;
 		this.playfieldLayer.getChildren().add(instance);
-		instance.getChildren().add(this.background);
+		
+		Start();
+		
+		instance.getChildren().add(background);
+		instance.getChildren().add(this.backgroundText);
 		instance.getChildren().add(this.text);
 	}
-	
-	
 }

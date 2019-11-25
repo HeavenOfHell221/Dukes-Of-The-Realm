@@ -14,4 +14,11 @@ public class Onager extends Soldier {
 		super(layer, x, y, Settings.ONAGER_COST, Settings.ONAGER_TIME_PRODUCTION, speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 		this.type = SoldierEnum.Onager;
 	}
+	
+	@Override
+	public void Start(Color color) 
+	{
+		AddOnagerRepresentation();
+		super.Start(color);
+	}
 }

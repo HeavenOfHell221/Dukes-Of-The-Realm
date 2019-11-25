@@ -14,4 +14,11 @@ public class Knight extends Soldier {
 		super(layer, x, y, Settings.KNIGHT_COST, Settings.KNIGHT_TIME_PRODUCTION, speed, Settings.KNIGHT_HP, Settings.PIKER_DAMAGE);
 		this.type = SoldierEnum.Knight;
 	}
+
+	@Override
+	public void Start(Color color) 
+	{
+		AddKnightRepresentation();
+		super.Start(color);
+	}
 }

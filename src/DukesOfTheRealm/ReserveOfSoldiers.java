@@ -78,4 +78,16 @@ public class ReserveOfSoldiers {
 	public int getNbOnagers() {
 		return nbOnagers;
 	}
+
+	public void setNbPikers(int nbPikers) {
+		this.nbPikers = nbPikers;
+	}
+
+	public void setNbKnights(int nbKnights) {
+		this.nbKnights = nbKnights;
+	}
+
+	public void setNbOnagers(int nbOnagers) {
+		this.nbOnagers = nbOnagers;
+	}
 }

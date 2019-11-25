@@ -130,7 +130,7 @@ public class Ost implements IUpdate{
 	{
 		if(pause)
 			lastTime = now;
-		if(now - lastTime > Settings.GAME_FREQUENCY)
+		if(now - lastTime > Settings.GAME_FREQUENCY * 2)
 		{
 			lastTime = now;
 			return true;

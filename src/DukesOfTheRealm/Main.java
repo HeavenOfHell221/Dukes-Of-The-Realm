@@ -55,13 +55,14 @@ public class Main extends Application implements IUpdate{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
-		
+
 		// create layers
 		playfieldLayer = new Pane();
 		root.getChildren().add(playfieldLayer);
 		
-		loadGame();
+		Start();
 		
 		gameLoop = new AnimationTimer() 
 		{
@@ -89,7 +90,7 @@ public class Main extends Application implements IUpdate{
 		gameLoop.start();
 	}
 	
-	private void loadGame()
+	public void Start()
 	{
 		/* INPUT */
 		input = new Input(scene);
