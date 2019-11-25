@@ -31,6 +31,8 @@ public class Kingdom extends Parent implements IUpdate{
 	private static Player player;
 	
 	private final Pane playfieldLayer; // Le layer du jeu (groupe de base)
+	CastleUI castleUIInstance;
+	private boolean canUpdate = false;
 	
 	
 	/*************************************************/
@@ -60,9 +62,43 @@ public class Kingdom extends Parent implements IUpdate{
 	
 	
 	/*************************************************/
-	/******************** METHODES *******************/
+	/********************* START *********************/
 	/*************************************************/
-
+	
+	public void Start()
+	{
+		castleUIInstance = CastleUI.GetInstance();
+		
+		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
+		castles.forEach(castle -> castle.Start());
+		
+		canUpdate = true;
+	}
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+	
+	public void Update(long now, boolean pause)
+	{
+		if(canUpdate)
+		{
+			castles.forEach(castle -> castle.Update(now, pause));
+			UpdateUI();
+		}
+	}
+	
+	private void UpdateUI()
+	{
+		if(castleUIInstance != null)
+		{
+			castleUIInstance.Update();
+		}
+	}
+	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
 	
 	public boolean CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
 	{
@@ -83,7 +119,7 @@ public class Kingdom extends Parent implements IUpdate{
 		Random rand = new Random();
 		
 		Color c = colors.get(rand.nextInt(colors.size() - 1));
-		Kingdom.player = new Player("Player", c);
+		Kingdom.player = new Player("Player", Color.DARKRED);
 		actors.add(Kingdom.player);
 		colors.remove(c);
 		
@@ -136,11 +172,6 @@ public class Kingdom extends Parent implements IUpdate{
 		}
 	}
 	
-	public void Start()
-	{
-		castles.forEach(castle -> castle.Start());
-	}
-	
 	private boolean AddCastle(Castle castle)
 	{
 		return castles.add(castle);
@@ -165,26 +196,15 @@ public class Kingdom extends Parent implements IUpdate{
 	{
 		return Math.sqrt((y - castle.GetY()) * (y - castle.GetY()) + (x - castle.GetX()) * (x - castle.GetX()));
 	}
-
-	public void Update(long now, boolean pause)
-	{
-		castles.forEach(castle -> castle.Update(now, pause));
-		UpdateUI();
-	}
-	
-	private void UpdateUI()
-	{
-		CastleUI instance = CastleUI.GetInstance();
-		if(instance != null)
-		{
-			instance.Update();
-		}
-	}
 	
 	public Point2D GetRandomCoordinates(Random rand)
 	{
 		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE)), rand.nextInt(Settings.SCENE_HEIGHT - (2 * Settings.CASTLE_SIZE)));
 	}
+	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
 	
 	public static Player GetPlayer()
 	{

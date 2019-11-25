@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import Soldiers.*;
-import Utility.FPS;
+import Utility.Time;
 import Utility.Settings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class Ost implements IUpdate{
+	
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
 	
 	private Castle origin;
 	private Castle destination;
@@ -23,6 +27,9 @@ public class Ost implements IUpdate{
 	private Color color;
 	private long lastTime;
 
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
 	
 	public Ost(Castle origin, Castle destination, int nbPikers, int nbKnights, int nbOnagers, Color color)
 	{
@@ -32,24 +39,29 @@ public class Ost implements IUpdate{
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
 		this.soldiers = new ArrayList<Soldier>();
-		this.speed = SetOstSpeed();
 		this.color = color;
 	}
-
+	
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
+	public void Start()
+	{
+		this.speed = SetOstSpeed();
+	}
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+	
 	public void Update(long now, boolean pause)
 	{
 		if (!this.fullyDeployed && Time(now, pause))
 			DeployOneSoldiersWave();
-		else if(!pause)
+		
+		if(!pause)
 			soldiers.forEach(soldier -> soldier.Update(now, pause));
-	}
-	
-	private int SetOstSpeed()
-	{
-		int minimalSpeed = Settings.KNIGHT_SPEED;
-		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
-		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
-		return minimalSpeed;
 	}
 	
 	// Pour le moment les unités apparaissent toutes à droite du château
@@ -69,16 +81,20 @@ public class Ost implements IUpdate{
 		}
 	}
 	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+		
 	private void SpawnSoldier(int x, int y)
 	{
-		System.out.println("x = " + x + " et y = " + y);
+		//System.out.println("x = " + x + " et y = " + y);
 		AtomicReference<SoldierEnum> soldierType = GetNextAvailableSoldier();
 		Pane layer = this.origin.getLayer();
 		switch (soldierType.get())
 		{
-		case Piker: this.soldiers.add(new Piker(layer, x, y, color)); break;
-		case Knight: this.soldiers.add(new Knight(layer, x, y, color)); break;
-		case Onager: this.soldiers.add(new Onager(layer, x, y, color)); break;
+		case Piker: Piker piker = new Piker(layer, x, y, speed); this.soldiers.add(piker); piker.Start(color); break;
+		case Knight: Knight knight = new Knight(layer, x, y, speed); this.soldiers.add(knight); knight.Start(color); break;
+		case Onager: Onager onager = new Onager(layer, x, y, speed); this.soldiers.add(onager); onager.Start(color); break;
 		default: break;
 		}
 	}
@@ -102,6 +118,30 @@ public class Ost implements IUpdate{
 		return slowestType;
 	}
 	
+	private int SetOstSpeed()
+	{
+		int minimalSpeed = Settings.KNIGHT_SPEED;
+		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
+		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
+		return minimalSpeed;
+	}
+	
+	private boolean Time(long now, boolean pause)
+	{
+		if(pause)
+			lastTime = now;
+		if(now - lastTime > Settings.GAME_FREQUENCY)
+		{
+			lastTime = now;
+			return true;
+		}
+		return false;
+	}
+	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+	
 	public Castle GetOrigin()
 	{
 		return origin;
@@ -115,17 +155,5 @@ public class Ost implements IUpdate{
 	public double GetSpeed()
 	{
 		return speed;
-	}
-	
-	private boolean Time(long now, boolean pause)
-	{
-		if(pause)
-			lastTime = now;
-		if(now - lastTime > Settings.GAME_FREQUENCY)
-		{
-			lastTime = now;
-			return true;
-		}
-		return false;
 	}
 }

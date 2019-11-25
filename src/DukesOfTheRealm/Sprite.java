@@ -1,6 +1,7 @@
 package DukesOfTheRealm;
 
 import javafx.scene.Parent;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,6 +12,10 @@ import javafx.geometry.Point2D;
 
 public abstract class Sprite extends Parent{
 
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+	
     private Pane canvas;
     private Shape shape;
 	
@@ -18,6 +23,9 @@ public abstract class Sprite extends Parent{
     private double width;
     private double height;
  
+    /*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
     
     public Sprite (Pane canvas, double x, double y)
     {
@@ -30,7 +38,26 @@ public abstract class Sprite extends Parent{
     	this.canvas = canvas;
     	this.coordinate = new Point2D(point2D.getX(), point2D.getY());
     }
-
+    
+    /*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
+	
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+	
+    public void UpdateUIShape()
+    {
+    	shape.relocate(GetX(), GetY());
+    }
+	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
     private void AddToLayerShape(Shape shape)
 	{
     	this.shape = shape;
@@ -47,6 +74,16 @@ public abstract class Sprite extends Parent{
 	{
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), size, size);
 		this.shape = rectangle;
+		
+		 DropShadow e = new DropShadow();
+	    e.setWidth(5);
+	    e.setHeight(5);
+	    e.setOffsetX(2);
+	    e.setOffsetY(2);
+	    e.setRadius(10);
+	    e.setColor(Color.BLACK);
+		    
+		rectangle.setEffect(e);
 		this.width = size;
 		this.height = size;
 		this.shape.toBack();
@@ -83,15 +120,14 @@ public abstract class Sprite extends Parent{
 		this.height = h;
 	}
 	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+	
 	public Shape GetShape()
 	{
 		return shape;
 	}
-    
-    public void UpdateUIShape()
-    {
-    	shape.relocate(GetX(), GetY());
-    }
     
     public int GetX() 
     {
@@ -106,7 +142,6 @@ public abstract class Sprite extends Parent{
     {
     	return new Point2D(GetX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), GetY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
     }
-    
     
     public double getWidth() 
     {
@@ -142,8 +177,7 @@ public abstract class Sprite extends Parent{
     {
     	coordinate = coordinate.add(0, dy);
     }
- 
-    
+  
     public void SetCoordinate(Point2D coordinate)
     {
     	this.coordinate = coordinate;

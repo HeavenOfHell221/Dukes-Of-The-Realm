@@ -9,10 +9,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Piker extends Soldier {
 
-	public Piker(Pane layer, double x, double y, Color color)
+	public Piker(Pane layer, double x, double y, int speed)
 	{
-		super(layer, x, y, Settings.PIKER_COST, Settings.PIKER_TIME_PRODUCTION, Settings.PIKER_SPEED, Settings.PIKER_HP, Settings.PIKER_DAMAGE);
+		super(layer, x, y, Settings.PIKER_COST, Settings.PIKER_TIME_PRODUCTION, speed, Settings.PIKER_HP, Settings.PIKER_DAMAGE);
 		this.type = SoldierEnum.Piker;
-		Start(color);
 	}
 }

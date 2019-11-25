@@ -24,7 +24,7 @@ import javafx.scene.shape.*;
 
 import Soldiers.*;
 import UI.CastleUI;
-import Utility.FPS;
+import Utility.Time;
 import Utility.Input;
 import Utility.Settings;
 import javafx.geometry.Point2D;
@@ -40,7 +40,7 @@ public class Main extends Application implements IUpdate{
 	private Group root;
 	
 	private Input input;
-	private FPS fps;
+	private Time fps;
 	private Kingdom kingdom;
 	
 	private CastleUI castleUI;
@@ -99,12 +99,11 @@ public class Main extends Application implements IUpdate{
 		rand = new Random();
 		
 		/* FPS MANAGER */
-		fps = new FPS(false);
+		fps = new Time(false);
 		
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);
 		playfieldLayer.getChildren().add(kingdom);
-		kingdom.CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
 		kingdom.Start();
 		
 		/* UI */

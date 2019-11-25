@@ -62,18 +62,18 @@ public class Settings {
 	public static final int ONAGER_COST = 0;
 	
 	/* Speed */
-	public static final int PIKER_SPEED = 2;
-	public static final int KNIGHT_SPEED = 6;
-	public static final int ONAGER_SPEED = 6;
+	public static final int PIKER_SPEED = 40;
+	public static final int KNIGHT_SPEED = 60;
+	public static final int ONAGER_SPEED = 20;
 	
 	/* Production time in second */
-	public static final int PIKER_TIME_PRODUCTION = 10;
+	public static final int PIKER_TIME_PRODUCTION = 15;
 	public static final int KNIGHT_TIME_PRODUCTION = 30;
 	public static final int ONAGER_TIME_PRODUCTION = 60;
 
 	/* Graphics */
-	public static final int PIKER_REPRESENTATION_RADIUS = 10;
-	public static final int KNIGHT_REPRESENTATION_SIZE = 21;
-	public static final int ONAGER_REPRESENTATION_WIDTH = 39;
-	public static final int ONAGER_REPRESENTATION_HEIGHT = 19;	
+	public static final int PIKER_REPRESENTATION_RADIUS = 8;
+	public static final int KNIGHT_REPRESENTATION_SIZE = 16;
+	public static final int ONAGER_REPRESENTATION_WIDTH = 32;
+	public static final int ONAGER_REPRESENTATION_HEIGHT = 16;	
 }

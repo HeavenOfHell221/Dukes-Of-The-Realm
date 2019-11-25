@@ -9,10 +9,9 @@ import javafx.scene.paint.Color;
 
 public class Knight extends Soldier {
 
-	public Knight(Pane layer, double x, double y, Color color) 
+	public Knight(Pane layer, double x, double y, int speed) 
 	{
-		super(layer, x, y, Settings.KNIGHT_COST, Settings.KNIGHT_TIME_PRODUCTION, Settings.KNIGHT_SPEED, Settings.KNIGHT_HP, Settings.PIKER_DAMAGE);
+		super(layer, x, y, Settings.KNIGHT_COST, Settings.KNIGHT_TIME_PRODUCTION, speed, Settings.KNIGHT_HP, Settings.PIKER_DAMAGE);
 		this.type = SoldierEnum.Knight;
-		Start(color);
 	}
 }

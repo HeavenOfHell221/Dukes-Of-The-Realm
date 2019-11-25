@@ -1,7 +1,7 @@
 package Soldiers;
 
 import DukesOfTheRealm.*;
-import Utility.FPS;
+import Utility.Time;
 import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -11,6 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate {
+	
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+	
 	protected SoldierEnum type;
 	protected int productionCost;
 	protected int productionTime;
@@ -18,10 +23,13 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected int damage;
 	protected int speed;
 	protected Ost itsOst = null; 
-//	protected double movement;
 	protected boolean onField = false;
-	protected boolean canMove = true;
+	protected boolean canMove = false;
 	protected boolean isArrived = false;
+	
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
 	
 	public Soldier(Pane layer, double x, double y, int productionCost, int productionTime, int speed, int health, int damage)
 	{
@@ -31,13 +39,61 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		this.health = health;
 		this.damage = damage;
 		this.speed = speed;
-//		this.movement = (this.itsOst.getOstSpeed() * (double) Settings.CELL_SIZE) / (double) this.timeToMove; //Settings.TIME_FACTOR;
 	}
 	
-	public void InflictDamage()
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
+	public void Start(Color color)
 	{
-		health--;
+		switch (this.type)
+		{
+		case Piker:
+			AddPikerRepresentation();
+			break;
+		case Knight:
+			AddKnightRepresentation();
+			break;
+		case Onager:
+			AddOnagerRepresentation();
+			break;
+		default:
+			break;
+		}
+		
+		canMove = true;
+		this.GetShape().setFill(color);
+		this.getLayer().getChildren().add(this.GetShape());
+		UpdateUIShape();
 	}
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+	
+	public void Update(long now, boolean pause)
+	{		
+		if (canMove)
+		{
+			Move();
+			UpdateUIShape();
+		}
+	}
+	
+	private void Move()
+	{
+		this.AddDx(this.speed * Time.deltaTime);
+	}
+	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
+	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
 
 	public int GetProductionTime()
 	{
@@ -62,63 +118,5 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	public boolean isOnField()
 	{
 		return onField;
-	}
-
-	public void Update(long now, boolean pause)
-	{		
-		if (canMove)
-		{
-			Move();
-			UpdateUIShape();
-		}
-	}
-	
-	private void Move()
-	{
-		/*int horizontalDirection = itsOst.GetDestination().GetX() > itsOst.GetOrigin().GetX() ? 1 : -1;
-		int verticalDirection = itsOst.GetDestination().GetY() > itsOst.GetOrigin().GetX() ? 1 : -1;
-		boolean toggleXMovement = true;
-		boolean toggleYMovement = true;*/
-		this.AddDx(1);
-		
-		/*toggleXMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getX() 
-				== Grid.GetCellWithCoordinates(itsOst.getDestination().GetX(), itsOst.getDestination().GetY()).getX() ? false : true;
-		 
-		
-		toggleYMovement = Grid.GetCellWithCoordinates(GetX(), GetY()).getY()
-				== Grid.GetCellWithCoordinates(itsOst.getDestination().GetX(), itsOst.getDestination().GetY()).getY() ? false : true;
-		
-		if(toggleXMovement)
-		{
-			AddDx(this.speed * horizontalDirection);
-		}
-		
-		else if(toggleYMovement)
-		{
-			AddDy(this.speed * verticalDirection);
-		}*/
-	}
-	
-	public void Start(Color color)
-	{
-		switch (this.type)
-		{
-		case Piker:
-			AddPikerRepresentation();
-			break;
-		case Knight:
-			AddKnightRepresentation();
-			break;
-		case Onager:
-			AddOnagerRepresentation();
-			break;
-		default:
-			break;
-		}
-		
-		canMove = true;
-		this.GetShape().setFill(color);
-		this.getLayer().getChildren().add(this.GetShape());
-		UpdateUIShape();
 	}
 }

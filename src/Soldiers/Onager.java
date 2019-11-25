@@ -9,10 +9,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Onager extends Soldier {
 
-	public Onager(Pane layer, double x, double y, Color color)
+	public Onager(Pane layer, double x, double y, int speed)
 	{
-		super(layer, x, y, Settings.ONAGER_COST, Settings.ONAGER_TIME_PRODUCTION, Settings.ONAGER_SPEED, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
+		super(layer, x, y, Settings.ONAGER_COST, Settings.ONAGER_TIME_PRODUCTION, speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 		this.type = SoldierEnum.Onager;
-		Start(color);
 	}
 }

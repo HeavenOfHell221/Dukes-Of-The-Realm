@@ -7,6 +7,7 @@ import DukesOfTheRealm.Kingdom;
 import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -35,6 +36,15 @@ public class CastleUI extends Parent{
 		this.background = new Rectangle(200, 0);
 		this.background.setArcHeight(60);
 		this.background.setArcWidth(60);
+		
+		DropShadow e = new DropShadow();
+	    e.setWidth(10);
+	    e.setHeight(10);
+	    e.setOffsetX(3);
+	    e.setOffsetY(3);
+	    e.setRadius(10);
+	    
+	    background.setEffect(e);
 		
 		this.background.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 25);
 		this.text.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 50);
