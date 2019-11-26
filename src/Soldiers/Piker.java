@@ -16,9 +16,9 @@ public class Piker extends Soldier {
 	}
 	
 	@Override
-	public void Start(Color color) 
+	public void Awake(Color color, Point2D castleDestinationCoordinate)
 	{
 		AddKnightRepresentation();
-		super.Start(color);
+		super.Awake(color, castleDestinationCoordinate);
 	}
 }

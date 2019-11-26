@@ -28,7 +28,6 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived = false;
-	protected Deque<Point2D> path;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -51,13 +50,11 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	@Override
 	public void Start()
 	{
-		Grid.GetPath(GetCoordinate());
 		canMove = true;
 	}
 	
-	public void Start(Color color)
-	{
-		
+	public void Awake(Color color, Point2D castleDestinationCoordinate)
+	{	
 		this.GetShape().setFill(color);
 		this.getLayer().getChildren().add(this.GetShape());
 		UpdateUIShape();
@@ -81,10 +78,6 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	private void Move()
 	{
 		this.AddDx(this.speed * Time.deltaTime);
-		
-		/*
-		 * Pour chaque Point2D dans le path -> Aller jusqu'a ce point puis prendre le prochain et y aller...
-		 */
 	}
 	
 	/*************************************************/

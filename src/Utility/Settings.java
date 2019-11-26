@@ -21,7 +21,7 @@ public class Settings {
 	public static final int SIMULTANEOUS_SPAWNS = 3;
 	
 	/* Grid */
-	public static final int CELL_SIZE = 5;
+	public static final int CELL_SIZE = 61;
 	
 	/****************************************************/
 	/********************** CASTLE **********************/

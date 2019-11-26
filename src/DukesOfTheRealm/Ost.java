@@ -94,9 +94,9 @@ public class Ost implements IUpdate{
 		Pane layer = this.origin.getLayer();
 		switch (soldierType.get())
 		{
-		case Piker: Piker piker = new Piker(layer, x, y, speed); this.soldiers.add(piker); piker.Start(color); break;
-		case Knight: Knight knight = new Knight(layer, x, y, speed); this.soldiers.add(knight); knight.Start(color); break;
-		case Onager: Onager onager = new Onager(layer, x, y, speed); this.soldiers.add(onager); onager.Start(color); break;
+		case Piker: Piker piker = new Piker(layer, x, y, speed); this.soldiers.add(piker); piker.Awake(color, destination.GetCoordinate()); break;
+		case Knight: Knight knight = new Knight(layer, x, y, speed); this.soldiers.add(knight); knight.Awake(color, destination.GetCoordinate()); break;
+		case Onager: Onager onager = new Onager(layer, x, y, speed); this.soldiers.add(onager); onager.Awake(color, destination.GetCoordinate()); break;
 		default: break;
 		}
 	}

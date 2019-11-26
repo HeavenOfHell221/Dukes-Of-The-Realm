@@ -24,6 +24,7 @@ public class AStar {
         this.diagonalCost = diagonalCost;
         setInitialNode(initialNode);
         setFinalNode(finalNode);
+        //System.out.println(cols);
         this.searchArea = new Node[rows][cols];
         this.openList = new PriorityQueue<Node>(new Comparator<Node>() {
             @Override
@@ -50,7 +51,8 @@ public class AStar {
     }
 
     public void setBlocks(int[][] blocksArray) {
-        for (int i = 0; i < blocksArray.length; i++) {
+        for (int i = 0; i < blocksArray.length; i++) 
+        {
             int row = blocksArray[i][0];
             int col = blocksArray[i][1];
             setBlock(row, col);
@@ -156,7 +158,9 @@ public class AStar {
         return openList.size() == 0;
     }
 
-    private void setBlock(int row, int col) {
+    private void setBlock(int row, int col) 
+    {
+    	//System.out.println(row + " " + col);
         this.searchArea[row][col].setBlock(true);
     }
 

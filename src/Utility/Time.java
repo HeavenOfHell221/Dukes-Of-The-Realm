@@ -49,14 +49,14 @@ public class Time implements IUpdate{
 	public void Update(long now, boolean pause)
 	{
 		FrameStart(now);
-		/*if((now - lastUpdate) >= cooldown)
+		if((now - lastUpdate) >= cooldown)
 		{
 			lastUpdate = now;
 			if(print)
 				System.out.println(counter + " fps");
 			counter = 0;
 		}
-		counter++;*/
+		counter++;
 	}
 	
 	public void FrameStart(long now)
