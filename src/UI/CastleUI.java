@@ -40,6 +40,7 @@ public class CastleUI extends Parent implements IUpdate{
 		this.text.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 150);
 	}
 	
+	@Override
 	public void Start()
 	{
 		StartText();
@@ -81,6 +82,7 @@ public class CastleUI extends Parent implements IUpdate{
 		this.background.setEffect(a);
 	}
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{
 		if(this.castle != null)

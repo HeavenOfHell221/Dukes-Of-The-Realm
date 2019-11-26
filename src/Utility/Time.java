@@ -34,6 +34,7 @@ public class Time implements IUpdate{
 	/********************* START *********************/
 	/*************************************************/
 	
+	@Override
 	public void Start()
 	{
 		
@@ -44,6 +45,7 @@ public class Time implements IUpdate{
 	/******************** UPDATE *********************/
 	/*************************************************/
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{
 		FrameStart(now);
@@ -66,7 +68,7 @@ public class Time implements IUpdate{
 			return;
 		}
 		this.deltaTime = (now - this.oldTime);
-		this.deltaTime /= (double)Settings.GAME_FREQUENCY;
+		this.deltaTime /= Settings.GAME_FREQUENCY;
 		this.oldTime = now;
 	}
 	

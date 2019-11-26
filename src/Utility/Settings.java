@@ -20,6 +20,9 @@ public class Settings {
 	public static final int NB_TYPES_OF_TROOPS = 3;
 	public static final int SIMULTANEOUS_SPAWNS = 3;
 	
+	/* Grid */
+	public static final int CELL_SIZE = 5;
+	
 	/****************************************************/
 	/********************** CASTLE **********************/
 	/****************************************************/

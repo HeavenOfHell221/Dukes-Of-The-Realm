@@ -30,6 +30,7 @@ public class Player extends Actor {
 		CastleUI.GetInstance().SwitchCastle(castle);
 	}
 
+	@Override
 	protected void CastleHandle(MouseEvent e)
 	{
 		if(e.getButton() == MouseButton.PRIMARY) // Clique gauche

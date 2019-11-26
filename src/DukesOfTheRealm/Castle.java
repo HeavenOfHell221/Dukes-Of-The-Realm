@@ -50,7 +50,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.productionTime = 0;
 		this.reserveOfSoldiers = new ReserveOfSoldiers();
 		this.ost = null;
-		this.productionUnit = new ArrayDeque<IProductionUnit>();
+		this.productionUnit = new ArrayDeque<>();
 		this.orientation = SetOrientation();
 		this.myColor = actor.GetMyColor();
 	}

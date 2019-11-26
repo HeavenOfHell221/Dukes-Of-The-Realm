@@ -48,6 +48,7 @@ public class Main extends Application implements IUpdate{
 	private long lastTime = 0;
 	private boolean pause = false;
 
+	@Override
 	public void start(Stage primaryStage) 
 	{
 		root = new Group();
@@ -90,6 +91,7 @@ public class Main extends Application implements IUpdate{
 		gameLoop.start();
 	}
 	
+	@Override
 	public void Start()
 	{
 		/* INPUT */
@@ -111,6 +113,7 @@ public class Main extends Application implements IUpdate{
 		CastleUI.GetInstance().SetPlayfieldLayer(playfieldLayer);
 	}
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{
 		fps.Update(now, pause);

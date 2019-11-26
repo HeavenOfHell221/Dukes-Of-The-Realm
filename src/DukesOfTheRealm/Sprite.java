@@ -138,6 +138,11 @@ public abstract class Sprite extends Parent{
         return (int) coordinate.getY();
     }
     
+    public Point2D GetCoordinate()
+    {
+    	return coordinate;
+    }
+    
     public Point2D GetCenter()
     {
     	return new Point2D(GetX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), GetY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));

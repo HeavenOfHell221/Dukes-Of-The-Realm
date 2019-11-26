@@ -13,6 +13,7 @@ public abstract class Duke extends Actor{
 		super(name, myColor);
 	}
 	
+	@Override
 	protected void CastleHandle(MouseEvent e)
 	{
 		if(e.getButton() == MouseButton.PRIMARY) // Clique gauche

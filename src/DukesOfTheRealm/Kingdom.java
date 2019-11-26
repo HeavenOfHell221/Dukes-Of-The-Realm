@@ -37,9 +37,9 @@ public class Kingdom extends Parent implements IUpdate{
 	public Kingdom(Pane playfieldLayer)
 	{
 		this.playfieldLayer = playfieldLayer;
-		this.castles = new ArrayList<Castle>();
-		this.actors = new ArrayList<Actor>();
-		this.colors = new ArrayList<Color>();
+		this.castles = new ArrayList<>();
+		this.actors = new ArrayList<>();
+		this.colors = new ArrayList<>();
 		colors.add(Color.DIMGRAY);
 		colors.add(Color.DARKORANGE);
 		colors.add(Color.HOTPINK);

@@ -38,7 +38,7 @@ public class Ost implements IUpdate{
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
-		this.soldiers = new ArrayList<Soldier>();
+		this.soldiers = new ArrayList<>();
 		this.color = color;
 	}
 	
@@ -46,6 +46,7 @@ public class Ost implements IUpdate{
 	/********************* START *********************/
 	/*************************************************/
 	
+	@Override
 	public void Start()
 	{
 		this.speed = SetOstSpeed();
@@ -55,6 +56,7 @@ public class Ost implements IUpdate{
 	/******************** UPDATE *********************/
 	/*************************************************/
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{
 		if (!this.fullyDeployed && Time(now, pause))

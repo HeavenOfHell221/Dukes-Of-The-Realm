@@ -1,5 +1,7 @@
 package Soldiers;
 
+import java.util.Deque;
+
 import DukesOfTheRealm.*;
 import Utility.Time;
 import Utility.Settings;
@@ -26,6 +28,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived = false;
+	protected Deque<Point2D> path;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -45,9 +48,10 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	/********************* START *********************/
 	/*************************************************/
 	
+	@Override
 	public void Start()
 	{
-		
+		Grid.GetPath(GetCoordinate());
 	}
 	
 	public void Start(Color color)
@@ -62,6 +66,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	/******************** UPDATE *********************/
 	/*************************************************/
 	
+	@Override
 	public void Update(long now, boolean pause)
 	{		
 		if (canMove)
@@ -74,6 +79,10 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	private void Move()
 	{
 		this.AddDx(this.speed * Time.deltaTime);
+		
+		/*
+		 * Pour chaque Point2D dans le path -> Aller jusqu'a ce point puis prendre le prochain et y aller...
+		 */
 	}
 	
 	/*************************************************/
@@ -85,11 +94,13 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
+	@Override
 	public int GetProductionTime()
 	{
 		return productionTime;
 	}
 	
+	@Override
 	public int GetProductionCost()
 	{
 		return productionCost;

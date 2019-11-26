@@ -20,7 +20,7 @@ public abstract class Actor extends Parent{
 	Actor(String name, Color myColor)
 	{
 		this.myColor = myColor;
-		this.myCastles = new ArrayList<Castle>();
+		this.myCastles = new ArrayList<>();
 		Actor.lastPlayerCastleClicked = null;
 		this.name = name;
 	}
