@@ -52,14 +52,16 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	public void Start()
 	{
 		Grid.GetPath(GetCoordinate());
+		canMove = true;
 	}
 	
 	public void Start(Color color)
 	{
-		canMove = true;
+		
 		this.GetShape().setFill(color);
 		this.getLayer().getChildren().add(this.GetShape());
 		UpdateUIShape();
+		Start();
 	}
 	
 	/*************************************************/
