@@ -28,6 +28,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived = false;
+	public boolean isDead = false;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -53,7 +54,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		canMove = true;
 	}
 	
-	public void Awake(Color color, Point2D castleDestinationCoordinate)
+	public void Awake(Color color)
 	{	
 		this.GetShape().setFill(color);
 		this.GetLayer().getChildren().add(this.GetShape());
@@ -78,6 +79,13 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	private void Move()
 	{
 		this.AddDx(this.speed * Time.deltaTime);
+		
+		if(GetX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04))
+		{
+			RemoveShapeToLayer();
+			canMove = false;
+			isDead = true;
+		}
 	}
 	
 	/*************************************************/

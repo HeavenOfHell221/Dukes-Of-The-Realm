@@ -74,27 +74,27 @@ public abstract class Sprite extends Parent{
 		rectangle.setEffect(e);
 		this.width = size;
 		this.height = size;
-		this.shape.toBack();
+		this.shape.toFront();
 	}
 	
 	protected void AddPikerRepresentation()
 	{
 		double r = Settings.PIKER_REPRESENTATION_RADIUS;
 		Circle circle = new Circle(GetX(), GetY(), r);
-		circle.toFront();
 		this.shape = circle;
 		this.width = 2 * r;
 		this.height = 2 * r;
+		circle.toFront();
 	}
 	
 	protected void AddKnightRepresentation()
 	{
 		double s = Settings.KNIGHT_REPRESENTATION_SIZE;
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), s, s);
-		rectangle.toFront();
 		this.shape = rectangle;
 		this.width = s;
 		this.height = s;
+		rectangle.toFront();
 	}
 	
 	protected void AddOnagerRepresentation()
@@ -102,10 +102,15 @@ public abstract class Sprite extends Parent{
 		double w = Settings.ONAGER_REPRESENTATION_WIDTH;
 		double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), w, h);
-		rectangle.toFront();
 		this.shape = rectangle;
 		this.width = w;
 		this.height = h;
+		rectangle.toFront();
+	}
+	
+	public void RemoveShapeToLayer()
+	{
+		canvas.getChildren().remove(this.shape);
 	}
 	
 	/*************************************************/

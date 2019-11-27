@@ -16,9 +16,9 @@ public class Onager extends Soldier {
 	}
 	
 	@Override
-	public void Awake(Color color, Point2D castleDestinationCoordinate)
+	public void Awake(Color color)
 	{
 		AddOnagerRepresentation();
-		super.Awake(color, castleDestinationCoordinate);
+		super.Awake(color);
 	}
 }

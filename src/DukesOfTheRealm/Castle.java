@@ -17,7 +17,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 	
-	private enum Orientation
+	public enum Orientation
 	{
 		North,
 		South,
@@ -305,4 +305,8 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return door;
 	}
 	
+	public Orientation GetOrientation()
+	{
+		return orientation;
+	}
 }

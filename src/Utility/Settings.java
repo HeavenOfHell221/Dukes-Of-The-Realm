@@ -36,12 +36,12 @@ public class Settings {
 	public static final int LEVEL_UP_DURATION_FACTOR = 50;
 	
 	/* Graphics*/
-	public static final int CASTLE_SIZE = 61;
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 300;
+	public static final int CASTLE_SIZE = 60;
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 350;
 	
 	/* Castle number */
 	public static final int AI_NUMBER = 3;
-	public static final int BARON_NUMBER = 8;
+	public static final int BARON_NUMBER = 6;
 	public static final int NB_TOTAL_TEST_CREATE_CASTLE = 1000 * 1000;
 	
 	
