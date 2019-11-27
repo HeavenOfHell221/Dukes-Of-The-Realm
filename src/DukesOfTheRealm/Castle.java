@@ -9,6 +9,7 @@ import Utility.Time;
 import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
@@ -34,6 +35,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private Ost ost;
 	private Orientation orientation;
 	private Color myColor;
+	private Rectangle door;
 	
 	
 	/*************************************************/
@@ -51,7 +53,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.reserveOfSoldiers = new ReserveOfSoldiers();
 		this.ost = null;
 		this.productionUnit = new ArrayDeque<>();
-		this.orientation = SetOrientation();
 		this.myColor = actor.GetMyColor();
 	}
 	
@@ -181,6 +182,23 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	public void AddRepresentation()
 	{
 		AddCastleRepresentation(Settings.CASTLE_SIZE);
+		AddDoorRepresentation();
+	}
+	
+	private void AddDoorRepresentation()
+	{
+		this.orientation = SetOrientation();
+		
+		switch(this.orientation)
+		{
+			case North: this.door = new Rectangle(GetX() + Settings.CASTLE_SIZE / 4, GetY(), Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6); break;
+			case South: this.door = new Rectangle(GetX() + Settings.CASTLE_SIZE / 4, GetY() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6); break;
+			case East: this.door = new Rectangle(GetX() +  + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, GetY() + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
+			case West: this.door = new Rectangle(GetX(), GetY() + + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
+			default: this.door = new Rectangle(0, 0, 0, 0); break;	
+		}
+		
+		
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
@@ -282,5 +300,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return reserveOfSoldiers;
 	}
 	
+	public Rectangle GetDoor()
+	{
+		return door;
+	}
 	
 }

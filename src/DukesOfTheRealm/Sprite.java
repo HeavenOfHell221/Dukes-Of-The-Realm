@@ -57,19 +57,7 @@ public abstract class Sprite extends Parent{
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
-    private void AddToLayerShape(Shape shape)
-	{
-    	this.shape = shape;
-		canvas.getChildren().add(shape);
-		shape.toBack();
-	}
-    
-    public void removeFromLayerShape() 
-    {
-        this.canvas.getChildren().remove(this.shape);
-    }
-    
+
     protected void AddCastleRepresentation(double size)
 	{
 		Rectangle rectangle = new Rectangle(GetX(), GetY(), size, size);
@@ -157,7 +145,7 @@ public abstract class Sprite extends Parent{
         return height;
     }
 
-    public Pane getLayer() 
+    public Pane GetLayer() 
     {
         return canvas;
     }

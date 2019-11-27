@@ -91,7 +91,7 @@ public class Ost implements IUpdate{
 	{
 		//System.out.println("x = " + x + " et y = " + y);
 		AtomicReference<SoldierEnum> soldierType = GetNextAvailableSoldier();
-		Pane layer = this.origin.getLayer();
+		Pane layer = this.origin.GetLayer();
 		switch (soldierType.get())
 		{
 		case Piker: Piker piker = new Piker(layer, x, y, speed); this.soldiers.add(piker); piker.Awake(color, destination.GetCoordinate()); break;

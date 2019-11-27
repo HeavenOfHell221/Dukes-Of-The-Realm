@@ -56,7 +56,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	public void Awake(Color color, Point2D castleDestinationCoordinate)
 	{	
 		this.GetShape().setFill(color);
-		this.getLayer().getChildren().add(this.GetShape());
+		this.GetLayer().getChildren().add(this.GetShape());
 		UpdateUIShape();
 		Start();
 	}

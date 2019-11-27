@@ -100,8 +100,8 @@ public class Kingdom extends Parent implements IUpdate{
 		{
 			Castle newCastle = new Castle(layer, coordinate.getX(), coordinate.getY(), level, actor);
 			newCastle.AddRepresentation();
-			//Grid.AddCastle(newCastle);
 			this.getChildren().add(newCastle.GetShape());
+			this.getChildren().add(newCastle.GetDoor());
 			if (newCastle.GetActor() == player)
 				newCastle.CreateOst(4, 1, 4);
 			return AddCastle(newCastle);
