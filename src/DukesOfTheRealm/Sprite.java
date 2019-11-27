@@ -60,21 +60,24 @@ public abstract class Sprite extends Parent{
 
     protected void AddCastleRepresentation(double size)
 	{
-		Rectangle rectangle = new Rectangle(GetX(), GetY(), size, size);
-		this.shape = rectangle;
+		Rectangle r = new Rectangle(GetX(), GetY(), size, size);
+		this.shape = r;
 		
-		 DropShadow e = new DropShadow();
+		DropShadow e = new DropShadow();
 	    e.setWidth(5);
 	    e.setHeight(5);
 	    e.setOffsetX(2);
 	    e.setOffsetY(2);
 	    e.setRadius(10);
 	    e.setColor(Color.BLACK);
-		    
-		rectangle.setEffect(e);
+		r.setEffect(e);
+		
 		this.width = size;
 		this.height = size;
-		this.shape.toFront();
+		
+		r.setStroke(Color.BLACK);
+		r.setStrokeType(StrokeType.OUTSIDE);
+		r.setStrokeWidth(1.5);
 	}
 	
 	protected void AddPikerRepresentation()
@@ -84,28 +87,37 @@ public abstract class Sprite extends Parent{
 		this.shape = circle;
 		this.width = 2 * r;
 		this.height = 2 * r;
-		circle.toFront();
+		
+		circle.setStroke(Color.BLACK);
+		circle.setStrokeType(StrokeType.OUTSIDE);
+		circle.setStrokeWidth(1.5);
 	}
 	
 	protected void AddKnightRepresentation()
 	{
 		double s = Settings.KNIGHT_REPRESENTATION_SIZE;
-		Rectangle rectangle = new Rectangle(GetX(), GetY(), s, s);
-		this.shape = rectangle;
+		Rectangle r = new Rectangle(GetX(), GetY(), s, s);
+		this.shape = r;
 		this.width = s;
 		this.height = s;
-		rectangle.toFront();
+		
+		r.setStroke(Color.BLACK);
+		r.setStrokeType(StrokeType.OUTSIDE);
+		r.setStrokeWidth(1.5);
 	}
 	
 	protected void AddOnagerRepresentation()
 	{
 		double w = Settings.ONAGER_REPRESENTATION_WIDTH;
 		double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
-		Rectangle rectangle = new Rectangle(GetX(), GetY(), w, h);
-		this.shape = rectangle;
+		Rectangle r = new Rectangle(GetX(), GetY(), w, h);
+		this.shape = r;
 		this.width = w;
 		this.height = h;
-		rectangle.toFront();
+		
+		r.setStroke(Color.BLACK);
+		r.setStrokeType(StrokeType.OUTSIDE);
+		r.setStrokeWidth(1.5);
 	}
 	
 	public void RemoveShapeToLayer()

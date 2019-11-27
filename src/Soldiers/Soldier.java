@@ -78,9 +78,13 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void Move()
 	{
-		this.AddDx(this.speed * Time.deltaTime);
-		
-		if(GetX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04))
+		this.AddDy(this.speed * Time.deltaTime);
+		testMustDie();
+	}
+	
+	private void testMustDie()
+	{
+		if(GetX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04) || GetY() > Settings.SCENE_HEIGHT || GetX() <= 0 || GetY() <= 0)
 		{
 			RemoveShapeToLayer();
 			canMove = false;

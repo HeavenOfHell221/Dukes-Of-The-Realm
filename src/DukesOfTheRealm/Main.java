@@ -102,7 +102,7 @@ public class Main extends Application implements IUpdate{
 		rand = new Random();
 		
 		/* FPS MANAGER */
-		fps = new Time(true);
+		fps = new Time(false);
 		
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);

@@ -257,6 +257,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		return false;
 	}
 	
+	public void RemoveOst()
+	{
+		this.ost = null;
+	}
+	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
