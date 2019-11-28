@@ -56,8 +56,10 @@ public class Main extends Application implements IUpdate{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);
-		primaryStage.setFullScreen(true);
+		primaryStage.setFullScreen(false);
 		primaryStage.show();
+		Settings.SCENE_WIDTH = (int) primaryStage.getWidth();
+		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();
 
 		// create layers
 		playfieldLayer = new Pane();

@@ -86,10 +86,9 @@ public class Ost implements IUpdate{
 			else
 				origin.RemoveOst();
 		}
-		System.out.println(soldiers.size());
 	}
 	
-	// Pour le moment les unités apparaissent toutes à droite du château
+	// Pour le moment les unitï¿½s apparaissent toutes ï¿½ droite du chï¿½teau
 	private void DeployOneSoldiersWave()
 	{
 		int nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
