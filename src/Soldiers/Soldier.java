@@ -78,7 +78,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void Move()
 	{
-		this.AddDy(this.speed * Time.deltaTime);
+		this.AddDx(this.speed * Time.deltaTime);
 		testMustDie();
 	}
 	

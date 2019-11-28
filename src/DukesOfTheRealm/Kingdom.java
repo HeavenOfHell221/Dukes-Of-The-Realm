@@ -103,7 +103,7 @@ public class Kingdom extends Parent implements IUpdate{
 			this.getChildren().add(newCastle.GetShape());
 			this.getChildren().add(newCastle.GetDoor());
 			if(actor.getClass() == DukeAI.class)
-				newCastle.CreateOst(0, 9, 0);
+				newCastle.CreateOst(6, 9, 4);
 			return AddCastle(newCastle);
 		}
 		return false;

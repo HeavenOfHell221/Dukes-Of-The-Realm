@@ -56,7 +56,7 @@ public class Main extends Application implements IUpdate{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);
-		primaryStage.setFullScreen(false);
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
 
 		// create layers
