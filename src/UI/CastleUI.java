@@ -26,6 +26,7 @@ import javafx.scene.text.TextAlignment;
 public class CastleUI extends Parent implements IUpdate{
 
 	private Castle castle;
+	
 	private Text text;
 	private Pane playfieldLayer;
 	private Rectangle backgroundText;
@@ -41,14 +42,14 @@ public class CastleUI extends Parent implements IUpdate{
 	
 	private CastleUI()
 	{	
-		enemyImage = new Image(getClass().getResource("/images/farmer.png").toExternalForm(), 50, 50, true, true);
-		ImageView iv = new ImageView(enemyImage);
+		/*enemyImage = new Image(getClass().getResource("/images/farmer.png").toExternalForm(), 50, 50, true, true);
+		ImageView iv = new ImageView(enemyImage);*/
 		
 		this.text = new Text();
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
 		this.backgroundText = new Rectangle(200, 0);
 		
-		this.buttonCreatePiker = new Button("", iv);
+		this.buttonCreatePiker = new Button();
 		this.buttonCreateKnight = new Button();
 		this.buttonCreateOnager = new Button();
 

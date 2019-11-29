@@ -28,6 +28,7 @@ public class Ost implements IUpdate{
 	private Color color;
 	private long lastTime;
 	private int nbSoldiersSpawned;
+	private final int nbSoldiers;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -42,6 +43,7 @@ public class Ost implements IUpdate{
 		this.nbOnagers = nbOnagers;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
+		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 	}
 	
 	/*************************************************/
@@ -91,7 +93,6 @@ public class Ost implements IUpdate{
 	// Pour le moment les unit�s apparaissent toutes � droite du ch�teau
 	private void DeployOneSoldiersWave()
 	{
-		int nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 		int nbSpawn = (this.soldiers.size() <= (nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS : (nbSoldiers - this.soldiers.size());
 		int thirdOfCastle = Settings.CASTLE_SIZE / 3;
 		
