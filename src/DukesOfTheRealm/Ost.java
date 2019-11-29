@@ -22,13 +22,13 @@ public class Ost implements IUpdate{
 	private int nbPikers;
 	private int nbKnights;
 	private int nbOnagers;
-	private ArrayList<Soldier> soldiers;
-	private boolean fullyDeployed = false;
+	private final int nbSoldiers;
 	private int speed;
+	private ArrayList<Soldier> soldiers;
+	private int nbSoldiersSpawned;
+	private boolean fullyDeployed = false;
 	private Color color;
 	private long lastTime;
-	private int nbSoldiersSpawned;
-	private final int nbSoldiers;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -41,9 +41,9 @@ public class Ost implements IUpdate{
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
+		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
-		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 	}
 	
 	/*************************************************/
@@ -90,24 +90,21 @@ public class Ost implements IUpdate{
 		}
 	}
 	
-	// Pour le moment les unités apparaissent toutes ï¿½ droite du chï¿½teau
 	private void DeployOneSoldiersWave()
 	{
 		int nbSpawn = (this.soldiers.size() <= (nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS : (nbSoldiers - this.soldiers.size());
-		int thirdOfCastle = Settings.CASTLE_SIZE / 3;
-		
 		
 		switch(origin.GetOrientation())
 		{
 			case North:
 			case South:
 				for (int i = 0; i < nbSpawn; i++)
-					SpawnSoldier(this.origin.GetX() + (thirdOfCastle * i), this.origin.GetY());
+					SpawnSoldier(this.origin.GetX() + (Settings.THIRD_OF_CASTLE * i), this.origin.GetY());
 				break;
 			case West:
 			case East:
 				for (int i = 0; i < nbSpawn; i++)
-					SpawnSoldier(this.origin.GetX(), this.origin.GetY() + (thirdOfCastle * i));
+					SpawnSoldier(this.origin.GetX(), this.origin.GetY() + (Settings.THIRD_OF_CASTLE * i));
 				break;
 			default:
 				break;
@@ -132,36 +129,36 @@ public class Ost implements IUpdate{
 			case North:
 				switch (soldierType.get())
 				{
-					case Piker: Piker piker = new Piker(layer, x, y - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
-					case Knight: Knight knight = new Knight(layer, x, y - 10 - Settings.KNIGHT_REPRESENTATION_SIZE, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
-					case Onager: Onager onager = new Onager(layer, x, y - 10 - Settings.ONAGER_REPRESENTATION_HEIGHT, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
+					case Piker: Piker piker = new Piker(layer, x, y - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2, this, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
+					case Knight: Knight knight = new Knight(layer, x, y - 10 - Settings.KNIGHT_REPRESENTATION_SIZE, this, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
+					case Onager: Onager onager = new Onager(layer, x, y - 10 - Settings.ONAGER_REPRESENTATION_HEIGHT, this, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
 					default: break;
 				}
 				break;
 			case South:
 				switch (soldierType.get())
 				{
-					case Piker: Piker piker = new Piker(layer, x, y + Settings.CASTLE_SIZE + 10, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
-					case Knight: Knight knight = new Knight(layer, x, y + Settings.CASTLE_SIZE + 10, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
-					case Onager: Onager onager = new Onager(layer, x, y + Settings.CASTLE_SIZE + 10, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
+					case Piker: Piker piker = new Piker(layer, x, y + Settings.CASTLE_SIZE + 10, this, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
+					case Knight: Knight knight = new Knight(layer, x, y + Settings.CASTLE_SIZE + 10, this, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
+					case Onager: Onager onager = new Onager(layer, x, y + Settings.CASTLE_SIZE + 10, this, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
 					default: break;
 				}
 				break;
 			case West:
 				switch (soldierType.get())
 				{
-					case Piker: Piker piker = new Piker(layer, x - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2, y, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
-					case Knight: Knight knight = new Knight(layer, x - 10 - Settings.KNIGHT_REPRESENTATION_SIZE, y, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
-					case Onager: Onager onager = new Onager(layer, x - 10 - Settings.ONAGER_REPRESENTATION_WIDTH, y, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
+					case Piker: Piker piker = new Piker(layer, x - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2, y, this, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
+					case Knight: Knight knight = new Knight(layer, x - 10 - Settings.KNIGHT_REPRESENTATION_SIZE, y, this, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
+					case Onager: Onager onager = new Onager(layer, x - 10 - Settings.ONAGER_REPRESENTATION_WIDTH, y, this, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
 					default: break;
 				}
 				break;
 			case East:
 				switch (soldierType.get())
 				{
-					case Piker: Piker piker = new Piker(layer, x + Settings.CASTLE_SIZE + 10, y, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
-					case Knight: Knight knight = new Knight(layer, x + Settings.CASTLE_SIZE + 10, y, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
-					case Onager: Onager onager = new Onager(layer, x + Settings.CASTLE_SIZE + 10, y, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
+					case Piker: Piker piker = new Piker(layer, x + Settings.CASTLE_SIZE + 10, y, this, speed); this.soldiers.add(piker); piker.Awake(color); this.nbSoldiersSpawned++; break;
+					case Knight: Knight knight = new Knight(layer, x + Settings.CASTLE_SIZE + 10, y, this, speed); this.soldiers.add(knight); knight.Awake(color); this.nbSoldiersSpawned++; break;
+					case Onager: Onager onager = new Onager(layer, x + Settings.CASTLE_SIZE + 10, y, this, speed); this.soldiers.add(onager); onager.Awake(color); this.nbSoldiersSpawned++; break;
 					default: break;
 				}
 				break;

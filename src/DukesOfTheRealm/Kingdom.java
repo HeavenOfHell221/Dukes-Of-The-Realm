@@ -65,6 +65,7 @@ public class Kingdom extends Parent implements IUpdate{
 		castleUIInstance = CastleUI.GetInstance();
 		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
 		castles.forEach(castle -> castle.Start());
+		Kingdom.player.GetMyCastles().get(0).CreateOst(this.actors.get(1).GetMyCastles().get(0), 6, 9, 0);
 		canUpdate = true;
 	}
 	
@@ -102,8 +103,6 @@ public class Kingdom extends Parent implements IUpdate{
 			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
 			this.getChildren().add(newCastle.GetDoor());
-			if(actor.getClass() == DukeAI.class)
-				newCastle.CreateOst(6, 9, 4);
 			return AddCastle(newCastle);
 		}
 		return false;
