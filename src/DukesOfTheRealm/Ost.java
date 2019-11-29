@@ -90,7 +90,7 @@ public class Ost implements IUpdate{
 		}
 	}
 	
-	// Pour le moment les unitï¿½s apparaissent toutes ï¿½ droite du chï¿½teau
+	// Pour le moment les unités apparaissent toutes ï¿½ droite du chï¿½teau
 	private void DeployOneSoldiersWave()
 	{
 		int nbSpawn = (this.soldiers.size() <= (nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS : (nbSoldiers - this.soldiers.size());
