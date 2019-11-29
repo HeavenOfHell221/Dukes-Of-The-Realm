@@ -73,7 +73,6 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		else
 		{
 			StartSoldier();
-			StartFlorin();
 		}
 	}
 	
@@ -98,7 +97,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		if(actor.getClass() != Baron.class)
 			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime);
 		else
-			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime * 0.1);
+			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime * Settings.FLORIN_FACTOR_BARON);
 	}
 	
 	private void UpdateProduction()
@@ -146,15 +145,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	private void StartSoldier()
 	{
-		this.reserveOfSoldiers.setNbKnights(10);
-		this.reserveOfSoldiers.setNbPikers(30);
-		this.reserveOfSoldiers.setNbOnagers(5);
+		this.reserveOfSoldiers.setNbKnights(Settings.STARTER_KNIGHT);
+		this.reserveOfSoldiers.setNbPikers(Settings.STARTER_PIKER);
+		this.reserveOfSoldiers.setNbOnagers(Settings.STARTER_ONAGER);
 	}
 	
-	private void StartFlorin()
-	{
-		this.totalFlorin += 500;
-	}
 	
 	private void RandomFlorin()
 	{
