@@ -43,9 +43,11 @@ public class CastleUI extends Parent implements IUpdate{
 	{	
 		enemyImage = new Image(getClass().getResource("/images/farmer.png").toExternalForm(), 50, 50, true, true);
 		ImageView iv = new ImageView(enemyImage);
+		
 		this.text = new Text();
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
 		this.backgroundText = new Rectangle(200, 0);
+		
 		this.buttonCreatePiker = new Button("", iv);
 		this.buttonCreateKnight = new Button();
 		this.buttonCreateOnager = new Button();
