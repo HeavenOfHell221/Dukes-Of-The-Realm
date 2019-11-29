@@ -1,7 +1,10 @@
 package DukesOfTheRealm;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Random;
+
+import javafx.geometry.Point2D;
 
 import Duke.*;
 import Soldiers.*;
@@ -36,7 +39,9 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private Orientation orientation;
 	private Color myColor;
 	private Rectangle door;
-	
+	private Point2D[] attackLocations;					// Ordre : Nord -> Est -> Sud -> Ouest
+	private Point2D waitAttackLocation;
+	private int occupiedAttackLocations;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -54,6 +59,8 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.ost = null;
 		this.productionUnit = new ArrayDeque<>();
 		this.myColor = actor.GetMyColor();
+		this.attackLocations = new Point2D[Settings.NB_ATTACK_LOCATIONS];
+		this.occupiedAttackLocations = 0;
 	}
 	
 	/*************************************************/
@@ -74,6 +81,8 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		{
 			StartSoldier();
 		}
+		
+		SetAttackLocations();
 	}
 	
 	/*************************************************/
@@ -241,11 +250,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	}
 	
 
-	public boolean CreateOst(int nbPikers, int nbKnights, int nbOnagers)
+	public boolean CreateOst(Castle destination, int nbPikers, int nbKnights, int nbOnagers)
 	{
 		if (this.ost == null)
 		{
-			this.ost = new Ost(this, this, nbPikers, nbKnights, nbOnagers, this.myColor);
+			this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor);
 			this.ost.Start();
 			return true;
 		}
@@ -255,6 +264,40 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	public void RemoveOst()
 	{
 		this.ost = null;
+	}
+
+	protected void SetAttackLocations() {
+		int x = this.GetX();
+		int y = this.GetY();
+		for (int i = 0; i < Settings.NB_ATTACK_LOCATIONS; i++) {
+			int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE;	// 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
+			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE)	// 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
+			{
+			// North
+			case 0: this.attackLocations[i] = new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y - 10 - Settings.SOLDIER_SIZE); break;
+			// East
+			case 1: this.attackLocations[i] = new Point2D(x + Settings.CASTLE_SIZE + 10, y + (Settings.THIRD_OF_CASTLE * j)); break;
+			// South
+			case 2: this.attackLocations[i] = new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y + Settings.CASTLE_SIZE + 10); break;
+			// West
+			case 3: this.attackLocations[i] = new Point2D(x - 10 - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j)); break;
+			}
+		}
+		this.waitAttackLocation = new Point2D(x, y - 2 * (10 + Settings.SOLDIER_SIZE));
+	}
+	
+	public boolean IsAvailableAttackLocation()
+	{
+		return (this.occupiedAttackLocations < Settings.NB_ATTACK_LOCATIONS);
+	}
+	
+	public Point2D GetNextAttackLocation()
+	{
+		return this.attackLocations[this.occupiedAttackLocations++];
+	}
+	
+	public Point2D GetWaitAttackLocation() {
+		return this.waitAttackLocation;
 	}
 	
 	/*************************************************/
