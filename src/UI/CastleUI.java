@@ -7,13 +7,17 @@ import DukesOfTheRealm.Kingdom;
 import Utility.Settings;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -27,17 +31,32 @@ public class CastleUI extends Parent implements IUpdate{
 	private Rectangle backgroundText;
 	private Rectangle background;
 	
+	private Button buttonCreatePiker;
+	private Button buttonCreateKnight;
+	private Button buttonCreateOnager;
+	
+	private Image enemyImage;
+	
 	private static CastleUI instance = new CastleUI();
 	
 	private CastleUI()
 	{	
+		enemyImage = new Image(getClass().getResource("/images/farmer.png").toExternalForm(), 50, 50, true, true);
+		ImageView iv = new ImageView(enemyImage);
 		this.text = new Text();
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
 		this.backgroundText = new Rectangle(200, 0);
+		this.buttonCreatePiker = new Button("", iv);
+		this.buttonCreateKnight = new Button();
+		this.buttonCreateOnager = new Button();
 
 	    this.background.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.05), 0);
 		this.backgroundText.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 125);
 		this.text.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 150);
+		
+		this.buttonCreatePiker.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 600);
+		this.buttonCreateKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 660);
+		this.buttonCreateOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 720);
 	}
 	
 	@Override
@@ -46,6 +65,14 @@ public class CastleUI extends Parent implements IUpdate{
 		StartText();
 		StartBackgroundText();
 		StartBackground();
+		StartButtons();
+	}
+	
+	private void StartButtons()
+	{
+		this.buttonCreatePiker.setMaxSize(40, 40);
+		this.buttonCreateKnight.setMinSize(50, 50);
+		this.buttonCreateOnager.setMinSize(50, 50);
 	}
 	
 	private void StartText()
@@ -152,8 +179,11 @@ public class CastleUI extends Parent implements IUpdate{
 		
 		Start();
 		
-		instance.getChildren().add(background);
+		instance.getChildren().add(this.background);
 		instance.getChildren().add(this.backgroundText);
 		instance.getChildren().add(this.text);
+		instance.getChildren().add(this.buttonCreatePiker);
+		instance.getChildren().add(this.buttonCreateKnight);
+		instance.getChildren().add(this.buttonCreateOnager);
 	}
 }

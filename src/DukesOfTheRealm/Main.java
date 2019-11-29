@@ -40,7 +40,7 @@ public class Main extends Application implements IUpdate{
 	private Group root;
 	
 	private Input input;
-	private Time fps;
+	private Time time;
 	private Kingdom kingdom;
 	
 	private CastleUI castleUI;
@@ -103,8 +103,8 @@ public class Main extends Application implements IUpdate{
 		/* RANDOM */
 		rand = new Random();
 		
-		/* FPS MANAGER */
-		fps = new Time(false);
+		/* TIME MANAGER */
+		time = new Time(false);
 		
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);
@@ -118,13 +118,13 @@ public class Main extends Application implements IUpdate{
 	@Override
 	public void Update(long now, boolean pause)
 	{
-		fps.Update(now, pause);
+		time.Update(now, pause);
 		kingdom.Update(now, pause);
 	}
 	
 	private boolean Time(long now)
 	{
-		if(now - lastTime > Settings.GAME_FREQUENCY)
+		if(now - lastTime > Settings.GAME_FREQUENCY / 5)
 		{
 			lastTime = now;
 			return true;
