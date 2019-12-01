@@ -64,9 +64,9 @@ public class Settings {
 	public static final int ONAGER_HP = 0;
 	
 	/* Damage */ /* Can be balanced */
-	public static final int PIKER_DAMAGE = 0;
-	public static final int KNIGHT_DAMAGE = 0;
-	public static final int ONAGER_DAMAGE = 0;
+	public static final int PIKER_DAMAGE = 120;
+	public static final int KNIGHT_DAMAGE = 300;
+	public static final int ONAGER_DAMAGE = 600;
 	
 	/* Cost */ /* Can be balanced */
 	public static final int PIKER_COST = 0;

@@ -83,6 +83,8 @@ public class Ost implements IUpdate{
 					if(s.isDead)
 					{
 						s.RemoveShapeToLayer();
+						Point2D FreedAttackLocation = s.GetAttackLocation();
+						this.destination.FreeAttackLocation(FreedAttackLocation);
 						it.remove();
 				}	
 				else

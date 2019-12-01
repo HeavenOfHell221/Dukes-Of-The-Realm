@@ -58,7 +58,6 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	{
 		if (this.attackLocation == null || this.isWaitingForAttackLocation)
 		{
-			SetAttackLocation();
 			canMove = true;
 		}
 	}
@@ -88,7 +87,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 			Move(this.attackLocation);
 		}
 
-		if (this.isInPosition)
+		if (this.isInPosition && !this.isWaitingForAttackLocation)
 		{
 			Attack();
 		}
@@ -142,8 +141,9 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	private void IsArrived() {
 		if (this.GetX() == this.itsOst.getSeparationPoint().getX() && this.GetY() == this.itsOst.getSeparationPoint().getY())
 		{
-			this.isArrived = true;
 			this.canMove = false;
+			this.isArrived = true;
+			SetAttackLocation();
 		}
 	}
 	
@@ -157,13 +157,20 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void Attack()
 	{
-		if (this.tmp == 1)
-		{
+//		if (this.tmp == 1)
+//		{
 			int x = this.itsOst.GetOrigin().GetX();
 			int y = this.itsOst.GetOrigin().GetY();
-			//System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") -> J'attaque 1 fois");
-			this.tmp++;
-		}
+			System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") de type " + this.type + " -> J'attaque 1 fois");
+			ApplyDamage();
+//			this.tmp++;
+//		}
+	}
+	
+	private void ApplyDamage()
+	{
+		this.isDead = (--this.damage <= 0) ? true : false;
+		System.out.println(this.damage);
 	}
 	
 	/*************************************************/
@@ -187,7 +194,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		return type;
 	}
 	
-	public int getSpeed()
+	public int GetSpeed()
 	{
 		return speed;
 	}
@@ -195,5 +202,10 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	public boolean isOnField()
 	{
 		return onField;
+	}
+
+	public Point2D GetAttackLocation()
+	{
+		return attackLocation;
 	}
 }

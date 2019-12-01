@@ -45,6 +45,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private Rectangle door;
 	private Point2D[] attackLocations;					// Ordre : Nord -> Est -> Sud -> Ouest
 	private Point2D waitAttackLocation;
+	private boolean occupiedAttackLocationsTab[];
 	private int occupiedAttackLocations;
 	
 	/*************************************************/
@@ -64,6 +65,7 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.productionUnit = new ArrayDeque<>();
 		this.myColor = actor.GetMyColor();
 		this.attackLocations = new Point2D[Settings.NB_ATTACK_LOCATIONS];
+		this.occupiedAttackLocationsTab = new boolean[Settings.NB_ATTACK_LOCATIONS];
 		this.occupiedAttackLocations = 0;
 	}
 	
@@ -302,6 +304,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	
 	public Point2D GetWaitAttackLocation() {
 		return this.waitAttackLocation;
+	}
+	
+	public void FreeAttackLocation(Point2D FreedAttackLocation)
+	{
+		
 	}
 	
 	/*************************************************/
