@@ -18,7 +18,7 @@ public class ReserveOfSoldiers {
 	
 	public void AddKnight()
 	{
-		this.nbKnights++;
+		this.nbKnights++;	
 	}
 	
 	public void AddOnager()

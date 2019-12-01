@@ -76,9 +76,6 @@ public abstract class Sprite extends Parent{
 	    e.setColor(Color.BLACK);
 		r.setEffect(e);
 		
-		r.setArcHeight(5);
-		r.setArcWidth(5);
-		
 		this.width = size;
 		this.height = size;
 		

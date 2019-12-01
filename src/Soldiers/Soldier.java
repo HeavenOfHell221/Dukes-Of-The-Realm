@@ -161,7 +161,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		{
 			int x = this.itsOst.GetOrigin().GetX();
 			int y = this.itsOst.GetOrigin().GetY();
-			System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") -> J'attaque 1 fois");
+			//System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") -> J'attaque 1 fois");
 			this.tmp++;
 		}
 	}

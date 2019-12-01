@@ -5,6 +5,7 @@ import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.IUpdate;
 import DukesOfTheRealm.Kingdom;
 import Utility.Settings;
+import Utility.Time;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -35,6 +36,7 @@ public class CastleUI extends Parent implements IUpdate{
 	private Castle castle;
 	
 	private Text text;
+	private Text textFPS;
 	private Pane playfieldLayer;
 	private Rectangle backgroundText;
 	private Rectangle background;
@@ -56,7 +58,8 @@ public class CastleUI extends Parent implements IUpdate{
 		this.text = new Text();
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
 		this.backgroundText = new Rectangle(220, 0);
-		this.backgroundButtonSoldier = new Rectangle(300, 0);
+		this.backgroundButtonSoldier = new Rectangle(320, 260);
+		this.textFPS = new Text();
 		
 		this.imageKnight = new ImageView(new Image(getClass().getResource("/images/mounted-knight-white.png").toExternalForm(), 64, 64, false, true));
 		this.imagePiker = new ImageView(new Image(getClass().getResource("/images/spartan-white.png").toExternalForm(), 64, 64, false, true));
@@ -70,25 +73,28 @@ public class CastleUI extends Parent implements IUpdate{
 	    this.background.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.05), 0);
 		this.backgroundText.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 60);
 		this.text.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 100);
+		this.textFPS.relocate(10, 10);
+		this.backgroundButtonSoldier.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0633), 550);
 		
-		this.imageCoins.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.097), 250 - 64 - 20);
+		this.imageCoins.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 250 - 64 - 20);
 		
 		this.imagePiker.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.097), 250);
 		this.imageKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 250 + 64 + 20);
 		this.imageOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 250 + 64 + 20 + 64 + 20);
 		
-		this.buttonCreatePiker.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1 - 0.025), 600);
-		this.buttonCreateKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.15 - 0.025), 600);
-		this.buttonCreateOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.20 - 0.025), 600);
+		this.buttonCreatePiker.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1 - 0.021), 600);
+		this.buttonCreateKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.15 - 0.021), 600);
+		this.buttonCreateOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.20 - 0.021), 600);
 	}
 	
 	@Override
 	public void Start()
 	{
-		StartText();
+		StartTexts();
 		StartBackgroundText();
 		StartBackground();
 		StartButtons();
+		StartBackgroundButtonSoldier();
 	}
 	
 	private void StartButtons()
@@ -181,12 +187,14 @@ public class CastleUI extends Parent implements IUpdate{
 			});
 	}
 	
-	private void StartText()
+	private void StartTexts()
 	{
 		this.text.setFont(new Font(20));
 		this.text.setWrappingWidth(220);
 		this.text.setTextAlignment(TextAlignment.CENTER);
 		this.text.setFill(Color.WHITE);
+		
+		this.textFPS.setFont(new Font(20));
 	}
 	
 	private void StartBackgroundText()
@@ -198,6 +206,16 @@ public class CastleUI extends Parent implements IUpdate{
 		this.backgroundText.setStrokeWidth(3);
 		this.backgroundText.setArcHeight(60);
 		this.backgroundText.setArcWidth(60);
+	}
+	
+	private void StartBackgroundButtonSoldier()
+	{
+		Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.WHITE)};
+	    LinearGradient lg2 = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
+		this.backgroundButtonSoldier.setStroke(lg2);
+		this.backgroundButtonSoldier.setStrokeWidth(3);
+		this.backgroundButtonSoldier.setArcHeight(60);
+		this.backgroundButtonSoldier.setArcWidth(60);
 	}
 	
 	private void StartBackground()
@@ -229,7 +247,7 @@ public class CastleUI extends Parent implements IUpdate{
 				TextPlayerOrDuke();
 			}
 		}
-			
+		textFPS.setText("" + Time.FPS);
 	}
 	
 	private void TextPlayerOrDuke()
@@ -288,14 +306,17 @@ public class CastleUI extends Parent implements IUpdate{
 		Start();
 		
 		instance.getChildren().add(this.background);
+		instance.getChildren().add(this.backgroundButtonSoldier);
 		instance.getChildren().add(this.backgroundText);
 		instance.getChildren().add(this.text);
+		instance.getChildren().add(this.textFPS);
 		instance.getChildren().add(this.buttonCreatePiker);
 		instance.getChildren().add(this.buttonCreateKnight);
 		instance.getChildren().add(this.buttonCreateOnager);
 		instance.getChildren().add(this.imageKnight);
 		instance.getChildren().add(this.imageOnager);
 		instance.getChildren().add(this.imagePiker);
-		instance.getChildren().add(this.imageCoins);
+		//instance.getChildren().add(this.imageCoins);
+		
 	}
 }

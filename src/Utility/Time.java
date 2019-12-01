@@ -15,6 +15,7 @@ public class Time implements IUpdate{
 	private long oldTime;
 	public static double deltaTime;
 	private boolean firstFrame;
+	public static int FPS;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -54,6 +55,7 @@ public class Time implements IUpdate{
 			lastUpdate = now;
 			if(print)
 				System.out.println(counter + " fps");
+			FPS = counter;
 			counter = 0;
 		}
 		counter++;

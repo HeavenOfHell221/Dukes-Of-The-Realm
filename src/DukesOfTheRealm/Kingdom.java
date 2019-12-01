@@ -69,7 +69,7 @@ public class Kingdom extends Parent implements IUpdate{
 			{
 				if (castle != castles.get(0))
 					{
-						castle.CreateOst(this.actors.get(0).GetMyCastles().get(0), 2, 2, 0);
+						castle.CreateOst(this.actors.get(0).GetMyCastles().get(0), 5, 5, 0);
 					}
 			});
 		Kingdom.player.GetMyCastles().get(0).CreateOst(this.actors.get(1).GetMyCastles().get(0), 6, 9, 0);
