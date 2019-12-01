@@ -26,6 +26,10 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		South,
 		West,
 		East,
+		NE,		// North East
+		NW,		// North West
+		SE,		// South East
+		SW,		// South West
 		None;
 	}
 	
