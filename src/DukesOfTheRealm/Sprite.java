@@ -1,6 +1,9 @@
 package DukesOfTheRealm;
 
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -62,6 +65,7 @@ public abstract class Sprite extends Parent{
 	{
 		Rectangle r = new Rectangle(GetX(), GetY(), size, size);
 		this.shape = r;
+		r.setCursor(Cursor.HAND);
 		
 		DropShadow e = new DropShadow();
 	    e.setWidth(5);
@@ -71,6 +75,9 @@ public abstract class Sprite extends Parent{
 	    e.setRadius(10);
 	    e.setColor(Color.BLACK);
 		r.setEffect(e);
+		
+		r.setArcHeight(5);
+		r.setArcWidth(5);
 		
 		this.width = size;
 		this.height = size;

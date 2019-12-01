@@ -37,7 +37,7 @@ public class Settings {
 	/* Graphics*/
 	public static final int CASTLE_SIZE = 60;
 	public static final int THIRD_OF_CASTLE = CASTLE_SIZE / 3;
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 350; /* Can be balanced */
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 250; /* Can be balanced */
 	
 	/* Castle number */
 	public static final int AI_NUMBER = 3;

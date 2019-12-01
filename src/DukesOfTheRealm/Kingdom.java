@@ -193,7 +193,7 @@ public class Kingdom extends Parent implements IUpdate{
 	
 	public Point2D GetRandomCoordinates(Random rand)
 	{
-		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE)), rand.nextInt(Settings.SCENE_HEIGHT - (2 * Settings.CASTLE_SIZE)));
+		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE, rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
 	
 	/*************************************************/

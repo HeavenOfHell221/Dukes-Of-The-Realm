@@ -16,9 +16,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Text;
 import javafx.scene.shape.*;
 
@@ -52,7 +58,10 @@ public class Main extends Application implements IUpdate{
 	public void start(Stage primaryStage) 
 	{
 		root = new Group();
-		scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT, Color.DARKGREEN);
+		scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		Image i = new Image(getClass().getResource("/images/bg2.jpg").toExternalForm());
+		ImagePattern pattern = new ImagePattern(i, 0, 0, 1, 1, true);
+		scene.setFill(pattern);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);

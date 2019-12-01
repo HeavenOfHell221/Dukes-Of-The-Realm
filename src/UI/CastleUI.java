@@ -38,6 +38,7 @@ public class CastleUI extends Parent implements IUpdate{
 	private Pane playfieldLayer;
 	private Rectangle backgroundText;
 	private Rectangle background;
+	private Rectangle backgroundButtonSoldier;
 	
 	private Button buttonCreatePiker;
 	private Button buttonCreateKnight;
@@ -55,6 +56,7 @@ public class CastleUI extends Parent implements IUpdate{
 		this.text = new Text();
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
 		this.backgroundText = new Rectangle(220, 0);
+		this.backgroundButtonSoldier = new Rectangle(300, 0);
 		
 		this.imageKnight = new ImageView(new Image(getClass().getResource("/images/mounted-knight-white.png").toExternalForm(), 64, 64, false, true));
 		this.imagePiker = new ImageView(new Image(getClass().getResource("/images/spartan-white.png").toExternalForm(), 64, 64, false, true));
@@ -75,9 +77,9 @@ public class CastleUI extends Parent implements IUpdate{
 		this.imageKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 250 + 64 + 20);
 		this.imageOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1), 250 + 64 + 20 + 64 + 20);
 		
-		this.buttonCreatePiker.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 600);
-		this.buttonCreateKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 600 + 80);
-		this.buttonCreateOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 600 + 80 + 80);
+		this.buttonCreatePiker.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.1 - 0.025), 600);
+		this.buttonCreateKnight.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.15 - 0.025), 600);
+		this.buttonCreateOnager.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.20 - 0.025), 600);
 	}
 	
 	@Override
@@ -100,16 +102,16 @@ public class CastleUI extends Parent implements IUpdate{
 	{
 		this.buttonCreateKnight.setStyle(""
 				+ "-fx-background-color: transparent;"
-				+ "-fx-background-image: url('/images/mounted-knight.png'); "
+				+ "-fx-background-image: url('/images/mounted-knight2.png'); "
 				+ "-fx-background-size: 64px 64px; "
 				+ "-fx-background-repeat: no-repeat; "
 				);
 		
 		StartButtonCreate(this.buttonCreateKnight);
-		this.buttonCreateKnight.setOnAction(
+		this.buttonCreateKnight.setOnMousePressed(
 			event -> 
 			{ 
-				buttonCreateKnight.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0)); 
+				buttonCreateKnight.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 15, 0.33, 0, 0)); 
 			});
 	}
 
@@ -117,13 +119,13 @@ public class CastleUI extends Parent implements IUpdate{
 	{
 		this.buttonCreateOnager.setStyle(""
 				+ "-fx-background-color: transparent;"
-				+ "-fx-background-image: url('/images/catapult.png'); "
+				+ "-fx-background-image: url('/images/catapult2.png'); "
 				+ "-fx-background-size: 64px 64px; "
 				+ "-fx-background-repeat: no-repeat; "
 				);
 		
 		StartButtonCreate(this.buttonCreateOnager);
-		this.buttonCreateOnager.setOnAction(
+		this.buttonCreateOnager.setOnMousePressed(
 			event -> 
 			{ 
 				buttonCreateOnager.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0)); 
@@ -134,17 +136,18 @@ public class CastleUI extends Parent implements IUpdate{
 	{
 		this.buttonCreatePiker.setStyle(""
 				+ "-fx-background-color: transparent;"
-				+ "-fx-background-image: url('/images/spartan.png'); "
+				+ "-fx-background-image: url('/images/spartan2.png'); "
 				+ "-fx-background-size: 64px 64px; "
 				+ "-fx-background-repeat: no-repeat; "
 				);
 		
 		StartButtonCreate(this.buttonCreatePiker);
-		this.buttonCreatePiker.setOnAction(
+		this.buttonCreatePiker.setOnMousePressed(
 			event -> 
 			{ 
 				buttonCreatePiker.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0)); 
 			});
+		
 	}
 	
 	private void StartButtonCreate(Button b)
@@ -160,10 +163,21 @@ public class CastleUI extends Parent implements IUpdate{
 			    bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 15, 0.25, 0, 0)); 
 			    b.setEffect(bloom);
 			});
+		
 		b.addEventHandler(MouseEvent.MOUSE_EXITED, 
 			event -> 
 			{ 
 				b.setEffect(null); 
+			});
+	
+		b.setOnMouseClicked(
+			event -> 
+			{
+				b.setEffect(null);
+				Bloom bloom = new Bloom();
+			    bloom.setThreshold(0.85);
+			    bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 15, 0.25, 0, 0)); 
+			    b.setEffect(bloom);
 			});
 	}
 	
@@ -206,14 +220,14 @@ public class CastleUI extends Parent implements IUpdate{
 	{
 		if(this.castle != null)
 		{
-			//if(this.castle.GetActor().getClass() == Baron.class)
-			//{
+			if(this.castle.GetActor().getClass() == Baron.class)
+			{
 				TextBaron();
-			//}
-			//else
-			//{
+			}
+			else
+			{
 				TextPlayerOrDuke();
-			//}
+			}
 		}
 			
 	}
@@ -234,7 +248,16 @@ public class CastleUI extends Parent implements IUpdate{
 	
 	private void TextBaron()
 	{
-
+		this.text.setText(
+				"Name : " + castle.GetActor().GetName() + "\n" + 
+				"Level : " + this.castle.GetLevel() + "\n" +
+				Settings.FLORIN_PER_SECOND * this.castle.GetLevel() * Settings.FLORIN_FACTOR_BARON + " Florin(s) / s" + "\n" +
+				"Florin : " + (int)this.castle.GetTotalFlorin() + "\n\n" //+
+				//"Piker : " + this.castle.GetReserveOfSoldiers().getNbPikers() + "\n" +
+				//"Knights : " + this.castle.GetReserveOfSoldiers().getNbKnights() + "\n" +
+				//"Onager : " + this.castle.GetReserveOfSoldiers().getNbOnagers() + "\n"
+				);
+		this.backgroundText.setHeight(450);
 	}
 	
 	public void SwitchCastle(Castle castle)
