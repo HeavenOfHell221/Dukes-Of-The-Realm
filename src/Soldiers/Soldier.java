@@ -81,10 +81,11 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		{
 			Move();
 			UpdateUIShape();
-			if (this.isArrived)
-			{
-				Attack();
-			}
+		}
+		
+		if (this.isArrived)
+		{
+			Attack();
 		}
 	}
 	
@@ -94,10 +95,9 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void Move()
 	{
-		int DirectionX = (this.GetX() < this.attackLocation.getX()) ? 1 : -1;
-		int DirectionY = (this.GetY() < this.attackLocation.getY()) ? 1 : -1;
-		this.AddDx(this.speed * Time.deltaTime * DirectionX);
-		this.AddDy(this.speed * Time.deltaTime * DirectionY);
+		int DirectionX = this.GetX() < this.attackLocation.getX() ? 1 : this.GetX() == this.attackLocation.getX() ? 0 : -1;
+		int DirectionY = this.GetY() < this.attackLocation.getY() ? 1 : this.GetY() == this.attackLocation.getY() ? 0 : -1;
+		this.AddMotion(this.speed * Time.deltaTime * DirectionX, this.speed * Time.deltaTime * DirectionY);
 		IsOutOfScreen();
 		IsArrived();
 	}

@@ -187,6 +187,11 @@ public abstract class Sprite extends Parent{
     {
     	coordinate = coordinate.add(0, dy);
     }
+    
+    public void AddMotion(double dx, double dy)
+    {
+    	coordinate = coordinate.add(dx, dy);
+    }
   
     public void SetCoordinate(Point2D coordinate)
     {
