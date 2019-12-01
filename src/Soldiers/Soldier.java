@@ -24,10 +24,11 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	protected int health;
 	protected int damage;
 	protected int speed;
-	protected Ost itsOst = null; 
+	protected Ost itsOst = null;
 	protected boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived = false;
+	protected boolean isInPosition = false;
 	public boolean isDead = false;
 	protected Point2D attackLocation = null;
 	protected boolean isWaitingForAttackLocation = false;
@@ -79,11 +80,15 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	{		
 		if (this.canMove)
 		{
-			Move();
-			UpdateUIShape();
+			Move(this.itsOst.getSeparationPoint());
 		}
 		
-		if (this.isArrived)
+		if (this.isArrived && !this.isInPosition)
+		{
+			Move(this.attackLocation);
+		}
+
+		if (this.isInPosition)
 		{
 			Attack();
 		}
@@ -92,33 +97,6 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
-	private void Move()
-	{
-		int DirectionX = this.GetX() < this.attackLocation.getX() ? 1 : this.GetX() == this.attackLocation.getX() ? 0 : -1;
-		int DirectionY = this.GetY() < this.attackLocation.getY() ? 1 : this.GetY() == this.attackLocation.getY() ? 0 : -1;
-		this.AddMotion(this.speed * Time.deltaTime * DirectionX, this.speed * Time.deltaTime * DirectionY);
-		IsOutOfScreen();
-		IsArrived();
-	}
-	
-	private void IsArrived() {
-		if (this.GetX() == this.attackLocation.getX() && this.GetY() == this.attackLocation.getY())
-		{
-			this.isArrived = true;
-			this.canMove = false;
-		}
-	}
-	
-	private void IsOutOfScreen()
-	{
-		if(GetX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04) || GetY() > Settings.SCENE_HEIGHT || GetX() <= 0 || GetY() <= 0)
-		{
-			RemoveShapeToLayer();
-			canMove = false;
-			isDead = true;
-		}
-	}
 	
 	private void SetAttackLocation()
 	{
@@ -131,6 +109,49 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 		{
 			this.attackLocation = this.itsOst.GetDestination().GetWaitAttackLocation();
 			this.isWaitingForAttackLocation = true; 
+		}
+	}
+	
+	private void Move(Point2D dst)
+	{
+		int DirectionX = this.GetX() < dst.getX() ? 1 : this.GetX() == dst.getX() ? 0 : -1;
+		int DirectionY = this.GetY() < dst.getY() ? 1 : this.GetY() == dst.getY() ? 0 : -1;
+		this.AddMotion(this.speed * Time.deltaTime * DirectionX, this.speed * Time.deltaTime * DirectionY);
+		IsOutOfScreen();
+		if (!this.isArrived)
+		{
+			IsArrived();
+		}
+		else if (!this.isInPosition)
+		{
+			IsInPosition();
+		}
+		UpdateUIShape();
+	}
+	
+	private void IsOutOfScreen()
+	{
+		if(GetX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04) || GetY() > Settings.SCENE_HEIGHT || GetX() <= 0 || GetY() <= 0)
+		{
+			RemoveShapeToLayer();
+			canMove = false;
+			isDead = true;
+		}
+	}
+	
+	private void IsArrived() {
+		if (this.GetX() == this.itsOst.getSeparationPoint().getX() && this.GetY() == this.itsOst.getSeparationPoint().getY())
+		{
+			this.isArrived = true;
+			this.canMove = false;
+		}
+	}
+	
+	private void IsInPosition()
+	{
+		if (this.GetX() == this.attackLocation.getX() && this.GetY() == this.attackLocation.getY())
+		{
+			this.isInPosition = true;
 		}
 	}
 	

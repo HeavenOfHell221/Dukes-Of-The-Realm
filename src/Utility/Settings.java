@@ -52,6 +52,7 @@ public class Settings {
 	/* Other */
 	public static final int NB_ATTACK_LOCATIONS = 12;
 	public static final int ATTACK_LOCATIONS_PER_SIDE = 3;
+	public static final int GAP_WITH_SOLDIER = 10;
 	
 	/****************************************************/
 	/********************* SOLDIERS *********************/
@@ -87,5 +88,5 @@ public class Settings {
 	public static final int PIKER_REPRESENTATION_RADIUS = SOLDIER_SIZE / 2;
 	public static final int KNIGHT_REPRESENTATION_SIZE = SOLDIER_SIZE;
 	public static final int ONAGER_REPRESENTATION_WIDTH = SOLDIER_SIZE * 2;
-	public static final int ONAGER_REPRESENTATION_HEIGHT = SOLDIER_SIZE;	
+	public static final int ONAGER_REPRESENTATION_HEIGHT = SOLDIER_SIZE;
 }

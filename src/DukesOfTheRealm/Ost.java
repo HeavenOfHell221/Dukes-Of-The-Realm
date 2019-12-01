@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;
 
+import DukesOfTheRealm.Castle.Orientation;
 import Soldiers.*;
 import Utility.Time;
 import Utility.Settings;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -19,6 +21,7 @@ public class Ost implements IUpdate{
 	
 	private Castle origin;
 	private Castle destination;
+	private Point2D separationPoint = null;
 	private int nbPikers;
 	private int nbKnights;
 	private int nbOnagers;
@@ -54,6 +57,7 @@ public class Ost implements IUpdate{
 	public void Start()
 	{
 		this.speed = SetOstSpeed();
+		this.separationPoint = SetSeparationPoint();
 	}
 	
 	/*************************************************/
@@ -90,6 +94,42 @@ public class Ost implements IUpdate{
 		}
 	}
 	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
+	private int SetOstSpeed()
+	{
+		int minimalSpeed = Settings.KNIGHT_SPEED;
+		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
+		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
+		return minimalSpeed;
+	}
+	
+	private Point2D SetSeparationPoint()
+	{
+		Orientation area = GetDestinationArea();
+		System.out.println(area);
+		int offsetX = (area == Orientation.NE || area == Orientation.SE) ? (- Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE) : (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
+		int offsetY = (area == Orientation.SE || area == Orientation.SW) ? (- Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE) : (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
+		Point2D separationPoint = new Point2D(this.destination.GetX() + offsetX, this.destination.GetY() + offsetY);
+		return separationPoint;
+	}
+	
+	private Orientation GetDestinationArea()
+	{
+		Orientation area = Orientation.None;
+		if (this.origin.GetX() <= this.destination.GetX())
+		{
+			area = (this.origin.GetY() <= this.destination.GetY()) ? Orientation.SE : Orientation.NE;
+		}
+		else
+		{
+			area = (this.origin.GetY() <= this.destination.GetY()) ? Orientation.SW : Orientation.NW;
+		}
+		return area;
+	}
+	
 	private void DeployOneSoldiersWave()
 	{
 		int nbSpawn = (this.soldiers.size() <= (nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS : (nbSoldiers - this.soldiers.size());
@@ -114,10 +154,6 @@ public class Ost implements IUpdate{
 			this.fullyDeployed = true;
 		}
 	}
-	
-	/*************************************************/
-	/******************* METHODES ********************/
-	/*************************************************/
 		
 	private void SpawnSoldier(int x, int y)
 	{
@@ -188,14 +224,6 @@ public class Ost implements IUpdate{
 		return slowestType;
 	}
 	
-	private int SetOstSpeed()
-	{
-		int minimalSpeed = Settings.KNIGHT_SPEED;
-		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
-		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
-		return minimalSpeed;
-	}
-	
 	private boolean Time(long now, boolean pause)
 	{
 		if(pause)
@@ -220,6 +248,11 @@ public class Ost implements IUpdate{
 	public Castle GetDestination()
 	{
 		return destination;
+	}
+
+	public Point2D getSeparationPoint()
+	{
+		return separationPoint;
 	}
 
 	public double GetSpeed()
