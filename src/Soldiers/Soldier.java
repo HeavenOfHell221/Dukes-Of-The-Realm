@@ -100,14 +100,26 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	@Override
 	public void Update(long now, boolean pause)
 	{		
-		if (this.canMove)
+		if (!this.isArrived)
 		{
-			Move(this.itsOst.getSeparationPoint());
+			Move(this.itsOst.GetSeparationPoint());
 		}
 		
 		if (this.isArrived && !this.isInPosition)
 		{
-			Move(this.attackLocation);
+			if (this.attackLocation != null)
+			{
+				Move(this.attackLocation);
+			}
+			else
+			{
+				Move(this.itsOst.GetWaitingPoint());
+			}
+		}
+		
+		if (this.isWaitingForAttackLocation)
+		{
+			SetAttackLocation();
 		}
 
 		if (this.isInPosition && !this.isWaitingForAttackLocation)
@@ -127,9 +139,8 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 			this.attackLocation = this.itsOst.GetDestination().GetNextAttackLocation();
 			this.isWaitingForAttackLocation = false;
 		}
-		else	/***** Cas par défaut à modifier *****/
+		else
 		{
-			this.attackLocation = this.itsOst.GetDestination().GetWaitAttackLocation();
 			this.isWaitingForAttackLocation = true; 
 		}
 	}
@@ -162,7 +173,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	}
 	
 	private void IsArrived() {
-		if (this.GetX() == this.itsOst.getSeparationPoint().GetX() && this.GetY() == this.itsOst.getSeparationPoint().GetY())
+		if (this.GetX() == this.itsOst.GetSeparationPoint().GetX() && this.GetY() == this.itsOst.GetSeparationPoint().GetY())
 		{
 			this.canMove = false;
 			this.isArrived = true;
@@ -172,9 +183,12 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	
 	private void IsInPosition()
 	{
-		if (this.GetX() == this.attackLocation.GetX() && this.GetY() == this.attackLocation.GetY())
+		if (!this.isWaitingForAttackLocation)
 		{
-			this.isInPosition = true;
+			if (this.GetX() == this.attackLocation.GetX() && this.GetY() == this.attackLocation.GetY())
+			{
+				this.isInPosition = true;
+			}
 		}
 	}
 	

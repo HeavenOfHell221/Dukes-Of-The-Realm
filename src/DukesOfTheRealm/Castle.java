@@ -2,6 +2,7 @@ package DukesOfTheRealm;
 
 import java.util.ArrayDeque;
 import java.util.Random;
+import java.util.Stack;
 
 import Utility.Point2D;
 
@@ -45,10 +46,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	private Orientation orientation;
 	private transient Color myColor;
 	private transient Rectangle door;
-	private Point2D[] attackLocations;					// Ordre : Nord -> Est -> Sud -> Ouest
-	private Point2D waitAttackLocation;
-	private boolean occupiedAttackLocationsTab[];
-	private int occupiedAttackLocations;
+	private Stack<Point2D> attackLocations;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -66,9 +64,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		this.ost = null;
 		this.productionUnit = new ArrayDeque<>();
 		this.myColor = actor.GetMyColor();
-		this.attackLocations = new Point2D[Settings.NB_ATTACK_LOCATIONS];
-		this.occupiedAttackLocationsTab = new boolean[Settings.NB_ATTACK_LOCATIONS];
-		this.occupiedAttackLocations = 0;
+		this.attackLocations = new Stack<Point2D>();
 	}
 	
 	public Castle(Pane layer, double x, double y) 
@@ -162,12 +158,9 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	{
 		data.attackLocations = this.attackLocations;
 		data.level = this.level;
-		data.occupiedAttackLocations = this.occupiedAttackLocations;
-		data.occupiedAttackLocationsTab = this.occupiedAttackLocationsTab;
 		data.orientation = this.orientation;
 		data.reserveOfSoldiers = this.reserveOfSoldiers;
 		data.totalFlorin = this.totalFlorin;
-		data.waitAttackLocation = this.waitAttackLocation;
 		data.productionTime = this.productionTime;
 		data.productionUnit = this.productionUnit;
 		data.coordinate = GetCoordinate();
@@ -311,35 +304,30 @@ public class Castle extends Sprite implements ISave<CastleData> {
 			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE)	// 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
 			{
 			// North
-			case 0: this.attackLocations[i] = new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y - 10 - Settings.SOLDIER_SIZE); break;
+			case 0: this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y - 10 - Settings.SOLDIER_SIZE)); break;
 			// East
-			case 1: this.attackLocations[i] = new Point2D(x + Settings.CASTLE_SIZE + 10, y + (Settings.THIRD_OF_CASTLE * j)); break;
+			case 1: this.attackLocations.push(new Point2D(x + Settings.CASTLE_SIZE + 10, y + (Settings.THIRD_OF_CASTLE * j))); break;
 			// South
-			case 2: this.attackLocations[i] = new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y + Settings.CASTLE_SIZE + 10); break;
+			case 2: this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y + Settings.CASTLE_SIZE + 10)); break;
 			// West
-			case 3: this.attackLocations[i] = new Point2D(x - 10 - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j)); break;
+			case 3: this.attackLocations.push(new Point2D(x - 10 - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j))); break;
 			}
 		}
-		this.waitAttackLocation = new Point2D(x, y - 2 * (10 + Settings.SOLDIER_SIZE));
 	}
 	
 	public boolean IsAvailableAttackLocation()
 	{
-		return (this.occupiedAttackLocations < Settings.NB_ATTACK_LOCATIONS);
+		return !this.attackLocations.empty();
 	}
 	
 	public Point2D GetNextAttackLocation()
 	{
-		return this.attackLocations[this.occupiedAttackLocations++];
-	}
-	
-	public Point2D GetWaitAttackLocation() {
-		return this.waitAttackLocation;
+		return this.attackLocations.pop();
 	}
 	
 	public void FreeAttackLocation(Point2D FreedAttackLocation)
 	{
-		
+		this.attackLocations.push(FreedAttackLocation);
 	}
 	
 	/*************************************************/
@@ -409,16 +397,8 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		this.ost = ost;
 	}
 
-	public Point2D[] GetAttackLocations() {
+	public Stack<Point2D> GetAttackLocations() {
 		return attackLocations;
-	}
-
-	public boolean[] GetOccupiedAttackLocationsTab() {
-		return occupiedAttackLocationsTab;
-	}
-
-	public int GetOccupiedAttackLocations() {
-		return occupiedAttackLocations;
 	}
 	
 	public ArrayDeque<IProductionUnit> GetProductionUnit()

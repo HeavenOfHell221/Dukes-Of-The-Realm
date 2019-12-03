@@ -25,6 +25,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	private Castle origin;
 	private Castle destination;
 	private Point2D separationPoint = null;
+	private Point2D waitingPoint = null;
 	private int nbPikers;
 	private int nbKnights;
 	private int nbOnagers;
@@ -61,6 +62,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	{
 		this.speed = SetOstSpeed();
 		this.separationPoint = SetSeparationPoint();
+		this.waitingPoint = SetWaitingPoint();
 	}
 	
 	/*************************************************/
@@ -86,8 +88,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 					if(s.isDead)
 					{
 						s.RemoveShapeToLayer();
-						Point2D FreedAttackLocation = s.GetAttackLocation();
-						this.destination.FreeAttackLocation(FreedAttackLocation);
+						this.destination.FreeAttackLocation(s.GetAttackLocation());
 						it.remove();
 				}	
 				else
@@ -128,17 +129,32 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
 		return minimalSpeed;
 	}
-	
-	
 
 	private Point2D SetSeparationPoint()
 	{
 		Orientation area = GetDestinationArea();
-		System.out.println(area);
 		int offsetX = (area == Orientation.NE || area == Orientation.SE) ? (- Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE) : (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
 		int offsetY = (area == Orientation.SE || area == Orientation.SW) ? (- Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE) : (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
 		Point2D separationPoint = new Point2D(this.destination.GetX() + offsetX, this.destination.GetY() + offsetY);
 		return separationPoint;
+	}
+
+	private Point2D SetWaitingPoint()
+	{
+		//new Point2D(x, y - 2 * (10 + Settings.SOLDIER_SIZE))   HAUT Gauche
+		Orientation area = GetDestinationArea();
+		int offsetX = 0;
+		int offsetY = 0;
+		switch (area)
+		{
+		case NW: offsetX = 2 * Settings.THIRD_OF_CASTLE; offsetY = Settings.CASTLE_SIZE + 2 * Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE; break;
+		case NE: offsetX = - 2 * (Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE); offsetY = 2 * Settings.THIRD_OF_CASTLE; break;
+		case SE: offsetY = - 2 * (Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE); break;
+		case SW: offsetX = Settings.CASTLE_SIZE + 2 * Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE; break;
+		default: break;
+		}
+		Point2D waitingPoint = new Point2D(this.destination.GetX() + offsetX, this.destination.GetY() + offsetY);
+		return waitingPoint;
 	}
 	
 	private Orientation GetDestinationArea()
@@ -280,9 +296,14 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 		return destination;
 	}
 
-	public Point2D getSeparationPoint()
+	public Point2D GetSeparationPoint()
 	{
 		return separationPoint;
+	}
+
+	public Point2D GetWaitingPoint()
+	{
+		return waitingPoint;
 	}
 
 	public double GetSpeed()

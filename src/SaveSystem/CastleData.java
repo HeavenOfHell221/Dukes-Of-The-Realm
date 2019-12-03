@@ -2,6 +2,7 @@ package SaveSystem;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.Stack;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
@@ -20,14 +21,11 @@ public class CastleData implements Serializable {
 	public int level; 									
 	public ReserveOfSoldiers reserveOfSoldiers; 		
 	//public Actor actor; 								
-	public ArrayDeque<IProductionUnit> productionUnit; 
-	public int productionTime; 						
+	public ArrayDeque<IProductionUnit> productionUnit;
+	public int productionTime;
 	private OstData ost;
 	public Orientation orientation;
-	public Point2D[] attackLocations;					
-	public Point2D waitAttackLocation;
-	public boolean occupiedAttackLocationsTab[];
-	public int occupiedAttackLocations;
+	public Stack<Point2D> attackLocations;
 	
 	private final transient Castle castle;
 	
