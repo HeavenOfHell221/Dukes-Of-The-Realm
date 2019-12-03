@@ -27,14 +27,7 @@ public abstract class Actor extends Parent implements Serializable {
 	
 	protected abstract void CastleHandle(MouseEvent e);
 	
-	EventHandler<MouseEvent> CastleEventHandle = new EventHandler<MouseEvent>() 
-	{ 
-	   @Override 
-	   public void handle(MouseEvent e) 
-	   { 
-	      CastleHandle(e);
-	   } 
-	}; 
+	EventHandler<MouseEvent> CastleEventHandle = e -> CastleHandle(e); 
 	
 	public void AddCastle(Castle castle)
 	{

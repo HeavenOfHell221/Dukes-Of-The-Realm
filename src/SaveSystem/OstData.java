@@ -3,11 +3,8 @@ package SaveSystem;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
-import Soldiers.Soldier;
 import Utility.Point2D;
-import javafx.scene.paint.Color;
 
 public class OstData implements Serializable
 {	
@@ -33,7 +30,7 @@ public class OstData implements Serializable
 	
 	public void Save()
 	{
-		soldiers = new ArrayList<SoldierData>();
+		soldiers = new ArrayList<>();
 		origin = castledata;
 		destination = castledata;
 		

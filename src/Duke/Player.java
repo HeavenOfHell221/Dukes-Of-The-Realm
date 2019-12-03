@@ -1,19 +1,11 @@
 package Duke;
 
-import java.io.Serializable;
-import java.util.Random;
-
 import DukesOfTheRealm.Castle;
 import UI.CastleUI;
-import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public class Player extends Actor {
 	

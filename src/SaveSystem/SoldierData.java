@@ -2,7 +2,6 @@ package SaveSystem;
 
 import java.io.Serializable;
 
-import DukesOfTheRealm.Ost;
 import Soldiers.Soldier;
 import Soldiers.SoldierEnum;
 import Utility.Point2D;

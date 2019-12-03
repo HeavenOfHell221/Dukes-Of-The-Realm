@@ -1,44 +1,24 @@
 package DukesOfTheRealm;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
-import Duke.*;
 import SaveSystem.SaveSystem;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.shape.*;
-
-import Soldiers.*;
 import UI.CastleUI;
 import Utility.Time;
 import Utility.Input;
 import Utility.Settings;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 
 public class Main extends Application implements IUpdate{
 	

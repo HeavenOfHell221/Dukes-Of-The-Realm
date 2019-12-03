@@ -3,10 +3,8 @@ package SaveSystem;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Kingdom;
-import DukesOfTheRealm.Main;
 
 public class KingdomData implements Serializable
 {

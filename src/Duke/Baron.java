@@ -3,7 +3,6 @@ package Duke;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class Baron extends Duke {

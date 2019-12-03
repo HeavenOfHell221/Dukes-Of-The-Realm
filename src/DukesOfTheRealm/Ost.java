@@ -8,10 +8,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import DukesOfTheRealm.Castle.Orientation;
 import SaveSystem.OstData;
 import Soldiers.*;
-import Utility.Time;
 import Utility.Point2D;
 import Utility.Settings;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 

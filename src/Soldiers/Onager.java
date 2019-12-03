@@ -2,11 +2,8 @@ package Soldiers;
 
 import DukesOfTheRealm.Ost;
 import Utility.Settings;
-import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class Onager extends Soldier {
 

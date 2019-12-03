@@ -1,18 +1,12 @@
 package Soldiers;
 
-import java.util.Deque;
-
 import DukesOfTheRealm.*;
-import SaveSystem.OstData;
 import SaveSystem.SoldierData;
 import Utility.Time;
 import Utility.Point2D;
 import Utility.Settings;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
 
 public abstract class Soldier extends Sprite implements ISave{
 
@@ -185,10 +179,8 @@ public abstract class Soldier extends Sprite implements ISave{
 	
 	private void Attack()
 	{
-//		if (this.tmp == 1)
-//		{
-			int x = this.itsOst.GetOrigin().GetX();
-			int y = this.itsOst.GetOrigin().GetY();
+this.itsOst.GetOrigin().GetX();
+			this.itsOst.GetOrigin().GetY();
 			//System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") de type " + this.type + " -> J'attaque 1 fois");
 			ApplyDamage();
 //			this.tmp++;

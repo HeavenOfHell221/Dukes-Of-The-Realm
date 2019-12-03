@@ -2,16 +2,10 @@ package DukesOfTheRealm;
 
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-
-import java.io.Serializable;
 
 import Utility.Point2D;
 import Utility.Settings;

@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import DukesOfTheRealm.Kingdom;
-import DukesOfTheRealm.Main;
 
 public class SaveSystem 
 {
