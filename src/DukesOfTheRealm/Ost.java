@@ -16,7 +16,7 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Ost implements IUpdate, Serializable, ISave {
+public class Ost implements IUpdate, Serializable, ISave<OstData> {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -104,9 +104,8 @@ public class Ost implements IUpdate, Serializable, ISave {
 	/*************************************************/
 	
 	@Override
-	public void ReceivedDataSave(Object o) 
+	public void ReceivedDataSave(OstData data) 
 	{
-		OstData data = (OstData) o;
 		data.separationPoint = this.separationPoint;
 		data.nbPikers = this.nbPikers;
 		data.nbKnights = this.nbKnights;
@@ -117,7 +116,7 @@ public class Ost implements IUpdate, Serializable, ISave {
 	}
 
 	@Override
-	public void SendingDataSave(Object o) 
+	public void SendingDataSave(OstData data) 
 	{
 		
 	}

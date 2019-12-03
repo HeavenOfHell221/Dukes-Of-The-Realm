@@ -10,7 +10,7 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public abstract class Soldier extends Sprite implements ISave{
+public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -73,9 +73,8 @@ public abstract class Soldier extends Sprite implements ISave{
 	/*************************************************/
 	
 	@Override
-	public void ReceivedDataSave(Object o) 
+	public void ReceivedDataSave(SoldierData data) 
 	{
-		SoldierData data = (SoldierData) o;
 		data.type = this.type;
 		data.health = this.health;
 		data.damage = this.damage;
@@ -93,7 +92,7 @@ public abstract class Soldier extends Sprite implements ISave{
 	}
 
 	@Override
-	public void SendingDataSave(Object o) 
+	public void SendingDataSave(SoldierData data) 
 	{
 		
 	}

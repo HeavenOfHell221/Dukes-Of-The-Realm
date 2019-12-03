@@ -7,32 +7,78 @@ import java.util.Random;
 import Duke.*;
 import Interface.ISave;
 import Interface.IUpdate;
+import SaveSystem.KingdomData;
 import UI.UIManager;
 import Utility.Settings;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Kingdom extends Parent implements IUpdate, ISave {
+/**
+ * Classe représentant le royaume.
+ * C'est la classe centrale du projet.
+ * 
+ */
+public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 	
-	private ArrayList<Castle> castles; // Liste des chateaux
-	private ArrayList<Actor> actors; // Liste des acteurs
+	/**
+	 * Liste des châteaux du royaume.
+	 * @see Kingdom#CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
+	 * @see Kingdom#Update(long now, boolean pause)
+	 */
+	private ArrayList<Castle> castles;
+	
+	/**
+	 * Liste des acteurs (joueur et IA) du royaume.
+	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
+	 */
+	private ArrayList<Actor> actors;
+	
+	/**
+	 * Liste des couleurs atribuable à chaque acteur.
+	 * @see Kingdom#Kingdom(Pane)
+	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
+	 */
 	private ArrayList<Color> colors;
+	
+	/**
+	 * Référence à l'acteur "player" qui est l'utilisateur.
+	 */
 	private static Player player;
 	
-	private final Pane playfieldLayer; // Le layer du jeu (groupe de base)
+	/**
+	 * Canvas utilisé pour afficher les images du jeu.
+	 */
+	private final Pane playfieldLayer;
+	
+	/**
+	 * Référence sur l'instance UIManager.
+	 * @see UIManager
+	 * @see UpdateUI(long now, boolean pause)
+	 */
 	public UIManager castleUIInstance;
+	
+	/**
+	 * Condition pour que le royaume utilise Update.
+	 * @see Kingdom#Update(long, boolean)
+	 * @see Main#Update(long, boolean)
+	 */
 	private boolean canUpdate = false;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 	
-	
+	/**
+	 * Constructeur Kingdom.
+	 * 
+	 * @param playfieldLayer
+	 * @see Kingdom#playfieldLayer
+	 */
 	public Kingdom(Pane playfieldLayer)
 	{
 		this.playfieldLayer = playfieldLayer;
@@ -196,24 +242,23 @@ public class Kingdom extends Parent implements IUpdate, ISave {
 	{
 		return Math.sqrt((y - castle.GetY()) * (y - castle.GetY()) + (x - castle.GetX()) * (x - castle.GetX()));
 	}
-	
+
 	public Point2D GetRandomCoordinates(Random rand)
 	{
 		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE, rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
 	
 	@Override
-	public void ReceivedDataSave(Object o) 
+	public void ReceivedDataSave(KingdomData data) 
 	{
 
 	}
 
 	@Override
-	public void SendingDataSave(Object o) 
+	public void SendingDataSave(KingdomData data) 
 	{
 
 	}
-	
 	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/

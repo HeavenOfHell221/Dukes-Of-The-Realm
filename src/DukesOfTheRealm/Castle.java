@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Castle extends Sprite implements ISave<Object> {
+public class Castle extends Sprite implements ISave<CastleData> {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -158,9 +158,8 @@ public class Castle extends Sprite implements ISave<Object> {
 	/*************************************************/
 	
 	@Override
-	public void ReceivedDataSave(Object o) 
+	public void ReceivedDataSave(CastleData data) 
 	{
-		CastleData data = (CastleData) o;
 		data.attackLocations = this.attackLocations;
 		data.level = this.level;
 		data.occupiedAttackLocations = this.occupiedAttackLocations;
@@ -177,7 +176,7 @@ public class Castle extends Sprite implements ISave<Object> {
 	}
 
 	@Override
-	public void SendingDataSave(Object o) 
+	public void SendingDataSave(CastleData castleData) 
 	{
 		
 	}
