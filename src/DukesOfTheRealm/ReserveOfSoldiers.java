@@ -1,8 +1,10 @@
 package DukesOfTheRealm;
 
+import java.io.Serializable;
+
 import Utility.Settings;
 
-public class ReserveOfSoldiers {
+public class ReserveOfSoldiers implements Serializable {
 
 	private int nbPikers = 0;
 	private int nbKnights = 0;

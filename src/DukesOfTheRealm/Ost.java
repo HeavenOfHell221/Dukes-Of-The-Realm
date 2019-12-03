@@ -1,20 +1,22 @@
 package DukesOfTheRealm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;
 
 import DukesOfTheRealm.Castle.Orientation;
+import SaveSystem.OstData;
 import Soldiers.*;
 import Utility.Time;
+import Utility.Point2D;
 import Utility.Settings;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Ost implements IUpdate{
-	
+public class Ost implements IUpdate, Serializable, ISave {
+
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -30,7 +32,7 @@ public class Ost implements IUpdate{
 	private ArrayList<Soldier> soldiers;
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
-	private Color color;
+	private transient Color color;
 	private long lastTime;
 
 	/*************************************************/
@@ -100,6 +102,25 @@ public class Ost implements IUpdate{
 	/******************* METHODES ********************/
 	/*************************************************/
 	
+	@Override
+	public void ReceivedDataSave(Object o) 
+	{
+		OstData data = (OstData) o;
+		data.separationPoint = this.separationPoint;
+		data.nbPikers = this.nbPikers;
+		data.nbKnights = this.nbKnights;
+		data.nbOnagers = this.nbOnagers;
+		data.speed = this.speed;
+		data.nbSoldiersSpawned = this.nbSoldiersSpawned;
+		data.fullyDeployed = this.fullyDeployed;
+	}
+
+	@Override
+	public void SendingDataSave(Object o) 
+	{
+		
+	}
+
 	private int SetOstSpeed()
 	{
 		int minimalSpeed = Settings.KNIGHT_SPEED;
@@ -108,6 +129,8 @@ public class Ost implements IUpdate{
 		return minimalSpeed;
 	}
 	
+	
+
 	private Point2D SetSeparationPoint()
 	{
 		Orientation area = GetDestinationArea();
@@ -238,6 +261,11 @@ public class Ost implements IUpdate{
 		return false;
 	}
 	
+	/*public void SetOstData(OstData ostData)
+	{
+		
+	}*/
+	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
@@ -260,5 +288,10 @@ public class Ost implements IUpdate{
 	public double GetSpeed()
 	{
 		return speed;
+	}
+	
+	public ArrayList<Soldier> GetSoldiers()
+	{
+		return soldiers;
 	}
 }

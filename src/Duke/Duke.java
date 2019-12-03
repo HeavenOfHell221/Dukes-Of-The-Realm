@@ -1,12 +1,14 @@
 package Duke;
 
+
+
 import UI.CastleUI;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class Duke extends Actor{
+public abstract class Duke extends Actor {
 
 	Duke(String name, Color myColor) 
 	{

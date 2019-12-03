@@ -3,17 +3,19 @@ package Soldiers;
 import java.util.Deque;
 
 import DukesOfTheRealm.*;
+import SaveSystem.OstData;
+import SaveSystem.SoldierData;
 import Utility.Time;
+import Utility.Point2D;
 import Utility.Settings;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
-public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate {
-	
+public abstract class Soldier extends Sprite implements ISave{
+
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -75,6 +77,32 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	/*************************************************/
 	
 	@Override
+	public void ReceivedDataSave(Object o) 
+	{
+		SoldierData data = (SoldierData) o;
+		data.type = this.type;
+		data.health = this.health;
+		data.damage = this.damage;
+		data.speed = this.speed;
+		data.onField = this.onField;
+		data.canMove = this.canMove;
+		data.isArrived = this.isArrived;
+		data.isInPosition = this.isInPosition;
+		data.isDead = this.isDead;
+		data.attackLocation = this.attackLocation;
+		data.isWaitingForAttackLocation = this.isWaitingForAttackLocation;
+		data.coordinate = GetCoordinate();
+	    data.width = getWidth();
+	    data.height = getHeight();
+	}
+
+	@Override
+	public void SendingDataSave(Object o) 
+	{
+		
+	}
+	
+	@Override
 	public void Update(long now, boolean pause)
 	{		
 		if (this.canMove)
@@ -113,8 +141,8 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void Move(Point2D dst)
 	{
-		int DirectionX = this.GetX() < dst.getX() ? 1 : this.GetX() == dst.getX() ? 0 : -1;
-		int DirectionY = this.GetY() < dst.getY() ? 1 : this.GetY() == dst.getY() ? 0 : -1;
+		int DirectionX = this.GetX() < dst.GetX() ? 1 : this.GetX() == dst.GetX() ? 0 : -1;
+		int DirectionY = this.GetY() < dst.GetY() ? 1 : this.GetY() == dst.GetY() ? 0 : -1;
 		this.AddMotion(this.speed * Time.deltaTime * DirectionX, this.speed * Time.deltaTime * DirectionY);
 		IsOutOfScreen();
 		if (!this.isArrived)
@@ -139,7 +167,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	}
 	
 	private void IsArrived() {
-		if (this.GetX() == this.itsOst.getSeparationPoint().getX() && this.GetY() == this.itsOst.getSeparationPoint().getY())
+		if (this.GetX() == this.itsOst.getSeparationPoint().GetX() && this.GetY() == this.itsOst.getSeparationPoint().GetY())
 		{
 			this.canMove = false;
 			this.isArrived = true;
@@ -149,7 +177,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	
 	private void IsInPosition()
 	{
-		if (this.GetX() == this.attackLocation.getX() && this.GetY() == this.attackLocation.getY())
+		if (this.GetX() == this.attackLocation.GetX() && this.GetY() == this.attackLocation.GetY())
 		{
 			this.isInPosition = true;
 		}
@@ -161,7 +189,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 //		{
 			int x = this.itsOst.GetOrigin().GetX();
 			int y = this.itsOst.GetOrigin().GetY();
-			System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") de type " + this.type + " -> J'attaque 1 fois");
+			//System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") de type " + this.type + " -> J'attaque 1 fois");
 			ApplyDamage();
 //			this.tmp++;
 //		}
@@ -170,7 +198,7 @@ public abstract class Soldier extends Sprite implements IProductionUnit, IUpdate
 	private void ApplyDamage()
 	{
 		this.isDead = (--this.damage <= 0) ? true : false;
-		System.out.println(this.damage);
+		//System.out.println(this.damage);
 	}
 	
 	/*************************************************/

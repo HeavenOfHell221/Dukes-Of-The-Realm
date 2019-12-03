@@ -1,23 +1,24 @@
 package DukesOfTheRealm;
 
-import javafx.geometry.Point2D;
+import Utility.Point2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import Duke.*;
+import SaveSystem.OstData;
+import SaveSystem.SaveSystem;
 import UI.CastleUI;
 import Utility.Settings;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Kingdom extends Parent implements IUpdate{
+public class Kingdom extends Parent implements IUpdate, ISave {
 
-	
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
 	
 	private ArrayList<Castle> castles; // Liste des chateaux
 	private ArrayList<Actor> actors; // Liste des acteurs
@@ -25,9 +26,8 @@ public class Kingdom extends Parent implements IUpdate{
 	private static Player player;
 	
 	private final Pane playfieldLayer; // Le layer du jeu (groupe de base)
-	CastleUI castleUIInstance;
+	public CastleUI castleUIInstance;
 	private boolean canUpdate = false;
-	
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -104,9 +104,9 @@ public class Kingdom extends Parent implements IUpdate{
 	
 	public boolean CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
 	{
-		if(!IsCastleToClose(coordinate.getX(), coordinate.getY()))
+		if(!IsCastleToClose(coordinate.GetX(), coordinate.GetY()))
 		{
-			Castle newCastle = new Castle(layer, coordinate.getX(), coordinate.getY(), level, actor);
+			Castle newCastle = new Castle(layer, coordinate.GetX(), coordinate.GetY(), level, actor);
 			newCastle.AddRepresentation();
 			this.getChildren().add(newCastle.GetShape());
 			this.getChildren().add(newCastle.GetDoor());
@@ -203,6 +203,19 @@ public class Kingdom extends Parent implements IUpdate{
 		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE, rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
 	
+	@Override
+	public void ReceivedDataSave(Object o) 
+	{
+
+	}
+
+	@Override
+	public void SendingDataSave(Object o) 
+	{
+
+	}
+	
+	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
@@ -210,5 +223,15 @@ public class Kingdom extends Parent implements IUpdate{
 	public static Player GetPlayer()
 	{
 		return player;
+	}
+	
+	public ArrayList<Castle> GetCastles()
+	{
+		return castles;
+	}
+	
+	public void SetCastles(ArrayList<Castle> castles)
+	{
+		this.castles = castles;
 	}
 }

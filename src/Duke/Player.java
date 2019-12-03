@@ -1,5 +1,6 @@
 package Duke;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
@@ -16,7 +17,11 @@ import javafx.scene.text.TextAlignment;
 
 public class Player extends Actor {
 	
-	private Castle lastCastleClicked;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1002476852003507617L;
+	private transient Castle lastCastleClicked = null;
 	
 	public Player(String name, Color myColor)
 	{

@@ -10,17 +10,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import Utility.Settings;
-import javafx.geometry.Point2D;
 
-public abstract class Sprite extends Parent{
+import java.io.Serializable;
+
+import Utility.Point2D;
+import Utility.Settings;
+
+public abstract class Sprite extends Parent implements IUpdate, IProductionUnit {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 	
-    private Pane canvas;
-    private Shape shape;
+    private transient Pane canvas;
+    private transient Shape shape;
 	
 	private Point2D coordinate;
     private double width;
@@ -39,7 +42,7 @@ public abstract class Sprite extends Parent{
     public Sprite (Pane canvas, Point2D point2D, double speed)
     {
     	this.canvas = canvas;
-    	this.coordinate = new Point2D(point2D.getX(), point2D.getY());
+    	this.coordinate = new Point2D(point2D);
     }
     
     /*************************************************/
@@ -140,11 +143,11 @@ public abstract class Sprite extends Parent{
     
     public int GetX() 
     {
-        return (int) coordinate.getX();
+        return (int) coordinate.GetX();
     }
     public int GetY() 
     {
-        return (int) coordinate.getY();
+        return (int) coordinate.GetY();
     }
     
     public Point2D GetCoordinate()
@@ -152,7 +155,7 @@ public abstract class Sprite extends Parent{
     	return coordinate;
     }
     
-    public Point2D GetCenter()
+    public Point2D GetCastleCenter()
     {
     	return new Point2D(GetX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), GetY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
     }
@@ -173,28 +176,26 @@ public abstract class Sprite extends Parent{
     
     public void SetX(int x) 
     {
-    	Point2D p = new Point2D(x, this.coordinate.getY());
-    	this.coordinate = p;
+    	this.coordinate.SetX(x);
     }
     public void SetY(int y) 
     {
-    	Point2D p = new Point2D(this.coordinate.getX(), y);
-    	this.coordinate = p;
+    	this.coordinate.SetY(y);
     }
     
     public void AddDx(double dx)
     {
-    	coordinate = coordinate.add(dx, 0);
+    	this.coordinate.AddDx(dx);
     }
     
     public void AddDy(double dy)
     {
-    	coordinate = coordinate.add(0, dy);
+    	this.coordinate.AddDy(dy);
     }
     
     public void AddMotion(double dx, double dy)
     {
-    	coordinate = coordinate.add(dx, dy);
+    	this.coordinate.AddMotion(dx, dy);
     }
   
     public void SetCoordinate(Point2D coordinate)

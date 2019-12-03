@@ -1,5 +1,6 @@
 package Duke;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
@@ -8,14 +9,13 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public abstract class Actor extends Parent{
-	
+public abstract class Actor extends Parent implements Serializable {
+
 	private ArrayList<Castle> myCastles;
 	private Color myColor;
 	static private Castle lastPlayerCastleClicked;
 	static private Castle lastOtherCastleClicked;
 	private String name = "";
-
 	
 	Actor(String name, Color myColor)
 	{

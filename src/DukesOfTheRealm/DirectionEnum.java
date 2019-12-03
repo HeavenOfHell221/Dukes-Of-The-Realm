@@ -1,6 +1,8 @@
 package DukesOfTheRealm;
 
-public enum DirectionEnum {
+import java.io.Serializable;
+
+public enum DirectionEnum implements Serializable{
 
 	Up,
 	Down,

@@ -1,12 +1,14 @@
 package DukesOfTheRealm;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javafx.geometry.Point2D;
+import Utility.Point2D;
 
 import Duke.*;
+import SaveSystem.CastleData;
 import Soldiers.*;
 import Utility.Time;
 import Utility.Settings;
@@ -14,8 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Castle extends Sprite implements IProductionUnit, IUpdate {
-	
+public class Castle extends Sprite implements ISave{
+
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -36,13 +38,13 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	private double totalFlorin; 						// L'argent que contient le chateau
 	private int level; 									// Le niveau du chateau
 	private ReserveOfSoldiers reserveOfSoldiers; 		// La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
-	private Actor actor; 								// Le proprietaire du chateau 
+	private transient Actor actor; 								// Le proprietaire du chateau 
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
 	private int productionTime; 						// Le temps restant a la production de l'unite de production
 	private Ost ost;
 	private Orientation orientation;
-	private Color myColor;
-	private Rectangle door;
+	private transient Color myColor;
+	private transient Rectangle door;
 	private Point2D[] attackLocations;					// Ordre : Nord -> Est -> Sud -> Ouest
 	private Point2D waitAttackLocation;
 	private boolean occupiedAttackLocationsTab[];
@@ -52,6 +54,14 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 	
+	/**
+	 * 
+	 * @param layer
+	 * @param x
+	 * @param y
+	 * @param level
+	 * @param actor
+	 */
 	Castle(Pane layer, double x, double y, int level, Actor actor)
 	{
 		super(layer, x, y);
@@ -69,6 +79,11 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 		this.occupiedAttackLocations = 0;
 	}
 	
+	public Castle(Pane layer, double x, double y) 
+	{
+		super(layer, x, y);
+	}
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
@@ -149,6 +164,31 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
+	
+	@Override
+	public void ReceivedDataSave(Object o) 
+	{
+		CastleData data = (CastleData) o;
+		data.attackLocations = this.attackLocations;
+		data.level = this.level;
+		data.occupiedAttackLocations = this.occupiedAttackLocations;
+		data.occupiedAttackLocationsTab = this.occupiedAttackLocationsTab;
+		data.orientation = this.orientation;
+		data.reserveOfSoldiers = this.reserveOfSoldiers;
+		data.totalFlorin = this.totalFlorin;
+		data.waitAttackLocation = this.waitAttackLocation;
+		data.productionTime = this.productionTime;
+		data.productionUnit = this.productionUnit;
+		data.coordinate = GetCoordinate();
+	    data.width = getWidth();
+	    data.height = getHeight();
+	}
+
+	@Override
+	public void SendingDataSave(Object o) 
+	{
+		
+	}
 	
 	private void RandomSoldier()
 	{
@@ -362,5 +402,41 @@ public class Castle extends Sprite implements IProductionUnit, IUpdate {
 	public Orientation GetOrientation()
 	{
 		return orientation;
+	}
+	
+	public Color GetMyColor()
+	{
+		return myColor;
+	}
+
+	public Ost GetOst() {
+		return ost;
+	}
+	
+	public void SetOst(Ost ost)
+	{
+		this.ost = ost;
+	}
+
+	public Point2D[] GetAttackLocations() {
+		return attackLocations;
+	}
+
+	public boolean[] GetOccupiedAttackLocationsTab() {
+		return occupiedAttackLocationsTab;
+	}
+
+	public int GetOccupiedAttackLocations() {
+		return occupiedAttackLocations;
+	}
+	
+	public ArrayDeque<IProductionUnit> GetProductionUnit()
+	{
+		return productionUnit;
+	}
+	
+	public int GetProductionTimeRemaining()
+	{
+		return productionTime;
 	}
 }
