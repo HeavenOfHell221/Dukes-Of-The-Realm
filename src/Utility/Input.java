@@ -16,7 +16,7 @@ public class Input {
 	public Input(Scene scene) 
 	{
 		this.scene = scene;
-	}
+	} 
 
 	public void addListeners() 
 	{
