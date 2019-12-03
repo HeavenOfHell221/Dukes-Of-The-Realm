@@ -1,4 +1,4 @@
-package DukesOfTheRealm;
+package Interface;
 
 public interface IProductionUnit {
 

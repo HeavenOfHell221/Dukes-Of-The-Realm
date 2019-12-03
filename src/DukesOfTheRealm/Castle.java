@@ -1,13 +1,13 @@
 package DukesOfTheRealm;
 
-import java.io.Serializable;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Random;
 
 import Utility.Point2D;
 
 import Duke.*;
+import Interface.IProductionUnit;
+import Interface.ISave;
 import SaveSystem.CastleData;
 import Soldiers.*;
 import Utility.Time;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Castle extends Sprite implements ISave{
+public class Castle extends Sprite implements ISave<Object> {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -54,14 +54,6 @@ public class Castle extends Sprite implements ISave{
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 	
-	/**
-	 * 
-	 * @param layer
-	 * @param x
-	 * @param y
-	 * @param level
-	 * @param actor
-	 */
 	Castle(Pane layer, double x, double y, int level, Actor actor)
 	{
 		super(layer, x, y);

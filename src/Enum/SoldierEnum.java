@@ -1,4 +1,4 @@
-package Soldiers;
+package Enum;
 
 import java.io.Serializable;
 

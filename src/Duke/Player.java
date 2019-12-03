@@ -1,7 +1,7 @@
 package Duke;
 
 import DukesOfTheRealm.Castle;
-import UI.CastleUI;
+import UI.UIManager;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -24,7 +24,7 @@ public class Player extends Actor {
 	public void AddCastle(Castle castle) {
 		super.AddCastle(castle);
 		lastCastleClicked = castle;
-		CastleUI.GetInstance().SwitchCastle(castle);
+		UIManager.GetInstance().SwitchCastle(castle);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class Player extends Actor {
 			.limit(1)
 			.forEach( castle -> {
 						SetLastPlayerCastleClicked(castle); 
-						CastleUI.GetInstance().SwitchCastle(castle);
+						UIManager.GetInstance().SwitchCastle(castle);
 					});
 		}
 	}

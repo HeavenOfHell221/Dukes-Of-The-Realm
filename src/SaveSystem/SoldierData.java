@@ -2,8 +2,8 @@ package SaveSystem;
 
 import java.io.Serializable;
 
+import Enum.SoldierEnum;
 import Soldiers.Soldier;
-import Soldiers.SoldierEnum;
 import Utility.Point2D;
 
 public class SoldierData implements Serializable {

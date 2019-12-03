@@ -3,6 +3,7 @@ package DukesOfTheRealm;
 
 import java.util.Random;
 
+import Interface.IUpdate;
 import SaveSystem.SaveSystem;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -15,7 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
-import UI.CastleUI;
+import UI.UIManager;
 import Utility.Time;
 import Utility.Input;
 import Utility.Settings;
@@ -37,7 +38,7 @@ public class Main extends Application implements IUpdate{
 	
 	/********************* UI ***********************/
 	
-	private CastleUI castleUI;
+	private UIManager castleUI;
 	
 	/******************** Other ********************/
 	
@@ -167,7 +168,7 @@ public class Main extends Application implements IUpdate{
 		kingdom.Start();
 		
 		/* UI */
-		CastleUI.GetInstance().SetPlayfieldLayer(playfieldLayer);
+		UIManager.GetInstance().SetPlayfieldLayer(playfieldLayer);
 	}
 	
 	@Override

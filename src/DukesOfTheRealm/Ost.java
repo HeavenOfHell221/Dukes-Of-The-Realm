@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;
 
 import DukesOfTheRealm.Castle.Orientation;
+import Enum.SoldierEnum;
+import Interface.ISave;
+import Interface.IUpdate;
 import SaveSystem.OstData;
 import Soldiers.*;
 import Utility.Point2D;

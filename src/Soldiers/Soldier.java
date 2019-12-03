@@ -1,6 +1,8 @@
 package Soldiers;
 
 import DukesOfTheRealm.*;
+import Enum.SoldierEnum;
+import Interface.ISave;
 import SaveSystem.SoldierData;
 import Utility.Time;
 import Utility.Point2D;

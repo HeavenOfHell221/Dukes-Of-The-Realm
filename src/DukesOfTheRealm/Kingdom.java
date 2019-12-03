@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import Duke.*;
-import UI.CastleUI;
+import Interface.ISave;
+import Interface.IUpdate;
+import UI.UIManager;
 import Utility.Settings;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -23,7 +25,7 @@ public class Kingdom extends Parent implements IUpdate, ISave {
 	private static Player player;
 	
 	private final Pane playfieldLayer; // Le layer du jeu (groupe de base)
-	public CastleUI castleUIInstance;
+	public UIManager castleUIInstance;
 	private boolean canUpdate = false;
 	
 	/*************************************************/
@@ -59,7 +61,7 @@ public class Kingdom extends Parent implements IUpdate, ISave {
 	@Override
 	public void Start()
 	{
-		castleUIInstance = CastleUI.GetInstance();
+		castleUIInstance = UIManager.GetInstance();
 		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
 		castles.forEach(castle -> castle.Start());
 		castles.forEach(castle -> 

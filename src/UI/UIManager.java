@@ -2,7 +2,7 @@ package UI;
 
 import Duke.Baron;
 import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.IUpdate;
+import Interface.IUpdate;
 import Utility.Settings;
 import Utility.Time;
 import javafx.scene.Cursor;
@@ -24,7 +24,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class CastleUI extends Parent implements IUpdate{
+public class UIManager extends Parent implements IUpdate{
 
 	private Castle castle;
 	
@@ -44,9 +44,9 @@ public class CastleUI extends Parent implements IUpdate{
 	private ImageView imageOnager;
 	private ImageView imageCoins;
 	
-	private static CastleUI instance = new CastleUI();
+	private static UIManager instance = new UIManager();
 	
-	private CastleUI()
+	private UIManager()
 	{	
 		this.text = new Text();
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
@@ -276,7 +276,7 @@ public class CastleUI extends Parent implements IUpdate{
 		this.castle = castle;
 	}
 	
-	public static CastleUI GetInstance()
+	public static UIManager GetInstance()
 	{
 		return instance;
 	}

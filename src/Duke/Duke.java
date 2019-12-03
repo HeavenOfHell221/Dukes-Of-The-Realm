@@ -2,7 +2,7 @@ package Duke;
 
 
 
-import UI.CastleUI;
+import UI.UIManager;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -32,7 +32,7 @@ public abstract class Duke extends Actor {
 							SetLastPlayerCastleClicked(null);
 						}
 						SetLastOtherCastleClicked(castle);
-						CastleUI.GetInstance().SwitchCastle(castle);
+						UIManager.GetInstance().SwitchCastle(castle);
 					});
 		}
 	}

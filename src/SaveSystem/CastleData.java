@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 
 import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.IProductionUnit;
 import DukesOfTheRealm.Main;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import Utility.Point2D;
 import DukesOfTheRealm.Castle.Orientation;
+import Interface.IProductionUnit;
 
 public class CastleData implements Serializable {	
 	

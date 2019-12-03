@@ -1,6 +1,6 @@
 package Utility;
 
-import DukesOfTheRealm.IUpdate;
+import Interface.IUpdate;
 
 public class Time implements IUpdate{
 

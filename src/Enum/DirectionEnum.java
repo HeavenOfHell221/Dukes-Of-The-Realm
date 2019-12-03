@@ -1,4 +1,4 @@
-package DukesOfTheRealm;
+package Enum;
 
 import java.io.Serializable;
 
