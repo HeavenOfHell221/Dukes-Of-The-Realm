@@ -51,10 +51,10 @@ public class CastleData implements Serializable {
 	
 	public Castle Load()
 	{
-		
-		Castle newCastle = new Castle(Main.playfieldLayer, coordinate.GetX(), coordinate.GetY());
+		return null;
+		/*Castle newCastle = new Castle(Main.playfieldLayer, coordinate.GetX(), coordinate.GetY());
 		Ost newOst = this.ost.Load();
 		newCastle.SetOst(newOst);
-		return newCastle;
+		return newCastle;*/
 	}
 }

@@ -23,39 +23,104 @@ import Utility.Settings;
 
 public class Main extends Application implements IUpdate{
 	
-	public static Pane playfieldLayer;
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+	
+	private Pane playfieldLayer;
 	private Scene mainScene;
 	private AnimationTimer lobbyGameLoop;
 	private AnimationTimer mainGameLoop;
 	private Group root;
 	private Input input;
 	private Time time;
-	public static Kingdom kingdom;
+	private Kingdom kingdom;
+	private Random rand;
 	
 	private boolean stopGame = false;
 	private boolean lobby = true;
 	private boolean mainGame = false;
-	
-	/********************* UI ***********************/
-	
-	private UIManager castleUI;
-	
-	/******************** Other ********************/
-	
-	private Random rand;
 	private long lastTime = 0;
 	private boolean pause = false;
 	
-	/******************* Methodes ***************/
-
+	
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
 	@Override
 	public void start(Stage primaryStage) 
 	{
+		
+		Awake(primaryStage);
+		
+		/* LOBBY GAME LOOP */
+		lobbyGameLoop = new AnimationTimer()
+		{
+			@Override
+			public void handle(long now) 
+			{	
+				processInput(input, now);
+			}
+			
+			private void processInput(Input input, long now)
+			{
+				if(input.isExit())
+				{
+					Platform.exit();
+					System.exit(0);
+				}
+			}
+		};
+		
+		/* MAIN GAME LOOP */
+		mainGameLoop = new AnimationTimer() 
+		{
+			@Override
+			public void handle(long now) 
+			{
+				processInput(input, now);
+				Update(now, pause);
+			}
+			
+			private void processInput(Input input, long now)
+			{
+				if(input.isExit())
+				{
+					Save();
+					Platform.exit();
+					System.exit(0);
+				}
+				if(input.isSpace() && Time(now))
+				{
+					pause = !pause;
+					SaveSystem.Load();
+				}
+			}	
+		};
+		
+		lobbyGameLoop.start();
+	}
+	
+	@Override
+	public void Start()
+	{
+		
+		
+		/* KINGDOM */
+		kingdom = new Kingdom(playfieldLayer);
+		playfieldLayer.getChildren().add(kingdom);
+		kingdom.Start();	
+		
+		/* UI */
+		UIManager.GetInstance().Awake();
+	}
+	
+	private void Awake(Stage primaryStage)
+	{
 		root = new Group();
 		mainScene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-		Image i = new Image(getClass().getResource("/images/bg2.jpg").toExternalForm());
-		ImagePattern pattern = new ImagePattern(i, 0, 0, 1, 1, true);
-		mainScene.setFill(pattern);
+		mainScene.setFill(new ImagePattern(new Image(getClass().getResource("/images/bg2.jpg").toExternalForm()), 0, 0, 1, 1, true));
 		primaryStage.setScene(mainScene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(true);
@@ -64,7 +129,7 @@ public class Main extends Application implements IUpdate{
 		Settings.SCENE_WIDTH = (int) primaryStage.getWidth();
 		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();
 
-		// create layers
+		/* LAYER */
 		playfieldLayer = new Pane();
 		root.getChildren().add(playfieldLayer);
 		
@@ -78,6 +143,7 @@ public class Main extends Application implements IUpdate{
 		/* TIME MANAGER */
 		time = new Time(false);
 		
+		/* BUTTONS */
 		Button buttonPlay = new Button();
 		Button buttonNew = new Button();
 		
@@ -110,66 +176,11 @@ public class Main extends Application implements IUpdate{
 		
 		root.getChildren().add(buttonPlay);
 		root.getChildren().add(buttonNew);
-		
-		
-		lobbyGameLoop = new AnimationTimer()
-		{
-			@Override
-			public void handle(long now) 
-			{	
-				processInput(input, now);
-			}
-			
-			private void processInput(Input input, long now)
-			{
-				if(input.isExit())
-				{
-					Platform.exit();
-					System.exit(0);
-				}
-			}
-		};
-		
-		mainGameLoop = new AnimationTimer() 
-		{
-			@Override
-			public void handle(long now) 
-			{
-				processInput(input, now);
-				Update(now, pause);
-			}
-			
-			private void processInput(Input input, long now)
-			{
-				if(input.isExit())
-				{
-					Save();
-					Platform.exit();
-					System.exit(0);
-				}
-				if(input.isSpace() && Time(now))
-				{
-					pause = !pause;
-					SaveSystem.Load();
-				}
-			}	
-		};
-		
-		lobbyGameLoop.start();
 	}
 	
-	@Override
-	public void Start()
-	{
-		/* KINGDOM */
-		kingdom = new Kingdom(playfieldLayer);
-		//kingdom = Load();
-		playfieldLayer.getChildren().add(kingdom);
-		kingdom.Start();
-		
-		/* UI */
-		UIManager.GetInstance().SetPlayfieldLayer(playfieldLayer);
-	}
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
 	
 	@Override
 	public void Update(long now, boolean pause)
@@ -177,6 +188,11 @@ public class Main extends Application implements IUpdate{
 		time.Update(now, pause);
 		kingdom.Update(now, pause);
 	}
+	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
 	
 	private boolean Time(long now)
 	{

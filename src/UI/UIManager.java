@@ -1,51 +1,121 @@
 package UI;
 
-import Duke.Baron;
 import DukesOfTheRealm.Castle;
 import Interface.IUpdate;
-import Utility.Settings;
-import Utility.Time;
-import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
-public class UIManager extends Parent implements IUpdate{
+public class UIManager extends Parent implements IUpdate {
 
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+	
+	private static final UIManager instance = new UIManager();
+	private UIAttackPreview attackPreview;
+	private UIProductionUnitPreview productionUnitPreview;
+	private UICastlePreview castlePreview;
+
+	protected Castle currentCastle;
+	
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
+	
+	protected UIManager()
+	{
+		
+	}
+	
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
+	@Override
+	public void Start() 
+	{
+		AddNode(attackPreview);
+		AddNode(castlePreview);
+		AddNode(productionUnitPreview);
+		
+		GetAttackPreview().Start();
+		GetCastlePreview().Start();
+		GetProductionUnitPreview().Start();
+	}
+	
+	public void Awake()
+	{
+		instance.attackPreview = new UIAttackPreview();
+		instance.castlePreview = new UICastlePreview();
+		instance.productionUnitPreview = new UIProductionUnitPreview();
+		instance.Start();
+	}
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+
+	@Override
+	public void Update(long now, boolean pause) 
+	{
+		
+	}
+
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
+	protected void AddNode(Node node)
+	{
+		instance.getChildren().add(node);
+	}
+	
+	public void SwitchCastle(Castle castle)
+	{
+		instance.currentCastle = castle;
+	}
+	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+
+	/**
+	 * @return the instance
+	 */
+	public static final UIManager GetInstance() 
+	{
+		return instance;
+	}
+
+	/**
+	 * @return the attackPreview
+	 */
+	public final UIAttackPreview GetAttackPreview() 
+	{
+		return instance.attackPreview;
+	}
+
+	/**
+	 * @return the productionUnitPreview
+	 */
+	public final UIProductionUnitPreview GetProductionUnitPreview() 
+	{
+		return instance.productionUnitPreview;
+	}
+
+	/**
+	 * @return the castlePreview
+	 */
+	public final UICastlePreview GetCastlePreview() 
+	{
+		return instance.castlePreview;
+	}
+	
+	
+	/*
 	private Castle castle;
-	
-	private Text text;
-	private Text textFPS;
-	private Pane playfieldLayer;
-	private Rectangle backgroundText;
-	private Rectangle background;
-	private Rectangle backgroundButtonSoldier;
-	
-	private Button buttonCreatePiker;
-	private Button buttonCreateKnight;
-	private Button buttonCreateOnager;
-	
-	private ImageView imageKnight;
-	private ImageView imagePiker;
-	private ImageView imageOnager;
-	private ImageView imageCoins;
-	
-	private static UIManager instance = new UIManager();
-	
+
 	private UIManager()
 	{	
 		this.text = new Text();
@@ -53,15 +123,6 @@ public class UIManager extends Parent implements IUpdate{
 		this.backgroundText = new Rectangle(220, 0);
 		this.backgroundButtonSoldier = new Rectangle(320, 260);
 		this.textFPS = new Text();
-		
-		this.imageKnight = new ImageView(new Image(getClass().getResource("/images/mounted-knight-white.png").toExternalForm(), 64, 64, false, true));
-		this.imagePiker = new ImageView(new Image(getClass().getResource("/images/spartan-white.png").toExternalForm(), 64, 64, false, true));
-		this.imageOnager = new ImageView(new Image(getClass().getResource("/images/catapult-white.png").toExternalForm(), 64, 64, false, true));
-		this.imageCoins = new ImageView(new Image(getClass().getResource("/images/coins2.png").toExternalForm(), 64, 64, false, true));
-		
-		this.buttonCreatePiker = new Button();
-		this.buttonCreateKnight = new Button();
-		this.buttonCreateOnager = new Button();
 
 	    this.background.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.05), 0);
 		this.backgroundText.relocate(Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0908), 60);
@@ -311,5 +372,5 @@ public class UIManager extends Parent implements IUpdate{
 		instance.getChildren().add(this.imagePiker);
 		//instance.getChildren().add(this.imageCoins);
 		
-	}
+	}*/
 }

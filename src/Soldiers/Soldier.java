@@ -132,7 +132,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	/******************* METHODES ********************/
 	/*************************************************/
 	
-	private void SetAttackLocation()
+	private final void SetAttackLocation()
 	{
 		if (this.itsOst.GetDestination().IsAvailableAttackLocation())
 		{
@@ -194,12 +194,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	
 	private void Attack()
 	{
-this.itsOst.GetOrigin().GetX();
-			this.itsOst.GetOrigin().GetY();
-			//System.out.println("Soldat (" + (-1* (x - this.GetX())) + ", " + (-1* (y - this.GetY())) + ") de type " + this.type + " -> J'attaque 1 fois");
-			ApplyDamage();
-//			this.tmp++;
-//		}
+
 	}
 	
 	private void ApplyDamage()
