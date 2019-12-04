@@ -69,27 +69,30 @@ public class ReserveOfSoldiers implements Serializable {
 		return false;
 	}
 
-	public int getNbPikers() {
+	public int GetNbPikers() {
 		return nbPikers;
 	}
 
-	public int getNbKnights() {
+	public int GetNbKnights() {
 		return nbKnights;
 	}
 
-	public int getNbOnagers() {
+	public int GetNbOnagers() {
 		return nbOnagers;
 	}
 
-	public void setNbPikers(int nbPikers) {
+	public void SetNbPikers(int nbPikers) 
+	{
 		this.nbPikers = nbPikers;
 	}
 
-	public void setNbKnights(int nbKnights) {
+	public void SetNbKnights(int nbKnights) 
+	{
 		this.nbKnights = nbKnights;
 	}
 
-	public void setNbOnagers(int nbOnagers) {
+	public void SetNbOnagers(int nbOnagers) 
+	{
 		this.nbOnagers = nbOnagers;
 	}
 }

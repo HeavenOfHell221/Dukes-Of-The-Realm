@@ -10,8 +10,13 @@ public class Onager extends Soldier {
 
 	public Onager(Pane layer, double x, double y, Ost itsOst, int speed)
 	{
-		super(layer, x, y, itsOst, Settings.ONAGER_COST, Settings.ONAGER_TIME_PRODUCTION, speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
+		super(layer, x, y, itsOst, speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 		this.type = SoldierEnum.Onager;
+	}
+	
+	public Onager()
+	{
+		super();
 	}
 	
 	@Override
@@ -19,5 +24,15 @@ public class Onager extends Soldier {
 	{
 		AddOnagerRepresentation();
 		super.Awake(color);
+	}
+
+	@Override
+	public int GetProductionTime() {
+		return Settings.ONAGER_TIME_PRODUCTION;
+	}
+
+	@Override
+	public int GetProductionCost() {
+		return Settings.ONAGER_COST;
 	}
 }

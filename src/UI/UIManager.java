@@ -47,7 +47,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	public void Start() 
 	{
 		AddAllNodes();
-		
+		RelocateAllNodes();
 		SetBackground();
 		
 		GetAttackPreview().Start();
@@ -89,12 +89,11 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	public void AddNode(Node node) 
 	{
 		this.playfieldLayer.getChildren().add(node);
+		this.background.toBack();
 	}
 	
 	private void SetBackground()
 	{
-		Relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
-		
 		Stop[] stops = new Stop[] { new Stop(0, Color.web("#753F0B")), new Stop(1, Color.web("#4F2E0F"))};
 	    LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.REFLECT, stops);
 	    this.background.setFill(lg1);
@@ -105,9 +104,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 		a.setSpread(0.1);
 		a.setRadius(5);
 		a.setColor(Color.BLACK);
-		this.background.setEffect(a);
-		
-		this.background.toBack();
+		this.background.setEffect(a);	
 	}
 	
 	@Override
@@ -122,18 +119,15 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	@Override
 	public void RelocateAllNodes() 
 	{
-		
+		Relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
 	}
 	
 	public void SwitchCastle(Castle castle)
 	{
-		if(castle != null)
-		{
-			currentCastle = castle;
-			attackPreview.SwitchCastle(castle);
-			productionUnitPreview.SwitchCastle(castle);
-			castlePreview.SwitchCastle(castle);
-		}
+		currentCastle = castle;
+		attackPreview.SwitchCastle(castle);
+		productionUnitPreview.SwitchCastle(castle);
+		castlePreview.SwitchCastle(castle);
 	}
 	
 	public void SetPlayfieldLayer(Pane playfieldLayer)

@@ -71,6 +71,12 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	{
 		super(layer, x, y);
 	}
+	
+	public Castle(int level)
+	{
+		super();
+		this.level = level;
+	}
 
 	/*************************************************/
 	/********************* START *********************/
@@ -123,6 +129,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		if(this.productionUnit.size() > 0)
 		{
 			this.productionTime--;
+			//System.out.println(this.productionTime);
 			if(this.productionTime == 0)
 			{
 				IProductionUnit p = this.productionUnit.pollFirst();
@@ -177,16 +184,16 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	private void RandomSoldier()
 	{
 		Random rand = new Random();
-		this.reserveOfSoldiers.setNbKnights(rand.nextInt(5) * level);
-		this.reserveOfSoldiers.setNbPikers(rand.nextInt(10) * level);
-		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(5) + level);
+		this.reserveOfSoldiers.SetNbKnights(rand.nextInt(5) * level);
+		this.reserveOfSoldiers.SetNbPikers(rand.nextInt(10) * level);
+		this.reserveOfSoldiers.SetNbOnagers(rand.nextInt(5) + level);
 	}
 	
 	private void StartSoldier()
 	{
-		this.reserveOfSoldiers.setNbKnights(Settings.STARTER_KNIGHT);
-		this.reserveOfSoldiers.setNbPikers(Settings.STARTER_PIKER);
-		this.reserveOfSoldiers.setNbOnagers(Settings.STARTER_ONAGER);
+		this.reserveOfSoldiers.SetNbKnights(Settings.STARTER_KNIGHT);
+		this.reserveOfSoldiers.SetNbPikers(Settings.STARTER_PIKER);
+		this.reserveOfSoldiers.SetNbOnagers(Settings.STARTER_ONAGER);
 	}
 	
 	
@@ -230,9 +237,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 			case East: this.door = new Rectangle(GetX() +  + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, GetY() + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
 			case West: this.door = new Rectangle(GetX(), GetY() + + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
 			default: this.door = new Rectangle(0, 0, 0, 0); break;	
-		}
-		
-		
+		}		
 	}
 	
 	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
@@ -271,12 +276,19 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		return (amount <= totalFlorin);
 	}
 	
-	public void AddProduction(IProductionUnit newProduction)
+	public boolean AddProduction(IProductionUnit newProduction)
 	{
 		if(newProduction == null || !RemoveFlorin(newProduction.GetProductionCost()))
-			return;
+			return false;
 		
 		this.productionUnit.addLast(newProduction);
+		
+		if(this.productionUnit.size() == 1)
+		{
+			this.productionTime = newProduction.GetProductionTime();
+		}
+		
+		return true;
 	}
 	
 
@@ -388,7 +400,8 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		return myColor;
 	}
 
-	public Ost GetOst() {
+	public Ost GetOst() 
+	{
 		return ost;
 	}
 	
@@ -397,7 +410,8 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		this.ost = ost;
 	}
 
-	public Stack<Point2D> GetAttackLocations() {
+	public Stack<Point2D> GetAttackLocations() 
+	{
 		return attackLocations;
 	}
 	

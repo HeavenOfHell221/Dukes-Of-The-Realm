@@ -40,6 +40,11 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
     	this.coordinate = new Point2D(point2D);
     }
     
+    protected Sprite()
+    {
+    	
+    }
+    
     /*************************************************/
 	/********************* START *********************/
 	/*************************************************/

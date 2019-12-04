@@ -2,6 +2,7 @@ package Soldiers;
 
 import DukesOfTheRealm.*;
 import Enum.SoldierEnum;
+import Interface.IProductionUnit;
 import Interface.ISave;
 import SaveSystem.SoldierData;
 import Utility.Time;
@@ -10,15 +11,13 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public abstract class Soldier extends Sprite implements ISave<SoldierData> {
+public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 	
 	protected SoldierEnum type;
-	protected int productionCost;
-	protected int productionTime;
 	protected int health;
 	protected int damage;
 	protected int speed;
@@ -36,15 +35,18 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 	
-	public Soldier(Pane layer, double x, double y, Ost itsOst, int productionCost, int productionTime, int speed, int health, int damage)
+	public Soldier(Pane layer, double x, double y, Ost itsOst, int speed, int health, int damage)
 	{
 		super(layer, x, y);
-		this.productionCost = productionCost;
-		this.productionTime = productionTime;
 		this.health = health;
 		this.damage = damage;
 		this.speed = speed;
 		this.itsOst = itsOst;
+	}
+	
+	protected Soldier()
+	{
+		super();
 	}
 	
 	/*************************************************/
@@ -208,16 +210,10 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData> {
 	/*************************************************/
 
 	@Override
-	public int GetProductionTime()
-	{
-		return productionTime;
-	}
+	public abstract int GetProductionTime();
 	
 	@Override
-	public int GetProductionCost()
-	{
-		return productionCost;
-	}
+	public abstract int GetProductionCost();
 
 	public SoldierEnum GetType()
 	{

@@ -1,8 +1,12 @@
 package UI;
 
 import DukesOfTheRealm.Castle;
+import Interface.IProductionUnit;
 import Interface.IUI;
 import Interface.IUpdate;
+import Soldiers.Knight;
+import Soldiers.Onager;
+import Soldiers.Piker;
 import Utility.Settings;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -150,39 +154,27 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 				+ "-fx-background-repeat: no-repeat; "
 				);
 		
-		this.buttonCreateOnager.setOnMousePressed(
-			event -> 
-			{ 
-				buttonCreateOnager.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0)); 
-				// TODO : Creation d'un onager
-			});
-		
-		this.buttonCreatePiker.setOnMousePressed(
-			event -> 
-			{ 
-				buttonCreatePiker.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0)); 
-				// TODO : Creation d'un piker
-			});
-		
-		
-		this.buttonCreateKnight.setOnMousePressed(
-			event -> 
-			{ 
-				buttonCreateKnight.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 15, 0.33, 0, 0)); 
-				// TODO : Creation d'un knight
-			});
-		
-		this.buttonUpgradeCastle.setOnMousePressed(
-				event -> 
-				{ 
-					buttonUpgradeCastle.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 15, 0.33, 0, 0)); 
-					// TODO : upgrade castle
-				});
+		this.buttonCreateOnager.setOnMousePressed(event -> AddProduction(this.buttonCreateOnager, new Onager()));
+		this.buttonCreatePiker.setOnMousePressed(event -> AddProduction(this.buttonCreatePiker, new Piker()));
+		this.buttonCreateKnight.setOnMousePressed(event -> AddProduction(this.buttonCreateKnight, new Knight()));
+		this.buttonUpgradeCastle.setOnMousePressed(event -> AddProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.GetLevel())));
 		
 		AddEventMouse(this.buttonCreateKnight);
 		AddEventMouse(this.buttonCreateOnager);
 		AddEventMouse(this.buttonCreatePiker);
 		AddEventMouse(this.buttonUpgradeCastle);
+	}
+	
+	private void AddProduction(Button b, IProductionUnit p)
+	{
+		if(this.currentCastle.AddProduction(p))
+		{
+			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0));
+		}
+		else
+		{
+			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 15, 0.33, 0, 0));
+		}
 	}
 	
 	private void SetBackground()

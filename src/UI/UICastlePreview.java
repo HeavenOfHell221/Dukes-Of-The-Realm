@@ -110,9 +110,9 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 		this.owner.setText(this.currentCastle.GetActor().GetName());
 		this.level.setText("Level: " + this.currentCastle.GetLevel());
 		this.nbFlorin.setText((int)this.currentCastle.GetTotalFlorin() + "");
-		this.nbPiker.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbPikers());
-		this.nbKnight.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbKnights());
-		this.nbOnager.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbOnagers());
+		this.nbPiker.setText("" + this.currentCastle.GetReserveOfSoldiers().GetNbPikers());
+		this.nbKnight.setText("" + this.currentCastle.GetReserveOfSoldiers().GetNbKnights());
+		this.nbOnager.setText("" + this.currentCastle.GetReserveOfSoldiers().GetNbOnagers());
 	}
 	
 
