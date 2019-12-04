@@ -1,5 +1,6 @@
 package Interface;
 
+import DukesOfTheRealm.Castle;
 import javafx.scene.Node;
 
 public interface IUI {
@@ -8,4 +9,5 @@ public interface IUI {
 	void RelocateAllNodes();
 	void Relocate(Node node, double x, double y);
 	void AddNode(Node node);
+	void SwitchCastle(Castle castle);
 }

@@ -26,7 +26,7 @@ public class Settings {
 	/****************************************************/
 	
 	/* Florin */ /* Can be balanced */
-	public static final int FLORIN_PER_SECOND = 2;
+	public static final int FLORIN_PER_SECOND = 10;
 	public static final float FLORIN_FACTOR_BARON = 0.1f;
 	
 	/* Levels */ /* Can be balanced */

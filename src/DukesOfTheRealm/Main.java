@@ -106,14 +106,16 @@ public class Main extends Application implements IUpdate{
 	public void Start()
 	{
 		
+		/* UI */
+		UIManager.GetInstance().SetPlayfieldLayer(playfieldLayer);
+		UIManager.GetInstance().Awake();
 		
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);
 		playfieldLayer.getChildren().add(kingdom);
 		kingdom.Start();	
 		
-		/* UI */
-		UIManager.GetInstance().Awake();
+		
 	}
 	
 	private void Awake(Stage primaryStage)
@@ -187,6 +189,7 @@ public class Main extends Application implements IUpdate{
 	{
 		time.Update(now, pause);
 		kingdom.Update(now, pause);
+		UIManager.GetInstance().Update(now, pause);
 	}
 	
 	/*************************************************/
