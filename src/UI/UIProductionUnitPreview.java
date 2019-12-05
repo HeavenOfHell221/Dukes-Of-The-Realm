@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -60,7 +61,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		this.background = new Rectangle(280, 300);
 		
 		this.backgroundTime = new Rectangle(240, 40);
-		this.fillTime = new Rectangle(30, 40); // entre +00 et +210
+		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
 	}
 	
 	/*************************************************/
@@ -84,8 +85,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 	@Override
 	public void Update(long now, boolean pause) 
 	{
-		i += 0.001;
-		SetFill(i);
+	
 	}
 
 	/*************************************************/
@@ -106,21 +106,27 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 			this.fillTime.setWidth(0);
 			return;
 		}
-		this.fillTime.setWidth(20 + (fractionFill * 220));
+		this.fillTime.setWidth(5 + fractionFill * 235);
 	}
 	
 	private void SetBar()
 	{
 		this.backgroundTime.setFill(Color.TAN);
-		this.backgroundTime.setStrokeWidth(4);
+		this.backgroundTime.setStrokeWidth(5);
 		this.backgroundTime.setStrokeType(StrokeType.OUTSIDE);
 		this.backgroundTime.setStroke(Color.BLANCHEDALMOND);
-		this.backgroundTime.setArcHeight(40);
-		this.backgroundTime.setArcWidth(40);
+		this.backgroundTime.setArcHeight(20);
+		this.backgroundTime.setArcWidth(20);
 			
 		this.fillTime.setFill(Color.SEAGREEN);
-		this.fillTime.setArcHeight(40);
-		this.fillTime.setArcWidth(40);
+		this.fillTime.setArcHeight(20);
+		this.fillTime.setArcWidth(20);
+		
+		InnerShadow i = new InnerShadow();
+		i.setColor(Color.BLACK);
+		i.setHeight(10);
+		
+		this.fillTime.setEffect(i);
 	}
 	
 	private void SetAllButtons()
@@ -149,7 +155,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		
 		this.buttonUpgradeCastle.setStyle(""
 				+ "-fx-background-color: transparent;"
-				+ "-fx-background-image: url('/images/mounted-knight.png'); "
+				+ "-fx-background-image: url('/images/egyptian-temple.png'); "
 				+ "-fx-background-size: 64px 64px; "
 				+ "-fx-background-repeat: no-repeat; "
 				);

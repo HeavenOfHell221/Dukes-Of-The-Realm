@@ -150,7 +150,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the attackPreview
 	 */
-	public final UIAttackPreview GetAttackPreview() 
+	public static final UIAttackPreview GetAttackPreview() 
 	{
 		return instance.attackPreview;
 	}
@@ -158,7 +158,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the productionUnitPreview
 	 */
-	public final UIProductionUnitPreview GetProductionUnitPreview() 
+	public static final UIProductionUnitPreview GetProductionUnitPreview() 
 	{
 		return instance.productionUnitPreview;
 	}
@@ -166,7 +166,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the castlePreview
 	 */
-	public final UICastlePreview GetCastlePreview() 
+	public static final UICastlePreview GetCastlePreview() 
 	{
 		return instance.castlePreview;
 	}

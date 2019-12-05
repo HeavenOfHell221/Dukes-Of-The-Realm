@@ -11,6 +11,7 @@ import Interface.IProductionUnit;
 import Interface.ISave;
 import SaveSystem.CastleData;
 import Soldiers.*;
+import UI.UIManager;
 import Utility.Time;
 import Utility.Settings;
 import javafx.scene.layout.Pane;
@@ -41,7 +42,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	private ReserveOfSoldiers reserveOfSoldiers; 		// La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
 	private transient Actor actor; 								// Le proprietaire du chateau 
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
-	private int productionTime; 						// Le temps restant a la production de l'unite de production
+	private double productionTime; 						// Le temps restant a la production de l'unite de production
 	private Ost ost;
 	private Orientation orientation;
 	private transient Color myColor;
@@ -128,9 +129,12 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	{
 		if(this.productionUnit.size() > 0)
 		{
-			this.productionTime--;
-			//System.out.println(this.productionTime);
-			if(this.productionTime == 0)
+			this.productionTime -= (1 * Time.deltaTime);
+			
+			double ratio = 1 - ((double) this.productionTime / (double)this.productionUnit.getFirst().GetProductionTime());
+			UIManager.GetProductionUnitPreview().SetFill(ratio);
+			
+			if(this.productionTime <= 0)
 			{
 				IProductionUnit p = this.productionUnit.pollFirst();
 				
@@ -168,7 +172,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		data.orientation = this.orientation;
 		data.reserveOfSoldiers = this.reserveOfSoldiers;
 		data.totalFlorin = this.totalFlorin;
-		data.productionTime = this.productionTime;
+		//data.productionTime = this.productionTime;
 		data.productionUnit = this.productionUnit;
 		data.coordinate = GetCoordinate();
 	    data.width = getWidth();
@@ -420,7 +424,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		return productionUnit;
 	}
 	
-	public int GetProductionTimeRemaining()
+	public double GetProductionTimeRemaining()
 	{
 		return productionTime;
 	}

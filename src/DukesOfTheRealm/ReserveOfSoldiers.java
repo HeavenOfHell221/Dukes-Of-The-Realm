@@ -13,6 +13,13 @@ public class ReserveOfSoldiers implements Serializable {
 	private int knigtHPRemaining = Settings.KNIGHT_HP;
 	private int onagerHPremaining = Settings.ONAGER_HP;
 	
+	public ReserveOfSoldiers()
+	{
+		
+	}
+	
+	private boolean stopAttack = false;
+	
 	public void AddPiker()
 	{
 		this.nbPikers++;
@@ -28,43 +35,101 @@ public class ReserveOfSoldiers implements Serializable {
 		this.nbOnagers++;
 	}
 	
-	public void RemovePikerHP()
+	public void RandomRemoveHP(int x)
 	{
-		if(RemoveHP(this.nbPikers, this.pikersHPRemaining) && this.nbPikers > 0)
+		x = x % Settings.NB_TYPES_OF_TROOPS;
+		
+		if(stopAttack)
+			return;
+		
+		switch(x)
 		{
-			this.pikersHPRemaining = Settings.PIKER_HP;
+			case 0: 
+				if(RemovePikerHP()) 
+					break;
+				else
+					RandomRemoveHP(x + 1);
+				break;
+			case 1: 
+				if(RemoveKnightHP())
+					break;
+				else
+					RandomRemoveHP(x + 1);
+				break;
+			case 2: 
+				if(RemoveOnagerHP())
+					break;
+				else
+					RandomRemoveHP(x + 1);
+				break;
+				default:
+					break;
 		}
+		
+		SwitchActor();
 	}
 	
-	public void RemoveKnightHP()
+	private void SwitchActor()
 	{
-		if(RemoveHP(this.nbKnights, this.knigtHPRemaining) && this.nbKnights > 0)
-		{
-			this.knigtHPRemaining = Settings.KNIGHT_HP;
-		}
+		if(this.nbKnights == 0 && this.nbPikers == 0 && this.nbOnagers == 0)
+			this.stopAttack = true;
 	}
 	
-	public void RemoveOnagerHP()
+	private boolean RemovePikerHP()
 	{
-		if(RemoveHP(this.nbOnagers, this.onagerHPremaining) && this.nbOnagers > 0)
+		if(this.nbPikers > 0)
 		{
-			this.onagerHPremaining = Settings.ONAGER_HP;
-		}
-	}
-	
-	private boolean RemoveHP(int nb, int hp)
-	{
-		if(nb > 0)
-		{
-			if(hp > 0)
+			switch(this.pikersHPRemaining)
 			{
-				hp--;
-				if(hp == 0)
-				{
-					nb--;
-					return true;
-				}
+				case 1:
+					this.pikersHPRemaining = Settings.PIKER_HP;
+					System.out.println("before " + this.nbPikers);
+					this.nbPikers--;
+					System.out.println("before " + this.nbPikers);
+					break;
+				default:
+					this.pikersHPRemaining--;
+					break;
 			}
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean RemoveKnightHP()
+	{
+		if(this.nbKnights > 0)
+		{
+			switch(this.knigtHPRemaining)
+			{
+				case 1:
+					this.knigtHPRemaining = Settings.KNIGHT_HP;
+					this.nbKnights--;
+					break;
+				default:
+					this.knigtHPRemaining--;
+					break;
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean RemoveOnagerHP()
+	{
+		if(this.nbOnagers > 0)
+		{
+			switch(this.onagerHPremaining)
+			{
+				case 1:
+					this.onagerHPremaining = Settings.ONAGER_HP;
+					this.nbOnagers--;
+					break;
+				default:
+					this.onagerHPremaining--;
+					break;
+			}
+			return true;
 		}
 		return false;
 	}

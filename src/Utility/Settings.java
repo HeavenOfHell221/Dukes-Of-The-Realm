@@ -30,9 +30,9 @@ public class Settings {
 	public static final float FLORIN_FACTOR_BARON = 0.1f;
 	
 	/* Levels */ /* Can be balanced */
-	public static final int LEVEL_UP_COST_FACTOR = 1000;
-	public static final int LEVEL_UP_DURATION_OFFSET = 100;
-	public static final int LEVEL_UP_DURATION_FACTOR = 50;
+	public static final int LEVEL_UP_COST_FACTOR = 100;
+	public static final int LEVEL_UP_DURATION_OFFSET = 10; // en sec
+	public static final int LEVEL_UP_DURATION_FACTOR = 50; // en sec
 	
 	/* Graphics*/
 	public static final int CASTLE_SIZE = 60;
@@ -59,9 +59,9 @@ public class Settings {
 	/****************************************************/
 	
 	/* HP */ /* Can be balanced */
-	public static final int PIKER_HP = 0;
-	public static final int KNIGHT_HP = 0;
-	public static final int ONAGER_HP = 0;
+	public static final int PIKER_HP = 10;
+	public static final int KNIGHT_HP = 20;
+	public static final int ONAGER_HP = 50;
 	
 	/* Damage */ /* Can be balanced */
 	public static final int PIKER_DAMAGE = 120;	//120
@@ -69,16 +69,16 @@ public class Settings {
 	public static final int ONAGER_DAMAGE = 600;	//600
 	
 	/* Cost */ /* Can be balanced */
-	public static final int PIKER_COST = 200;
-	public static final int KNIGHT_COST = 400;
-	public static final int ONAGER_COST = 800;
+	public static final int PIKER_COST = 2;
+	public static final int KNIGHT_COST = 4;
+	public static final int ONAGER_COST = 8;
 	
 	/* Speed */ /* Can be balanced */
 	public static final int PIKER_SPEED = 40;
 	public static final int KNIGHT_SPEED = 60;
 	public static final int ONAGER_SPEED = 20;
 	
-	/* Production time in second */ /* Can be balanced */
+	/* Production time in frame */ /* Can be balanced */
 	public static final int PIKER_TIME_PRODUCTION = 15;
 	public static final int KNIGHT_TIME_PRODUCTION = 30;
 	public static final int ONAGER_TIME_PRODUCTION = 60;

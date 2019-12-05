@@ -9,10 +9,6 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends Actor {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1002476852003507617L;
 	private transient Castle lastCastleClicked = null;
 	
 	public Player(String name, Color myColor)

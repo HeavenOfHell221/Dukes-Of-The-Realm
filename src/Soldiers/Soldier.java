@@ -1,5 +1,7 @@
 package Soldiers;
 
+import java.util.Random;
+
 import DukesOfTheRealm.*;
 import Enum.SoldierEnum;
 import Interface.IProductionUnit;
@@ -196,7 +198,8 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	
 	private void Attack()
 	{
-
+		ApplyDamage();
+		this.itsOst.GetDestination().GetReserveOfSoldiers().RandomRemoveHP(new Random().nextInt());
 	}
 	
 	private void ApplyDamage()
