@@ -2,10 +2,8 @@ package Enum;
 
 import java.io.Serializable;
 
-public enum DirectionEnum implements Serializable{
+public enum DirectionEnum implements Serializable
+{
 
-	Up,
-	Down,
-	Left,
-	Right;
+	Up, Down, Left, Right;
 }

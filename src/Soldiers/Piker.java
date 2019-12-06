@@ -7,13 +7,14 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Piker extends Soldier {
+public class Piker extends Soldier
+{
 
 	public Piker(final Pane layer, final Point2D coord, final Ost itsOst, final int speed)
 	{
 		super(layer, coord, itsOst);
-		type = SoldierEnum.Piker;
-		stats = new Stats(speed, Settings.PIKER_HP, Settings.PIKER_DAMAGE);
+		this.type = SoldierEnum.Piker;
+		this.stats = new Stats(speed, Settings.PIKER_HP, Settings.PIKER_DAMAGE);
 	}
 
 	public Piker()
@@ -29,12 +30,14 @@ public class Piker extends Soldier {
 	}
 
 	@Override
-	public int getProductionTime() {
-		return Settings.PIKER_TIME_PRODUCTION ;
+	public int getProductionTime()
+	{
+		return Settings.PIKER_TIME_PRODUCTION;
 	}
 
 	@Override
-	public int getProductionCost() {
+	public int getProductionCost()
+	{
 		return Settings.PIKER_COST;
 	}
 }

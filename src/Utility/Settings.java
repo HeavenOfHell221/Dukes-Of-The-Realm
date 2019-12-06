@@ -1,6 +1,7 @@
 package Utility;
 
-public class Settings {
+public class Settings
+{
 
 	/****************************************************/
 	/*********************** GAME ***********************/
@@ -34,7 +35,7 @@ public class Settings {
 	public static final int LEVEL_UP_DURATION_OFFSET = 10; // en sec
 	public static final int LEVEL_UP_DURATION_FACTOR = 50; // en sec
 
-	/* Graphics*/
+	/* Graphics */
 	public static final int CASTLE_SIZE = 60;
 	public static final int THIRD_OF_CASTLE = CASTLE_SIZE / 3;
 	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 250; /* Can be balanced */

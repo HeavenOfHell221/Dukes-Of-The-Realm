@@ -2,15 +2,16 @@ package Utility;
 
 import java.io.Serializable;
 
-public class Point2D implements Serializable {
+public class Point2D implements Serializable
+{
 
 	private double x;
 	private double y;
 
 	public Point2D()
 	{
-		x = 0;
-		y = 0;
+		this.x = 0;
+		this.y = 0;
 	}
 
 	public Point2D(final double x, final double y)
@@ -26,12 +27,12 @@ public class Point2D implements Serializable {
 
 	public double getX()
 	{
-		return x;
+		return this.x;
 	}
 
 	public double getY()
 	{
-		return y;
+		return this.y;
 	}
 
 	public void setX(final double x)

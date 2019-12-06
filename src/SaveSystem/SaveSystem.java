@@ -13,13 +13,9 @@ public class SaveSystem
 {
 	public static void Save(final Kingdom kingdom)
 	{
-
-		final KingdomData data = new KingdomData(kingdom);
-		data.Save();
-
-		try(ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("save/DukesOfTheRealm.bin")))
+		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("save/DukesOfTheRealm.bin")))
 		{
-			stream.writeObject(data);
+			stream.writeObject(kingdom);
 		}
 		catch (final FileNotFoundException e)
 		{
@@ -35,14 +31,16 @@ public class SaveSystem
 		}
 	}
 
-	public static void Load()
+	public static Kingdom Load()
 	{
-		KingdomData kingdomData;
-
-		try(ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save/DukesOfTheRealm.bin")))
+		Kingdom kingdom = null;
+		try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save/DukesOfTheRealm.bin")))
 		{
-			kingdomData = (KingdomData) stream.readObject();
-			kingdomData.Load();
+			kingdom = (Kingdom) stream.readObject();
+			if (kingdom != null)
+			{
+				System.out.println("Load completed !");
+			}
 		}
 		catch (final FileNotFoundException e)
 		{
@@ -56,5 +54,6 @@ public class SaveSystem
 		{
 			e.printStackTrace();
 		}
+		return kingdom;
 	}
 }

@@ -1,7 +1,9 @@
 package Interface;
 
-public interface IProductionUnit {
+public interface IProductionUnit
+{
 
 	int getProductionTime();
+
 	int getProductionCost();
 }

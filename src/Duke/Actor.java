@@ -1,78 +1,76 @@
 package Duke;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
+import UI.UIManager;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public abstract class Actor extends Parent implements Serializable {
-
-	private final ArrayList<Castle> myCastles;
-	private final Color myColor;
-	static private Castle lastPlayerCastleClicked;
-	static private Castle lastOtherCastleClicked;
+public abstract class Actor
+{
+	private ArrayList<Castle> myCastles;
+	private transient Color myColor;
 	private String name = "";
 
-	Actor(final String name, final Color myColor)
+	Actor()
 	{
-		this.myColor = myColor;
-		myCastles = new ArrayList<>();
-		Actor.lastPlayerCastleClicked = null;
+
+	}
+
+	Actor(final String name)
+	{
+		this.myCastles = new ArrayList<>();
 		this.name = name;
 	}
 
-	protected abstract void CastleHandle(MouseEvent e);
-
-	EventHandler<MouseEvent> CastleEventHandle = e -> CastleHandle(e);
-
-	public void AddCastle(final Castle castle)
+	protected void castleHandle(final MouseEvent e)
 	{
-		castle.GetShape().setFill(GetMyColor());
-		castle.GetShape().addEventFilter(MouseEvent.MOUSE_PRESSED, CastleEventHandle);
-		myCastles.add(castle);
+		if (e.getButton() == MouseButton.PRIMARY) // Clique gauche
+		{
+			final Rectangle rectangle = (Rectangle) e.getSource();
+
+			getMyCastles().stream().filter(castle -> castle.getShape() == rectangle).limit(1).forEach(castle ->
+			{
+				UIManager.GetInstance().switchCastle(castle);
+			});
+		}
 	}
 
-	public boolean RemoveCastle(final Castle castle)
+	EventHandler<MouseEvent> CastleEventHandle = e -> castleHandle(e);
+
+	public void addCastle(final Castle castle)
 	{
-		return myCastles.remove(castle);
+		castle.getShape().setFill(this.myColor);
+		castle.getShape().addEventFilter(MouseEvent.MOUSE_PRESSED, this.CastleEventHandle);
+		this.myCastles.add(castle);
 	}
 
-	public ArrayList<Castle> GetMyCastles()
+	public boolean removeCastle(final Castle castle)
 	{
-		return myCastles;
+		return this.myCastles.remove(castle);
 	}
 
-	public Color GetMyColor()
+	public ArrayList<Castle> getMyCastles()
 	{
-		return myColor;
+		return this.myCastles;
 	}
 
-	public Castle GetLastPlayerCastleClicked()
+	public Color getMyColor()
 	{
-		return Actor.lastPlayerCastleClicked;
+		return this.myColor;
 	}
 
-	public void SetLastPlayerCastleClicked(final Castle castle)
+	public String getName()
 	{
-		Actor.lastPlayerCastleClicked = castle;
+		return this.name;
 	}
 
-	public Castle GetLastOtherCastleClicked()
+	public void setColor(final Color color)
 	{
-		return Actor.lastOtherCastleClicked;
-	}
-
-	public void SetLastOtherCastleClicked(final Castle lastOtherCastleClcked)
-	{
-		Actor.lastOtherCastleClicked = lastOtherCastleClcked;
-	}
-
-	public String GetName()
-	{
-		return name;
+		this.myColor = color;
 	}
 }

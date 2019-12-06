@@ -1,5 +1,7 @@
 package UI;
 
+import java.io.Serializable;
+
 import Duke.Baron;
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
@@ -10,15 +12,13 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public final class UICastlePreview extends Parent implements IUpdate, IUI {
+public final class UICastlePreview extends Parent implements IUpdate, IUI, Serializable
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -26,21 +26,21 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 
 	private Castle currentCastle;
 
-	private final ImageView imageKnight;
-	private final ImageView imagePiker;
-	private final ImageView imageOnager;
-	private final ImageView imageFlorin;
+	private transient ImageView imageKnight;
+	private transient ImageView imagePiker;
+	private transient ImageView imageOnager;
+	private transient ImageView imageFlorin;
 
-	private final Text level;
-	private final Text owner;
-	private final Text florinIncome;
+	private transient Text level;
+	private transient Text owner;
+	private transient Text florinIncome;
 
-	private final Text nbKnight;
-	private final Text nbPiker;
-	private final Text nbOnager;
-	private final Text nbFlorin;
+	private transient Text nbKnight;
+	private transient Text nbPiker;
+	private transient Text nbOnager;
+	private transient Text nbFlorin;
 
-	private final Rectangle background;
+	private transient Rectangle background;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -49,20 +49,6 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	public UICastlePreview()
 	{
 		super();
-		imageKnight = NewImageView("/images/mounted-knight-white.png");
-		imagePiker = NewImageView("/images/spartan-white.png");
-		imageOnager = NewImageView("/images/catapult-white.png");
-		imageFlorin = NewImageView("/images/coins.png");
-		level = new Text();
-		owner = new Text();
-		nbFlorin = new Text();
-		nbKnight = new Text();
-		nbOnager = new Text();
-		nbPiker = new Text();
-		florinIncome = new Text();
-		background = new Rectangle(240, 440);
-
-
 	}
 
 	/*************************************************/
@@ -72,6 +58,7 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	@Override
 	public void start()
 	{
+		awake();
 		addAllNodes();
 		relocateAllNodes();
 		SetAllTexts();
@@ -82,55 +69,76 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	private void SetAllTexts()
-	{
-		SetText(level, 24);
-		SetText(owner, 24);
-		SetText(florinIncome, 24);
-		SetText(nbKnight, 30);
-		SetText(nbOnager, 30);
-		SetText(nbPiker, 30);
-		SetText(nbFlorin, 30);
-	}
-
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		if(currentCastle != null) {
+		if (this.currentCastle != null)
+		{
 			UpdateTexts();
 		}
 	}
 
 	private void UpdateTexts()
 	{
-		if(currentCastle.GetActor().getClass() != Baron.class) {
-			florinIncome.setText(Settings.FLORIN_PER_SECOND * currentCastle.GetLevel() + " Florin/s");
-		} else {
-			florinIncome.setText((int)(Settings.FLORIN_PER_SECOND * currentCastle.GetLevel() * Settings.FLORIN_FACTOR_BARON) + " Florin/s");
+		if (this.currentCastle.GetActor().getClass() != Baron.class)
+		{
+			this.florinIncome.setText(Settings.FLORIN_PER_SECOND * this.currentCastle.GetLevel() + " Florin/s");
 		}
-		owner.setText(currentCastle.GetActor().GetName());
-		level.setText("Level: " + currentCastle.GetLevel());
-		nbFlorin.setText((int)currentCastle.GetTotalFlorin() + "");
-		nbPiker.setText("" + currentCastle.GetReserveOfSoldiers().GetNbPikers());
-		nbKnight.setText("" + currentCastle.GetReserveOfSoldiers().GetNbKnights());
-		nbOnager.setText("" + currentCastle.GetReserveOfSoldiers().GetNbOnagers());
+		else
+		{
+			this.florinIncome.setText(
+					(int) (Settings.FLORIN_PER_SECOND * this.currentCastle.GetLevel() * Settings.FLORIN_FACTOR_BARON) + " Florin/s");
+		}
+		this.owner.setText(this.currentCastle.GetActor().getName());
+		this.level.setText("Level: " + this.currentCastle.GetLevel());
+		this.nbFlorin.setText((int) this.currentCastle.GetTotalFlorin() + "");
+		this.nbPiker.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbPikers());
+		this.nbKnight.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbKnights());
+		this.nbOnager.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbOnagers());
 	}
-
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	public void awake()
+	{
+		this.imageKnight = NewImageView("/images/mounted-knight-white.png");
+		this.imagePiker = NewImageView("/images/spartan-white.png");
+		this.imageOnager = NewImageView("/images/catapult-white.png");
+		this.imageFlorin = NewImageView("/images/coins.png");
+		this.level = new Text();
+		this.owner = new Text();
+		this.nbFlorin = new Text();
+		this.nbKnight = new Text();
+		this.nbOnager = new Text();
+		this.nbPiker = new Text();
+		this.florinIncome = new Text();
+		this.background = new Rectangle(240, 440);
+	}
+
+	private void SetAllTexts()
+	{
+		SetText(this.level, 24);
+		SetText(this.owner, 24);
+		SetText(this.florinIncome, 24);
+		SetText(this.nbKnight, 30);
+		SetText(this.nbOnager, 30);
+		SetText(this.nbPiker, 30);
+		SetText(this.nbFlorin, 30);
+	}
 
 	private void SetBackground()
 	{
-		final Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.WHITE)};
-		final LinearGradient lg2 = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
-		background.setStroke(lg2);
-
-		background.setStrokeWidth(3);
-		background.setArcHeight(60);
-		background.setArcWidth(60);
+		/*
+		 * final Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.BLACK)}; final
+		 * LinearGradient lg2 = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
+		 * background.setStroke(lg2);
+		 */
+		this.background.setStroke(Color.WHITE);
+		this.background.setStrokeWidth(3);
+		this.background.setArcHeight(60);
+		this.background.setArcWidth(60);
 	}
 
 	private ImageView NewImageView(final String path)
@@ -145,38 +153,38 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 		int offset = 50;
 		final int i = 69;
 
-		relocate(owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
-		relocate(florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 30);
-		relocate(level, Settings.SCENE_WIDTH * margin, offset + i * 2 - 60);
+		relocate(this.owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
+		relocate(this.florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 30);
+		relocate(this.level, Settings.SCENE_WIDTH * margin, offset + i * 2 - 60);
 		offset -= 20;
-		relocate(imageFlorin, Settings.SCENE_WIDTH * margin, offset + i * 2);
-		relocate(imagePiker, Settings.SCENE_WIDTH * margin, offset + i * 3);
-		relocate(imageKnight, Settings.SCENE_WIDTH * margin, offset + i * 4);
-		relocate(imageOnager, Settings.SCENE_WIDTH * margin, offset + i * 5);
+		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin, offset + i * 2);
+		relocate(this.imagePiker, Settings.SCENE_WIDTH * margin, offset + i * 3);
+		relocate(this.imageKnight, Settings.SCENE_WIDTH * margin, offset + i * 4);
+		relocate(this.imageOnager, Settings.SCENE_WIDTH * margin, offset + i * 5);
 
-		relocate(nbFlorin, Settings.SCENE_WIDTH * margin + 40, offset + i * 2 + 30);
-		relocate(nbPiker, Settings.SCENE_WIDTH * margin + 40, offset + i * 3 + 30);
-		relocate(nbKnight, Settings.SCENE_WIDTH * margin + 40, offset + i * 4 + 30);
-		relocate(nbOnager, Settings.SCENE_WIDTH * margin + 40, offset + i * 5 + 30);
+		relocate(this.nbFlorin, Settings.SCENE_WIDTH * margin + 40, offset + i * 2 + 30);
+		relocate(this.nbPiker, Settings.SCENE_WIDTH * margin + 40, offset + i * 3 + 30);
+		relocate(this.nbKnight, Settings.SCENE_WIDTH * margin + 40, offset + i * 4 + 30);
+		relocate(this.nbOnager, Settings.SCENE_WIDTH * margin + 40, offset + i * 5 + 30);
 
-		relocate(background, Settings.SCENE_WIDTH * margin - 44, offset);
+		relocate(this.background, Settings.SCENE_WIDTH * margin - 44, offset);
 	}
 
 	@Override
 	public void addAllNodes()
 	{
-		addNode(background);
-		addNode(imageKnight);
-		addNode(level);
-		addNode(imageFlorin);
-		addNode(imageOnager);
-		addNode(imagePiker);
-		addNode(owner);
-		addNode(florinIncome);
-		addNode(nbFlorin);
-		addNode(nbKnight);
-		addNode(nbOnager);
-		addNode(nbPiker);
+		addNode(this.background);
+		addNode(this.imageKnight);
+		addNode(this.level);
+		addNode(this.imageFlorin);
+		addNode(this.imageOnager);
+		addNode(this.imagePiker);
+		addNode(this.owner);
+		addNode(this.florinIncome);
+		addNode(this.nbFlorin);
+		addNode(this.nbKnight);
+		addNode(this.nbOnager);
+		addNode(this.nbPiker);
 	}
 
 	@Override
@@ -203,7 +211,7 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	@Override
 	public void switchCastle(final Castle castle)
 	{
-		currentCastle = castle;
+		this.currentCastle = castle;
 	}
 
 	public void SetVisible(final Node node, final boolean visible)
@@ -213,18 +221,18 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 
 	public void SetAllVisible(final boolean visible)
 	{
-		SetVisible(background, visible);
-		SetVisible(imageKnight, visible);
-		SetVisible(level, visible);
-		SetVisible(imageFlorin, visible);
-		SetVisible(imageOnager, visible);
-		SetVisible(imagePiker, visible);
-		SetVisible(owner, visible);
-		SetVisible(florinIncome, visible);
-		SetVisible(nbFlorin, visible);
-		SetVisible(nbKnight, visible);
-		SetVisible(nbOnager, visible);
-		SetVisible(nbPiker, visible);
+		SetVisible(this.background, visible);
+		SetVisible(this.imageKnight, visible);
+		SetVisible(this.level, visible);
+		SetVisible(this.imageFlorin, visible);
+		SetVisible(this.imageOnager, visible);
+		SetVisible(this.imagePiker, visible);
+		SetVisible(this.owner, visible);
+		SetVisible(this.florinIncome, visible);
+		SetVisible(this.nbFlorin, visible);
+		SetVisible(this.nbKnight, visible);
+		SetVisible(this.nbOnager, visible);
+		SetVisible(this.nbPiker, visible);
 	}
 
 	/*************************************************/

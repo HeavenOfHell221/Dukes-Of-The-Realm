@@ -2,7 +2,8 @@ package Utility;
 
 import Interface.IUpdate;
 
-public class Time implements IUpdate{
+public class Time implements IUpdate
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -23,12 +24,12 @@ public class Time implements IUpdate{
 
 	public Time(final boolean print)
 	{
-		cooldown = Settings.GAME_FREQUENCY;
-		lastUpdate = 0;
+		this.cooldown = Settings.GAME_FREQUENCY;
+		this.lastUpdate = 0;
 		this.print = print;
 		deltaTime = 0;
-		oldTime = 0;
-		firstFrame = true;
+		this.oldTime = 0;
+		this.firstFrame = true;
 	}
 
 	/*************************************************/
@@ -41,7 +42,6 @@ public class Time implements IUpdate{
 
 	}
 
-
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
@@ -49,37 +49,36 @@ public class Time implements IUpdate{
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		FrameStart(now);
-		if((now - lastUpdate) >= cooldown)
+		frameStart(now);
+		if ((now - this.lastUpdate) >= this.cooldown)
 		{
-			lastUpdate = now;
-			if(print) {
-				System.out.println(counter + " fps");
+			this.lastUpdate = now;
+			if (this.print)
+			{
+				System.out.println(this.counter + " fps");
 			}
-			FPS = counter;
-			counter = 0;
+			FPS = this.counter;
+			this.counter = 0;
 		}
-		counter++;
+		this.counter++;
 	}
 
-	public void FrameStart(final long now)
+	public void frameStart(final long now)
 	{
-		if(firstFrame)
+		if (this.firstFrame)
 		{
-			firstFrame = false;
-			oldTime = now;
+			this.firstFrame = false;
+			this.oldTime = now;
 			return;
 		}
-		deltaTime = (now - oldTime);
+		deltaTime = (now - this.oldTime);
 		deltaTime /= Settings.GAME_FREQUENCY;
-		oldTime = now;
+		this.oldTime = now;
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
-
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/

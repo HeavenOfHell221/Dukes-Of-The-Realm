@@ -1,5 +1,7 @@
 package UI;
 
+import java.io.Serializable;
+
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
 import Interface.IUpdate;
@@ -14,20 +16,21 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
-public class UIManager extends Parent implements IUpdate, IUI {
+public class UIManager extends Parent implements IUpdate, IUI, Serializable
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
-	private static final UIManager instance = new UIManager();
+	private static UIManager instance = new UIManager();
 	private UIAttackPreview attackPreview;
 	private UIProductionUnitPreview productionUnitPreview;
 	private UICastlePreview castlePreview;
 
-	private Pane playfieldLayer;
+	private transient Pane playfieldLayer;
 
-	private final Rectangle background;
+	private transient Rectangle background;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -35,7 +38,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 
 	private UIManager()
 	{
-		background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
+
 	}
 
 	/*************************************************/
@@ -45,6 +48,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	@Override
 	public void start()
 	{
+
 		addAllNodes();
 		relocateAllNodes();
 		SetBackground();
@@ -56,9 +60,10 @@ public class UIManager extends Parent implements IUpdate, IUI {
 
 	public void Awake()
 	{
-		attackPreview = new UIAttackPreview();
-		castlePreview = new UICastlePreview();
-		productionUnitPreview = new UIProductionUnitPreview();
+		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT * 2);
+		this.attackPreview = new UIAttackPreview();
+		this.castlePreview = new UICastlePreview();
+		this.productionUnitPreview = new UIProductionUnitPreview();
 		start();
 	}
 
@@ -69,9 +74,9 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		castlePreview.update(now, pause);
-		productionUnitPreview.update(now, pause);
-		attackPreview.update(now, pause);
+		this.castlePreview.update(now, pause);
+		this.productionUnitPreview.update(now, pause);
+		this.attackPreview.update(now, pause);
 	}
 
 	/*************************************************/
@@ -87,15 +92,18 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	@Override
 	public void addNode(final Node node)
 	{
-		playfieldLayer.getChildren().add(node);
-		background.toBack();
+		this.playfieldLayer.getChildren().add(node);
+		this.background.toBack();
 	}
 
 	private void SetBackground()
 	{
-		final Stop[] stops = new Stop[] { new Stop(0, Color.web("#753F0B")), new Stop(1, Color.web("#4F2E0F"))};
+		final Stop[] stops = new Stop[]
+		{
+				new Stop(0, Color.web("#753F0B")), new Stop(1, Color.web("#4F2E0F"))
+		};
 		final LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.REFLECT, stops);
-		background.setFill(lg1);
+		this.background.setFill(lg1);
 
 		final DropShadow a = new DropShadow();
 		a.setOffsetX(-2);
@@ -103,30 +111,30 @@ public class UIManager extends Parent implements IUpdate, IUI {
 		a.setSpread(0.1);
 		a.setRadius(5);
 		a.setColor(Color.BLACK);
-		background.setEffect(a);
+		this.background.setEffect(a);
 	}
 
 	@Override
 	public void addAllNodes()
 	{
-		addNode(attackPreview);
-		addNode(castlePreview);
-		addNode(productionUnitPreview);
-		addNode(background);
+		addNode(this.attackPreview);
+		addNode(this.castlePreview);
+		addNode(this.productionUnitPreview);
+		addNode(this.background);
 	}
 
 	@Override
 	public void relocateAllNodes()
 	{
-		relocate(background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
+		relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
 	}
 
 	@Override
 	public void switchCastle(final Castle castle)
 	{
-		attackPreview.switchCastle(castle);
-		productionUnitPreview.switchCastle(castle);
-		castlePreview.switchCastle(castle);
+		this.attackPreview.switchCastle(castle);
+		this.productionUnitPreview.switchCastle(castle);
+		this.castlePreview.switchCastle(castle);
 	}
 
 	public void SetPlayfieldLayer(final Pane playfieldLayer)

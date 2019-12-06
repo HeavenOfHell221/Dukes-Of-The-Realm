@@ -14,7 +14,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
-public abstract class Sprite extends Parent implements IUpdate, IProductionUnit {
+public abstract class Sprite extends Parent implements IUpdate, IProductionUnit
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -23,24 +24,24 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 	private transient Pane canvas;
 	private transient Shape shape;
 
-	private Point2D coordinate;
-	private double width;
-	private double height;
+	protected Point2D coordinate;
+	protected double width;
+	protected double height;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
-	public Sprite (final Pane canvas, final double x, final double y)
+	public Sprite(final Pane canvas, final double x, final double y)
 	{
 		this.canvas = canvas;
-		coordinate = new Point2D(x, y);
+		this.coordinate = new Point2D(x, y);
 	}
 
-	public Sprite (final Pane canvas, final Point2D point2D)
+	public Sprite(final Pane canvas, final Point2D point2D)
 	{
 		this.canvas = canvas;
-		coordinate = new Point2D(point2D);
+		this.coordinate = new Point2D(point2D);
 	}
 
 	protected Sprite()
@@ -52,15 +53,13 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 	/********************* START *********************/
 	/*************************************************/
 
-
-
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	public void UpdateUIShape()
+	public void updateUIShape()
 	{
-		shape.relocate(GetX(), GetY());
+		this.shape.relocate(getX(), getY());
 	}
 
 	/*************************************************/
@@ -69,8 +68,8 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 
 	protected void AddCastleRepresentation(final double size)
 	{
-		final Rectangle r = new Rectangle(GetX(), GetY(), size, size);
-		shape = r;
+		final Rectangle r = new Rectangle(getX(), getY(), size, size);
+		this.shape = r;
 		r.setCursor(Cursor.HAND);
 
 		final DropShadow e = new DropShadow();
@@ -82,8 +81,8 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 		e.setColor(Color.BLACK);
 		r.setEffect(e);
 
-		width = size;
-		height = size;
+		this.width = size;
+		this.height = size;
 
 		r.setStroke(Color.BLACK);
 		r.setStrokeType(StrokeType.OUTSIDE);
@@ -93,10 +92,10 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 	protected void AddPikerRepresentation()
 	{
 		final double r = Settings.PIKER_REPRESENTATION_RADIUS;
-		final Circle circle = new Circle(GetX(), GetY(), r);
-		shape = circle;
-		width = 2 * r;
-		height = 2 * r;
+		final Circle circle = new Circle(getX(), getY(), r);
+		this.shape = circle;
+		this.width = 2 * r;
+		this.height = 2 * r;
 
 		circle.setStroke(Color.BLACK);
 		circle.setStrokeType(StrokeType.OUTSIDE);
@@ -106,10 +105,10 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 	protected void AddKnightRepresentation()
 	{
 		final double s = Settings.KNIGHT_REPRESENTATION_SIZE;
-		final Rectangle r = new Rectangle(GetX(), GetY(), s, s);
-		shape = r;
-		width = s;
-		height = s;
+		final Rectangle r = new Rectangle(getX(), getY(), s, s);
+		this.shape = r;
+		this.width = s;
+		this.height = s;
 
 		r.setStroke(Color.BLACK);
 		r.setStrokeType(StrokeType.OUTSIDE);
@@ -120,10 +119,10 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 	{
 		final double w = Settings.ONAGER_REPRESENTATION_WIDTH;
 		final double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
-		final Rectangle r = new Rectangle(GetX(), GetY(), w, h);
-		shape = r;
-		width = w;
-		height = h;
+		final Rectangle r = new Rectangle(getX(), getY(), w, h);
+		this.shape = r;
+		this.width = w;
+		this.height = h;
 
 		r.setStroke(Color.BLACK);
 		r.setStrokeType(StrokeType.OUTSIDE);
@@ -132,76 +131,79 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 
 	public void RemoveShapeToLayer()
 	{
-		canvas.getChildren().remove(shape);
+		this.canvas.getChildren().remove(this.shape);
 	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-	public Shape GetShape()
+	public Shape getShape()
 	{
-		return shape;
+		return this.shape;
 	}
 
-	public int GetX()
+	public int getX()
 	{
-		return (int) coordinate.getX();
-	}
-	public int GetY()
-	{
-		return (int) coordinate.getY();
+		return (int) this.coordinate.getX();
 	}
 
-	public Point2D GetCoordinate()
+	public int getY()
 	{
-		return coordinate;
+		return (int) this.coordinate.getY();
 	}
 
-	public Point2D GetCastleCenter()
+	public Point2D getCoordinate()
 	{
-		return new Point2D(GetX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), GetY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
+		return this.coordinate;
+	}
+
+	public Point2D getCastleCenter()
+	{
+		return new Point2D(getX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), getY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
 	}
 
 	public double getWidth()
 	{
-		return width;
+		return this.width;
 	}
+
 	public double getHeight()
 	{
-		return height;
+		return this.height;
 	}
 
-	public Pane GetLayer()
+	public Pane getLayer()
 	{
-		return canvas;
+		return this.canvas;
 	}
 
-	public void SetX(final int x)
+	public void setX(final int x)
 	{
-		coordinate.setX(x);
-	}
-	public void SetY(final int y)
-	{
-		coordinate.setY(y);
+		this.coordinate.setX(x);
 	}
 
-	public void AddDx(final double dx)
+	public void setY(final int y)
 	{
-		coordinate.addDx(dx);
+		this.coordinate.setY(y);
 	}
 
-	public void AddDy(final double dy)
+	public void addDx(final double dx)
 	{
-		coordinate.addDy(dy);
+		this.coordinate.addDx(dx);
 	}
 
-	public void AddMotion(final double dx, final double dy)
+	public void addDy(final double dy)
 	{
-		coordinate.addMotion(dx, dy);
+		this.coordinate.addDy(dy);
 	}
 
-	public void SetCoordinate(final Point2D coordinate)
+	public void addMotion(final double dx, final double dy)
+	{
+		this.coordinate.addMotion(dx, dy);
+	}
+
+	public void setCoordinate(final Point2D coordinate)
 	{
 		this.coordinate = coordinate;
 	}

@@ -1,20 +1,19 @@
 package UI;
 
+import java.io.Serializable;
+
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
 import Interface.IUpdate;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
-public final class UIAttackPreview extends Parent implements IUpdate, IUI {
-
-
+public final class UIAttackPreview extends Parent implements IUpdate, IUI, Serializable
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
-
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -44,7 +43,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI {
 	{
 
 	}
-
 
 	/*************************************************/
 	/******************* METHODES ********************/
@@ -79,7 +77,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI {
 	{
 
 	}
-
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/

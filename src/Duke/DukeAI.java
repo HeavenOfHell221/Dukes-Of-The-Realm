@@ -1,11 +1,16 @@
 package Duke;
 
-import javafx.scene.paint.Color;
+import java.io.Serializable;
 
-public class DukeAI extends Duke{
-
-	public DukeAI(final String name, final Color myColor)
+public class DukeAI extends Actor implements Serializable
+{
+	public DukeAI(final String name)
 	{
-		super(name, myColor);
+		super(name);
+	}
+
+	public DukeAI()
+	{
+		super();
 	}
 }

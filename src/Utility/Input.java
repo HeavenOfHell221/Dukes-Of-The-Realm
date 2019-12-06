@@ -10,7 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class Input {
+public class Input
+{
 
 	private final BitSet keyboardBitSet = new BitSet();
 
@@ -23,35 +24,33 @@ public class Input {
 
 	public void addListeners()
 	{
-		scene.addEventFilter(KeyEvent.KEY_PRESSED, keyPressedEventHandler);
-		scene.addEventFilter(KeyEvent.KEY_RELEASED, keyReleasedEventHandler);
+		this.scene.addEventFilter(KeyEvent.KEY_PRESSED, this.keyPressedEventHandler);
+		this.scene.addEventFilter(KeyEvent.KEY_RELEASED, this.keyReleasedEventHandler);
 	}
 
 	public void removeListeners()
 	{
-		scene.removeEventFilter(KeyEvent.KEY_PRESSED, keyPressedEventHandler);
-		scene.removeEventFilter(KeyEvent.KEY_RELEASED, keyReleasedEventHandler);
+		this.scene.removeEventFilter(KeyEvent.KEY_PRESSED, this.keyPressedEventHandler);
+		this.scene.removeEventFilter(KeyEvent.KEY_RELEASED, this.keyReleasedEventHandler);
 	}
 
-	private final EventHandler<KeyEvent> keyPressedEventHandler =
-			event ->
+	private final EventHandler<KeyEvent> keyPressedEventHandler = event ->
 	{
 		// register key down
-		keyboardBitSet.set(event.getCode().ordinal(), true);
+		this.keyboardBitSet.set(event.getCode().ordinal(), true);
 		event.consume();
 	};
 
-	private final EventHandler<KeyEvent> keyReleasedEventHandler =
-			event ->
+	private final EventHandler<KeyEvent> keyReleasedEventHandler = event ->
 	{
 		// register key up
-		keyboardBitSet.set(event.getCode().ordinal(), false);
+		this.keyboardBitSet.set(event.getCode().ordinal(), false);
 		event.consume();
 	};
 
 	private boolean is(final KeyCode key)
 	{
-		return keyboardBitSet.get(key.ordinal());
+		return this.keyboardBitSet.get(key.ordinal());
 	}
 
 	public boolean isExit()

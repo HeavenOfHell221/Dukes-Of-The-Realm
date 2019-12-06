@@ -7,9 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import DukesOfTheRealm.Castle.Orientation;
 import Enum.SoldierEnum;
-import Interface.ISave;
 import Interface.IUpdate;
-import SaveSystem.OstData;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
@@ -19,7 +17,8 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Ost implements IUpdate, Serializable, ISave<OstData> {
+public class Ost implements IUpdate, Serializable
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -38,21 +37,22 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
 	private transient Color color;
-	private long lastTime;
+	private transient long lastTime;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
-	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, final Color color)
+	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
+			final Color color)
 	{
 		this.origin = origin;
 		this.destination = destination;
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
-		nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
-		soldiers = new ArrayList<>();
+		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
+		this.soldiers = new ArrayList<>();
 		this.color = color;
 	}
 
@@ -63,9 +63,9 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	@Override
 	public void start()
 	{
-		speed = SetOstSpeed();
-		separationPoint = SetSeparationPoint();
-		waitingPoint = SetWaitingPoint();
+		this.speed = SetOstSpeed();
+		this.separationPoint = SetSeparationPoint();
+		this.waitingPoint = SetWaitingPoint();
 	}
 
 	/*************************************************/
@@ -75,31 +75,36 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		if (!fullyDeployed && Time(now, pause)) {
+		if (!this.fullyDeployed && Time(now, pause))
+		{
 			DeployOneSoldiersWave();
 		}
 
-		if(!pause)
+		if (!pause)
 		{
-			if(soldiers.size() > 0)
+			if (this.soldiers.size() > 0)
 			{
-				final Iterator it = soldiers.iterator();
+				final Iterator<Soldier> it = this.soldiers.iterator();
 
-				while(it.hasNext())
+				while (it.hasNext())
 				{
-					final Soldier s = (Soldier) it.next();
+					final Soldier s = it.next();
 
-					if(s.isDead)
+					if (s.isDead)
 					{
 						s.RemoveShapeToLayer();
-						destination.FreeAttackLocation(s.GetAttackLocation());
+						this.destination.FreeAttackLocation(s.GetAttackLocation());
 						it.remove();
-					} else {
+					}
+					else
+					{
 						s.update(now, pause);
 					}
 				}
-			} else {
-				origin.RemoveOst();
+			}
+			else
+			{
+				this.origin.RemoveOst();
 			}
 		}
 	}
@@ -108,146 +113,215 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	@Override
-	public void receivedDataSave(final OstData data)
-	{
-		data.separationPoint = separationPoint;
-		data.nbPikers = nbPikers;
-		data.nbKnights = nbKnights;
-		data.nbOnagers = nbOnagers;
-		data.speed = speed;
-		data.nbSoldiersSpawned = nbSoldiersSpawned;
-		data.fullyDeployed = fullyDeployed;
-	}
-
-	@Override
-	public void sendingDataSave(final OstData data)
-	{
-
-	}
-
 	private int SetOstSpeed()
 	{
 		int minimalSpeed = Settings.KNIGHT_SPEED;
-		minimalSpeed = (nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
-		minimalSpeed = (nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
+		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
+		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
 		return minimalSpeed;
 	}
 
 	private Point2D SetSeparationPoint()
 	{
 		final Orientation area = GetDestinationArea();
-		final int offsetX = (area == Orientation.NE || area == Orientation.SE) ? (- Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE) : (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
-		final int offsetY = (area == Orientation.SE || area == Orientation.SW) ? (- Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE) : (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
-		final Point2D separationPoint = new Point2D(destination.GetX() + offsetX, destination.GetY() + offsetY);
+		final int offsetX = (area == Orientation.NE || area == Orientation.SE) ? (-Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
+				: (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
+		final int offsetY = (area == Orientation.SE || area == Orientation.SW) ? (-Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
+				: (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
+		final Point2D separationPoint = new Point2D(this.destination.getX() + offsetX, this.destination.getY() + offsetY);
 		return separationPoint;
 	}
 
 	private Point2D SetWaitingPoint()
 	{
-		//new Point2D(x, y - 2 * (10 + Settings.SOLDIER_SIZE))   HAUT Gauche
+		// new Point2D(x, y - 2 * (10 + Settings.SOLDIER_SIZE)) HAUT Gauche
 		final Orientation area = GetDestinationArea();
 		int offsetX = 0;
 		int offsetY = 0;
 		switch (area)
 		{
-		case NW: offsetX = 2 * Settings.THIRD_OF_CASTLE; offsetY = Settings.CASTLE_SIZE + 2 * Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE; break;
-		case NE: offsetX = - 2 * (Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE); offsetY = 2 * Settings.THIRD_OF_CASTLE; break;
-		case SE: offsetY = - 2 * (Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE); break;
-		case SW: offsetX = Settings.CASTLE_SIZE + 2 * Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE; break;
-		default: break;
+			case NW:
+				offsetX = 2 * Settings.THIRD_OF_CASTLE;
+				offsetY = Settings.CASTLE_SIZE + 2 * Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE;
+				break;
+			case NE:
+				offsetX = -2 * (Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE);
+				offsetY = 2 * Settings.THIRD_OF_CASTLE;
+				break;
+			case SE:
+				offsetY = -2 * (Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE);
+				break;
+			case SW:
+				offsetX = Settings.CASTLE_SIZE + 2 * Settings.GAP_WITH_SOLDIER + Settings.SOLDIER_SIZE;
+				break;
+			default:
+				break;
 		}
-		final Point2D waitingPoint = new Point2D(destination.GetX() + offsetX, destination.GetY() + offsetY);
+		final Point2D waitingPoint = new Point2D(this.destination.getX() + offsetX, this.destination.getY() + offsetY);
 		return waitingPoint;
 	}
 
 	private Orientation GetDestinationArea()
 	{
 		Orientation area = Orientation.None;
-		if (origin.GetX() <= destination.GetX())
+		if (this.origin.getX() <= this.destination.getX())
 		{
-			area = (origin.GetY() <= destination.GetY()) ? Orientation.SE : Orientation.NE;
+			area = (this.origin.getY() <= this.destination.getY()) ? Orientation.SE : Orientation.NE;
 		}
 		else
 		{
-			area = (origin.GetY() <= destination.GetY()) ? Orientation.SW : Orientation.NW;
+			area = (this.origin.getY() <= this.destination.getY()) ? Orientation.SW : Orientation.NW;
 		}
 		return area;
 	}
 
 	private void DeployOneSoldiersWave()
 	{
-		final int nbSpawn = (soldiers.size() <= (nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS : (nbSoldiers - soldiers.size());
+		final int nbSpawn = (this.soldiers.size() <= (this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS
+				: (this.nbSoldiers - this.soldiers.size());
 
-		switch(origin.GetOrientation())
+		switch (this.origin.GetOrientation())
 		{
-		case North:
-		case South:
-			for (int i = 0; i < nbSpawn; i++) {
-				SpawnSoldier(origin.GetX() + (Settings.THIRD_OF_CASTLE * i), origin.GetY());
-			}
-			break;
-		case West:
-		case East:
-			for (int i = 0; i < nbSpawn; i++) {
-				SpawnSoldier(origin.GetX(), origin.GetY() + (Settings.THIRD_OF_CASTLE * i));
-			}
-			break;
-		default:
-			break;
+			case North:
+			case South:
+				for (int i = 0; i < nbSpawn; i++)
+				{
+					SpawnSoldier(this.origin.getX() + (Settings.THIRD_OF_CASTLE * i), this.origin.getY());
+				}
+				break;
+			case West:
+			case East:
+				for (int i = 0; i < nbSpawn; i++)
+				{
+					SpawnSoldier(this.origin.getX(), this.origin.getY() + (Settings.THIRD_OF_CASTLE * i));
+				}
+				break;
+			default:
+				break;
 		}
 
-		if (nbSoldiersSpawned == nbSoldiers) {
-			fullyDeployed = true;
+		if (this.nbSoldiersSpawned == this.nbSoldiers)
+		{
+			this.fullyDeployed = true;
 		}
 	}
 
 	private void SpawnSoldier(final int x, final int y)
 	{
 		final AtomicReference<SoldierEnum> soldierType = GetNextAvailableSoldier();
-		final Pane layer = origin.GetLayer();
+		final Pane layer = this.origin.getLayer();
 
-		switch(origin.GetOrientation())
+		switch (this.origin.GetOrientation())
 		{
-		case North:
-			switch (soldierType.get())
-			{
-			case Piker: final Piker piker = new Piker(layer, new Point2D(x, y - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2), this, speed); soldiers.add(piker); piker.Awake(color); nbSoldiersSpawned++; break;
-			case Knight: final Knight knight = new Knight(layer, new Point2D(x, y - 10 - Settings.KNIGHT_REPRESENTATION_SIZE), this, speed); soldiers.add(knight); knight.Awake(color); nbSoldiersSpawned++; break;
-			case Onager: final Onager onager = new Onager(layer, new Point2D(x, y - 10 - Settings.ONAGER_REPRESENTATION_HEIGHT), this, speed); soldiers.add(onager); onager.Awake(color); nbSoldiersSpawned++; break;
-			default: break;
-			}
-			break;
-		case South:
-			switch (soldierType.get())
-			{
-			case Piker: final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + 10), this, speed); soldiers.add(piker); piker.Awake(color); nbSoldiersSpawned++; break;
-			case Knight: final Knight knight = new Knight(layer,new Point2D( x, y + Settings.CASTLE_SIZE + 10), this, speed); soldiers.add(knight); knight.Awake(color); nbSoldiersSpawned++; break;
-			case Onager: final Onager onager = new Onager(layer,new Point2D( x, y + Settings.CASTLE_SIZE + 10), this, speed); soldiers.add(onager); onager.Awake(color); nbSoldiersSpawned++; break;
-			default: break;
-			}
-			break;
-		case West:
-			switch (soldierType.get())
-			{
-			case Piker: final Piker piker = new Piker(layer, new Point2D(x - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2, y), this, speed); soldiers.add(piker); piker.Awake(color); nbSoldiersSpawned++; break;
-			case Knight: final Knight knight = new Knight(layer, new Point2D(x - 10 - Settings.KNIGHT_REPRESENTATION_SIZE, y), this, speed); soldiers.add(knight); knight.Awake(color); nbSoldiersSpawned++; break;
-			case Onager: final Onager onager = new Onager(layer, new Point2D(x - 10 - Settings.ONAGER_REPRESENTATION_WIDTH, y), this, speed); soldiers.add(onager); onager.Awake(color); nbSoldiersSpawned++; break;
-			default: break;
-			}
-			break;
-		case East:
-			switch (soldierType.get())
-			{
-			case Piker: final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + 10, y), this, speed); soldiers.add(piker); piker.Awake(color); nbSoldiersSpawned++; break;
-			case Knight: final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + 10, y), this, speed); soldiers.add(knight); knight.Awake(color); nbSoldiersSpawned++; break;
-			case Onager: final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + 10, y), this, speed); soldiers.add(onager); onager.Awake(color); nbSoldiersSpawned++; break;
-			default: break;
-			}
-			break;
+			case North:
+				switch (soldierType.get())
+				{
+					case Piker:
+						final Piker piker = new Piker(layer, new Point2D(x, y - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2), this,
+								this.speed);
+						this.soldiers.add(piker);
+						piker.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Knight:
+						final Knight knight = new Knight(layer, new Point2D(x, y - 10 - Settings.KNIGHT_REPRESENTATION_SIZE), this,
+								this.speed);
+						this.soldiers.add(knight);
+						knight.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Onager:
+						final Onager onager = new Onager(layer, new Point2D(x, y - 10 - Settings.ONAGER_REPRESENTATION_HEIGHT), this,
+								this.speed);
+						this.soldiers.add(onager);
+						onager.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					default:
+						break;
+				}
+				break;
+			case South:
+				switch (soldierType.get())
+				{
+					case Piker:
+						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + 10), this, this.speed);
+						this.soldiers.add(piker);
+						piker.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Knight:
+						final Knight knight = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + 10), this, this.speed);
+						this.soldiers.add(knight);
+						knight.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Onager:
+						final Onager onager = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + 10), this, this.speed);
+						this.soldiers.add(onager);
+						onager.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					default:
+						break;
+				}
+				break;
+			case West:
+				switch (soldierType.get())
+				{
+					case Piker:
+						final Piker piker = new Piker(layer, new Point2D(x - 10 - Settings.PIKER_REPRESENTATION_RADIUS * 2, y), this,
+								this.speed);
+						this.soldiers.add(piker);
+						piker.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Knight:
+						final Knight knight = new Knight(layer, new Point2D(x - 10 - Settings.KNIGHT_REPRESENTATION_SIZE, y), this,
+								this.speed);
+						this.soldiers.add(knight);
+						knight.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Onager:
+						final Onager onager = new Onager(layer, new Point2D(x - 10 - Settings.ONAGER_REPRESENTATION_WIDTH, y), this,
+								this.speed);
+						this.soldiers.add(onager);
+						onager.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					default:
+						break;
+				}
+				break;
+			case East:
+				switch (soldierType.get())
+				{
+					case Piker:
+						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + 10, y), this, this.speed);
+						this.soldiers.add(piker);
+						piker.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Knight:
+						final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + 10, y), this, this.speed);
+						this.soldiers.add(knight);
+						knight.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					case Onager:
+						final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + 10, y), this, this.speed);
+						this.soldiers.add(onager);
+						onager.Awake(this.color);
+						this.nbSoldiersSpawned++;
+						break;
+					default:
+						break;
+				}
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 	}
@@ -255,18 +329,19 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	private AtomicReference<SoldierEnum> GetNextAvailableSoldier()
 	{
 		final AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
-		final long nbCreatedPikers = soldiers.stream()
-				.filter(soldier -> soldier.GetType() == SoldierEnum.Piker)
-				.count();
-		final long nbCreatedOnagers = soldiers.stream()
-				.filter(soldier -> soldier.GetType() == SoldierEnum.Onager)
-				.count();
+		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Piker).count();
+		final long nbCreatedOnagers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Onager).count();
 
-		if (nbCreatedOnagers < nbOnagers) {
+		if (nbCreatedOnagers < this.nbOnagers)
+		{
 			slowestType.set(SoldierEnum.Onager);
-		} else if (nbCreatedPikers < nbPikers) {
+		}
+		else if (nbCreatedPikers < this.nbPikers)
+		{
 			slowestType.set(SoldierEnum.Piker);
-		} else {
+		}
+		else
+		{
 			slowestType.set(SoldierEnum.Knight);
 		}
 		return slowestType;
@@ -274,21 +349,23 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 
 	private boolean Time(final long now, final boolean pause)
 	{
-		if(pause) {
-			lastTime = now;
-		}
-		if(now - lastTime > Settings.GAME_FREQUENCY)
+		if (pause)
 		{
-			lastTime = now;
+			this.lastTime = now;
+		}
+		if (now - this.lastTime > Settings.GAME_FREQUENCY)
+		{
+			this.lastTime = now;
 			return true;
 		}
 		return false;
 	}
 
-	/*public void SetOstData(OstData ostData)
-	{
-
-	}*/
+	/*
+	 * public void SetOstData(OstData ostData) {
+	 *
+	 * }
+	 */
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
@@ -296,31 +373,31 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 
 	public Castle GetOrigin()
 	{
-		return origin;
+		return this.origin;
 	}
 
 	public Castle GetDestination()
 	{
-		return destination;
+		return this.destination;
 	}
 
 	public Point2D GetSeparationPoint()
 	{
-		return separationPoint;
+		return this.separationPoint;
 	}
 
 	public Point2D GetWaitingPoint()
 	{
-		return waitingPoint;
+		return this.waitingPoint;
 	}
 
 	public double GetSpeed()
 	{
-		return speed;
+		return this.speed;
 	}
 
 	public ArrayList<Soldier> GetSoldiers()
 	{
-		return soldiers;
+		return this.soldiers;
 	}
 }

@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 import Utility.Settings;
 
-public class ReserveOfSoldiers implements Serializable {
+public class ReserveOfSoldiers implements Serializable
+{
 
 	private int nbPikers = 0;
 	private int nbKnights = 0;
 	private int nbOnagers = 0;
-	private int pikersHPRemaining = Settings.PIKER_HP;
-	private int knigtHPRemaining = Settings.KNIGHT_HP;
-	private int onagerHPremaining = Settings.ONAGER_HP;
+	private transient int pikersHPRemaining = Settings.PIKER_HP;
+	private transient int knigtHPRemaining = Settings.KNIGHT_HP;
+	private transient int onagerHPremaining = Settings.ONAGER_HP;
 
 	public ReserveOfSoldiers()
 	{
@@ -20,146 +21,160 @@ public class ReserveOfSoldiers implements Serializable {
 
 	private boolean stopAttack = false;
 
-	public void AddPiker()
+	public void addPiker()
 	{
-		nbPikers++;
+		this.nbPikers++;
 	}
 
-	public void AddKnight()
+	public void addKnight()
 	{
-		nbKnights++;
+		this.nbKnights++;
 	}
 
-	public void AddOnager()
+	public void addOnager()
 	{
-		nbOnagers++;
+		this.nbOnagers++;
 	}
 
-	public void RandomRemoveHP(int x)
+	public void randomRemoveHP(int x)
 	{
 		x = x % Settings.NB_TYPES_OF_TROOPS;
 
-		if(stopAttack) {
+		if (this.stopAttack)
+		{
 			return;
 		}
 
-		switch(x)
+		switch (x)
 		{
-		case 0:
-			if(RemovePikerHP()) {
+			case 0:
+				if (removePikerHP())
+				{
+					break;
+				}
+				else
+				{
+					randomRemoveHP(x + 1);
+				}
 				break;
-			} else {
-				RandomRemoveHP(x + 1);
-			}
-			break;
-		case 1:
-			if(RemoveKnightHP()) {
-				break;
-			} else {
-				RandomRemoveHP(x + 1);
-			}
-			break;
-		case 2:
-			if(RemoveOnagerHP()) {
-				break;
-			} else {
-				RandomRemoveHP(x + 1);
-			}
-			break;
-		default:
-			break;
-		}
-
-		SwitchActor();
-	}
-
-	private void SwitchActor()
-	{
-		if(nbKnights == 0 && nbPikers == 0 && nbOnagers == 0) {
-			stopAttack = true;
-		}
-	}
-
-	private boolean RemovePikerHP()
-	{
-		if(nbPikers > 0)
-		{
-			switch(pikersHPRemaining)
-			{
 			case 1:
-				pikersHPRemaining = Settings.PIKER_HP;
-				nbPikers--;
+				if (removeKnightHP())
+				{
+					break;
+				}
+				else
+				{
+					randomRemoveHP(x + 1);
+				}
+				break;
+			case 2:
+				if (removeOnagerHP())
+				{
+					break;
+				}
+				else
+				{
+					randomRemoveHP(x + 1);
+				}
 				break;
 			default:
-				pikersHPRemaining--;
 				break;
+		}
+
+		switchActor();
+	}
+
+	private void switchActor()
+	{
+		if (this.nbKnights == 0 && this.nbPikers == 0 && this.nbOnagers == 0)
+		{
+			this.stopAttack = true;
+		}
+	}
+
+	private boolean removePikerHP()
+	{
+		if (this.nbPikers > 0)
+		{
+			switch (this.pikersHPRemaining)
+			{
+				case 1:
+					this.pikersHPRemaining = Settings.PIKER_HP;
+					this.nbPikers--;
+					break;
+				default:
+					this.pikersHPRemaining--;
+					break;
 			}
 			return true;
 		}
 		return false;
 	}
 
-	private boolean RemoveKnightHP()
+	private boolean removeKnightHP()
 	{
-		if(nbKnights > 0)
+		if (this.nbKnights > 0)
 		{
-			switch(knigtHPRemaining)
+			switch (this.knigtHPRemaining)
 			{
-			case 1:
-				knigtHPRemaining = Settings.KNIGHT_HP;
-				nbKnights--;
-				break;
-			default:
-				knigtHPRemaining--;
-				break;
+				case 1:
+					this.knigtHPRemaining = Settings.KNIGHT_HP;
+					this.nbKnights--;
+					break;
+				default:
+					this.knigtHPRemaining--;
+					break;
 			}
 			return true;
 		}
 		return false;
 	}
 
-	private boolean RemoveOnagerHP()
+	private boolean removeOnagerHP()
 	{
-		if(nbOnagers > 0)
+		if (this.nbOnagers > 0)
 		{
-			switch(onagerHPremaining)
+			switch (this.onagerHPremaining)
 			{
-			case 1:
-				onagerHPremaining = Settings.ONAGER_HP;
-				nbOnagers--;
-				break;
-			default:
-				onagerHPremaining--;
-				break;
+				case 1:
+					this.onagerHPremaining = Settings.ONAGER_HP;
+					this.nbOnagers--;
+					break;
+				default:
+					this.onagerHPremaining--;
+					break;
 			}
 			return true;
 		}
 		return false;
 	}
 
-	public int GetNbPikers() {
-		return nbPikers;
+	public int getNbPikers()
+	{
+		return this.nbPikers;
 	}
 
-	public int GetNbKnights() {
-		return nbKnights;
+	public int getNbKnights()
+	{
+		return this.nbKnights;
 	}
 
-	public int GetNbOnagers() {
-		return nbOnagers;
+	public int getNbOnagers()
+	{
+		return this.nbOnagers;
 	}
 
-	public void SetNbPikers(final int nbPikers)
+	public void setNbPikers(final int nbPikers)
 	{
 		this.nbPikers = nbPikers;
 	}
 
-	public void SetNbKnights(final int nbKnights)
+	public void setNbKnights(final int nbKnights)
 	{
 		this.nbKnights = nbKnights;
 	}
 
-	public void SetNbOnagers(final int nbOnagers)
+	public void setNbOnagers(final int nbOnagers)
 	{
 		this.nbOnagers = nbOnagers;
 	}

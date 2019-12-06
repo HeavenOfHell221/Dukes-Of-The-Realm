@@ -7,13 +7,14 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class Onager extends Soldier {
+public class Onager extends Soldier
+{
 
 	public Onager(final Pane layer, final Point2D coord, final Ost itsOst, final int speed)
 	{
 		super(layer, coord, itsOst);
-		type = SoldierEnum.Onager;
-		stats = new Stats(speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
+		this.type = SoldierEnum.Onager;
+		this.stats = new Stats(speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 	}
 
 	public Onager()
@@ -29,12 +30,14 @@ public class Onager extends Soldier {
 	}
 
 	@Override
-	public int getProductionTime() {
+	public int getProductionTime()
+	{
 		return Settings.ONAGER_TIME_PRODUCTION;
 	}
 
 	@Override
-	public int getProductionCost() {
+	public int getProductionCost()
+	{
 		return Settings.ONAGER_COST;
 	}
 }

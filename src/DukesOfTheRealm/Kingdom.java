@@ -1,5 +1,6 @@
 package DukesOfTheRealm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -8,9 +9,7 @@ import Duke.Actor;
 import Duke.Baron;
 import Duke.DukeAI;
 import Duke.Player;
-import Interface.ISave;
 import Interface.IUpdate;
-import SaveSystem.KingdomData;
 import UI.UIManager;
 import Utility.Point2D;
 import Utility.Settings;
@@ -19,11 +18,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Classe représentant le royaume.
- * C'est la classe centrale du projet.
- *
+ * Classe représentant le royaume. C'est la classe centrale du projet.
  */
-public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
+public class Kingdom extends Parent implements IUpdate, Serializable
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -31,23 +29,26 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	/**
 	 * Liste des châteaux du royaume.
+	 *
 	 * @see Kingdom#CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
 	 * @see Kingdom#update(long now, boolean pause)
 	 */
-	private ArrayList<Castle> castles;
+	private final ArrayList<Castle> castles;
 
 	/**
 	 * Liste des acteurs (joueur et IA) du royaume.
+	 *
 	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
 	private final ArrayList<Actor> actors;
 
 	/**
 	 * Liste des couleurs atribuable à chaque acteur.
+	 *
 	 * @see Kingdom#Kingdom(Pane)
 	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
-	private final ArrayList<Color> colors;
+	private final transient ArrayList<Color> colors;
 
 	/**
 	 * Référence à l'acteur "player" qui est l'utilisateur.
@@ -57,21 +58,23 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	/**
 	 * Canvas utilisé pour afficher les images du jeu.
 	 */
-	private final Pane playfieldLayer;
+	private transient Pane playfieldLayer;
 
 	/**
 	 * Référence sur l'instance UIManager.
+	 *
 	 * @see UIManager
 	 * @see UpdateUI(long now, boolean pause)
 	 */
-	public UIManager castleUIInstance;
+	public final transient UIManager castleUIInstance;
 
 	/**
 	 * Condition pour que le royaume utilise Update.
+	 *
 	 * @see Kingdom#update(long, boolean)
 	 * @see Main#update(long, boolean)
 	 */
-	private boolean canUpdate = false;
+	private transient boolean canUpdate = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -81,22 +84,23 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	 * Constructeur Kingdom.
 	 *
 	 * @param playfieldLayer
-	 * @see Kingdom#playfieldLayer
+	 * @see                  Kingdom#playfieldLayer
 	 */
-	public Kingdom(final Pane playfieldLayer)
+	public Kingdom()
 	{
-		this.playfieldLayer = playfieldLayer;
-		castles = new ArrayList<>();
-		actors = new ArrayList<>();
-		colors = new ArrayList<>();
-		colors.add(Color.DIMGRAY);
-		colors.add(Color.DARKORANGE);
-		colors.add(Color.LIGHTSLATEGRAY);
-		colors.add(Color.AQUA);
-		colors.add(Color.MEDIUMORCHID);
-		colors.add(Color.GOLDENROD);
+		this.castles = new ArrayList<>();
+		this.actors = new ArrayList<>();
+		this.colors = new ArrayList<>();
+		this.colors.add(Color.DIMGRAY);
+		this.colors.add(Color.DARKORANGE);
+		this.colors.add(Color.LIGHTSLATEGRAY);
+		this.colors.add(Color.AQUA);
+		this.colors.add(Color.MEDIUMORCHID);
+		this.colors.add(Color.GOLDENROD);
+		player = new Player("Player");
+		player.setColor(Color.LIMEGREEN);
+		this.castleUIInstance = UIManager.GetInstance();
 	}
-
 
 	/*************************************************/
 	/********************* START *********************/
@@ -105,18 +109,17 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	@Override
 	public void start()
 	{
-		castleUIInstance = UIManager.GetInstance();
 		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
-		castles.forEach(castle -> castle.start());
-		castles.forEach(castle ->
+		this.castles.forEach(castle -> castle.start());
+		this.castles.forEach(castle ->
 		{
-			if (castle != castles.get(0))
+			if (castle != this.castles.get(0))
 			{
-				castle.CreateOst(actors.get(0).GetMyCastles().get(0), 5, 5, 0);
+				castle.CreateOst(this.actors.get(0).getMyCastles().get(0), 5, 5, 0);
 			}
 		});
-		Kingdom.player.GetMyCastles().get(0).CreateOst(actors.get(1).GetMyCastles().get(0), 9, 9, 0);
-		canUpdate = true;
+		Kingdom.player.getMyCastles().get(0).CreateOst(this.actors.get(1).getMyCastles().get(0), 9, 9, 0);
+		this.canUpdate = true;
 	}
 
 	/*************************************************/
@@ -126,18 +129,18 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		if(canUpdate)
+		if (this.canUpdate)
 		{
-			castles.forEach(castle -> castle.update(now, pause));
+			this.castles.forEach(castle -> castle.update(now, pause));
 			UpdateUI(now, pause);
 		}
 	}
 
 	private void UpdateUI(final long now, final boolean pause)
 	{
-		if(castleUIInstance != null)
+		if (this.castleUIInstance != null)
 		{
-			castleUIInstance.update(now, pause);
+			this.castleUIInstance.update(now, pause);
 		}
 	}
 
@@ -147,11 +150,11 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	public boolean CreateCastle(final Pane layer, final Point2D coordinate, final int level, final Actor actor)
 	{
-		if(!IsCastleToClose(coordinate))
+		if (!IsCastleToClose(coordinate))
 		{
 			final Castle newCastle = new Castle(layer, coordinate, level, actor);
 			newCastle.AddRepresentation();
-			getChildren().add(newCastle.GetShape());
+			getChildren().add(newCastle.getShape());
 			getChildren().add(newCastle.GetDoor());
 			return AddCastle(newCastle);
 		}
@@ -162,35 +165,34 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	{
 		final Random rand = new Random();
 
-		Color c = colors.get(rand.nextInt(colors.size() - 1));
-		Kingdom.player = new Player("Player", Color.LIMEGREEN);
-		actors.add(Kingdom.player);
-		colors.remove(c);
+		Color c = this.colors.get(rand.nextInt(this.colors.size() - 1));
+		this.actors.add(Kingdom.player);
+		this.colors.remove(c);
 
 		int numberTest = 0;
 
-		while(numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
+		while (numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
 		{
-			if(CreateCastle(playfieldLayer, GetRandomCoordinates(rand), 1, player))
+			if (CreateCastle(this.playfieldLayer, GetRandomCoordinates(rand), 1, player))
 			{
 				break;
 			}
 			numberTest++;
 		}
 
-
-		for(int i = 0; i < AINumber; i++)
+		for (int i = 0; i < AINumber; i++)
 		{
-			c = colors.get(rand.nextInt(colors.size() - 1));
-			final Actor a = new DukeAI("Duke " + (i+1), c);
-			actors.add(a);
-			colors.remove(c);
+			c = this.colors.get(rand.nextInt(this.colors.size() - 1));
+			final Actor a = new DukeAI("Duke " + (i + 1));
+			a.setColor(c);
+			this.actors.add(a);
+			this.colors.remove(c);
 
 			numberTest = 0;
 
-			while(numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
+			while (numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
 			{
-				if(CreateCastle(playfieldLayer, GetRandomCoordinates(rand), 1, a))
+				if (CreateCastle(this.playfieldLayer, GetRandomCoordinates(rand), 1, a))
 				{
 					break;
 				}
@@ -198,17 +200,17 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 			}
 		}
 
-
-		for(int i = 0; i < baronNumber; i++)
+		for (int i = 0; i < baronNumber; i++)
 		{
-			final Actor a = new Baron("Baron " + (i+1), Color.WHEAT);
-			actors.add(a);
+			final Actor a = new Baron("Baron " + (i + 1));
+			a.setColor(Color.WHEAT);
+			this.actors.add(a);
 
 			numberTest = 0;
 
-			while(numberTest < 1000)
+			while (numberTest < 1000)
 			{
-				if(CreateCastle(playfieldLayer, GetRandomCoordinates(rand), rand.nextInt(6) + 1, a))
+				if (CreateCastle(this.playfieldLayer, GetRandomCoordinates(rand), rand.nextInt(6) + 1, a))
 				{
 					break;
 				}
@@ -219,17 +221,17 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	private boolean AddCastle(final Castle castle)
 	{
-		return castles.add(castle);
+		return this.castles.add(castle);
 	}
 
 	private boolean IsCastleToClose(final Point2D coordinate)
 	{
-		final Iterator<Castle> it = castles.iterator();
-		while(it.hasNext())
+		final Iterator<Castle> it = this.castles.iterator();
+		while (it.hasNext())
 		{
 			final Castle currentCastle = it.next();
 			final double d = DistanceBetween(currentCastle, coordinate);
-			if(d < Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE)
+			if (d < Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE)
 			{
 				return true;
 			}
@@ -239,24 +241,15 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	private double DistanceBetween(final Castle castle, final Point2D coord)
 	{
-		return Math.sqrt((coord.getY() - castle.GetY()) * (coord.getY() - castle.GetY()) + (coord.getX() - castle.GetX()) * (coord.getX() - castle.GetX()));
+		return Math.sqrt((coord.getY() - castle.getY()) * (coord.getY() - castle.getY())
+				+ (coord.getX() - castle.getX()) * (coord.getX() - castle.getX()));
 	}
 
 	public Point2D GetRandomCoordinates(final Random rand)
 	{
-		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE, rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
-	}
-
-	@Override
-	public void receivedDataSave(final KingdomData data)
-	{
-
-	}
-
-	@Override
-	public void sendingDataSave(final KingdomData data)
-	{
-
+		return new Point2D(
+				rand.nextInt((int) (Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE,
+				rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
 
 	/*************************************************/
@@ -270,11 +263,11 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	public ArrayList<Castle> GetCastles()
 	{
-		return castles;
+		return this.castles;
 	}
 
-	public void SetCastles(final ArrayList<Castle> castles)
+	public void setPlayfieldLayer(final Pane playfieldLayer)
 	{
-		this.castles = castles;
+		this.playfieldLayer = playfieldLayer;
 	}
 }

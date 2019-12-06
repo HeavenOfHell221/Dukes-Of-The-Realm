@@ -1,6 +1,9 @@
 package Soldiers;
 
-public class Stats {
+import java.io.Serializable;
+
+public class Stats implements Serializable
+{
 
 	public int speed;
 	public int health;

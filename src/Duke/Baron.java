@@ -1,21 +1,27 @@
 package Duke;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
-import javafx.scene.paint.Color;
 
-public class Baron extends Duke {
-
-	public Baron(final String name, final Color myColor)
+public class Baron extends Actor implements Serializable
+{
+	public Baron(final String name)
 	{
-		super(name, myColor);
+		super(name);
+	}
+
+	public Baron()
+	{
+		super();
 	}
 
 	@Override
-	public void AddCastle(final Castle castle) {
+	public void addCastle(final Castle castle)
+	{
 		final Random rand = new Random();
 		castle.AddFlorin(rand.nextInt(801) + 200);
-		super.AddCastle(castle);
+		super.addCastle(castle);
 	}
 }

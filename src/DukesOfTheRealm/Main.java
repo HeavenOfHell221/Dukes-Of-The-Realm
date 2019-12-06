@@ -1,8 +1,5 @@
 package DukesOfTheRealm;
 
-
-import java.util.Random;
-
 import Interface.IUpdate;
 import SaveSystem.SaveSystem;
 import UI.UIManager;
@@ -21,7 +18,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Main extends Application implements IUpdate{
+public class Main extends Application implements IUpdate
+{
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -35,11 +33,9 @@ public class Main extends Application implements IUpdate{
 	private Input input;
 	private Time time;
 	private Kingdom kingdom;
-	private Random rand;
 
 	private long lastTime = 0;
 	private boolean pause = false;
-
 
 	/*************************************************/
 	/********************* START *********************/
@@ -52,17 +48,17 @@ public class Main extends Application implements IUpdate{
 		Awake(primaryStage);
 
 		/* LOBBY GAME LOOP */
-		lobbyGameLoop = new AnimationTimer()
+		this.lobbyGameLoop = new AnimationTimer()
 		{
 			@Override
 			public void handle(final long now)
 			{
-				processInput(input, now);
+				processInput(Main.this.input, now);
 			}
 
 			private void processInput(final Input input, final long now)
 			{
-				if(input.isExit())
+				if (input.isExit())
 				{
 					Platform.exit();
 					System.exit(0);
@@ -71,32 +67,32 @@ public class Main extends Application implements IUpdate{
 		};
 
 		/* MAIN GAME LOOP */
-		mainGameLoop = new AnimationTimer()
+		this.mainGameLoop = new AnimationTimer()
 		{
 			@Override
 			public void handle(final long now)
 			{
-				processInput(input, now);
-				update(now, pause);
+				processInput(Main.this.input, now);
+				update(now, Main.this.pause);
 			}
 
 			private void processInput(final Input input, final long now)
 			{
-				if(input.isExit())
+				if (input.isExit())
 				{
-					Save();
+					save();
 					Platform.exit();
 					System.exit(0);
 				}
-				if(input.isSpace() && Time(now))
+				if (input.isSpace() && Time(now))
 				{
-					pause = !pause;
-					SaveSystem.Load();
+					Main.this.pause = !Main.this.pause;
+					load();
 				}
 			}
 		};
 
-		lobbyGameLoop.start();
+		this.lobbyGameLoop.start();
 	}
 
 	@Override
@@ -104,23 +100,23 @@ public class Main extends Application implements IUpdate{
 	{
 
 		/* UI */
-		UIManager.GetInstance().SetPlayfieldLayer(playfieldLayer);
+		UIManager.GetInstance().SetPlayfieldLayer(this.playfieldLayer);
 		UIManager.GetInstance().Awake();
 
 		/* KINGDOM */
-		kingdom = new Kingdom(playfieldLayer);
-		playfieldLayer.getChildren().add(kingdom);
-		kingdom.start();
-
+		this.kingdom = new Kingdom();
+		this.kingdom.setPlayfieldLayer(this.playfieldLayer);
+		this.playfieldLayer.getChildren().add(this.kingdom);
+		this.kingdom.start();
 
 	}
 
 	private void Awake(final Stage primaryStage)
 	{
-		root = new Group();
-		mainScene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-		mainScene.setFill(new ImagePattern(new Image(getClass().getResource("/images/bg2.jpg").toExternalForm()), 0, 0, 1, 1, true));
-		primaryStage.setScene(mainScene);
+		this.root = new Group();
+		this.mainScene = new Scene(this.root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+		this.mainScene.setFill(new ImagePattern(new Image(getClass().getResource("/images/bg2.jpg").toExternalForm()), 0, 0, 1, 1, true));
+		primaryStage.setScene(this.mainScene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(false);
 		primaryStage.setFullScreen(true);
@@ -129,18 +125,15 @@ public class Main extends Application implements IUpdate{
 		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();
 
 		/* LAYER */
-		playfieldLayer = new Pane();
-		root.getChildren().add(playfieldLayer);
+		this.playfieldLayer = new Pane();
+		this.root.getChildren().add(this.playfieldLayer);
 
 		/* INPUT */
-		input = new Input(mainScene);
-		input.addListeners();
-
-		/* RANDOM */
-		rand = new Random();
+		this.input = new Input(this.mainScene);
+		this.input.addListeners();
 
 		/* TIME MANAGER */
-		time = new Time(false);
+		this.time = new Time(false);
 
 		/* BUTTONS */
 		final Button buttonPlay = new Button();
@@ -157,24 +150,25 @@ public class Main extends Application implements IUpdate{
 
 		buttonPlay.setOnMousePressed(event ->
 		{
-			mainGameLoop.start();
-			lobbyGameLoop.stop();
+			this.mainGameLoop.start();
+			this.lobbyGameLoop.stop();
 			start();
-			root.getChildren().remove(buttonPlay);
-			root.getChildren().remove(buttonNew);
+			// load();
+			this.root.getChildren().remove(buttonPlay);
+			this.root.getChildren().remove(buttonNew);
 		});
 
 		buttonNew.setOnMousePressed(event ->
 		{
-			mainGameLoop.start();
-			lobbyGameLoop.stop();
+			this.mainGameLoop.start();
+			this.lobbyGameLoop.stop();
 			start();
-			root.getChildren().remove(buttonPlay);
-			root.getChildren().remove(buttonNew);
+			this.root.getChildren().remove(buttonPlay);
+			this.root.getChildren().remove(buttonNew);
 		});
 
-		root.getChildren().add(buttonPlay);
-		root.getChildren().add(buttonNew);
+		this.root.getChildren().add(buttonPlay);
+		this.root.getChildren().add(buttonNew);
 	}
 
 	/*************************************************/
@@ -184,8 +178,8 @@ public class Main extends Application implements IUpdate{
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		time.update(now, pause);
-		kingdom.update(now, pause);
+		this.time.update(now, pause);
+		this.kingdom.update(now, pause);
 		UIManager.GetInstance().update(now, pause);
 	}
 
@@ -193,23 +187,32 @@ public class Main extends Application implements IUpdate{
 	/******************* METHODES ********************/
 	/*************************************************/
 
-
 	private boolean Time(final long now)
 	{
-		if(now - lastTime > Settings.GAME_FREQUENCY / 5)
+		if (now - this.lastTime > Settings.GAME_FREQUENCY / 5)
 		{
-			lastTime = now;
+			this.lastTime = now;
 			return true;
 		}
 		return false;
 	}
 
-	private void Save()
+	private void save()
 	{
-		SaveSystem.Save(kingdom);
+		SaveSystem.Save(this.kingdom);
 	}
 
-	public static void main(final String[] args) {
+	private void load()
+	{
+		Kingdom k = SaveSystem.Load();
+		if (k != null)
+		{
+			Main.this.kingdom = k;
+		}
+	}
+
+	public static void main(final String[] args)
+	{
 		launch(args);
 	}
 }
