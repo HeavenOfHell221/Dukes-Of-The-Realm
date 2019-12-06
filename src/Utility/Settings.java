@@ -17,6 +17,8 @@ public class Settings {
 	public static final double MARGIN_PERCENTAGE = 0.75;
 
 	/* Other */
+	public static final int X_DIRECTION = 1;
+	public static final int Y_DIRECTION = 0;
 	public static final int NB_TYPES_OF_TROOPS = 3;
 	public static final int SIMULTANEOUS_SPAWNS = 3;
 	public static final int SLODIERS_MAX_PER_OST = 12;

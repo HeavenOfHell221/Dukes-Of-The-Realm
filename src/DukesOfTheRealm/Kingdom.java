@@ -12,6 +12,7 @@ import Interface.ISave;
 import Interface.IUpdate;
 import SaveSystem.KingdomData;
 import UI.UIManager;
+import Utility.Collisions;
 import Utility.Point2D;
 import Utility.Settings;
 import javafx.scene.Parent;
@@ -19,7 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Classe représentant le royaume.
+ * Classe reprï¿½sentant le royaume.
  * C'est la classe centrale du projet.
  *
  */
@@ -30,7 +31,7 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	/*************************************************/
 
 	/**
-	 * Liste des châteaux du royaume.
+	 * Liste des chï¿½teaux du royaume.
 	 * @see Kingdom#CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
 	 * @see Kingdom#update(long now, boolean pause)
 	 */
@@ -43,24 +44,24 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	private final ArrayList<Actor> actors;
 
 	/**
-	 * Liste des couleurs atribuable à chaque acteur.
+	 * Liste des couleurs atribuable ï¿½ chaque acteur.
 	 * @see Kingdom#Kingdom(Pane)
 	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
 	private final ArrayList<Color> colors;
 
 	/**
-	 * Référence à l'acteur "player" qui est l'utilisateur.
+	 * Rï¿½fï¿½rence ï¿½ l'acteur "player" qui est l'utilisateur.
 	 */
 	private static Player player;
 
 	/**
-	 * Canvas utilisé pour afficher les images du jeu.
+	 * Canvas utilisï¿½ pour afficher les images du jeu.
 	 */
 	private final Pane playfieldLayer;
 
 	/**
-	 * Référence sur l'instance UIManager.
+	 * Rï¿½fï¿½rence sur l'instance UIManager.
 	 * @see UIManager
 	 * @see UpdateUI(long now, boolean pause)
 	 */
@@ -72,6 +73,8 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	 * @see Main#update(long, boolean)
 	 */
 	private boolean canUpdate = false;
+	
+	public static Collisions collisionsManagement;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -107,14 +110,16 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	{
 		castleUIInstance = UIManager.GetInstance();
 		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
+		setCollisionsManagement();
+		
 		castles.forEach(castle -> castle.start());
-		castles.forEach(castle ->
-		{
-			if (castle != castles.get(0))
-			{
-				castle.CreateOst(actors.get(0).GetMyCastles().get(0), 5, 5, 0);
-			}
-		});
+//		castles.forEach(castle ->
+//		{
+//			if (castle != castles.get(0))
+//			{
+//				castle.CreateOst(actors.get(0).GetMyCastles().get(0), 5, 5, 0);
+//			}
+//		});
 		Kingdom.player.GetMyCastles().get(0).CreateOst(actors.get(1).GetMyCastles().get(0), 9, 9, 0);
 		canUpdate = true;
 	}
@@ -216,7 +221,6 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 			}
 		}
 	}
-
 	private boolean AddCastle(final Castle castle)
 	{
 		return castles.add(castle);
@@ -245,6 +249,15 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	public Point2D GetRandomCoordinates(final Random rand)
 	{
 		return new Point2D(rand.nextInt((int)(Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE, rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
+	}
+	
+	protected void setCollisionsManagement()
+	{
+		Kingdom.collisionsManagement = new Collisions();
+		this.castles.forEach(castle ->
+			{
+				collisionsManagement.addPoint(castle.GetCoordinate());
+			});
 	}
 
 	@Override
