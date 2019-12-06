@@ -2,14 +2,14 @@ package Soldiers;
 
 import java.util.Random;
 
-import DukesOfTheRealm.*;
+import DukesOfTheRealm.Ost;
+import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
-import Interface.IProductionUnit;
 import Interface.ISave;
 import SaveSystem.SoldierData;
-import Utility.Time;
 import Utility.Point2D;
 import Utility.Settings;
+import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -18,12 +18,10 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	protected SoldierEnum type;
-	protected int health;
-	protected int damage;
-	protected int speed;
-	protected Ost itsOst = null;
+	protected Stats stats;
+	protected transient Ost itsOst = null;
 	protected boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived = false;
@@ -31,141 +29,125 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	public boolean isDead = false;
 	protected Point2D attackLocation = null;
 	protected boolean isWaitingForAttackLocation = false;
-	int tmp = 1;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
-	public Soldier(Pane layer, double x, double y, Ost itsOst, int speed, int health, int damage)
+
+	public Soldier(final Pane layer, final Point2D coord, final Ost itsOst)
 	{
-		super(layer, x, y);
-		this.health = health;
-		this.damage = damage;
-		this.speed = speed;
+		super(layer, coord);
 		this.itsOst = itsOst;
 	}
-	
+
 	protected Soldier()
 	{
 		super();
 	}
-	
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	@Override
 	public void Start()
 	{
-		if (this.attackLocation == null || this.isWaitingForAttackLocation)
+		if (attackLocation == null || isWaitingForAttackLocation)
 		{
 			canMove = true;
 		}
 	}
-	
-	public void Awake(Color color)
-	{	
-		this.GetShape().setFill(color);
-		this.GetLayer().getChildren().add(this.GetShape());
+
+	public void Awake(final Color color)
+	{
+		GetShape().setFill(color);
+		GetLayer().getChildren().add(GetShape());
 		UpdateUIShape();
 		Start();
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
-	
+
 	@Override
-	public void ReceivedDataSave(SoldierData data) 
+	public void ReceivedDataSave(final SoldierData data)
 	{
-		data.type = this.type;
-		data.health = this.health;
-		data.damage = this.damage;
-		data.speed = this.speed;
-		data.onField = this.onField;
-		data.canMove = this.canMove;
-		data.isArrived = this.isArrived;
-		data.isInPosition = this.isInPosition;
-		data.isDead = this.isDead;
-		data.attackLocation = this.attackLocation;
-		data.isWaitingForAttackLocation = this.isWaitingForAttackLocation;
-		data.coordinate = GetCoordinate();
-	    data.width = getWidth();
-	    data.height = getHeight();
+
 	}
 
 	@Override
-	public void SendingDataSave(SoldierData data) 
+	public void SendingDataSave(final SoldierData data)
 	{
-		
+
 	}
-	
+
 	@Override
-	public void Update(long now, boolean pause)
-	{		
-		if (!this.isArrived)
+	public void Update(final long now, final boolean pause)
+	{
+		if (!isArrived)
 		{
-			Move(this.itsOst.GetSeparationPoint());
+			Move(itsOst.GetSeparationPoint());
 		}
-		
-		if (this.isArrived && !this.isInPosition)
+
+		if (isArrived && !isInPosition)
 		{
-			if (this.attackLocation != null)
+			if (attackLocation != null)
 			{
-				Move(this.attackLocation);
+				Move(attackLocation);
 			}
 			else
 			{
-				Move(this.itsOst.GetWaitingPoint());
+				Move(itsOst.GetWaitingPoint());
 			}
 		}
-		
-		if (this.isWaitingForAttackLocation)
+
+		if (isWaitingForAttackLocation)
 		{
 			SetAttackLocation();
 		}
 
-		if (this.isInPosition && !this.isWaitingForAttackLocation)
+		if (isInPosition && !isWaitingForAttackLocation)
 		{
 			Attack();
 		}
 	}
-	
+
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	private final void SetAttackLocation()
 	{
-		if (this.itsOst.GetDestination().IsAvailableAttackLocation())
+		if (itsOst.GetDestination().IsAvailableAttackLocation())
 		{
-			this.attackLocation = this.itsOst.GetDestination().GetNextAttackLocation();
-			this.isWaitingForAttackLocation = false;
+			attackLocation = itsOst.GetDestination().GetNextAttackLocation();
+			isWaitingForAttackLocation = false;
 		}
 		else
 		{
-			this.isWaitingForAttackLocation = true; 
+			isWaitingForAttackLocation = true;
 		}
 	}
-	
-	private void Move(Point2D dst)
+
+	private void Move(final Point2D dst)
 	{
-		int DirectionX = this.GetX() < dst.GetX() ? 1 : this.GetX() == dst.GetX() ? 0 : -1;
-		int DirectionY = this.GetY() < dst.GetY() ? 1 : this.GetY() == dst.GetY() ? 0 : -1;
-		this.AddMotion(this.speed * Time.deltaTime * DirectionX, this.speed * Time.deltaTime * DirectionY);
+		final int directionX = GetX() < dst.GetX() ? 1 : GetX() == dst.GetX() ? 0 : -1;
+		final int directionY = GetY() < dst.GetY() ? 1 : GetY() == dst.GetY() ? 0 : -1;
+
+		AddMotion(stats.speed * Time.deltaTime * directionX, stats.speed * Time.deltaTime * directionY);
 		IsOutOfScreen();
-		if (!this.isArrived)
+		if (!isArrived)
 		{
 			IsArrived();
 		}
-		else if (!this.isInPosition)
+		else if (!isInPosition)
 		{
 			IsInPosition();
 		}
 		UpdateUIShape();
 	}
-	
+
 	private void IsOutOfScreen()
 	{
 		if(GetX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04) || GetY() > Settings.SCENE_HEIGHT || GetX() <= 0 || GetY() <= 0)
@@ -175,46 +157,40 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 			isDead = true;
 		}
 	}
-	
+
 	private void IsArrived() {
-		if (this.GetX() == this.itsOst.GetSeparationPoint().GetX() && this.GetY() == this.itsOst.GetSeparationPoint().GetY())
+		if (GetX() == itsOst.GetSeparationPoint().GetX() && GetY() == itsOst.GetSeparationPoint().GetY())
 		{
-			this.canMove = false;
-			this.isArrived = true;
+			canMove = false;
+			isArrived = true;
 			SetAttackLocation();
 		}
 	}
-	
+
 	private void IsInPosition()
 	{
-		if (!this.isWaitingForAttackLocation)
+		if (!isWaitingForAttackLocation)
 		{
-			if (this.GetX() == this.attackLocation.GetX() && this.GetY() == this.attackLocation.GetY())
+			if (GetX() == attackLocation.GetX() && GetY() == attackLocation.GetY())
 			{
-				this.isInPosition = true;
+				isInPosition = true;
 			}
 		}
 	}
-	
+
 	private void Attack()
 	{
-		ApplyDamage();
-		this.itsOst.GetDestination().GetReserveOfSoldiers().RandomRemoveHP(new Random().nextInt());
+		isDead = (--stats.damage <= 0) ? true : false;
+		itsOst.GetDestination().GetReserveOfSoldiers().RandomRemoveHP(new Random().nextInt());
 	}
-	
-	private void ApplyDamage()
-	{
-		this.isDead = (--this.damage <= 0) ? true : false;
-		//System.out.println(this.damage);
-	}
-	
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
 	@Override
 	public abstract int GetProductionTime();
-	
+
 	@Override
 	public abstract int GetProductionCost();
 
@@ -222,10 +198,15 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	{
 		return type;
 	}
-	
+
 	public int GetSpeed()
 	{
-		return speed;
+		return stats.speed;
+	}
+
+	public int GetDamage()
+	{
+		return stats.damage;
 	}
 
 	public boolean isOnField()

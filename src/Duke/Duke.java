@@ -10,30 +10,30 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class Duke extends Actor {
 
-	Duke(String name, Color myColor) 
+	Duke(final String name, final Color myColor)
 	{
 		super(name, myColor);
 	}
-	
+
 	@Override
-	protected void CastleHandle(MouseEvent e)
+	protected void CastleHandle(final MouseEvent e)
 	{
 		if(e.getButton() == MouseButton.PRIMARY) // Clique gauche
-		{	
-			Rectangle rectangle = (Rectangle) e.getSource();
-			
+		{
+			final Rectangle rectangle = (Rectangle) e.getSource();
+
 			GetMyCastles()
 			.stream()
 			.filter(castle -> castle.GetShape() == rectangle)
 			.limit(1)
 			.forEach( castle -> {
-						if(GetLastOtherCastleClicked() == null)
-						{
-							SetLastPlayerCastleClicked(null);
-						}
-						SetLastOtherCastleClicked(castle);
-						UIManager.GetInstance().SwitchCastle(castle);
-					});
+				if(GetLastOtherCastleClicked() == null)
+				{
+					SetLastPlayerCastleClicked(null);
+				}
+				SetLastOtherCastleClicked(castle);
+				UIManager.GetInstance().SwitchCastle(castle);
+			});
 		}
 	}
 }

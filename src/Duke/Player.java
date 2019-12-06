@@ -8,38 +8,35 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Player extends Actor {
-	
-	private transient Castle lastCastleClicked = null;
-	
-	public Player(String name, Color myColor)
+
+	public Player(final String name, final Color myColor)
 	{
 		super(name, myColor);
 	}
-	
+
 	@Override
-	public void AddCastle(Castle castle) {
+	public void AddCastle(final Castle castle) {
 		super.AddCastle(castle);
-		lastCastleClicked = castle;
 		UIManager.GetInstance().SwitchCastle(castle);
 	}
 
 	@Override
-	protected void CastleHandle(MouseEvent e)
+	protected void CastleHandle(final MouseEvent e)
 	{
 		if(e.getButton() == MouseButton.PRIMARY) // Clique gauche
-		{	
-			Rectangle rectangle = (Rectangle) e.getSource();
-			
+		{
+			final Rectangle rectangle = (Rectangle) e.getSource();
+
 			GetMyCastles()
 			.stream()
 			.filter(castle -> castle.GetShape() == rectangle)
 			.limit(1)
 			.forEach( castle -> {
-						SetLastPlayerCastleClicked(castle); 
-						UIManager.GetInstance().SwitchCastle(castle);
-					});
+				SetLastPlayerCastleClicked(castle);
+				UIManager.GetInstance().SwitchCastle(castle);
+			});
 		}
 	}
-	
-	
+
+
 }

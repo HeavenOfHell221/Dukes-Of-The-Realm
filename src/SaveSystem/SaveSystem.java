@@ -9,23 +9,23 @@ import java.io.ObjectOutputStream;
 
 import DukesOfTheRealm.Kingdom;
 
-public class SaveSystem 
+public class SaveSystem
 {
 	public static void Save(final Kingdom kingdom)
-	{	
-		
-		KingdomData data = new KingdomData(kingdom);
+	{
+
+		final KingdomData data = new KingdomData(kingdom);
 		data.Save();
-		
+
 		try(ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("save/DukesOfTheRealm.bin")))
 		{
 			stream.writeObject(data);
-		} 
-		catch (FileNotFoundException e) 
+		}
+		catch (final FileNotFoundException e)
 		{
 			e.printStackTrace();
-		} 
-		catch (IOException e) 
+		}
+		catch (final IOException e)
 		{
 			e.printStackTrace();
 		}
@@ -34,25 +34,25 @@ public class SaveSystem
 			System.out.println("Save completed !");
 		}
 	}
-	
+
 	public static void Load()
 	{
 		KingdomData kingdomData;
-		
-		try(ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save/DukesOfTheRealm.bin"))) 
+
+		try(ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save/DukesOfTheRealm.bin")))
 		{
 			kingdomData = (KingdomData) stream.readObject();
 			kingdomData.Load();
-		} 
-		catch (FileNotFoundException e) 
+		}
+		catch (final FileNotFoundException e)
 		{
 			e.printStackTrace();
-		} 
-		catch (IOException e) 
+		}
+		catch (final IOException e)
 		{
 			e.printStackTrace();
-		} 
-		catch (ClassNotFoundException e) 
+		}
+		catch (final ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}

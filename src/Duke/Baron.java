@@ -7,14 +7,14 @@ import javafx.scene.paint.Color;
 
 public class Baron extends Duke {
 
-	public Baron(String name, Color myColor)
+	public Baron(final String name, final Color myColor)
 	{
 		super(name, myColor);
 	}
 
 	@Override
-	public void AddCastle(Castle castle) {
-		Random rand = new Random();
+	public void AddCastle(final Castle castle) {
+		final Random rand = new Random();
 		castle.AddFlorin(rand.nextInt(801) + 200);
 		super.AddCastle(castle);
 	}

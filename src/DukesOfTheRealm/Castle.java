@@ -4,16 +4,18 @@ import java.util.ArrayDeque;
 import java.util.Random;
 import java.util.Stack;
 
-import Utility.Point2D;
-
-import Duke.*;
+import Duke.Actor;
+import Duke.Baron;
 import Interface.IProductionUnit;
 import Interface.ISave;
 import SaveSystem.CastleData;
-import Soldiers.*;
+import Soldiers.Knight;
+import Soldiers.Onager;
+import Soldiers.Piker;
 import UI.UIManager;
-import Utility.Time;
+import Utility.Point2D;
 import Utility.Settings;
+import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,7 +25,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	public enum Orientation
 	{
 		North,
@@ -36,11 +38,11 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		SW,		// South West
 		None;
 	}
-	
+
 	private double totalFlorin; 						// L'argent que contient le chateau
 	private int level; 									// Le niveau du chateau
 	private ReserveOfSoldiers reserveOfSoldiers; 		// La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
-	private transient Actor actor; 								// Le proprietaire du chateau 
+	private transient Actor actor; 								// Le proprietaire du chateau
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un soldat en cours de production
 	private double productionTime; 						// Le temps restant a la production de l'unite de production
 	private Ost ost;
@@ -48,32 +50,32 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	private transient Color myColor;
 	private transient Rectangle door;
 	private Stack<Point2D> attackLocations;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
-	Castle(Pane layer, double x, double y, int level, Actor actor)
+
+	Castle(final Pane layer, final double x, final double y, final int level, final Actor actor)
 	{
 		super(layer, x, y);
 		this.level = level;
-		this.totalFlorin = 0;
+		totalFlorin = 0;
 		this.actor = actor;
-		this.productionUnit = null;
-		this.productionTime = 0;
-		this.reserveOfSoldiers = new ReserveOfSoldiers();
-		this.ost = null;
-		this.productionUnit = new ArrayDeque<>();
-		this.myColor = actor.GetMyColor();
-		this.attackLocations = new Stack<Point2D>();
+		productionUnit = null;
+		productionTime = 0;
+		reserveOfSoldiers = new ReserveOfSoldiers();
+		ost = null;
+		productionUnit = new ArrayDeque<>();
+		myColor = actor.GetMyColor();
+		attackLocations = new Stack<>();
 	}
-	
-	public Castle(Pane layer, double x, double y) 
+
+	public Castle(final Pane layer, final double x, final double y)
 	{
 		super(layer, x, y);
 	}
-	
-	public Castle(int level)
+
+	public Castle(final int level)
 	{
 		super();
 		this.level = level;
@@ -82,12 +84,12 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	@Override
 	public void Start()
 	{
 		actor.AddCastle(this);
-		
+
 		if(actor.getClass() == Baron.class)
 		{
 			RandomSoldier();
@@ -97,175 +99,169 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		{
 			StartSoldier();
 		}
-		
+
 		SetAttackLocations();
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
-	
+
 	@Override
-	public void Update(long now, boolean pause)
-	{	
+	public void Update(final long now, final boolean pause)
+	{
 		if(!pause)
 		{
 			UpdateFlorin();
 			UpdateProduction();
 		}
-		if(this.ost != null)
+		if(ost != null) {
 			UpdateOst(now, pause);
+		}
 	}
-	
+
 	private void UpdateFlorin()
 	{
-		if(actor.getClass() != Baron.class)
+		if(actor.getClass() != Baron.class) {
 			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime);
-		else
+		} else {
 			AddFlorin(Settings.FLORIN_PER_SECOND * level * Time.deltaTime * Settings.FLORIN_FACTOR_BARON);
+		}
 	}
-	
+
 	private void UpdateProduction()
 	{
-		if(this.productionUnit.size() > 0)
+		if(productionUnit.size() > 0)
 		{
-			this.productionTime -= (1 * Time.deltaTime);
-			
-			double ratio = 1 - ((double) this.productionTime / (double)this.productionUnit.getFirst().GetProductionTime());
+			productionTime -= (1 * Time.deltaTime);
+
+			final double ratio = 1 - (productionTime / productionUnit.getFirst().GetProductionTime());
 			UIManager.GetProductionUnitPreview().SetFill(ratio);
-			
-			if(this.productionTime <= 0)
+
+			if(productionTime <= 0)
 			{
-				IProductionUnit p = this.productionUnit.pollFirst();
-				
-				if(p.getClass() == Castle.class)
+				final IProductionUnit p = productionUnit.pollFirst();
+
+				if(p.getClass() == Castle.class) {
 					LevelUp();
-				else if(p.getClass() == Piker.class)
-					this.reserveOfSoldiers.AddPiker();
-				else if(p.getClass() == Onager.class)
-					this.reserveOfSoldiers.AddOnager();
-				else if(p.getClass() == Knight.class)
-					this.reserveOfSoldiers.AddKnight();
-				
-				if(this.productionUnit.size() > 0)
+				} else if(p.getClass() == Piker.class) {
+					reserveOfSoldiers.AddPiker();
+				} else if(p.getClass() == Onager.class) {
+					reserveOfSoldiers.AddOnager();
+				} else if(p.getClass() == Knight.class) {
+					reserveOfSoldiers.AddKnight();
+				}
+
+				if(productionUnit.size() > 0)
 				{
-					this.productionTime = this.productionUnit.getFirst().GetProductionTime();
+					productionTime = productionUnit.getFirst().GetProductionTime();
 				}
 			}
 		}
 	}
-	
-	private void UpdateOst(long now, boolean pause)
+
+	private void UpdateOst(final long now, final boolean pause)
 	{
-		this.ost.Update(now, pause);
+		ost.Update(now, pause);
 	}
-	
+
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	@Override
-	public void ReceivedDataSave(CastleData data) 
+	public void ReceivedDataSave(final CastleData data)
 	{
-		data.attackLocations = this.attackLocations;
-		data.level = this.level;
-		data.orientation = this.orientation;
-		data.reserveOfSoldiers = this.reserveOfSoldiers;
-		data.totalFlorin = this.totalFlorin;
+		data.attackLocations = attackLocations;
+		data.level = level;
+		data.orientation = orientation;
+		data.reserveOfSoldiers = reserveOfSoldiers;
+		data.totalFlorin = totalFlorin;
 		//data.productionTime = this.productionTime;
-		data.productionUnit = this.productionUnit;
+		data.productionUnit = productionUnit;
 		data.coordinate = GetCoordinate();
-	    data.width = getWidth();
-	    data.height = getHeight();
+		data.width = getWidth();
+		data.height = getHeight();
 	}
 
 	@Override
-	public void SendingDataSave(CastleData castleData) 
+	public void SendingDataSave(final CastleData castleData)
 	{
-		
+
 	}
-	
+
 	private void RandomSoldier()
 	{
-		Random rand = new Random();
-		this.reserveOfSoldiers.SetNbKnights(rand.nextInt(5) * level);
-		this.reserveOfSoldiers.SetNbPikers(rand.nextInt(10) * level);
-		this.reserveOfSoldiers.SetNbOnagers(rand.nextInt(5) + level);
+		final Random rand = new Random();
+		reserveOfSoldiers.SetNbKnights(rand.nextInt(5) * level);
+		reserveOfSoldiers.SetNbPikers(rand.nextInt(10) * level);
+		reserveOfSoldiers.SetNbOnagers(rand.nextInt(5) + level);
 	}
-	
+
 	private void StartSoldier()
 	{
-		this.reserveOfSoldiers.SetNbKnights(Settings.STARTER_KNIGHT);
-		this.reserveOfSoldiers.SetNbPikers(Settings.STARTER_PIKER);
-		this.reserveOfSoldiers.SetNbOnagers(Settings.STARTER_ONAGER);
+		reserveOfSoldiers.SetNbKnights(Settings.STARTER_KNIGHT);
+		reserveOfSoldiers.SetNbPikers(Settings.STARTER_PIKER);
+		reserveOfSoldiers.SetNbOnagers(Settings.STARTER_ONAGER);
 	}
-	
-	
+
+
 	private void RandomFlorin()
 	{
-		Random rand = new Random();
-		this.totalFlorin += (rand.nextInt(1000) * level);
+		final Random rand = new Random();
+		totalFlorin += (rand.nextInt(1000) * level);
 	}
-	
+
 	private Orientation SetOrientation()
 	{
-		Random rand = new Random();
+		final Random rand = new Random();
 		Orientation orientation;
-		
+
 		switch(rand.nextInt(4))
 		{
-			case 0: orientation = Orientation.North; break;
-			case 1: orientation = Orientation.South; break;
-			case 2: orientation = Orientation.West; break;
-			case 3: orientation = Orientation.East; break;
-			default: orientation = Orientation.None; break;
+		case 0: orientation = Orientation.North; break;
+		case 1: orientation = Orientation.South; break;
+		case 2: orientation = Orientation.West; break;
+		case 3: orientation = Orientation.East; break;
+		default: orientation = Orientation.None; break;
 		}
 		return orientation;
 	}
-	
+
 	/* Ajoute un rectangle au layer */
 	public void AddRepresentation()
 	{
 		AddCastleRepresentation(Settings.CASTLE_SIZE);
 		AddDoorRepresentation();
 	}
-	
+
 	private void AddDoorRepresentation()
 	{
-		this.orientation = SetOrientation();
-		
-		switch(this.orientation)
+		orientation = SetOrientation();
+
+		switch(orientation)
 		{
-			case North: this.door = new Rectangle(GetX() + Settings.CASTLE_SIZE / 4, GetY(), Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6); break;
-			case South: this.door = new Rectangle(GetX() + Settings.CASTLE_SIZE / 4, GetY() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6); break;
-			case East: this.door = new Rectangle(GetX() +  + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, GetY() + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
-			case West: this.door = new Rectangle(GetX(), GetY() + + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
-			default: this.door = new Rectangle(0, 0, 0, 0); break;	
-		}		
-	}
-	
-	/* Test si le chateau a assez d'argent pour augmenter d'un niveau */
-	public boolean CanLevelUp() 
-	{
-		if(totalFlorin >= Settings.LEVEL_UP_COST_FACTOR * (level + 1))
-		{
-			return true;
+		case North: door = new Rectangle(GetX() + Settings.CASTLE_SIZE / 4, GetY(), Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6); break;
+		case South: door = new Rectangle(GetX() + Settings.CASTLE_SIZE / 4, GetY() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6); break;
+		case East: door = new Rectangle(GetX() +  + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, GetY() + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
+		case West: door = new Rectangle(GetX(), GetY() + + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2); break;
+		default: door = new Rectangle(0, 0, 0, 0); break;
 		}
-		return false;
+		door.setMouseTransparent(true);
 	}
-	
+
 	/* Augmente le chateau d'un niveau */
 	public void LevelUp()
 	{
-		this.level++;
+		level++;
 	}
-	
-	public void AddFlorin(double amount)
+
+	public void AddFlorin(final double amount)
 	{
 		totalFlorin += amount;
 	}
-	
-	public boolean RemoveFlorin(double amount)
+
+	public boolean RemoveFlorin(final double amount)
 	{
 		if(EnoughOfFlorin(amount))
 		{
@@ -274,91 +270,87 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		}
 		return false;
 	}
-	
-	public boolean EnoughOfFlorin(double amount)
+
+	public boolean EnoughOfFlorin(final double amount)
 	{
 		return (amount <= totalFlorin);
 	}
-	
-	public boolean AddProduction(IProductionUnit newProduction)
+
+	public boolean AddProduction(final IProductionUnit newProduction)
 	{
-		if(newProduction == null || !RemoveFlorin(newProduction.GetProductionCost()))
+		if(newProduction == null || !RemoveFlorin(newProduction.GetProductionCost())) {
 			return false;
-		
-		this.productionUnit.addLast(newProduction);
-		
-		if(this.productionUnit.size() == 1)
-		{
-			this.productionTime = newProduction.GetProductionTime();
 		}
-		
+
+		productionUnit.addLast(newProduction);
+
+		if(productionUnit.size() == 1)
+		{
+			productionTime = newProduction.GetProductionTime();
+		}
+
 		return true;
 	}
-	
 
-	public boolean CreateOst(Castle destination, int nbPikers, int nbKnights, int nbOnagers)
+
+	public boolean CreateOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
-		if (this.ost == null)
+		if (ost == null)
 		{
-			this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor);
-			this.ost.Start();
+			ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, myColor);
+			ost.Start();
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void RemoveOst()
 	{
-		this.ost = null;
+		ost = null;
 	}
 
 	protected void SetAttackLocations() {
-		int x = this.GetX();
-		int y = this.GetY();
+		final int x = GetX();
+		final int y = GetY();
 		for (int i = 0; i < Settings.NB_ATTACK_LOCATIONS; i++) {
-			int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE;	// 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
+			final int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE;	// 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
 			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE)	// 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
 			{
 			// North
-			case 0: this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y - 10 - Settings.SOLDIER_SIZE)); break;
+			case 0: attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y - 10 - Settings.SOLDIER_SIZE)); break;
 			// East
-			case 1: this.attackLocations.push(new Point2D(x + Settings.CASTLE_SIZE + 10, y + (Settings.THIRD_OF_CASTLE * j))); break;
+			case 1: attackLocations.push(new Point2D(x + Settings.CASTLE_SIZE + 10, y + (Settings.THIRD_OF_CASTLE * j))); break;
 			// South
-			case 2: this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y + Settings.CASTLE_SIZE + 10)); break;
+			case 2: attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y + Settings.CASTLE_SIZE + 10)); break;
 			// West
-			case 3: this.attackLocations.push(new Point2D(x - 10 - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j))); break;
+			case 3: attackLocations.push(new Point2D(x - 10 - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j))); break;
 			}
 		}
 	}
-	
+
 	public boolean IsAvailableAttackLocation()
 	{
-		return !this.attackLocations.empty();
+		return !attackLocations.empty();
 	}
-	
+
 	public Point2D GetNextAttackLocation()
 	{
-		return this.attackLocations.pop();
+		return attackLocations.pop();
 	}
-	
-	public void FreeAttackLocation(Point2D FreedAttackLocation)
+
+	public void FreeAttackLocation(final Point2D FreedAttackLocation)
 	{
-		this.attackLocations.push(FreedAttackLocation);
+		attackLocations.push(FreedAttackLocation);
 	}
-	
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
-	
+
 	@Override
 	public int GetProductionCost()
 	{
 		return Settings.LEVEL_UP_COST_FACTOR * level;
-	}
-	
-	private int GetProductionTime(IProductionUnit production)
-	{
-		return production.GetProductionTime();
 	}
 
 	public double GetTotalFlorin() {
@@ -369,61 +361,61 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		return actor;
 	}
 
-	public void SetDuke(Actor actor) {
+	public void SetDuke(final Actor actor) {
 		this.actor = actor;
 	}
-	
+
 	@Override
 	public int GetProductionTime()
 	{
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
 	}
-	
+
 	public int GetLevel()
 	{
 		return level;
 	}
-	
+
 	public ReserveOfSoldiers GetReserveOfSoldiers()
 	{
 		return reserveOfSoldiers;
 	}
-	
+
 	public Rectangle GetDoor()
 	{
 		return door;
 	}
-	
+
 	public Orientation GetOrientation()
 	{
 		return orientation;
 	}
-	
+
 	public Color GetMyColor()
 	{
 		return myColor;
 	}
 
-	public Ost GetOst() 
+	public Ost GetOst()
 	{
 		return ost;
 	}
-	
-	public void SetOst(Ost ost)
+
+	public void SetOst(final Ost ost)
 	{
 		this.ost = ost;
 	}
 
-	public Stack<Point2D> GetAttackLocations() 
+	public Stack<Point2D> GetAttackLocations()
 	{
 		return attackLocations;
 	}
-	
+
 	public ArrayDeque<IProductionUnit> GetProductionUnit()
 	{
 		return productionUnit;
 	}
-	
+
 	public double GetProductionTimeRemaining()
 	{
 		return productionTime;

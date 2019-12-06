@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class DukeAI extends Duke{
 
-	public DukeAI(String name, Color myColor)
+	public DukeAI(final String name, final Color myColor)
 	{
 		super(name, myColor);
 	}

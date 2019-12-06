@@ -2,25 +2,27 @@ package Soldiers;
 
 import DukesOfTheRealm.Ost;
 import Enum.SoldierEnum;
+import Utility.Point2D;
 import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class Onager extends Soldier {
 
-	public Onager(Pane layer, double x, double y, Ost itsOst, int speed)
+	public Onager(final Pane layer, final Point2D coord, final Ost itsOst, final int speed)
 	{
-		super(layer, x, y, itsOst, speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
-		this.type = SoldierEnum.Onager;
+		super(layer, coord, itsOst);
+		type = SoldierEnum.Onager;
+		stats = new Stats(speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 	}
-	
+
 	public Onager()
 	{
 		super();
 	}
-	
+
 	@Override
-	public void Awake(Color color)
+	public void Awake(final Color color)
 	{
 		AddOnagerRepresentation();
 		super.Awake(color);

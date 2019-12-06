@@ -2,25 +2,27 @@ package Soldiers;
 
 import DukesOfTheRealm.Ost;
 import Enum.SoldierEnum;
+import Utility.Point2D;
 import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class Knight extends Soldier {
 
-	public Knight(Pane layer, double x, double y, Ost itsOst, int speed) 
+	public Knight(final Pane layer, final Point2D coord, final Ost itsOst, final int speed)
 	{
-		super(layer, x, y, itsOst, speed, Settings.KNIGHT_HP, Settings.PIKER_DAMAGE);
-		this.type = SoldierEnum.Knight;
+		super(layer, coord, itsOst);
+		type = SoldierEnum.Knight;
+		stats = new Stats(speed, Settings.KNIGHT_HP, Settings.KNIGHT_DAMAGE);
 	}
 
-	public Knight() 
+	public Knight()
 	{
 		super();
 	}
 
 	@Override
-	public void Awake(Color color)
+	public void Awake(final Color color)
 	{
 		AddKnightRepresentation();
 		super.Awake(color);

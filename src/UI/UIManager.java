@@ -19,42 +19,41 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	private static final UIManager instance = new UIManager();
 	private UIAttackPreview attackPreview;
 	private UIProductionUnitPreview productionUnitPreview;
 	private UICastlePreview castlePreview;
 
-	private Castle currentCastle;
 	private Pane playfieldLayer;
-	
-	private Rectangle background;
-	
+
+	private final Rectangle background;
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
+
 	private UIManager()
 	{
-		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
+		background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT);
 	}
-	
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	@Override
-	public void Start() 
+	public void Start()
 	{
 		AddAllNodes();
 		RelocateAllNodes();
 		SetBackground();
-		
+
 		GetAttackPreview().Start();
 		GetCastlePreview().Start();
 		GetProductionUnitPreview().Start();
 	}
-	
+
 	public void Awake()
 	{
 		attackPreview = new UIAttackPreview();
@@ -62,13 +61,13 @@ public class UIManager extends Parent implements IUpdate, IUI {
 		productionUnitPreview = new UIProductionUnitPreview();
 		Start();
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
 	@Override
-	public void Update(long now, boolean pause) 
+	public void Update(final long now, final boolean pause)
 	{
 		castlePreview.Update(now, pause);
 		productionUnitPreview.Update(now, pause);
@@ -80,61 +79,61 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Relocate(Node node, double x, double y) 
+	public void Relocate(final Node node, final double x, final double y)
 	{
 		node.relocate(x, y);
 	}
 
 	@Override
-	public void AddNode(Node node) 
+	public void AddNode(final Node node)
 	{
-		this.playfieldLayer.getChildren().add(node);
-		this.background.toBack();
+		playfieldLayer.getChildren().add(node);
+		background.toBack();
 	}
-	
+
 	private void SetBackground()
 	{
-		Stop[] stops = new Stop[] { new Stop(0, Color.web("#753F0B")), new Stop(1, Color.web("#4F2E0F"))};
-	    LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.REFLECT, stops);
-	    this.background.setFill(lg1);
-	     
-		DropShadow a = new DropShadow();
+		final Stop[] stops = new Stop[] { new Stop(0, Color.web("#753F0B")), new Stop(1, Color.web("#4F2E0F"))};
+		final LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.REFLECT, stops);
+		background.setFill(lg1);
+
+		final DropShadow a = new DropShadow();
 		a.setOffsetX(-2);
 		a.setOffsetY(0);
 		a.setSpread(0.1);
 		a.setRadius(5);
 		a.setColor(Color.BLACK);
-		this.background.setEffect(a);	
-	}
-	
-	@Override
-	public void AddAllNodes() 
-	{
-		AddNode(this.attackPreview);
-		AddNode(this.castlePreview);
-		AddNode(this.productionUnitPreview);
-		AddNode(this.background);
+		background.setEffect(a);
 	}
 
 	@Override
-	public void RelocateAllNodes() 
+	public void AddAllNodes()
 	{
-		Relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
+		AddNode(attackPreview);
+		AddNode(castlePreview);
+		AddNode(productionUnitPreview);
+		AddNode(background);
 	}
-	
-	public void SwitchCastle(Castle castle)
+
+	@Override
+	public void RelocateAllNodes()
 	{
-		currentCastle = castle;
+		Relocate(background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
+	}
+
+	@Override
+	public void SwitchCastle(final Castle castle)
+	{
 		attackPreview.SwitchCastle(castle);
 		productionUnitPreview.SwitchCastle(castle);
 		castlePreview.SwitchCastle(castle);
 	}
-	
-	public void SetPlayfieldLayer(Pane playfieldLayer)
+
+	public void SetPlayfieldLayer(final Pane playfieldLayer)
 	{
 		instance.playfieldLayer = playfieldLayer;
 	}
-	
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
@@ -142,7 +141,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the instance
 	 */
-	public static final UIManager GetInstance() 
+	public static final UIManager GetInstance()
 	{
 		return instance;
 	}
@@ -150,7 +149,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the attackPreview
 	 */
-	public static final UIAttackPreview GetAttackPreview() 
+	public static final UIAttackPreview GetAttackPreview()
 	{
 		return instance.attackPreview;
 	}
@@ -158,7 +157,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the productionUnitPreview
 	 */
-	public static final UIProductionUnitPreview GetProductionUnitPreview() 
+	public static final UIProductionUnitPreview GetProductionUnitPreview()
 	{
 		return instance.productionUnitPreview;
 	}
@@ -166,7 +165,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/**
 	 * @return the castlePreview
 	 */
-	public static final UICastlePreview GetCastlePreview() 
+	public static final UICastlePreview GetCastlePreview()
 	{
 		return instance.castlePreview;
 	}

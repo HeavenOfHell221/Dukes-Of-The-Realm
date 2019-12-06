@@ -8,74 +8,74 @@ import javafx.scene.Parent;
 
 public final class UIAttackPreview extends Parent implements IUpdate, IUI {
 
-	
-	
+
+
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
-	
-	
+
+
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
-	public UIAttackPreview() 
+
+	public UIAttackPreview()
 	{
 		super();
 	}
-	
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	@Override
-	public void Start() 
+	public void Start()
 	{
-		
+
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
 	@Override
-	public void Update(long now, boolean pause) 
+	public void Update(final long now, final boolean pause)
 	{
 
 	}
-	
+
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	@Override
-	public void AddNode(Node node)
+	public void AddNode(final Node node)
 	{
-		this.getChildren().add(node);
+		getChildren().add(node);
 	}
 
 	@Override
-	public void AddAllNodes() 
-	{
-	
-	}
-
-	@Override
-	public void RelocateAllNodes() 
+	public void AddAllNodes()
 	{
 
 	}
 
 	@Override
-	public void Relocate(Node node, double x, double y) 
+	public void RelocateAllNodes()
+	{
+
+	}
+
+	@Override
+	public void Relocate(final Node node, final double x, final double y)
 	{
 		node.relocate(x, y);
 	}
 
 	@Override
-	public void SwitchCastle(Castle castle) 
+	public void SwitchCastle(final Castle castle)
 	{
 
 	}

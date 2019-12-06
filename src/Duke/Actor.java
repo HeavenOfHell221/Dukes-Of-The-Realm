@@ -11,66 +11,66 @@ import javafx.scene.paint.Color;
 
 public abstract class Actor extends Parent implements Serializable {
 
-	private ArrayList<Castle> myCastles;
-	private Color myColor;
+	private final ArrayList<Castle> myCastles;
+	private final Color myColor;
 	static private Castle lastPlayerCastleClicked;
 	static private Castle lastOtherCastleClicked;
 	private String name = "";
-	
-	Actor(String name, Color myColor)
+
+	Actor(final String name, final Color myColor)
 	{
 		this.myColor = myColor;
-		this.myCastles = new ArrayList<>();
+		myCastles = new ArrayList<>();
 		Actor.lastPlayerCastleClicked = null;
 		this.name = name;
 	}
-	
+
 	protected abstract void CastleHandle(MouseEvent e);
-	
-	EventHandler<MouseEvent> CastleEventHandle = e -> CastleHandle(e); 
-	
-	public void AddCastle(Castle castle)
+
+	EventHandler<MouseEvent> CastleEventHandle = e -> CastleHandle(e);
+
+	public void AddCastle(final Castle castle)
 	{
 		castle.GetShape().setFill(GetMyColor());
 		castle.GetShape().addEventFilter(MouseEvent.MOUSE_PRESSED, CastleEventHandle);
-		this.myCastles.add(castle);
+		myCastles.add(castle);
 	}
-	
-	public boolean RemoveCastle(Castle castle)
+
+	public boolean RemoveCastle(final Castle castle)
 	{
-		return this.myCastles.remove(castle);
+		return myCastles.remove(castle);
 	}
-	
+
 	public ArrayList<Castle> GetMyCastles()
 	{
 		return myCastles;
 	}
-	
+
 	public Color GetMyColor()
 	{
 		return myColor;
 	}
-	
+
 	public Castle GetLastPlayerCastleClicked()
 	{
 		return Actor.lastPlayerCastleClicked;
 	}
-	
-	public void SetLastPlayerCastleClicked(Castle castle)
+
+	public void SetLastPlayerCastleClicked(final Castle castle)
 	{
 		Actor.lastPlayerCastleClicked = castle;
 	}
 
-	public Castle GetLastOtherCastleClicked() 
+	public Castle GetLastOtherCastleClicked()
 	{
 		return Actor.lastOtherCastleClicked;
 	}
 
-	public void SetLastOtherCastleClicked(Castle lastOtherCastleClcked) 
+	public void SetLastOtherCastleClicked(final Castle lastOtherCastleClcked)
 	{
 		Actor.lastOtherCastleClicked = lastOtherCastleClcked;
 	}
-	
+
 	public String GetName()
 	{
 		return name;

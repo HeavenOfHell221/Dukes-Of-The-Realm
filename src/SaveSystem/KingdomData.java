@@ -8,37 +8,37 @@ import DukesOfTheRealm.Kingdom;
 
 public class KingdomData implements Serializable
 {
-	private ArrayList<CastleData> castles;
+	private final ArrayList<CastleData> castles;
 	private final transient Kingdom kingdom;
 	private transient ArrayList<Castle> newCastles;
-		
+
 	public KingdomData(final Kingdom kingdom)
 	{
-		this.castles = new ArrayList<>();
+		castles = new ArrayList<>();
 		this.kingdom = kingdom;
 	}
-	
+
 	public void Save()
 	{
 		kingdom.GetCastles().forEach(
-			castle ->
-			{
-				CastleData data = new CastleData(castle);
-				data.Save();
-				castles.add(data);
-			});
+				castle ->
+				{
+					final CastleData data = new CastleData(castle);
+					data.Save();
+					castles.add(data);
+				});
 	}
-	
+
 	public void Load()
 	{
-		this.newCastles = new ArrayList<>();
-		castles.forEach( 
-			castle ->
-			{
-				Castle newCastle = castle.Load();
-				this.newCastles.add(newCastle);
-			});
-		
+		newCastles = new ArrayList<>();
+		castles.forEach(
+				castle ->
+				{
+					final Castle newCastle = castle.Load();
+					newCastles.add(newCastle);
+				});
+
 		//Main.kingdom.SetCastles(newCastles);
 	}
 }
