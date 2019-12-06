@@ -34,7 +34,7 @@ public class SoldierData implements Serializable {
 
 	public void Save()
 	{
-		soldier.ReceivedDataSave(this);
+		soldier.receivedDataSave(this);
 	}
 
 	public void Load()

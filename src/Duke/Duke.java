@@ -32,7 +32,7 @@ public abstract class Duke extends Actor {
 					SetLastPlayerCastleClicked(null);
 				}
 				SetLastOtherCastleClicked(castle);
-				UIManager.GetInstance().SwitchCastle(castle);
+				UIManager.GetInstance().switchCastle(castle);
 			});
 		}
 	}

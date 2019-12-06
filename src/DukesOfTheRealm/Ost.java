@@ -61,7 +61,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
 		speed = SetOstSpeed();
 		separationPoint = SetSeparationPoint();
@@ -73,7 +73,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		if (!fullyDeployed && Time(now, pause)) {
 			DeployOneSoldiersWave();
@@ -95,7 +95,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 						destination.FreeAttackLocation(s.GetAttackLocation());
 						it.remove();
 					} else {
-						s.Update(now, pause);
+						s.update(now, pause);
 					}
 				}
 			} else {
@@ -109,7 +109,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	/*************************************************/
 
 	@Override
-	public void ReceivedDataSave(final OstData data)
+	public void receivedDataSave(final OstData data)
 	{
 		data.separationPoint = separationPoint;
 		data.nbPikers = nbPikers;
@@ -121,7 +121,7 @@ public class Ost implements IUpdate, Serializable, ISave<OstData> {
 	}
 
 	@Override
-	public void SendingDataSave(final OstData data)
+	public void sendingDataSave(final OstData data)
 	{
 
 	}

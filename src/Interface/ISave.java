@@ -2,6 +2,6 @@ package Interface;
 
 public interface ISave<T> {
 
-	void ReceivedDataSave(T o);
-	void SendingDataSave(T o);
+	void receivedDataSave(T o);
+	void sendingDataSave(T o);
 }

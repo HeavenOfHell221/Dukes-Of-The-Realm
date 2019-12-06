@@ -29,12 +29,12 @@ public class Knight extends Soldier {
 	}
 
 	@Override
-	public int GetProductionTime() {
+	public int getProductionTime() {
 		return Settings.KNIGHT_TIME_PRODUCTION;
 	}
 
 	@Override
-	public int GetProductionCost() {
+	public int getProductionCost() {
 		return Settings.KNIGHT_COST;
 	}
 }

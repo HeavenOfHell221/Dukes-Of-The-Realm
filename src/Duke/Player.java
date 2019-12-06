@@ -17,7 +17,7 @@ public class Player extends Actor {
 	@Override
 	public void AddCastle(final Castle castle) {
 		super.AddCastle(castle);
-		UIManager.GetInstance().SwitchCastle(castle);
+		UIManager.GetInstance().switchCastle(castle);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class Player extends Actor {
 			.limit(1)
 			.forEach( castle -> {
 				SetLastPlayerCastleClicked(castle);
-				UIManager.GetInstance().SwitchCastle(castle);
+				UIManager.GetInstance().switchCastle(castle);
 			});
 		}
 	}

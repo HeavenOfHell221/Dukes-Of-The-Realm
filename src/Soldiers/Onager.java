@@ -29,12 +29,12 @@ public class Onager extends Soldier {
 	}
 
 	@Override
-	public int GetProductionTime() {
+	public int getProductionTime() {
 		return Settings.ONAGER_TIME_PRODUCTION;
 	}
 
 	@Override
-	public int GetProductionCost() {
+	public int getProductionCost() {
 		return Settings.ONAGER_COST;
 	}
 }

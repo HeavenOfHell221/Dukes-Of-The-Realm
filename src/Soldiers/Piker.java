@@ -29,12 +29,12 @@ public class Piker extends Soldier {
 	}
 
 	@Override
-	public int GetProductionTime() {
+	public int getProductionTime() {
 		return Settings.PIKER_TIME_PRODUCTION ;
 	}
 
 	@Override
-	public int GetProductionCost() {
+	public int getProductionCost() {
 		return Settings.PIKER_COST;
 	}
 }

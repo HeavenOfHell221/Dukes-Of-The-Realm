@@ -77,7 +77,7 @@ public class Main extends Application implements IUpdate{
 			public void handle(final long now)
 			{
 				processInput(input, now);
-				Update(now, pause);
+				update(now, pause);
 			}
 
 			private void processInput(final Input input, final long now)
@@ -100,7 +100,7 @@ public class Main extends Application implements IUpdate{
 	}
 
 	@Override
-	public void Start()
+	public void start()
 	{
 
 		/* UI */
@@ -110,7 +110,7 @@ public class Main extends Application implements IUpdate{
 		/* KINGDOM */
 		kingdom = new Kingdom(playfieldLayer);
 		playfieldLayer.getChildren().add(kingdom);
-		kingdom.Start();
+		kingdom.start();
 
 
 	}
@@ -159,7 +159,7 @@ public class Main extends Application implements IUpdate{
 		{
 			mainGameLoop.start();
 			lobbyGameLoop.stop();
-			Start();
+			start();
 			root.getChildren().remove(buttonPlay);
 			root.getChildren().remove(buttonNew);
 		});
@@ -168,7 +168,7 @@ public class Main extends Application implements IUpdate{
 		{
 			mainGameLoop.start();
 			lobbyGameLoop.stop();
-			Start();
+			start();
 			root.getChildren().remove(buttonPlay);
 			root.getChildren().remove(buttonNew);
 		});
@@ -182,11 +182,11 @@ public class Main extends Application implements IUpdate{
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
-		time.Update(now, pause);
-		kingdom.Update(now, pause);
-		UIManager.GetInstance().Update(now, pause);
+		time.update(now, pause);
+		kingdom.update(now, pause);
+		UIManager.GetInstance().update(now, pause);
 	}
 
 	/*************************************************/

@@ -36,7 +36,7 @@ public class Time implements IUpdate{
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
 
 	}
@@ -47,7 +47,7 @@ public class Time implements IUpdate{
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		FrameStart(now);
 		if((now - lastUpdate) >= cooldown)

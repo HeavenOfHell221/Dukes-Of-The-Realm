@@ -5,9 +5,9 @@ import javafx.scene.Node;
 
 public interface IUI {
 
-	void AddAllNodes();
-	void RelocateAllNodes();
-	void Relocate(Node node, double x, double y);
-	void AddNode(Node node);
-	void SwitchCastle(Castle castle);
+	void addAllNodes();
+	void relocateAllNodes();
+	void relocate(Node node, double x, double y);
+	void addNode(Node node);
+	void switchCastle(Castle castle);
 }

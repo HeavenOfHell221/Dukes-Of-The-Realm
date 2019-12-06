@@ -43,15 +43,15 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
-		AddAllNodes();
-		RelocateAllNodes();
+		addAllNodes();
+		relocateAllNodes();
 		SetBackground();
 
-		GetAttackPreview().Start();
-		GetCastlePreview().Start();
-		GetProductionUnitPreview().Start();
+		GetAttackPreview().start();
+		GetCastlePreview().start();
+		GetProductionUnitPreview().start();
 	}
 
 	public void Awake()
@@ -59,7 +59,7 @@ public class UIManager extends Parent implements IUpdate, IUI {
 		attackPreview = new UIAttackPreview();
 		castlePreview = new UICastlePreview();
 		productionUnitPreview = new UIProductionUnitPreview();
-		Start();
+		start();
 	}
 
 	/*************************************************/
@@ -67,11 +67,11 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
-		castlePreview.Update(now, pause);
-		productionUnitPreview.Update(now, pause);
-		attackPreview.Update(now, pause);
+		castlePreview.update(now, pause);
+		productionUnitPreview.update(now, pause);
+		attackPreview.update(now, pause);
 	}
 
 	/*************************************************/
@@ -79,13 +79,13 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Relocate(final Node node, final double x, final double y)
+	public void relocate(final Node node, final double x, final double y)
 	{
 		node.relocate(x, y);
 	}
 
 	@Override
-	public void AddNode(final Node node)
+	public void addNode(final Node node)
 	{
 		playfieldLayer.getChildren().add(node);
 		background.toBack();
@@ -107,26 +107,26 @@ public class UIManager extends Parent implements IUpdate, IUI {
 	}
 
 	@Override
-	public void AddAllNodes()
+	public void addAllNodes()
 	{
-		AddNode(attackPreview);
-		AddNode(castlePreview);
-		AddNode(productionUnitPreview);
-		AddNode(background);
+		addNode(attackPreview);
+		addNode(castlePreview);
+		addNode(productionUnitPreview);
+		addNode(background);
 	}
 
 	@Override
-	public void RelocateAllNodes()
+	public void relocateAllNodes()
 	{
-		Relocate(background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
+		relocate(background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
 	}
 
 	@Override
-	public void SwitchCastle(final Castle castle)
+	public void switchCastle(final Castle castle)
 	{
-		attackPreview.SwitchCastle(castle);
-		productionUnitPreview.SwitchCastle(castle);
-		castlePreview.SwitchCastle(castle);
+		attackPreview.switchCastle(castle);
+		productionUnitPreview.switchCastle(castle);
+		castlePreview.switchCastle(castle);
 	}
 
 	public void SetPlayfieldLayer(final Pane playfieldLayer)

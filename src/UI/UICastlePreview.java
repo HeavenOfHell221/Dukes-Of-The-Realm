@@ -70,10 +70,10 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
-		AddAllNodes();
-		RelocateAllNodes();
+		addAllNodes();
+		relocateAllNodes();
 		SetAllTexts();
 		SetBackground();
 	}
@@ -94,7 +94,7 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	}
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		if(currentCastle != null) {
 			UpdateTexts();
@@ -139,55 +139,55 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	}
 
 	@Override
-	public void RelocateAllNodes()
+	public void relocateAllNodes()
 	{
 		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.1f;
 		int offset = 50;
 		final int i = 69;
 
-		Relocate(owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
-		Relocate(florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 30);
-		Relocate(level, Settings.SCENE_WIDTH * margin, offset + i * 2 - 60);
+		relocate(owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
+		relocate(florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 30);
+		relocate(level, Settings.SCENE_WIDTH * margin, offset + i * 2 - 60);
 		offset -= 20;
-		Relocate(imageFlorin, Settings.SCENE_WIDTH * margin, offset + i * 2);
-		Relocate(imagePiker, Settings.SCENE_WIDTH * margin, offset + i * 3);
-		Relocate(imageKnight, Settings.SCENE_WIDTH * margin, offset + i * 4);
-		Relocate(imageOnager, Settings.SCENE_WIDTH * margin, offset + i * 5);
+		relocate(imageFlorin, Settings.SCENE_WIDTH * margin, offset + i * 2);
+		relocate(imagePiker, Settings.SCENE_WIDTH * margin, offset + i * 3);
+		relocate(imageKnight, Settings.SCENE_WIDTH * margin, offset + i * 4);
+		relocate(imageOnager, Settings.SCENE_WIDTH * margin, offset + i * 5);
 
-		Relocate(nbFlorin, Settings.SCENE_WIDTH * margin + 40, offset + i * 2 + 30);
-		Relocate(nbPiker, Settings.SCENE_WIDTH * margin + 40, offset + i * 3 + 30);
-		Relocate(nbKnight, Settings.SCENE_WIDTH * margin + 40, offset + i * 4 + 30);
-		Relocate(nbOnager, Settings.SCENE_WIDTH * margin + 40, offset + i * 5 + 30);
+		relocate(nbFlorin, Settings.SCENE_WIDTH * margin + 40, offset + i * 2 + 30);
+		relocate(nbPiker, Settings.SCENE_WIDTH * margin + 40, offset + i * 3 + 30);
+		relocate(nbKnight, Settings.SCENE_WIDTH * margin + 40, offset + i * 4 + 30);
+		relocate(nbOnager, Settings.SCENE_WIDTH * margin + 40, offset + i * 5 + 30);
 
-		Relocate(background, Settings.SCENE_WIDTH * margin - 44, offset);
+		relocate(background, Settings.SCENE_WIDTH * margin - 44, offset);
 	}
 
 	@Override
-	public void AddAllNodes()
+	public void addAllNodes()
 	{
-		AddNode(background);
-		AddNode(imageKnight);
-		AddNode(level);
-		AddNode(imageFlorin);
-		AddNode(imageOnager);
-		AddNode(imagePiker);
-		AddNode(owner);
-		AddNode(florinIncome);
-		AddNode(nbFlorin);
-		AddNode(nbKnight);
-		AddNode(nbOnager);
-		AddNode(nbPiker);
+		addNode(background);
+		addNode(imageKnight);
+		addNode(level);
+		addNode(imageFlorin);
+		addNode(imageOnager);
+		addNode(imagePiker);
+		addNode(owner);
+		addNode(florinIncome);
+		addNode(nbFlorin);
+		addNode(nbKnight);
+		addNode(nbOnager);
+		addNode(nbPiker);
 	}
 
 	@Override
-	public void Relocate(final Node node, final double x, final double y)
+	public void relocate(final Node node, final double x, final double y)
 	{
 		node.relocate(x, y);
 		node.toBack();
 	}
 
 	@Override
-	public void AddNode(final Node node)
+	public void addNode(final Node node)
 	{
 		getChildren().add(node);
 	}
@@ -201,7 +201,7 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI {
 	}
 
 	@Override
-	public void SwitchCastle(final Castle castle)
+	public void switchCastle(final Castle castle)
 	{
 		currentCastle = castle;
 	}

@@ -50,7 +50,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
 		if (attackLocation == null || isWaitingForAttackLocation)
 		{
@@ -63,7 +63,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 		GetShape().setFill(color);
 		GetLayer().getChildren().add(GetShape());
 		UpdateUIShape();
-		Start();
+		start();
 	}
 
 	/*************************************************/
@@ -71,19 +71,19 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	/*************************************************/
 
 	@Override
-	public void ReceivedDataSave(final SoldierData data)
+	public void receivedDataSave(final SoldierData data)
 	{
 
 	}
 
 	@Override
-	public void SendingDataSave(final SoldierData data)
+	public void sendingDataSave(final SoldierData data)
 	{
 
 	}
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		if (!isArrived)
 		{
@@ -132,8 +132,8 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 
 	private void Move(final Point2D dst)
 	{
-		final int directionX = GetX() < dst.GetX() ? 1 : GetX() == dst.GetX() ? 0 : -1;
-		final int directionY = GetY() < dst.GetY() ? 1 : GetY() == dst.GetY() ? 0 : -1;
+		final int directionX = GetX() < dst.getX() ? 1 : GetX() == dst.getX() ? 0 : -1;
+		final int directionY = GetY() < dst.getY() ? 1 : GetY() == dst.getY() ? 0 : -1;
 
 		AddMotion(stats.speed * Time.deltaTime * directionX, stats.speed * Time.deltaTime * directionY);
 		IsOutOfScreen();
@@ -159,7 +159,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	}
 
 	private void IsArrived() {
-		if (GetX() == itsOst.GetSeparationPoint().GetX() && GetY() == itsOst.GetSeparationPoint().GetY())
+		if (GetX() == itsOst.GetSeparationPoint().getX() && GetY() == itsOst.GetSeparationPoint().getY())
 		{
 			canMove = false;
 			isArrived = true;
@@ -171,7 +171,7 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	{
 		if (!isWaitingForAttackLocation)
 		{
-			if (GetX() == attackLocation.GetX() && GetY() == attackLocation.GetY())
+			if (GetX() == attackLocation.getX() && GetY() == attackLocation.getY())
 			{
 				isInPosition = true;
 			}
@@ -189,10 +189,10 @@ public abstract class Soldier extends Sprite implements ISave<SoldierData>{
 	/*************************************************/
 
 	@Override
-	public abstract int GetProductionTime();
+	public abstract int getProductionTime();
 
 	@Override
-	public abstract int GetProductionCost();
+	public abstract int getProductionCost();
 
 	public SoldierEnum GetType()
 	{

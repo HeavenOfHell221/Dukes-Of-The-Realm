@@ -2,6 +2,6 @@ package Interface;
 
 public interface IProductionUnit {
 
-	int GetProductionTime();
-	int GetProductionCost();
+	int getProductionTime();
+	int getProductionCost();
 }

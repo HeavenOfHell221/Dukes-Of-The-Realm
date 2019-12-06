@@ -30,7 +30,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
 
 	}
@@ -40,7 +40,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 
 	}
@@ -51,31 +51,31 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI {
 	/*************************************************/
 
 	@Override
-	public void AddNode(final Node node)
+	public void addNode(final Node node)
 	{
 		getChildren().add(node);
 	}
 
 	@Override
-	public void AddAllNodes()
+	public void addAllNodes()
 	{
 
 	}
 
 	@Override
-	public void RelocateAllNodes()
+	public void relocateAllNodes()
 	{
 
 	}
 
 	@Override
-	public void Relocate(final Node node, final double x, final double y)
+	public void relocate(final Node node, final double x, final double y)
 	{
 		node.relocate(x, y);
 	}
 
 	@Override
-	public void SwitchCastle(final Castle castle)
+	public void switchCastle(final Castle castle)
 	{
 
 	}

@@ -33,7 +33,7 @@ public class CastleData implements Serializable {
 
 	public void Save()
 	{
-		castle.ReceivedDataSave(this);
+		castle.receivedDataSave(this);
 		if(castle.GetOst() == null)
 		{
 		}

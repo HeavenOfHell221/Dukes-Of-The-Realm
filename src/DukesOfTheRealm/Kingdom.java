@@ -32,7 +32,7 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	/**
 	 * Liste des châteaux du royaume.
 	 * @see Kingdom#CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
-	 * @see Kingdom#Update(long now, boolean pause)
+	 * @see Kingdom#update(long now, boolean pause)
 	 */
 	private ArrayList<Castle> castles;
 
@@ -68,8 +68,8 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	/**
 	 * Condition pour que le royaume utilise Update.
-	 * @see Kingdom#Update(long, boolean)
-	 * @see Main#Update(long, boolean)
+	 * @see Kingdom#update(long, boolean)
+	 * @see Main#update(long, boolean)
 	 */
 	private boolean canUpdate = false;
 
@@ -92,11 +92,7 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 		colors.add(Color.DIMGRAY);
 		colors.add(Color.DARKORANGE);
 		colors.add(Color.LIGHTSLATEGRAY);
-		//colors.add(Color.SILVER);
-		//colors.add(Color.TOMATO);
 		colors.add(Color.AQUA);
-		//colors.add(Color.KHAKI);
-		//colors.add(Color.LINEN);
 		colors.add(Color.MEDIUMORCHID);
 		colors.add(Color.GOLDENROD);
 	}
@@ -107,11 +103,11 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
 		castleUIInstance = UIManager.GetInstance();
 		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
-		castles.forEach(castle -> castle.Start());
+		castles.forEach(castle -> castle.start());
 		castles.forEach(castle ->
 		{
 			if (castle != castles.get(0))
@@ -128,11 +124,11 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		if(canUpdate)
 		{
-			castles.forEach(castle -> castle.Update(now, pause));
+			castles.forEach(castle -> castle.update(now, pause));
 			UpdateUI(now, pause);
 		}
 	}
@@ -141,7 +137,7 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	{
 		if(castleUIInstance != null)
 		{
-			castleUIInstance.Update(now, pause);
+			castleUIInstance.update(now, pause);
 		}
 	}
 
@@ -151,9 +147,9 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 
 	public boolean CreateCastle(final Pane layer, final Point2D coordinate, final int level, final Actor actor)
 	{
-		if(!IsCastleToClose(coordinate.GetX(), coordinate.GetY()))
+		if(!IsCastleToClose(coordinate))
 		{
-			final Castle newCastle = new Castle(layer, coordinate.GetX(), coordinate.GetY(), level, actor);
+			final Castle newCastle = new Castle(layer, coordinate, level, actor);
 			newCastle.AddRepresentation();
 			getChildren().add(newCastle.GetShape());
 			getChildren().add(newCastle.GetDoor());
@@ -226,13 +222,13 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 		return castles.add(castle);
 	}
 
-	private boolean IsCastleToClose(final double x, final double y)
+	private boolean IsCastleToClose(final Point2D coordinate)
 	{
 		final Iterator<Castle> it = castles.iterator();
 		while(it.hasNext())
 		{
 			final Castle currentCastle = it.next();
-			final double d = DistanceBetween(currentCastle, x, y);
+			final double d = DistanceBetween(currentCastle, coordinate);
 			if(d < Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE)
 			{
 				return true;
@@ -241,9 +237,9 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 		return false;
 	}
 
-	private double DistanceBetween(final Castle castle, final double x, final double y)
+	private double DistanceBetween(final Castle castle, final Point2D coord)
 	{
-		return Math.sqrt((y - castle.GetY()) * (y - castle.GetY()) + (x - castle.GetX()) * (x - castle.GetX()));
+		return Math.sqrt((coord.getY() - castle.GetY()) * (coord.getY() - castle.GetY()) + (coord.getX() - castle.GetX()) * (coord.getX() - castle.GetX()));
 	}
 
 	public Point2D GetRandomCoordinates(final Random rand)
@@ -252,13 +248,13 @@ public class Kingdom extends Parent implements IUpdate, ISave<KingdomData> {
 	}
 
 	@Override
-	public void ReceivedDataSave(final KingdomData data)
+	public void receivedDataSave(final KingdomData data)
 	{
 
 	}
 
 	@Override
-	public void SendingDataSave(final KingdomData data)
+	public void sendingDataSave(final KingdomData data)
 	{
 
 	}

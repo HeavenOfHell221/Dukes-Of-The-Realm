@@ -146,11 +146,11 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 
 	public int GetX()
 	{
-		return (int) coordinate.GetX();
+		return (int) coordinate.getX();
 	}
 	public int GetY()
 	{
-		return (int) coordinate.GetY();
+		return (int) coordinate.getY();
 	}
 
 	public Point2D GetCoordinate()
@@ -179,26 +179,26 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit 
 
 	public void SetX(final int x)
 	{
-		coordinate.SetX(x);
+		coordinate.setX(x);
 	}
 	public void SetY(final int y)
 	{
-		coordinate.SetY(y);
+		coordinate.setY(y);
 	}
 
 	public void AddDx(final double dx)
 	{
-		coordinate.AddDx(dx);
+		coordinate.addDx(dx);
 	}
 
 	public void AddDy(final double dy)
 	{
-		coordinate.AddDy(dy);
+		coordinate.addDy(dy);
 	}
 
 	public void AddMotion(final double dx, final double dy)
 	{
-		coordinate.AddMotion(dx, dy);
+		coordinate.addMotion(dx, dy);
 	}
 
 	public void SetCoordinate(final Point2D coordinate)

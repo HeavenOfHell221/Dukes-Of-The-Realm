@@ -55,9 +55,9 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
-	Castle(final Pane layer, final double x, final double y, final int level, final Actor actor)
+	Castle(final Pane layer, final Point2D coord, final int level, final Actor actor)
 	{
-		super(layer, x, y);
+		super(layer, coord);
 		this.level = level;
 		totalFlorin = 0;
 		this.actor = actor;
@@ -86,7 +86,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
 		actor.AddCastle(this);
 
@@ -108,7 +108,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		if(!pause)
 		{
@@ -135,7 +135,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		{
 			productionTime -= (1 * Time.deltaTime);
 
-			final double ratio = 1 - (productionTime / productionUnit.getFirst().GetProductionTime());
+			final double ratio = 1 - (productionTime / productionUnit.getFirst().getProductionTime());
 			UIManager.GetProductionUnitPreview().SetFill(ratio);
 
 			if(productionTime <= 0)
@@ -154,7 +154,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 
 				if(productionUnit.size() > 0)
 				{
-					productionTime = productionUnit.getFirst().GetProductionTime();
+					productionTime = productionUnit.getFirst().getProductionTime();
 				}
 			}
 		}
@@ -162,7 +162,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 
 	private void UpdateOst(final long now, final boolean pause)
 	{
-		ost.Update(now, pause);
+		ost.update(now, pause);
 	}
 
 	/*************************************************/
@@ -170,7 +170,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/*************************************************/
 
 	@Override
-	public void ReceivedDataSave(final CastleData data)
+	public void receivedDataSave(final CastleData data)
 	{
 		data.attackLocations = attackLocations;
 		data.level = level;
@@ -185,7 +185,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	}
 
 	@Override
-	public void SendingDataSave(final CastleData castleData)
+	public void sendingDataSave(final CastleData castleData)
 	{
 
 	}
@@ -278,7 +278,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 
 	public boolean AddProduction(final IProductionUnit newProduction)
 	{
-		if(newProduction == null || !RemoveFlorin(newProduction.GetProductionCost())) {
+		if(newProduction == null || !RemoveFlorin(newProduction.getProductionCost())) {
 			return false;
 		}
 
@@ -286,7 +286,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 
 		if(productionUnit.size() == 1)
 		{
-			productionTime = newProduction.GetProductionTime();
+			productionTime = newProduction.getProductionTime();
 		}
 
 		return true;
@@ -298,7 +298,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 		if (ost == null)
 		{
 			ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, myColor);
-			ost.Start();
+			ost.start();
 			return true;
 		}
 		return false;
@@ -348,7 +348,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	/*************************************************/
 
 	@Override
-	public int GetProductionCost()
+	public int getProductionCost()
 	{
 		return Settings.LEVEL_UP_COST_FACTOR * level;
 	}
@@ -366,7 +366,7 @@ public class Castle extends Sprite implements ISave<CastleData> {
 	}
 
 	@Override
-	public int GetProductionTime()
+	public int getProductionTime()
 	{
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * level;
 	}

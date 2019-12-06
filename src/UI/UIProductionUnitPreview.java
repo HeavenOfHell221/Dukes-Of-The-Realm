@@ -66,10 +66,10 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 	/*************************************************/
 
 	@Override
-	public void Start()
+	public void start()
 	{
-		AddAllNodes();
-		RelocateAllNodes();
+		addAllNodes();
+		relocateAllNodes();
 		SetAllButtons();
 		SetBackground();
 		SetBar();
@@ -80,7 +80,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 	/*************************************************/
 
 	@Override
-	public void Update(final long now, final boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 
 	}
@@ -90,7 +90,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 	/*************************************************/
 
 	@Override
-	public void Relocate(final Node node, final double x, final double y)
+	public void relocate(final Node node, final double x, final double y)
 	{
 		node.relocate(x, y);
 		node.toBack();
@@ -239,46 +239,46 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 	}
 
 	@Override
-	public void AddAllNodes()
+	public void addAllNodes()
 	{
-		AddNode(background);
-		AddNode(backgroundTime);
-		AddNode(buttonCreateKnight);
-		AddNode(buttonCreateOnager);
-		AddNode(buttonCreatePiker);
-		AddNode(buttonUpgradeCastle);
-		AddNode(fillTime);
+		addNode(background);
+		addNode(backgroundTime);
+		addNode(buttonCreateKnight);
+		addNode(buttonCreateOnager);
+		addNode(buttonCreatePiker);
+		addNode(buttonUpgradeCastle);
+		addNode(fillTime);
 	}
 
 	@Override
-	public void RelocateAllNodes()
+	public void relocateAllNodes()
 	{
 		final int i = 90;
 		final int offset = 540;
 
 		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.076f;
 
-		Relocate(buttonCreateKnight,  Settings.SCENE_WIDTH * margin + i * 0, offset);
-		Relocate(buttonCreateOnager,  Settings.SCENE_WIDTH * margin + i * 1, offset);
-		Relocate(buttonCreatePiker, Settings.SCENE_WIDTH * margin + i * 2, offset);
+		relocate(buttonCreateKnight,  Settings.SCENE_WIDTH * margin + i * 0, offset);
+		relocate(buttonCreateOnager,  Settings.SCENE_WIDTH * margin + i * 1, offset);
+		relocate(buttonCreatePiker, Settings.SCENE_WIDTH * margin + i * 2, offset);
 
-		Relocate(buttonUpgradeCastle, Settings.SCENE_WIDTH * margin + i * 1 , offset + 90);
+		relocate(buttonUpgradeCastle, Settings.SCENE_WIDTH * margin + i * 1 , offset + 90);
 
-		Relocate(fillTime, Settings.SCENE_WIDTH * margin+ 1, offset + 190);
-		Relocate(backgroundTime, Settings.SCENE_WIDTH * margin+ 1, offset + 190);
+		relocate(fillTime, Settings.SCENE_WIDTH * margin+ 1, offset + 190);
+		relocate(backgroundTime, Settings.SCENE_WIDTH * margin+ 1, offset + 190);
 
-		Relocate(background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
+		relocate(background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
 	}
 
 
 	@Override
-	public void AddNode(final Node node)
+	public void addNode(final Node node)
 	{
 		getChildren().add(node);
 	}
 
 	@Override
-	public void SwitchCastle(final Castle castle)
+	public void switchCastle(final Castle castle)
 	{
 		currentCastle = castle;
 	}

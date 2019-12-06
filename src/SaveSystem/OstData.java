@@ -37,7 +37,7 @@ public class OstData implements Serializable
 					soldiers.add(data);
 				});
 
-		ost.ReceivedDataSave(this);
+		ost.receivedDataSave(this);
 	}
 
 	public Ost Load()

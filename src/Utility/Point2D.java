@@ -24,37 +24,37 @@ public class Point2D implements Serializable {
 		this(p.x, p.y);
 	}
 
-	public double GetX()
+	public double getX()
 	{
 		return x;
 	}
 
-	public double GetY()
+	public double getY()
 	{
 		return y;
 	}
 
-	public void SetX(final double x)
+	public void setX(final double x)
 	{
 		this.x = x;
 	}
 
-	public void SetY(final double y)
+	public void setY(final double y)
 	{
 		this.y = y;
 	}
 
-	public void AddDx(final double x)
+	public void addDx(final double x)
 	{
 		this.x += x;
 	}
 
-	public void AddDy(final double y)
+	public void addDy(final double y)
 	{
 		this.y += y;
 	}
 
-	public void AddMotion(final double x, final double y)
+	public void addMotion(final double x, final double y)
 	{
 		this.x += x;
 		this.y += y;
