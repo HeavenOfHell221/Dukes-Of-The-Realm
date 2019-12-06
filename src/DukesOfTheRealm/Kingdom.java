@@ -123,7 +123,7 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 //				castle.CreateOst(actors.get(0).GetMyCastles().get(0), 5, 5, 0);
 //			}
 //		});
-		Kingdom.player.GetMyCastles().get(0).CreateOst(actors.get(1).GetMyCastles().get(0), 9, 9, 0);
+		Kingdom.player.getMyCastles().get(0).CreateOst(actors.get(1).getMyCastles().get(0), 9, 9, 0);
 		canUpdate = true;
 	}
 
@@ -261,7 +261,7 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 		Kingdom.collisionsManagement = new Collisions();
 		this.castles.forEach(castle ->
 			{
-				collisionsManagement.addPoint(castle.GetCoordinate());
+				collisionsManagement.addPoint(castle.getCoordinate());
 			});
 	}
 

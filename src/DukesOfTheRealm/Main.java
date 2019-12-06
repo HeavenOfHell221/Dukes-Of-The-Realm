@@ -87,7 +87,7 @@ public class Main extends Application implements IUpdate
 				if (input.isSpace() && Time(now))
 				{
 					Main.this.pause = !Main.this.pause;
-					load();
+					//load();
 				}
 			}
 		};

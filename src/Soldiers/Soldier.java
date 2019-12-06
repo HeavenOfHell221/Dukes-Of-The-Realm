@@ -121,8 +121,8 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private void Move(final Point2D dst)
 	{
-		final int directionX = GetX() < dst.getX() ? 1 : GetX() == dst.getX() ? 0 : -1;
-		final int directionY = GetY() < dst.getY() ? 1 : GetY() == dst.getY() ? 0 : -1;
+		final int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
+		final int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
 		
 		double offsetX = stats.speed * Time.deltaTime * directionX;
 		double offsetY = stats.speed * Time.deltaTime * directionY;
