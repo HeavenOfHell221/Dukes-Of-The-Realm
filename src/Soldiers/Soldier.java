@@ -3,6 +3,7 @@ package Soldiers;
 import java.io.Serializable;
 import java.util.Random;
 
+import DukesOfTheRealm.Kingdom;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
@@ -120,8 +121,22 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private void Move(final Point2D dst)
 	{
-		final int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
-		final int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
+		final int directionX = GetX() < dst.getX() ? 1 : GetX() == dst.getX() ? 0 : -1;
+		final int directionY = GetY() < dst.getY() ? 1 : GetY() == dst.getY() ? 0 : -1;
+		
+		double offsetX = stats.speed * Time.deltaTime * directionX;
+		double offsetY = stats.speed * Time.deltaTime * directionY;
+		
+//		if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetX, Settings.X_DIRECTION))
+//		{
+//			offsetX = 0;
+//			System.out.println("off x bloqué");
+//		}
+//		if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetY, Settings.Y_DIRECTION))
+//		{
+//			offsetY = 0;
+//			System.out.println("off y bloqué");
+//		}
 
 		addMotion(this.stats.speed * Time.deltaTime * directionX, this.stats.speed * Time.deltaTime * directionY);
 		IsOutOfScreen();
