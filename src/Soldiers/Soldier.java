@@ -43,14 +43,13 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	protected Soldier()
 	{
-		super();
+		
 	}
 
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
 
-	@Override
 	public void start()
 	{
 		if (this.attackLocation == null || this.isWaitingForAttackLocation)
@@ -71,7 +70,6 @@ public abstract class Soldier extends Sprite implements Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
 	public void update(final long now, final boolean pause)
 	{
 		if (!this.isArrived)
@@ -108,9 +106,9 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private final void SetAttackLocation()
 	{
-		if (this.itsOst.GetDestination().IsAvailableAttackLocation())
+		if (this.itsOst.GetDestination().isAvailableAttackLocation())
 		{
-			this.attackLocation = this.itsOst.GetDestination().GetNextAttackLocation();
+			this.attackLocation = this.itsOst.GetDestination().getNextAttackLocation();
 			this.isWaitingForAttackLocation = false;
 		}
 		else
@@ -186,7 +184,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	private void Attack()
 	{
 		this.isDead = (--this.stats.damage <= 0) ? true : false;
-		this.itsOst.GetDestination().GetReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
+		this.itsOst.GetDestination().getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
 	}
 
 	/*************************************************/

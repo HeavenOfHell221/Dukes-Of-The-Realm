@@ -18,7 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Main extends Application implements IUpdate
+public class Main extends Application
 {
 
 	/*************************************************/
@@ -36,6 +36,8 @@ public class Main extends Application implements IUpdate
 
 	private long lastTime = 0;
 	private boolean pause = false;
+	
+	public static boolean isNewGame = false;
 
 	/*************************************************/
 	/********************* START *********************/
@@ -80,35 +82,18 @@ public class Main extends Application implements IUpdate
 			{
 				if (input.isExit())
 				{
-					save();
+				    SaveSystem.save(kingdom);
 					Platform.exit();
 					System.exit(0);
 				}
 				if (input.isSpace() && Time(now))
 				{
 					Main.this.pause = !Main.this.pause;
-					//load();
 				}
 			}
 		};
 
 		this.lobbyGameLoop.start();
-	}
-
-	@Override
-	public void start()
-	{
-
-		/* UI */
-		UIManager.GetInstance().SetPlayfieldLayer(this.playfieldLayer);
-		UIManager.GetInstance().Awake();
-
-		/* KINGDOM */
-		this.kingdom = new Kingdom();
-		this.kingdom.setPlayfieldLayer(this.playfieldLayer);
-		this.playfieldLayer.getChildren().add(this.kingdom);
-		this.kingdom.start();
-
 	}
 
 	private void Awake(final Stage primaryStage)
@@ -119,7 +104,7 @@ public class Main extends Application implements IUpdate
 		primaryStage.setScene(this.mainScene);
 		primaryStage.setResizable(true);
 		primaryStage.setMaximized(false);
-		primaryStage.setFullScreen(true);
+		primaryStage.setFullScreen(false);
 		primaryStage.show();
 		Settings.SCENE_WIDTH = (int) primaryStage.getWidth();
 		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();
@@ -134,7 +119,7 @@ public class Main extends Application implements IUpdate
 
 		/* TIME MANAGER */
 		this.time = new Time(false);
-
+		
 		/* BUTTONS */
 		final Button buttonPlay = new Button();
 		final Button buttonNew = new Button();
@@ -150,21 +135,21 @@ public class Main extends Application implements IUpdate
 
 		buttonPlay.setOnMousePressed(event ->
 		{
-			this.mainGameLoop.start();
-			this.lobbyGameLoop.stop();
-			start();
-			// load();
 			this.root.getChildren().remove(buttonPlay);
 			this.root.getChildren().remove(buttonNew);
+			loadGame();
+			this.mainGameLoop.start();
+			this.lobbyGameLoop.stop();
 		});
 
 		buttonNew.setOnMousePressed(event ->
 		{
-			this.mainGameLoop.start();
-			this.lobbyGameLoop.stop();
-			start();
 			this.root.getChildren().remove(buttonPlay);
 			this.root.getChildren().remove(buttonNew);
+			newGame();
+			this.mainGameLoop.start();
+			this.lobbyGameLoop.stop();
+			
 		});
 
 		this.root.getChildren().add(buttonPlay);
@@ -175,12 +160,11 @@ public class Main extends Application implements IUpdate
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
 	public void update(final long now, final boolean pause)
 	{
 		this.time.update(now, pause);
 		this.kingdom.update(now, pause);
-		UIManager.GetInstance().update(now, pause);
+		UIManager.getInstance().update(now, pause);
 	}
 
 	/*************************************************/
@@ -192,23 +176,32 @@ public class Main extends Application implements IUpdate
 		if (now - this.lastTime > Settings.GAME_FREQUENCY / 5)
 		{
 			this.lastTime = now;
+			SaveSystem.save(kingdom);
 			return true;
 		}
 		return false;
 	}
 
-	private void save()
+	private void newGame()
 	{
-		SaveSystem.Save(this.kingdom);
+		System.out.println("Start new game... ");
+		isNewGame = true;
+		kingdom = new Kingdom();
+		kingdom.start(this.playfieldLayer);
+		
+		System.out.println("New game done !");
 	}
-
-	private void load()
+	
+	private void loadGame()
 	{
-		Kingdom k = SaveSystem.Load();
-		if (k != null)
-		{
-			Main.this.kingdom = k;
-		}
+		System.out.println("Start load game... ");
+		kingdom = SaveSystem.load();
+		if(kingdom != null)
+			System.out.println("Load game done !\n");
+		else
+			System.out.println("Error load !");
+		
+		kingdom.startTransient(this.playfieldLayer);
 	}
 
 	public static void main(final String[] args)

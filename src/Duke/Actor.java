@@ -1,76 +1,131 @@
 package Duke;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Main;
+import Interface.IUpdate;
 import UI.UIManager;
+import Utility.Settings;
+import Utility.Time;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class Actor
+public class Actor implements Serializable, IUpdate
 {
-	private ArrayList<Castle> myCastles;
-	private transient Color myColor;
-	private String name = "";
-
+	protected String name = "";
+	protected ArrayList<Castle> castles;
+	protected transient Color color;
+	protected transient Pane pane;
+	
 	Actor()
 	{
-
+		
 	}
-
-	Actor(final String name)
+	
+	@Override
+	public void start()
 	{
-		this.myCastles = new ArrayList<>();
-		this.name = name;
+		this.castles = new ArrayList<>();
 	}
-
-	protected void castleHandle(final MouseEvent e)
+	
+	public void startTransient(Color color, Pane pane)
 	{
-		if (e.getButton() == MouseButton.PRIMARY) // Clique gauche
+		this.color = color;
+		if(!Main.isNewGame)
 		{
-			final Rectangle rectangle = (Rectangle) e.getSource();
-
-			getMyCastles().stream().filter(castle -> castle.getShape() == rectangle).limit(1).forEach(castle ->
-			{
-				UIManager.GetInstance().switchCastle(castle);
-			});
+			castles.forEach(castle -> castle.setColor(color));
 		}
 	}
-
-	EventHandler<MouseEvent> CastleEventHandle = e -> castleHandle(e);
-
-	public void addCastle(final Castle castle)
+	
+	protected void castleHandle(MouseEvent e)
 	{
-		castle.getShape().setFill(this.myColor);
-		castle.getShape().addEventFilter(MouseEvent.MOUSE_PRESSED, this.CastleEventHandle);
-		this.myCastles.add(castle);
+		if(e.getButton() == MouseButton.PRIMARY)
+		{
+			final Rectangle r = (Rectangle) e.getSource();
+			
+			getCastles()
+			.stream()
+			.filter(castle -> castle.getShape() == r)
+			.limit(1)
+			.forEach(castle ->
+			{
+				switchCastle(castle);
+			});
+			
+		}
 	}
-
-	public boolean removeCastle(final Castle castle)
+	
+	public String florinIncome(final Castle castle)
 	{
-		return this.myCastles.remove(castle);
+		return (int)(Settings.FLORIN_PER_SECOND * castle.getLevel()) + " Florin/s";
 	}
-
-	public ArrayList<Castle> getMyCastles()
+	
+	public void addFirstCastle(final Castle castle)
 	{
-		return this.myCastles;
+		this.castles.add(castle);
+		addEvent(castle);
 	}
-
-	public Color getMyColor()
+	
+	private void addEvent(Castle castle)
 	{
-		return this.myColor;
+		castle.getShape().setOnMousePressed(e -> castleHandle(e));
 	}
-
+	
+	public void addEventAllCastles()
+	{
+		castles.forEach(castle -> addEvent(castle));
+	}
+	
+	protected void switchCastle(Castle castle)
+	{
+		UIManager.getInstance().switchCastle(castle, this, false, true);
+	}
+	
+	protected void updateFlorin(Castle castle)
+	{
+		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setColor(Color color)
+	{
+		this.color = color;
+	}
+	
 	public String getName()
 	{
-		return this.name;
+		return name;
+	}
+	
+	public Color getColor()
+	{
+		return color;
+	}
+	
+	public ArrayList<Castle> getCastles()
+	{
+		return castles;
 	}
 
-	public void setColor(final Color color)
+	@Override
+	public void update(long now, boolean pause)
 	{
-		this.myColor = color;
+		castles.forEach(castle ->
+		{
+			updateFlorin(castle);
+			castle.updateProduction();
+			castle.updateUIShape();
+			castle.updateOst(now, pause);
+		});
 	}
 }

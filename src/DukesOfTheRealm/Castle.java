@@ -5,8 +5,6 @@ import java.util.ArrayDeque;
 import java.util.Random;
 import java.util.Stack;
 
-import Duke.Actor;
-import Duke.Baron;
 import Interface.IProductionUnit;
 import Soldiers.Knight;
 import Soldiers.Onager;
@@ -40,7 +38,6 @@ public class Castle extends Sprite implements Serializable
 	private ReserveOfSoldiers reserveOfSoldiers; // La reserve de soldat du chateau. Contient des Piker, des
 													// Onager et
 													// des Knight
-	private Actor actor; // Le proprietaire du chateau
 	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un
 														// soldat en
 														// cours de production
@@ -55,92 +52,57 @@ public class Castle extends Sprite implements Serializable
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
-	Castle(final Pane layer, final Point2D coord, final int level, final Actor actor)
-	{
-		super(layer, coord);
-		this.level = level;
-		this.totalFlorin = 0;
-		this.actor = actor;
-		this.productionUnit = null;
-		this.productionTime = 0;
-		this.reserveOfSoldiers = new ReserveOfSoldiers();
-		this.ost = null;
-		this.productionUnit = new ArrayDeque<>();
-		this.myColor = actor.getMyColor();
-		this.attackLocations = new Stack<>();
-	}
-
-	public Castle(final Pane layer, final double x, final double y)
-	{
-		super(layer, x, y);
-	}
-
 	public Castle(final int level)
 	{
 		super();
 		this.level = level;
+	}
+	
+	public Castle()
+	{
+		super();
 	}
 
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
 
-	@Override
-	public void start()
+	public void start(int level, Pane pane, Point2D coord)
 	{
-		this.actor.addCastle(this);
-
-		if (this.actor.getClass() == Baron.class)
-		{
-			RandomSoldier();
-			RandomFlorin();
-		}
-		else
-		{
-			StartSoldier();
-		}
-
-		SetAttackLocations();
+		this.coordinate = coord;
+		this.level = level;
+		this.totalFlorin = 0;
+		this.productionUnit = null;
+		this.productionTime = 0;
+		this.reserveOfSoldiers = new ReserveOfSoldiers();
+		this.ost = null;
+		this.productionUnit = new ArrayDeque<>();
+		this.attackLocations = new Stack<>();
+		this.orientation = setOrientation();
+		startTransient(pane);
+		setAttackLocations();
+	}
+	
+	public void startTransient(Pane pane)
+	{
+		this.canvas = pane;
+		addRepresentation(pane);
+		//System.out.println("transient:" + this);
 	}
 
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
-	public void update(final long now, final boolean pause)
-	{
-		if (!pause)
-		{
-			UpdateFlorin();
-			UpdateProduction();
-		}
-		if (this.ost != null)
-		{
-			UpdateOst(now, pause);
-		}
-	}
 
-	private void UpdateFlorin()
-	{
-		if (this.actor.getClass() != Baron.class)
-		{
-			AddFlorin(Settings.FLORIN_PER_SECOND * this.level * Time.deltaTime);
-		}
-		else
-		{
-			AddFlorin(Settings.FLORIN_PER_SECOND * this.level * Time.deltaTime * Settings.FLORIN_FACTOR_BARON);
-		}
-	}
-
-	private void UpdateProduction()
+	public void updateProduction()
 	{
 		if (this.productionUnit.size() > 0)
 		{
 			this.productionTime -= (1 * Time.deltaTime);
 
 			final double ratio = 1 - (this.productionTime / this.productionUnit.getFirst().getProductionTime());
-			UIManager.GetProductionUnitPreview().SetFill(ratio);
+			UIManager.getProductionUnitPreview().setFill(ratio);
 
 			if (this.productionTime <= 0)
 			{
@@ -148,7 +110,7 @@ public class Castle extends Sprite implements Serializable
 
 				if (p.getClass() == Castle.class)
 				{
-					LevelUp();
+					levelUp();
 				}
 				else if (p.getClass() == Piker.class)
 				{
@@ -171,16 +133,17 @@ public class Castle extends Sprite implements Serializable
 		}
 	}
 
-	private void UpdateOst(final long now, final boolean pause)
+	public void updateOst(final long now, final boolean pause)
 	{
-		this.ost.update(now, pause);
+		if(this.ost != null)
+			this.ost.update(now, pause);
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	private void RandomSoldier()
+	public void randomSoldier()
 	{
 		final Random rand = new Random();
 		this.reserveOfSoldiers.setNbKnights(rand.nextInt(5) * this.level);
@@ -188,20 +151,15 @@ public class Castle extends Sprite implements Serializable
 		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(5) + this.level);
 	}
 
-	private void StartSoldier()
+	public void startSoldier()
 	{
 		this.reserveOfSoldiers.setNbKnights(Settings.STARTER_KNIGHT);
 		this.reserveOfSoldiers.setNbPikers(Settings.STARTER_PIKER);
 		this.reserveOfSoldiers.setNbOnagers(Settings.STARTER_ONAGER);
 	}
 
-	private void RandomFlorin()
-	{
-		final Random rand = new Random();
-		this.totalFlorin += (rand.nextInt(1000) * this.level);
-	}
 
-	private Orientation SetOrientation()
+	private Orientation setOrientation()
 	{
 		final Random rand = new Random();
 		Orientation orientation;
@@ -228,15 +186,16 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/* Ajoute un rectangle au layer */
-	public void AddRepresentation()
+	public void addRepresentation(Pane pane)
 	{
-		AddCastleRepresentation(Settings.CASTLE_SIZE);
-		AddDoorRepresentation();
+		addCastleRepresentation(pane, Settings.CASTLE_SIZE);
+		addDoorRepresentation(pane);
+		this.shape.setFill(myColor);
 	}
 
-	private void AddDoorRepresentation()
+	private void addDoorRepresentation(Pane pane)
 	{
-		this.orientation = SetOrientation();
+		
 
 		switch (this.orientation)
 		{
@@ -259,22 +218,23 @@ public class Castle extends Sprite implements Serializable
 				break;
 		}
 		this.door.setMouseTransparent(true);
+		pane.getChildren().add(door);
 	}
 
 	/* Augmente le chateau d'un niveau */
-	public void LevelUp()
+	public void levelUp()
 	{
 		this.level++;
 	}
 
-	public void AddFlorin(final double amount)
+	public void addFlorin(final double amount)
 	{
 		this.totalFlorin += amount;
 	}
 
-	public boolean RemoveFlorin(final double amount)
+	public boolean removeFlorin(final double amount)
 	{
-		if (EnoughOfFlorin(amount))
+		if (enoughOfFlorin(amount))
 		{
 			this.totalFlorin -= amount;
 			return true;
@@ -282,14 +242,14 @@ public class Castle extends Sprite implements Serializable
 		return false;
 	}
 
-	public boolean EnoughOfFlorin(final double amount)
+	public boolean enoughOfFlorin(final double amount)
 	{
 		return (amount <= this.totalFlorin);
 	}
 
-	public boolean AddProduction(final IProductionUnit newProduction)
+	public boolean addProduction(final IProductionUnit newProduction)
 	{
-		if (newProduction == null || !RemoveFlorin(newProduction.getProductionCost()))
+		if (newProduction == null || !removeFlorin(newProduction.getProductionCost()))
 		{
 			return false;
 		}
@@ -304,7 +264,7 @@ public class Castle extends Sprite implements Serializable
 		return true;
 	}
 
-	public boolean CreateOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
+	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
 		if (this.ost == null)
 		{
@@ -315,12 +275,12 @@ public class Castle extends Sprite implements Serializable
 		return false;
 	}
 
-	public void RemoveOst()
+	public void removeOst()
 	{
 		this.ost = null;
 	}
 
-	protected void SetAttackLocations()
+	protected void setAttackLocations()
 	{
 		final int x = getX();
 		final int y = getY();
@@ -349,17 +309,17 @@ public class Castle extends Sprite implements Serializable
 		}
 	}
 
-	public boolean IsAvailableAttackLocation()
+	public boolean isAvailableAttackLocation()
 	{
 		return !this.attackLocations.empty();
 	}
 
-	public Point2D GetNextAttackLocation()
+	public Point2D getNextAttackLocation()
 	{
 		return this.attackLocations.pop();
 	}
 
-	public void FreeAttackLocation(final Point2D FreedAttackLocation)
+	public void freeAttackLocation(final Point2D FreedAttackLocation)
 	{
 		this.attackLocations.push(FreedAttackLocation);
 	}
@@ -374,19 +334,9 @@ public class Castle extends Sprite implements Serializable
 		return Settings.LEVEL_UP_COST_FACTOR * this.level;
 	}
 
-	public double GetTotalFlorin()
+	public double getTotalFlorin()
 	{
 		return this.totalFlorin;
-	}
-
-	public Actor GetActor()
-	{
-		return this.actor;
-	}
-
-	public void SetDuke(final Actor actor)
-	{
-		this.actor = actor;
 	}
 
 	@Override
@@ -395,53 +345,63 @@ public class Castle extends Sprite implements Serializable
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * this.level;
 	}
 
-	public int GetLevel()
+	public int getLevel()
 	{
 		return this.level;
 	}
 
-	public ReserveOfSoldiers GetReserveOfSoldiers()
+	public ReserveOfSoldiers getReserveOfSoldiers()
 	{
 		return this.reserveOfSoldiers;
 	}
 
-	public Rectangle GetDoor()
+	public Rectangle getDoor()
 	{
 		return this.door;
 	}
 
-	public Orientation GetOrientation()
+	public Orientation getOrientation()
 	{
 		return this.orientation;
 	}
 
-	public Color GetMyColor()
+	public Color getMyColor()
 	{
 		return this.myColor;
 	}
 
-	public Ost GetOst()
+	public Ost getOst()
 	{
 		return this.ost;
 	}
 
-	public void SetOst(final Ost ost)
+	public void setOst(final Ost ost)
 	{
 		this.ost = ost;
 	}
 
-	public Stack<Point2D> GetAttackLocations()
+	public Stack<Point2D> getAttackLocations()
 	{
 		return this.attackLocations;
 	}
 
-	public ArrayDeque<IProductionUnit> GetProductionUnit()
+	public ArrayDeque<IProductionUnit> getProductionUnit()
 	{
 		return this.productionUnit;
 	}
 
-	public double GetProductionTimeRemaining()
+	public double getProductionTimeRemaining()
 	{
 		return this.productionTime;
+	}
+	
+	public void setLevel(int level)
+	{
+		this.level = level;
+	}
+
+	public void setColor(Color color)
+	{
+		this.myColor = color;
 	}
 }

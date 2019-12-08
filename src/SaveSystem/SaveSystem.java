@@ -11,7 +11,7 @@ import DukesOfTheRealm.Kingdom;
 
 public class SaveSystem
 {
-	public static void Save(final Kingdom kingdom)
+	public static void save(final Kingdom kingdom)
 	{
 		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("save/DukesOfTheRealm.bin")))
 		{
@@ -31,16 +31,12 @@ public class SaveSystem
 		}
 	}
 
-	public static Kingdom Load()
+	public static Kingdom load()
 	{
 		Kingdom kingdom = null;
 		try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save/DukesOfTheRealm.bin")))
 		{
 			kingdom = (Kingdom) stream.readObject();
-			if (kingdom != null)
-			{
-				System.out.println("Load completed !");
-			}
 		}
 		catch (final FileNotFoundException e)
 		{

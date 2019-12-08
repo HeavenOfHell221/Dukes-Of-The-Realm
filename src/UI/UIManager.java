@@ -2,6 +2,7 @@ package UI;
 
 import java.io.Serializable;
 
+import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
 import Interface.IUpdate;
@@ -16,7 +17,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
-public class UIManager extends Parent implements IUpdate, IUI, Serializable
+public class UIManager extends Parent implements IUI, Serializable
 {
 
 	/*************************************************/
@@ -45,21 +46,21 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	/********************* START *********************/
 	/*************************************************/
 
-	@Override
 	public void start()
 	{
 
 		addAllNodes();
 		relocateAllNodes();
-		SetBackground();
+		setBackground();
 
-		GetAttackPreview().start();
-		GetCastlePreview().start();
-		GetProductionUnitPreview().start();
+		getAttackPreview().start();
+		getCastlePreview().start();
+		getProductionUnitPreview().start();
 	}
 
-	public void Awake()
+	public void awake(Pane pane)
 	{
+		this.playfieldLayer = pane;
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT * 2);
 		this.attackPreview = new UIAttackPreview();
 		this.castlePreview = new UICastlePreview();
@@ -71,7 +72,6 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
 	public void update(final long now, final boolean pause)
 	{
 		this.castlePreview.update(now, pause);
@@ -96,7 +96,7 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 		this.background.toBack();
 	}
 
-	private void SetBackground()
+	private void setBackground()
 	{
 		final Stop[] stops = new Stop[]
 		{
@@ -130,14 +130,14 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	}
 
 	@Override
-	public void switchCastle(final Castle castle)
+	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
 	{
-		this.attackPreview.switchCastle(castle);
-		this.productionUnitPreview.switchCastle(castle);
-		this.castlePreview.switchCastle(castle);
+		this.attackPreview.switchCastle(castle, actor, productionVisible, attackVisible);
+		this.productionUnitPreview.switchCastle(castle, actor, productionVisible, attackVisible);
+		this.castlePreview.switchCastle(castle, actor, productionVisible, attackVisible);
 	}
 
-	public void SetPlayfieldLayer(final Pane playfieldLayer)
+	public void setPlayfieldLayer(final Pane playfieldLayer)
 	{
 		instance.playfieldLayer = playfieldLayer;
 	}
@@ -149,7 +149,7 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	/**
 	 * @return the instance
 	 */
-	public static final UIManager GetInstance()
+	public static final UIManager getInstance()
 	{
 		return instance;
 	}
@@ -157,7 +157,7 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	/**
 	 * @return the attackPreview
 	 */
-	public static final UIAttackPreview GetAttackPreview()
+	public static final UIAttackPreview getAttackPreview()
 	{
 		return instance.attackPreview;
 	}
@@ -165,7 +165,7 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	/**
 	 * @return the productionUnitPreview
 	 */
-	public static final UIProductionUnitPreview GetProductionUnitPreview()
+	public static final UIProductionUnitPreview getProductionUnitPreview()
 	{
 		return instance.productionUnitPreview;
 	}
@@ -173,8 +173,20 @@ public class UIManager extends Parent implements IUpdate, IUI, Serializable
 	/**
 	 * @return the castlePreview
 	 */
-	public static final UICastlePreview GetCastlePreview()
+	public static final UICastlePreview getCastlePreview()
 	{
 		return instance.castlePreview;
+	}
+
+	@Override
+	public void setAllVisible(boolean visible)
+	{
+		
+	}
+
+	@Override
+	public void setVisible(Node node, boolean visible)
+	{
+		node.setVisible(visible);
 	}
 }

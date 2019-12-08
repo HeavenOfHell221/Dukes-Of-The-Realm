@@ -93,7 +93,7 @@ public class Ost implements IUpdate, Serializable
 					if (s.isDead)
 					{
 						s.RemoveShapeToLayer();
-						this.destination.FreeAttackLocation(s.GetAttackLocation());
+						this.destination.freeAttackLocation(s.GetAttackLocation());
 						it.remove();
 					}
 					else
@@ -104,7 +104,7 @@ public class Ost implements IUpdate, Serializable
 			}
 			else
 			{
-				this.origin.RemoveOst();
+				this.origin.removeOst();
 			}
 		}
 	}
@@ -180,7 +180,7 @@ public class Ost implements IUpdate, Serializable
 		final int nbSpawn = (this.soldiers.size() <= (this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS
 				: (this.nbSoldiers - this.soldiers.size());
 
-		switch (this.origin.GetOrientation())
+		switch (this.origin.getOrientation())
 		{
 			case North:
 			case South:
@@ -211,7 +211,7 @@ public class Ost implements IUpdate, Serializable
 		final AtomicReference<SoldierEnum> soldierType = GetNextAvailableSoldier();
 		final Pane layer = this.origin.getLayer();
 
-		switch (this.origin.GetOrientation())
+		switch (this.origin.getOrientation())
 		{
 			case North:
 				switch (soldierType.get())
@@ -400,4 +400,14 @@ public class Ost implements IUpdate, Serializable
 	{
 		return this.soldiers;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Ost [origin=" + origin + ", destination=" + destination + ", nbPikers=" + nbPikers + ", nbKnights=" + nbKnights
+				+ ", nbOnagers=" + nbOnagers + ", nbSoldiers=" + nbSoldiers + ", speed=" + speed + ", soldiers=" + soldiers
+				+ ", nbSoldiersSpawned=" + nbSoldiersSpawned + ", fullyDeployed=" + fullyDeployed + ", color=" + color + "]";
+	}
+	
+	
 }

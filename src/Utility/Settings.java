@@ -33,9 +33,9 @@ public class Settings
 	public static final float FLORIN_FACTOR_BARON = 0.1f;
 
 	/* Levels */ /* Can be balanced */
-	public static final int LEVEL_UP_COST_FACTOR = 100;
-	public static final int LEVEL_UP_DURATION_OFFSET = 10; // en sec
-	public static final int LEVEL_UP_DURATION_FACTOR = 50; // en sec
+	public static final int LEVEL_UP_COST_FACTOR = 10;
+	public static final int LEVEL_UP_DURATION_OFFSET = 1; // en sec
+	public static final int LEVEL_UP_DURATION_FACTOR = 5; // en sec
 
 	/* Graphics */
 	public static final int CASTLE_SIZE = 60;
@@ -82,9 +82,9 @@ public class Settings
 	public static final int ONAGER_SPEED = 20;
 
 	/* Production time in frame */ /* Can be balanced */
-	public static final int PIKER_TIME_PRODUCTION = 15;
-	public static final int KNIGHT_TIME_PRODUCTION = 30;
-	public static final int ONAGER_TIME_PRODUCTION = 60;
+	public static final int PIKER_TIME_PRODUCTION = 1;
+	public static final int KNIGHT_TIME_PRODUCTION = 3;
+	public static final int ONAGER_TIME_PRODUCTION = 6;
 
 	/* Graphics */
 	public static final int SOLDIER_SIZE = 16;

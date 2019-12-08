@@ -2,10 +2,9 @@ package UI;
 
 import java.io.Serializable;
 
-import Duke.Baron;
+import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
-import Interface.IUpdate;
 import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,14 +16,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public final class UICastlePreview extends Parent implements IUpdate, IUI, Serializable
+public final class UICastlePreview extends Parent implements Serializable, IUI
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
-	private Castle currentCastle;
 
 	private transient ImageView imageKnight;
 	private transient ImageView imagePiker;
@@ -41,7 +38,10 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 	private transient Text nbFlorin;
 
 	private transient Rectangle background;
-
+	
+	private Castle currentCastle;
+	private Actor currentActor;
+	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -55,47 +55,39 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 	/********************* START *********************/
 	/*************************************************/
 
-	@Override
 	public void start()
 	{
 		awake();
 		addAllNodes();
 		relocateAllNodes();
-		SetAllTexts();
-		SetBackground();
+		setAllTexts();
+		setBackground();
 	}
 
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
-	public void update(final long now, final boolean pause)
-	{
-		if (this.currentCastle != null)
+	
+	public void update(final long now, final boolean pause) 
+	{ 
+		if (this.currentCastle != null && this.currentActor != null) 
 		{
-			UpdateTexts();
-		}
+			updateTexts(); 
+		} 
 	}
-
-	private void UpdateTexts()
-	{
-		if (this.currentCastle.GetActor().getClass() != Baron.class)
-		{
-			this.florinIncome.setText(Settings.FLORIN_PER_SECOND * this.currentCastle.GetLevel() + " Florin/s");
-		}
-		else
-		{
-			this.florinIncome.setText(
-					(int) (Settings.FLORIN_PER_SECOND * this.currentCastle.GetLevel() * Settings.FLORIN_FACTOR_BARON) + " Florin/s");
-		}
-		this.owner.setText(this.currentCastle.GetActor().getName());
-		this.level.setText("Level: " + this.currentCastle.GetLevel());
-		this.nbFlorin.setText((int) this.currentCastle.GetTotalFlorin() + "");
-		this.nbPiker.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbPikers());
-		this.nbKnight.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbKnights());
-		this.nbOnager.setText("" + this.currentCastle.GetReserveOfSoldiers().getNbOnagers());
-	}
+	
+	private void updateTexts() 
+	{ 
+		this.florinIncome.setText(this.currentActor.florinIncome(this.currentCastle));
+		this.owner.setText(this.currentActor.getName());
+		this.level.setText("Level: " + this.currentCastle.getLevel()); 
+		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
+		this.nbPiker.setText("" + this.currentCastle.getReserveOfSoldiers().getNbPikers());
+		this.nbKnight.setText("" + this.currentCastle.getReserveOfSoldiers().getNbKnights());
+		this.nbOnager.setText("" + this.currentCastle.getReserveOfSoldiers().getNbOnagers()); 
+	 }
+	 
 
 	/*************************************************/
 	/******************* METHODES ********************/
@@ -103,10 +95,10 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 
 	public void awake()
 	{
-		this.imageKnight = NewImageView("/images/mounted-knight-white.png");
-		this.imagePiker = NewImageView("/images/spartan-white.png");
-		this.imageOnager = NewImageView("/images/catapult-white.png");
-		this.imageFlorin = NewImageView("/images/coins.png");
+		this.imageKnight = newImageView("/images/mounted-knight-white.png");
+		this.imagePiker = newImageView("/images/spartan-white.png");
+		this.imageOnager = newImageView("/images/catapult-white.png");
+		this.imageFlorin = newImageView("/images/coins.png");
 		this.level = new Text();
 		this.owner = new Text();
 		this.nbFlorin = new Text();
@@ -117,18 +109,24 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 		this.background = new Rectangle(240, 440);
 	}
 
-	private void SetAllTexts()
+	private void setAllTexts()
 	{
-		SetText(this.level, 24);
-		SetText(this.owner, 24);
-		SetText(this.florinIncome, 24);
-		SetText(this.nbKnight, 30);
-		SetText(this.nbOnager, 30);
-		SetText(this.nbPiker, 30);
-		SetText(this.nbFlorin, 30);
+		setText(this.level, 24);
+		setText(this.owner, 24);
+		setText(this.florinIncome, 24);
+		setText(this.nbKnight, 30);
+		setText(this.nbOnager, 30);
+		setText(this.nbPiker, 30);
+		setText(this.nbFlorin, 30);
+	}
+	
+	@Override
+	public void addNode(final Node node)
+	{
+		getChildren().add(node);
 	}
 
-	private void SetBackground()
+	private void setBackground()
 	{
 		/*
 		 * final Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.BLACK)}; final
@@ -141,7 +139,7 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 		this.background.setArcWidth(60);
 	}
 
-	private ImageView NewImageView(final String path)
+	private ImageView newImageView(final String path)
 	{
 		return new ImageView(new Image(getClass().getResource(path).toExternalForm(), 64, 64, false, true));
 	}
@@ -187,20 +185,7 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 		addNode(this.nbPiker);
 	}
 
-	@Override
-	public void relocate(final Node node, final double x, final double y)
-	{
-		node.relocate(x, y);
-		node.toBack();
-	}
-
-	@Override
-	public void addNode(final Node node)
-	{
-		getChildren().add(node);
-	}
-
-	private void SetText(final Text text, final int font)
+	private void setText(final Text text, final int font)
 	{
 		text.setFont(new Font(font));
 		text.setWrappingWidth(155);
@@ -209,30 +194,27 @@ public final class UICastlePreview extends Parent implements IUpdate, IUI, Seria
 	}
 
 	@Override
-	public void switchCastle(final Castle castle)
+	public void setAllVisible(final boolean visible)
+	{
+		setVisible(this.background, visible);
+		setVisible(this.imageKnight, visible);
+		setVisible(this.level, visible);
+		setVisible(this.imageFlorin, visible);
+		setVisible(this.imageOnager, visible);
+		setVisible(this.imagePiker, visible);
+		setVisible(this.owner, visible);
+		setVisible(this.florinIncome, visible);
+		setVisible(this.nbFlorin, visible);
+		setVisible(this.nbKnight, visible);
+		setVisible(this.nbOnager, visible);
+		setVisible(this.nbPiker, visible);
+	}
+
+	@Override
+	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
 	{
 		this.currentCastle = castle;
-	}
-
-	public void SetVisible(final Node node, final boolean visible)
-	{
-		node.setVisible(visible);
-	}
-
-	public void SetAllVisible(final boolean visible)
-	{
-		SetVisible(this.background, visible);
-		SetVisible(this.imageKnight, visible);
-		SetVisible(this.level, visible);
-		SetVisible(this.imageFlorin, visible);
-		SetVisible(this.imageOnager, visible);
-		SetVisible(this.imagePiker, visible);
-		SetVisible(this.owner, visible);
-		SetVisible(this.florinIncome, visible);
-		SetVisible(this.nbFlorin, visible);
-		SetVisible(this.nbKnight, visible);
-		SetVisible(this.nbOnager, visible);
-		SetVisible(this.nbPiker, visible);
+		this.currentActor = actor;
 	}
 
 	/*************************************************/

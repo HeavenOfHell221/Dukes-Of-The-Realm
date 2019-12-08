@@ -14,34 +14,27 @@ import UI.UIManager;
 import Utility.Collisions;
 import Utility.Point2D;
 import Utility.Settings;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Classe reprï¿½sentant le royaume. C'est la classe centrale du projet.
+ * Classe representant le royaume. C'est la classe centrale du projet.
  */
-public class Kingdom extends Parent implements IUpdate, Serializable
+public class Kingdom extends Parent implements Serializable
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
-	/**
-	 * Liste des chï¿½teaux du royaume.
-	 *
-	 * @see Kingdom#CreateCastle(Pane layer, Point2D coordinate, int level, Actor actor)
-	 * @see Kingdom#update(long now, boolean pause)
-	 */
-	private final ArrayList<Castle> castles;
-
+	
 	/**
 	 * Liste des acteurs (joueur et IA) du royaume.
 	 *
 	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
-	private final ArrayList<Actor> actors;
+	private ArrayList<Actor> actors;
 
 	/**
 	 * Liste des couleurs atribuable ï¿½ chaque acteur.
@@ -49,25 +42,17 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 	 * @see Kingdom#Kingdom(Pane)
 	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
-	private final transient ArrayList<Color> colors;
+	private transient ArrayList<Color> colors;
 
 	/**
-	 * Rï¿½fï¿½rence ï¿½ l'acteur "player" qui est l'utilisateur.
+	 * Reference à l'acteur "player" qui est l'utilisateur.
 	 */
-	private static Player player;
+	private Player player;
 
 	/**
-	 * Canvas utilisï¿½ pour afficher les images du jeu.
+	 * Canvas utilise pour afficher les images du jeu.
 	 */
 	private transient Pane playfieldLayer;
-
-	/**
-	 * Rï¿½fï¿½rence sur l'instance UIManager.
-	 *
-	 * @see UIManager
-	 * @see UpdateUI(long now, boolean pause)
-	 */
-	public final transient UIManager castleUIInstance;
 
 	/**
 	 * Condition pour que le royaume utilise Update.
@@ -75,9 +60,9 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 	 * @see Kingdom#update(long, boolean)
 	 * @see Main#update(long, boolean)
 	 */
-	private boolean canUpdate = false;
+	private transient boolean canUpdate = false;
 	
-	public static Collisions collisionsManagement;
+	//public static Collisions collisionsManagement;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -87,12 +72,30 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 	 * Constructeur Kingdom.
 	 *
 	 * @param playfieldLayer
-	 * @see                  Kingdom#playfieldLayer
+	 * @see Kingdom#playfieldLayer
 	 */
 	public Kingdom()
 	{
-		this.castles = new ArrayList<>();
+		
+	}
+
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+
+	public void start(Pane pane)
+	{	
 		this.actors = new ArrayList<>();
+		startTransient(pane);
+		createActors();
+		player.getCastles().get(0).createOst(actors.get(1).getCastles().get(0), 10, 10, 0);
+		canUpdate = true;
+	}
+	
+	public void startTransient(Pane pane)
+	{
+		this.playfieldLayer = pane;
+		UIManager.getInstance().awake(this.playfieldLayer);
 		this.colors = new ArrayList<>();
 		this.colors.add(Color.DIMGRAY);
 		this.colors.add(Color.DARKORANGE);
@@ -100,141 +103,112 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 		this.colors.add(Color.AQUA);
 		this.colors.add(Color.MEDIUMORCHID);
 		this.colors.add(Color.GOLDENROD);
-		player = new Player("Player");
-		player.setColor(Color.LIMEGREEN);
-		this.castleUIInstance = UIManager.GetInstance();
-	}
 
-	/*************************************************/
-	/********************* START *********************/
-	/*************************************************/
-
-	@Override
-	public void start()
-	{
-		CreateWorld(Settings.AI_NUMBER, Settings.BARON_NUMBER);
-		setCollisionsManagement();
-		
-		castles.forEach(castle -> castle.start());
-//		castles.forEach(castle ->
-//		{
-//			if (castle != castles.get(0))
-//			{
-//				castle.CreateOst(actors.get(0).GetMyCastles().get(0), 5, 5, 0);
-//			}
-//		});
-		Kingdom.player.getMyCastles().get(0).CreateOst(actors.get(1).getMyCastles().get(0), 9, 9, 0);
-		canUpdate = true;
+		if(Main.isNewGame)
+		{
+			player = new Player();
+			player.start();
+			player.setName("Player");
+			actors.add(player);
+			player.setColor(Color.LIMEGREEN);
+		}
+		else
+		{
+			Random rand = new Random();
+			actors.stream().filter(actor -> actor.getClass() != Baron.class).forEach(actor -> actor.startTransient(randomColor(rand), pane));
+			Color c = randomColor(rand);
+			actors.stream().filter(actor -> actor.getClass() == Baron.class).forEach(actor -> actor.startTransient(c, pane));
+			
+			actors.forEach(actor -> 
+			{
+				actor.getCastles().forEach(castle -> 
+				{	
+					castle.startTransient(pane);
+					System.out.println(castle.getOst());
+				});
+				actor.addEventAllCastles();
+			});
+			
+			UIManager.getInstance().switchCastle(player.getCastles().get(0), player, true, false);
+			
+			canUpdate = true;
+		}
 	}
 
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
 	public void update(final long now, final boolean pause)
 	{
-		if (this.canUpdate)
-		{
-			this.castles.forEach(castle -> castle.update(now, pause));
-			UpdateUI(now, pause);
-		}
-	}
-
-	private void UpdateUI(final long now, final boolean pause)
-	{
-		if (this.castleUIInstance != null)
-		{
-			this.castleUIInstance.update(now, pause);
-		}
+		if(canUpdate && !pause)
+			actors.forEach(actor -> actor.update(now, pause));
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	public boolean CreateCastle(final Pane layer, final Point2D coordinate, final int level, final Actor actor)
+	public void createActors()
 	{
-		if (!IsCastleToClose(coordinate))
+		Random rand = new Random();
+		
+		for(int i = 0; i < Settings.AI_NUMBER; i++)
 		{
-			final Castle newCastle = new Castle(layer, coordinate, level, actor);
-			newCastle.AddRepresentation();
-			getChildren().add(newCastle.getShape());
-			getChildren().add(newCastle.GetDoor());
-			return AddCastle(newCastle);
+			Actor a = new DukeAI();
+			a.start();
+			a.setName("Duke " + (i + 1));
+			actors.add(a);
+			a.setColor(randomColor(rand));
 		}
-		return false;
-	}
-
-	public void CreateWorld(final int AINumber, final int baronNumber)
-	{
-		final Random rand = new Random();
-
-		Color c = this.colors.get(rand.nextInt(this.colors.size() - 1));
-		this.actors.add(Kingdom.player);
-		this.colors.remove(c);
-
-		int numberTest = 0;
-
-		while (numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
+		
+		Color colorBaron = randomColor(rand);
+		
+		for(int i = 0; i < Settings.BARON_NUMBER; i++)
 		{
-			if (CreateCastle(this.playfieldLayer, GetRandomCoordinates(rand), 1, player))
-			{
-				break;
-			}
-			numberTest++;
+			Actor a = new Baron();
+			a.start();
+			a.setName("Baron " + (i + 1));
+			actors.add(a);
+			a.setColor(colorBaron);
 		}
-
-		for (int i = 0; i < AINumber; i++)
+		
+		ArrayList<Castle> list = new ArrayList<>();
+		
+		for(int i = 0; i < (Settings.AI_NUMBER + Settings.BARON_NUMBER + 1); i++)
 		{
-			c = this.colors.get(rand.nextInt(this.colors.size() - 1));
-			final Actor a = new DukeAI("Duke " + (i + 1));
-			a.setColor(c);
-			this.actors.add(a);
-			this.colors.remove(c);
-
-			numberTest = 0;
-
-			while (numberTest < Settings.NB_TOTAL_TEST_CREATE_CASTLE)
+			
+			Point2D p = getRandomCoordinates(rand);
+			
+			while(isCastleToClose(list, p) == true)
 			{
-				if (CreateCastle(this.playfieldLayer, GetRandomCoordinates(rand), 1, a))
-				{
-					break;
-				}
-				numberTest++;
+				p =  getRandomCoordinates(rand);
 			}
-		}
 
-		for (int i = 0; i < baronNumber; i++)
-		{
-			final Actor a = new Baron("Baron " + (i + 1));
-			a.setColor(Color.WHEAT);
-			this.actors.add(a);
-
-			numberTest = 0;
-
-			while (numberTest < 1000)
-			{
-				if (CreateCastle(this.playfieldLayer, GetRandomCoordinates(rand), rand.nextInt(6) + 1, a))
-				{
-					break;
-				}
-				numberTest++;
-			}
+			Castle c = new Castle();
+			list.add(c);
+			c.setColor(actors.get(i).getColor());
+			c.start(1, this.playfieldLayer, p);
+			actors.get(i).addFirstCastle(c);
 		}
 	}
-	private boolean AddCastle(final Castle castle)
+	
+	
+	private Color randomColor(Random rand)
 	{
-		return this.castles.add(castle);
+		int size = this.colors.size();
+		Color color = colors.get((rand.nextInt(20) + 1) % size);
+		colors.remove(color);
+		return color;
 	}
 
-	private boolean IsCastleToClose(final Point2D coordinate)
+	private boolean isCastleToClose(final ArrayList<Castle> castles, final Point2D coordinate)
 	{
-		final Iterator<Castle> it = this.castles.iterator();
+		final Iterator<Castle> it = castles.iterator();
 		while (it.hasNext())
 		{
 			final Castle currentCastle = it.next();
-			final double d = DistanceBetween(currentCastle, coordinate);
+			final double d = distanceBetween(currentCastle, coordinate);
 			if (d < Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE)
 			{
 				return true;
@@ -243,13 +217,13 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 		return false;
 	}
 
-	private double DistanceBetween(final Castle castle, final Point2D coord)
+	private double distanceBetween(final Castle castle, final Point2D coord)
 	{
 		return Math.sqrt((coord.getY() - castle.getY()) * (coord.getY() - castle.getY())
 				+ (coord.getX() - castle.getX()) * (coord.getX() - castle.getX()));
 	}
 
-	public Point2D GetRandomCoordinates(final Random rand)
+	public Point2D getRandomCoordinates(final Random rand)
 	{
 		return new Point2D(
 				rand.nextInt((int) (Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE,
@@ -258,26 +232,16 @@ public class Kingdom extends Parent implements IUpdate, Serializable
 	
 	protected void setCollisionsManagement()
 	{
-		Kingdom.collisionsManagement = new Collisions();
-		this.castles.forEach(castle ->
+		//Kingdom.collisionsManagement = new Collisions();
+		/*this.castles.forEach(castle ->
 			{
 				collisionsManagement.addPoint(castle.getCoordinate());
-			});
+			});*/
 	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
-
-	public static Player GetPlayer()
-	{
-		return player;
-	}
-
-	public ArrayList<Castle> GetCastles()
-	{
-		return this.castles;
-	}
 
 	public void setPlayfieldLayer(final Pane playfieldLayer)
 	{

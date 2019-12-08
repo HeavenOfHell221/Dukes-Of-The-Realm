@@ -2,18 +2,22 @@ package UI;
 
 import java.io.Serializable;
 
+import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
 import Interface.IUpdate;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
-public final class UIAttackPreview extends Parent implements IUpdate, IUI, Serializable
+public final class UIAttackPreview extends Parent implements IUpdate, Serializable, IUI
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
+	
+	private Castle currentCastle;
+	private Actor currentActor;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -49,11 +53,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI, Seria
 	/*************************************************/
 
 	@Override
-	public void addNode(final Node node)
+	public void addNode(Node node)
 	{
 		getChildren().add(node);
 	}
-
+	
 	@Override
 	public void addAllNodes()
 	{
@@ -67,15 +71,17 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI, Seria
 	}
 
 	@Override
-	public void relocate(final Node node, final double x, final double y)
+	public void setAllVisible(final boolean visible)
 	{
-		node.relocate(x, y);
+
 	}
 
 	@Override
-	public void switchCastle(final Castle castle)
+	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
 	{
-
+		this.currentCastle = castle;
+		this.currentActor = actor;
+		setAllVisible(attackVisible);
 	}
 
 	/*************************************************/

@@ -2,8 +2,8 @@ package UI;
 
 import java.io.Serializable;
 
+import Duke.Actor;
 import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.Kingdom;
 import Interface.IProductionUnit;
 import Interface.IUI;
 import Interface.IUpdate;
@@ -27,7 +27,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
-public final class UIProductionUnitPreview extends Parent implements IUI, IUpdate, Serializable
+public final class UIProductionUnitPreview extends Parent implements IUpdate, Serializable, IUI
 {
 
 	/*************************************************/
@@ -43,9 +43,10 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 
 	private transient Rectangle backgroundTime;
 	private transient Rectangle fillTime;
-
+	
 	private Castle currentCastle;
-
+	private Actor currentActor;
+	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -65,9 +66,9 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		awake();
 		addAllNodes();
 		relocateAllNodes();
-		SetAllButtons();
-		SetBackground();
-		SetBar();
+		setAllButtons();
+		setBackground();
+		setBar();
 	}
 
 	/*************************************************/
@@ -77,14 +78,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		if (this.currentCastle.GetActor() == Kingdom.GetPlayer())
-		{
-			SetAllVisible(true);
-		}
-		else
-		{
-			SetAllVisible(false);
-		}
+
 	}
 
 	/*************************************************/
@@ -103,31 +97,26 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		this.backgroundTime = new Rectangle(240, 40);
 		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
 	}
+	
+	@Override
+	public void addNode(final Node node)
+	{
+		getChildren().add(node);
+	}
 
 	@Override
-	public void relocate(final Node node, final double x, final double y)
+	public void setAllVisible(final boolean visible)
 	{
-		node.relocate(x, y);
-		node.toBack();
+		setVisible(this.backgroundTime, visible);
+		setVisible(this.background, visible);
+		setVisible(this.fillTime, visible);
+		setVisible(this.buttonCreateKnight, visible);
+		setVisible(this.buttonCreateOnager, visible);
+		setVisible(this.buttonCreatePiker, visible);
+		setVisible(this.buttonUpgradeCastle, visible);
 	}
-
-	public void SetAllVisible(final boolean visible)
-	{
-		SetVisible(this.backgroundTime, visible);
-		SetVisible(this.background, visible);
-		SetVisible(this.fillTime, visible);
-		SetVisible(this.buttonCreateKnight, visible);
-		SetVisible(this.buttonCreateOnager, visible);
-		SetVisible(this.buttonCreatePiker, visible);
-		SetVisible(this.buttonUpgradeCastle, visible);
-	}
-
-	public void SetVisible(final Node node, final boolean visible)
-	{
-		node.setVisible(visible);
-	}
-
-	public void SetFill(final double fractionFill)
+	
+	public void setFill(final double fractionFill)
 	{
 		if (fractionFill >= 1)
 		{
@@ -137,7 +126,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		this.fillTime.setWidth(5 + fractionFill * 235);
 	}
 
-	private void SetBar()
+	private void setBar()
 	{
 		this.backgroundTime.setFill(Color.TAN);
 		this.backgroundTime.setStrokeWidth(5);
@@ -157,7 +146,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		this.fillTime.setEffect(i);
 	}
 
-	private void SetAllButtons()
+	private void setAllButtons()
 	{
 		this.buttonCreateKnight
 				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/mounted-knight2.png'); "
@@ -173,21 +162,21 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/egyptian-temple.png'); "
 						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
-		this.buttonCreateOnager.setOnMousePressed(event -> AddProduction(this.buttonCreateOnager, new Onager()));
-		this.buttonCreatePiker.setOnMousePressed(event -> AddProduction(this.buttonCreatePiker, new Piker()));
-		this.buttonCreateKnight.setOnMousePressed(event -> AddProduction(this.buttonCreateKnight, new Knight()));
+		this.buttonCreateOnager.setOnMousePressed(event -> addProduction(this.buttonCreateOnager, new Onager()));
+		this.buttonCreatePiker.setOnMousePressed(event -> addProduction(this.buttonCreatePiker, new Piker()));
+		this.buttonCreateKnight.setOnMousePressed(event -> addProduction(this.buttonCreateKnight, new Knight()));
 		this.buttonUpgradeCastle
-				.setOnMousePressed(event -> AddProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.GetLevel())));
+				.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
 
-		AddEventMouse(this.buttonCreateKnight);
-		AddEventMouse(this.buttonCreateOnager);
-		AddEventMouse(this.buttonCreatePiker);
-		AddEventMouse(this.buttonUpgradeCastle);
+		addEventMouse(this.buttonCreateKnight);
+		addEventMouse(this.buttonCreateOnager);
+		addEventMouse(this.buttonCreatePiker);
+		addEventMouse(this.buttonUpgradeCastle);
 	}
 
-	private void AddProduction(final Button b, final IProductionUnit p)
+	private void addProduction(final Button b, final IProductionUnit p)
 	{
-		if (this.currentCastle.AddProduction(p))
+		if (this.currentCastle.addProduction(p))
 		{
 			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0));
 		}
@@ -197,7 +186,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		}
 	}
 
-	private void SetBackground()
+	private void setBackground()
 	{
 		final Stop[] stops = new Stop[]
 		{
@@ -211,7 +200,7 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 		this.background.setArcWidth(60);
 	}
 
-	private void AddEventMouse(final Button b)
+	private void addEventMouse(final Button b)
 	{
 		b.setMinSize(64, 64);
 		b.setMaxSize(64, 64);
@@ -270,18 +259,15 @@ public final class UIProductionUnitPreview extends Parent implements IUI, IUpdat
 
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
 	}
-
+	
 	@Override
-	public void addNode(final Node node)
-	{
-		getChildren().add(node);
-	}
-
-	@Override
-	public void switchCastle(final Castle castle)
+	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
 	{
 		this.currentCastle = castle;
+		this.currentActor = actor;
+		setAllVisible(productionVisible);
 	}
+
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/

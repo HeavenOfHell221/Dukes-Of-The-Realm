@@ -1,5 +1,7 @@
 package DukesOfTheRealm;
 
+import java.io.Serializable;
+
 import Interface.IProductionUnit;
 import Interface.IUpdate;
 import Utility.Point2D;
@@ -14,15 +16,15 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
-public abstract class Sprite extends Parent implements IUpdate, IProductionUnit
+public abstract class Sprite extends Parent implements IProductionUnit, Serializable
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
-	private transient Pane canvas;
-	private transient Shape shape;
+	protected transient Pane canvas;
+	protected transient Shape shape;
 
 	protected Point2D coordinate;
 	protected double width;
@@ -59,17 +61,19 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit
 
 	public void updateUIShape()
 	{
-		this.shape.relocate(getX(), getY());
+		if(this.shape != null)
+			this.shape.relocate(getX(), getY());
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	protected void AddCastleRepresentation(final double size)
+	protected void addCastleRepresentation(Pane pane, final double size)
 	{
 		final Rectangle r = new Rectangle(getX(), getY(), size, size);
 		this.shape = r;
+		pane.getChildren().add(this.shape);
 		r.setCursor(Cursor.HAND);
 
 		final DropShadow e = new DropShadow();
@@ -131,7 +135,8 @@ public abstract class Sprite extends Parent implements IUpdate, IProductionUnit
 
 	public void RemoveShapeToLayer()
 	{
-		this.canvas.getChildren().remove(this.shape);
+		if(this.shape != null)
+			this.canvas.getChildren().remove(this.shape);
 	}
 
 	/*************************************************/
