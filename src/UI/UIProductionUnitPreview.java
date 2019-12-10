@@ -43,17 +43,24 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 	private transient Rectangle backgroundTime;
 	private transient Rectangle fillTime;
-	
+
 	private Castle currentCastle;
-	private Actor currentActor;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
 	public UIProductionUnitPreview()
 	{
-		super();
+		this.buttonCreatePiker = new Button();
+		this.buttonCreateKnight = new Button();
+		this.buttonCreateOnager = new Button();
+		this.buttonUpgradeCastle = new Button();
+
+		this.background = new Rectangle(280, 300);
+
+		this.backgroundTime = new Rectangle(240, 40);
+		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
 	}
 
 	/*************************************************/
@@ -63,7 +70,6 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	@Override
 	public void start()
 	{
-		awake();
 		addAllNodes();
 		relocateAllNodes();
 		setAllButtons();
@@ -85,19 +91,6 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	public void awake()
-	{
-		this.buttonCreatePiker = new Button();
-		this.buttonCreateKnight = new Button();
-		this.buttonCreateOnager = new Button();
-		this.buttonUpgradeCastle = new Button();
-
-		this.background = new Rectangle(280, 300);
-
-		this.backgroundTime = new Rectangle(240, 40);
-		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
-	}
-	
 	@Override
 	public void addNode(final Node node)
 	{
@@ -115,7 +108,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		setVisible(this.buttonCreatePiker, visible);
 		setVisible(this.buttonUpgradeCastle, visible);
 	}
-	
+
 	public void setFill(final double fractionFill)
 	{
 		if (fractionFill >= 1)
@@ -259,15 +252,13 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
 	}
-	
+
 	@Override
-	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
+	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
 	{
 		this.currentCastle = castle;
-		this.currentActor = actor;
 		setAllVisible(productionVisible);
 	}
-
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/

@@ -9,12 +9,9 @@ import Duke.Actor;
 import Duke.Baron;
 import Duke.DukeAI;
 import Duke.Player;
-import Interface.IUpdate;
 import UI.UIManager;
-import Utility.Collisions;
 import Utility.Point2D;
 import Utility.Settings;
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -28,19 +25,16 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	/**
 	 * Liste des acteurs (joueur et IA) du royaume.
 	 *
-	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
 	private ArrayList<Actor> actors;
 
 	/**
 	 * Liste des couleurs atribuable � chaque acteur.
 	 *
-	 * @see Kingdom#Kingdom(Pane)
-	 * @see Kingdom#CreateWorld(int AINumber, int baronNumber)
 	 */
 	private transient ArrayList<Color> colors;
 
@@ -57,12 +51,10 @@ public class Kingdom extends Parent implements Serializable
 	/**
 	 * Condition pour que le royaume utilise Update.
 	 *
-	 * @see Kingdom#update(long, boolean)
-	 * @see Main#update(long, boolean)
 	 */
 	private transient boolean canUpdate = false;
-	
-	//public static Collisions collisionsManagement;
+
+	// public static Collisions collisionsManagement;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -71,28 +63,33 @@ public class Kingdom extends Parent implements Serializable
 	/**
 	 * Constructeur Kingdom.
 	 *
-	 * @param playfieldLayer
-	 * @see Kingdom#playfieldLayer
 	 */
 	public Kingdom()
 	{
-		
+
 	}
 
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-
-	public void start(Pane pane)
-	{	
+	/**
+	 *
+	 * @param pane
+	 */
+	public void start(final Pane pane)
+	{
 		this.actors = new ArrayList<>();
 		startTransient(pane);
 		createActors();
-		player.getCastles().get(0).createOst(actors.get(1).getCastles().get(0), 10, 10, 0);
-		canUpdate = true;
+		this.player.getCastles().get(0).createOst(this.actors.get(1).getCastles().get(0), 20, 10, 0);
+		this.canUpdate = true;
 	}
-	
-	public void startTransient(Pane pane)
+
+	/**
+	 *
+	 * @param pane
+	 */
+	public void startTransient(final Pane pane)
 	{
 		this.playfieldLayer = pane;
 		UIManager.getInstance().awake(this.playfieldLayer);
@@ -104,34 +101,35 @@ public class Kingdom extends Parent implements Serializable
 		this.colors.add(Color.MEDIUMORCHID);
 		this.colors.add(Color.GOLDENROD);
 
-		if(Main.isNewGame)
+		if (Main.isNewGame)
 		{
-			player = new Player();
-			player.start();
-			player.setName("Player");
-			actors.add(player);
-			player.setColor(Color.LIMEGREEN);
+			this.player = new Player();
+			this.player.start();
+			this.player.setName("Player");
+			this.actors.add(this.player);
+			this.player.setColor(Color.LIMEGREEN);
 		}
 		else
 		{
 			Random rand = new Random();
-			actors.stream().filter(actor -> actor.getClass() != Baron.class).forEach(actor -> actor.startTransient(randomColor(rand), pane));
+			this.actors.stream().filter(actor -> actor.getClass() != Baron.class)
+					.forEach(actor -> actor.startTransient(randomColor(rand), pane));
 			Color c = randomColor(rand);
-			actors.stream().filter(actor -> actor.getClass() == Baron.class).forEach(actor -> actor.startTransient(c, pane));
-			
-			actors.forEach(actor -> 
+			this.actors.stream().filter(actor -> actor.getClass() == Baron.class).forEach(actor -> actor.startTransient(c, pane));
+
+			this.actors.forEach(actor ->
 			{
-				actor.getCastles().forEach(castle -> 
-				{	
+				actor.getCastles().forEach(castle ->
+				{
 					castle.startTransient(pane);
-					System.out.println(castle.getOst());
+					// System.out.println(castle.getOst());
 				});
 				actor.addEventAllCastles();
 			});
-			
-			UIManager.getInstance().switchCastle(player.getCastles().get(0), player, true, false);
-			
-			canUpdate = true;
+
+			UIManager.getInstance().switchCastle(this.player.getCastles().get(0), this.player, true, false);
+
+			this.canUpdate = true;
 		}
 	}
 
@@ -139,10 +137,17 @@ public class Kingdom extends Parent implements Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+	/**
+	 *
+	 * @param now
+	 * @param pause
+	 */
 	public void update(final long now, final boolean pause)
 	{
-		if(canUpdate && !pause)
-			actors.forEach(actor -> actor.update(now, pause));
+		if (this.canUpdate && !pause)
+		{
+			this.actors.forEach(actor -> actor.update(now, pause));
+		}
 	}
 
 	/*************************************************/
@@ -152,53 +157,52 @@ public class Kingdom extends Parent implements Serializable
 	public void createActors()
 	{
 		Random rand = new Random();
-		
-		for(int i = 0; i < Settings.AI_NUMBER; i++)
+
+		for (int i = 0; i < Settings.AI_NUMBER; i++)
 		{
 			Actor a = new DukeAI();
 			a.start();
 			a.setName("Duke " + (i + 1));
-			actors.add(a);
+			this.actors.add(a);
 			a.setColor(randomColor(rand));
 		}
-		
+
 		Color colorBaron = randomColor(rand);
-		
-		for(int i = 0; i < Settings.BARON_NUMBER; i++)
+
+		for (int i = 0; i < Settings.BARON_NUMBER; i++)
 		{
 			Actor a = new Baron();
 			a.start();
 			a.setName("Baron " + (i + 1));
-			actors.add(a);
+			this.actors.add(a);
 			a.setColor(colorBaron);
 		}
-		
+
 		ArrayList<Castle> list = new ArrayList<>();
-		
-		for(int i = 0; i < (Settings.AI_NUMBER + Settings.BARON_NUMBER + 1); i++)
+
+		for (int i = 0; i < (Settings.AI_NUMBER + Settings.BARON_NUMBER + 1); i++)
 		{
-			
+
 			Point2D p = getRandomCoordinates(rand);
-			
-			while(isCastleToClose(list, p) == true)
+
+			while (isCastleToClose(list, p) == true)
 			{
-				p =  getRandomCoordinates(rand);
+				p = getRandomCoordinates(rand);
 			}
 
 			Castle c = new Castle();
 			list.add(c);
-			c.setColor(actors.get(i).getColor());
+			c.setColor(this.actors.get(i).getColor());
 			c.start(1, this.playfieldLayer, p);
-			actors.get(i).addFirstCastle(c);
+			this.actors.get(i).addFirstCastle(c);
 		}
 	}
-	
-	
-	private Color randomColor(Random rand)
+
+	private Color randomColor(final Random rand)
 	{
 		int size = this.colors.size();
-		Color color = colors.get((rand.nextInt(20) + 1) % size);
-		colors.remove(color);
+		Color color = this.colors.get((rand.nextInt(20) + 1) % size);
+		this.colors.remove(color);
 		return color;
 	}
 
@@ -229,14 +233,13 @@ public class Kingdom extends Parent implements Serializable
 				rand.nextInt((int) (Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE,
 				rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
-	
+
 	protected void setCollisionsManagement()
 	{
-		//Kingdom.collisionsManagement = new Collisions();
-		/*this.castles.forEach(castle ->
-			{
-				collisionsManagement.addPoint(castle.getCoordinate());
-			});*/
+		// Kingdom.collisionsManagement = new Collisions();
+		/*
+		 * this.castles.forEach(castle -> { collisionsManagement.addPoint(castle.getCoordinate()); });
+		 */
 	}
 
 	/*************************************************/

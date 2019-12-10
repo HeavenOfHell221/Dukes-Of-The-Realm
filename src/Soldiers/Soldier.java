@@ -3,8 +3,8 @@ package Soldiers;
 import java.io.Serializable;
 import java.util.Random;
 
-import DukesOfTheRealm.Kingdom;
 import DukesOfTheRealm.Ost;
+import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
 import Utility.Point2D;
@@ -23,7 +23,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	protected SoldierEnum type;
 	protected Stats stats;
 	protected Ost itsOst = null;
-	protected boolean onField = false;
+	public boolean onField = false;
 	protected boolean canMove = false;
 	protected boolean isArrived = false;
 	protected boolean isInPosition = false;
@@ -43,7 +43,7 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	protected Soldier()
 	{
-		
+
 	}
 
 	/*************************************************/
@@ -62,8 +62,14 @@ public abstract class Soldier extends Sprite implements Serializable
 	{
 		getShape().setFill(color);
 		getLayer().getChildren().add(getShape());
+		this.onField = true;
 		updateUIShape();
 		start();
+	}
+
+	public void startTransient(final Pane pane)
+	{
+		this.canvas = pane;
 	}
 
 	/*************************************************/
@@ -121,20 +127,19 @@ public abstract class Soldier extends Sprite implements Serializable
 	{
 		final int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
 		final int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
-		
-		double offsetX = stats.speed * Time.deltaTime * directionX;
-		double offsetY = stats.speed * Time.deltaTime * directionY;
-		
-//		if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetX, Settings.X_DIRECTION))
-//		{
-//			offsetX = 0;
-//			System.out.println("off x bloqué");
-//		}
-//		if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetY, Settings.Y_DIRECTION))
-//		{
-//			offsetY = 0;
-//			System.out.println("off y bloqué");
-//		}
+
+		// if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetX,
+		// Settings.X_DIRECTION))
+		// {
+		// offsetX = 0;
+		// System.out.println("off x bloqué");
+		// }
+		// if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetY,
+		// Settings.Y_DIRECTION))
+		// {
+		// offsetY = 0;
+		// System.out.println("off y bloqué");
+		// }
 
 		addMotion(this.stats.speed * Time.deltaTime * directionX, this.stats.speed * Time.deltaTime * directionY);
 		IsOutOfScreen();
@@ -184,7 +189,11 @@ public abstract class Soldier extends Sprite implements Serializable
 	private void Attack()
 	{
 		this.isDead = (--this.stats.damage <= 0) ? true : false;
-		this.itsOst.GetDestination().getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
+		getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
+		if (getReserveOfSoldiers().isStopAttack())
+		{
+			// TODO changement de proprietaire
+		}
 	}
 
 	/*************************************************/
@@ -220,5 +229,16 @@ public abstract class Soldier extends Sprite implements Serializable
 	public Point2D GetAttackLocation()
 	{
 		return this.attackLocation;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" + this.canMove + "]";
+	}
+
+	private ReserveOfSoldiers getReserveOfSoldiers()
+	{
+		return this.itsOst.GetDestination().getReserveOfSoldiers();
 	}
 }

@@ -9,7 +9,6 @@ import Interface.IUpdate;
 import UI.UIManager;
 import Utility.Settings;
 import Utility.Time;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -22,105 +21,101 @@ public class Actor implements Serializable, IUpdate
 	protected ArrayList<Castle> castles;
 	protected transient Color color;
 	protected transient Pane pane;
-	
+
 	Actor()
 	{
-		
+
 	}
-	
+
 	@Override
 	public void start()
 	{
 		this.castles = new ArrayList<>();
 	}
-	
-	public void startTransient(Color color, Pane pane)
+
+	public void startTransient(final Color color, final Pane pane)
 	{
 		this.color = color;
-		if(!Main.isNewGame)
+		if (!Main.isNewGame)
 		{
-			castles.forEach(castle -> castle.setColor(color));
+			this.castles.forEach(castle -> castle.setColor(color));
 		}
 	}
-	
-	protected void castleHandle(MouseEvent e)
+
+	protected void castleHandle(final MouseEvent e)
 	{
-		if(e.getButton() == MouseButton.PRIMARY)
+		if (e.getButton() == MouseButton.PRIMARY)
 		{
 			final Rectangle r = (Rectangle) e.getSource();
-			
-			getCastles()
-			.stream()
-			.filter(castle -> castle.getShape() == r)
-			.limit(1)
-			.forEach(castle ->
+
+			getCastles().stream().filter(castle -> castle.getShape() == r).limit(1).forEach(castle ->
 			{
 				switchCastle(castle);
 			});
-			
+
 		}
 	}
-	
+
 	public String florinIncome(final Castle castle)
 	{
-		return (int)(Settings.FLORIN_PER_SECOND * castle.getLevel()) + " Florin/s";
+		return Settings.FLORIN_PER_SECOND * castle.getLevel() + " Florin/s";
 	}
-	
+
 	public void addFirstCastle(final Castle castle)
 	{
 		this.castles.add(castle);
 		addEvent(castle);
 	}
-	
-	private void addEvent(Castle castle)
+
+	private void addEvent(final Castle castle)
 	{
 		castle.getShape().setOnMousePressed(e -> castleHandle(e));
 	}
-	
+
 	public void addEventAllCastles()
 	{
-		castles.forEach(castle -> addEvent(castle));
+		this.castles.forEach(castle -> addEvent(castle));
 	}
-	
-	protected void switchCastle(Castle castle)
+
+	protected void switchCastle(final Castle castle)
 	{
 		UIManager.getInstance().switchCastle(castle, this, false, true);
 	}
-	
-	protected void updateFlorin(Castle castle)
+
+	protected void updateFlorin(final Castle castle)
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
 	}
-	
-	public void setName(String name)
+
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
-	
-	public void setColor(Color color)
+
+	public void setColor(final Color color)
 	{
 		this.color = color;
 	}
-	
+
 	public String getName()
 	{
-		return name;
+		return this.name;
 	}
-	
+
 	public Color getColor()
 	{
-		return color;
+		return this.color;
 	}
-	
+
 	public ArrayList<Castle> getCastles()
 	{
-		return castles;
+		return this.castles;
 	}
 
 	@Override
-	public void update(long now, boolean pause)
+	public void update(final long now, final boolean pause)
 	{
-		castles.forEach(castle ->
+		this.castles.forEach(castle ->
 		{
 			updateFlorin(castle);
 			castle.updateProduction();

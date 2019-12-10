@@ -6,7 +6,7 @@ import Utility.Settings;
 
 public class ReserveOfSoldiers implements Serializable
 {
-
+	private boolean stopAttack = false;
 	private int nbPikers = 0;
 	private int nbKnights = 0;
 	private int nbOnagers = 0;
@@ -18,8 +18,6 @@ public class ReserveOfSoldiers implements Serializable
 	{
 
 	}
-
-	private boolean stopAttack = false;
 
 	public void addPiker()
 	{
@@ -177,5 +175,10 @@ public class ReserveOfSoldiers implements Serializable
 	public void setNbOnagers(final int nbOnagers)
 	{
 		this.nbOnagers = nbOnagers;
+	}
+
+	public final boolean isStopAttack()
+	{
+		return this.stopAttack;
 	}
 }

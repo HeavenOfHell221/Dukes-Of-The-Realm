@@ -38,62 +38,15 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	private transient Text nbFlorin;
 
 	private transient Rectangle background;
-	
+
 	private Castle currentCastle;
 	private Actor currentActor;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
 	public UICastlePreview()
-	{
-		super();
-	}
-
-	/*************************************************/
-	/********************* START *********************/
-	/*************************************************/
-
-	public void start()
-	{
-		awake();
-		addAllNodes();
-		relocateAllNodes();
-		setAllTexts();
-		setBackground();
-	}
-
-	/*************************************************/
-	/******************** UPDATE *********************/
-	/*************************************************/
-
-	
-	public void update(final long now, final boolean pause) 
-	{ 
-		if (this.currentCastle != null && this.currentActor != null) 
-		{
-			updateTexts(); 
-		} 
-	}
-	
-	private void updateTexts() 
-	{ 
-		this.florinIncome.setText(this.currentActor.florinIncome(this.currentCastle));
-		this.owner.setText(this.currentActor.getName());
-		this.level.setText("Level: " + this.currentCastle.getLevel()); 
-		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
-		this.nbPiker.setText("" + this.currentCastle.getReserveOfSoldiers().getNbPikers());
-		this.nbKnight.setText("" + this.currentCastle.getReserveOfSoldiers().getNbKnights());
-		this.nbOnager.setText("" + this.currentCastle.getReserveOfSoldiers().getNbOnagers()); 
-	 }
-	 
-
-	/*************************************************/
-	/******************* METHODES ********************/
-	/*************************************************/
-
-	public void awake()
 	{
 		this.imageKnight = newImageView("/images/mounted-knight-white.png");
 		this.imagePiker = newImageView("/images/spartan-white.png");
@@ -109,6 +62,46 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		this.background = new Rectangle(240, 440);
 	}
 
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+
+	public void start()
+	{
+		addAllNodes();
+		relocateAllNodes();
+		setAllTexts();
+		setBackground();
+	}
+
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+
+	public void update(final long now, final boolean pause)
+	{
+		if (this.currentCastle != null && this.currentActor != null)
+		{
+			updateTexts();
+		}
+	}
+
+	private void updateTexts()
+	{
+		this.florinIncome.setText(this.currentActor.florinIncome(this.currentCastle));
+		this.owner.setText(this.currentActor.getName());
+		this.level.setText("Level: " + this.currentCastle.getLevel());
+		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
+		this.nbPiker.setText("" + this.currentCastle.getReserveOfSoldiers().getNbPikers());
+		this.nbKnight.setText("" + this.currentCastle.getReserveOfSoldiers().getNbKnights());
+		this.nbOnager.setText("" + this.currentCastle.getReserveOfSoldiers().getNbOnagers());
+	}
+
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+
+
 	private void setAllTexts()
 	{
 		setText(this.level, 24);
@@ -119,7 +112,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		setText(this.nbPiker, 30);
 		setText(this.nbFlorin, 30);
 	}
-	
+
 	@Override
 	public void addNode(final Node node)
 	{
@@ -211,7 +204,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	}
 
 	@Override
-	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
+	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
 	{
 		this.currentCastle = castle;
 		this.currentActor = actor;

@@ -5,7 +5,6 @@ import java.io.Serializable;
 import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
-import Interface.IUpdate;
 import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,7 +18,6 @@ import javafx.scene.shape.Rectangle;
 
 public class UIManager extends Parent implements IUI, Serializable
 {
-
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -58,7 +56,7 @@ public class UIManager extends Parent implements IUI, Serializable
 		getProductionUnitPreview().start();
 	}
 
-	public void awake(Pane pane)
+	public void awake(final Pane pane)
 	{
 		this.playfieldLayer = pane;
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT * 2);
@@ -130,7 +128,7 @@ public class UIManager extends Parent implements IUI, Serializable
 	}
 
 	@Override
-	public void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible)
+	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
 	{
 		this.attackPreview.switchCastle(castle, actor, productionVisible, attackVisible);
 		this.productionUnitPreview.switchCastle(castle, actor, productionVisible, attackVisible);
@@ -179,13 +177,13 @@ public class UIManager extends Parent implements IUI, Serializable
 	}
 
 	@Override
-	public void setAllVisible(boolean visible)
+	public void setAllVisible(final boolean visible)
 	{
-		
+
 	}
 
 	@Override
-	public void setVisible(Node node, boolean visible)
+	public void setVisible(final Node node, final boolean visible)
 	{
 		node.setVisible(visible);
 	}

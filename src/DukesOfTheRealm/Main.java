@@ -1,6 +1,5 @@
 package DukesOfTheRealm;
 
-import Interface.IUpdate;
 import SaveSystem.SaveSystem;
 import UI.UIManager;
 import Utility.Input;
@@ -36,7 +35,7 @@ public class Main extends Application
 
 	private long lastTime = 0;
 	private boolean pause = false;
-	
+
 	public static boolean isNewGame = false;
 
 	/*************************************************/
@@ -82,7 +81,7 @@ public class Main extends Application
 			{
 				if (input.isExit())
 				{
-				    SaveSystem.save(kingdom);
+					SaveSystem.save(Main.this.kingdom);
 					Platform.exit();
 					System.exit(0);
 				}
@@ -119,7 +118,7 @@ public class Main extends Application
 
 		/* TIME MANAGER */
 		this.time = new Time(false);
-		
+
 		/* BUTTONS */
 		final Button buttonPlay = new Button();
 		final Button buttonNew = new Button();
@@ -149,7 +148,7 @@ public class Main extends Application
 			newGame();
 			this.mainGameLoop.start();
 			this.lobbyGameLoop.stop();
-			
+
 		});
 
 		this.root.getChildren().add(buttonPlay);
@@ -176,7 +175,7 @@ public class Main extends Application
 		if (now - this.lastTime > Settings.GAME_FREQUENCY / 5)
 		{
 			this.lastTime = now;
-			SaveSystem.save(kingdom);
+			SaveSystem.save(this.kingdom);
 			return true;
 		}
 		return false;
@@ -186,22 +185,26 @@ public class Main extends Application
 	{
 		System.out.println("Start new game... ");
 		isNewGame = true;
-		kingdom = new Kingdom();
-		kingdom.start(this.playfieldLayer);
-		
+		this.kingdom = new Kingdom();
+		this.kingdom.start(this.playfieldLayer);
+
 		System.out.println("New game done !");
 	}
-	
+
 	private void loadGame()
 	{
 		System.out.println("Start load game... ");
-		kingdom = SaveSystem.load();
-		if(kingdom != null)
+		this.kingdom = SaveSystem.load();
+		if (this.kingdom != null)
+		{
 			System.out.println("Load game done !\n");
+		}
 		else
+		{
 			System.out.println("Error load !");
-		
-		kingdom.startTransient(this.playfieldLayer);
+		}
+
+		this.kingdom.startTransient(this.playfieldLayer);
 	}
 
 	public static void main(final String[] args)

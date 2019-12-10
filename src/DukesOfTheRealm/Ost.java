@@ -36,6 +36,7 @@ public class Ost implements IUpdate, Serializable
 	private final ArrayList<Soldier> soldiers;
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
+
 	private transient Color color;
 	private transient long lastTime;
 
@@ -66,6 +67,16 @@ public class Ost implements IUpdate, Serializable
 		this.speed = SetOstSpeed();
 		this.separationPoint = SetSeparationPoint();
 		this.waitingPoint = SetWaitingPoint();
+	}
+
+	public void startTransient(final Color color)
+	{
+		this.color = color;
+		this.soldiers.forEach(soldier ->
+		{
+			soldier.startTransient(this.origin.getLayer());
+			soldier.Awake(this.color);
+		});
 	}
 
 	/*************************************************/
@@ -404,10 +415,9 @@ public class Ost implements IUpdate, Serializable
 	@Override
 	public String toString()
 	{
-		return "Ost [origin=" + origin + ", destination=" + destination + ", nbPikers=" + nbPikers + ", nbKnights=" + nbKnights
-				+ ", nbOnagers=" + nbOnagers + ", nbSoldiers=" + nbSoldiers + ", speed=" + speed + ", soldiers=" + soldiers
-				+ ", nbSoldiersSpawned=" + nbSoldiersSpawned + ", fullyDeployed=" + fullyDeployed + ", color=" + color + "]";
+		return "Ost [nbPikers=" + this.nbPikers + ", nbKnights=" + this.nbKnights + ", nbOnagers=" + this.nbOnagers + ", nbSoldiers="
+				+ this.nbSoldiers + ", speed=" + this.speed + ", soldiers=" + this.soldiers + ", nbSoldiersSpawned="
+				+ this.nbSoldiersSpawned + ", fullyDeployed=" + this.fullyDeployed + ", color=" + this.color + "]";
 	}
-	
-	
+
 }

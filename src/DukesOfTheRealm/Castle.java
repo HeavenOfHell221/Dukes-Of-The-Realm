@@ -57,7 +57,7 @@ public class Castle extends Sprite implements Serializable
 		super();
 		this.level = level;
 	}
-	
+
 	public Castle()
 	{
 		super();
@@ -67,7 +67,7 @@ public class Castle extends Sprite implements Serializable
 	/********************* START *********************/
 	/*************************************************/
 
-	public void start(int level, Pane pane, Point2D coord)
+	public void start(final int level, final Pane pane, final Point2D coord)
 	{
 		this.coordinate = coord;
 		this.level = level;
@@ -82,18 +82,20 @@ public class Castle extends Sprite implements Serializable
 		startTransient(pane);
 		setAttackLocations();
 	}
-	
-	public void startTransient(Pane pane)
+
+	public void startTransient(final Pane pane)
 	{
 		this.canvas = pane;
 		addRepresentation(pane);
-		//System.out.println("transient:" + this);
+		if (this.ost != null)
+		{
+			this.ost.startTransient(this.myColor);
+		}
 	}
 
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
-
 
 	public void updateProduction()
 	{
@@ -135,8 +137,10 @@ public class Castle extends Sprite implements Serializable
 
 	public void updateOst(final long now, final boolean pause)
 	{
-		if(this.ost != null)
+		if (this.ost != null)
+		{
 			this.ost.update(now, pause);
+		}
 	}
 
 	/*************************************************/
@@ -157,7 +161,6 @@ public class Castle extends Sprite implements Serializable
 		this.reserveOfSoldiers.setNbPikers(Settings.STARTER_PIKER);
 		this.reserveOfSoldiers.setNbOnagers(Settings.STARTER_ONAGER);
 	}
-
 
 	private Orientation setOrientation()
 	{
@@ -186,39 +189,37 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/* Ajoute un rectangle au layer */
-	public void addRepresentation(Pane pane)
+	public void addRepresentation(final Pane pane)
 	{
 		addCastleRepresentation(pane, Settings.CASTLE_SIZE);
 		addDoorRepresentation(pane);
-		this.shape.setFill(myColor);
+		this.shape.setFill(this.myColor);
 	}
 
-	private void addDoorRepresentation(Pane pane)
+	private void addDoorRepresentation(final Pane pane)
 	{
-		
-
 		switch (this.orientation)
 		{
 			case North:
 				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE / 4, getY(), Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6);
 				break;
 			case South:
-				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE / 4, getY() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6,
+				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE / 4, getY() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6 + 1,
 						Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6);
 				break;
 			case East:
-				this.door = new Rectangle(getX() + +Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6, getY() + Settings.CASTLE_SIZE / 4,
+				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6 + 1, getY() + Settings.CASTLE_SIZE / 4,
 						Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2);
 				break;
 			case West:
-				this.door = new Rectangle(getX(), getY() + +Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2);
+				this.door = new Rectangle(getX(), getY() + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2);
 				break;
 			default:
 				this.door = new Rectangle(0, 0, 0, 0);
 				break;
 		}
 		this.door.setMouseTransparent(true);
-		pane.getChildren().add(door);
+		pane.getChildren().add(this.door);
 	}
 
 	/* Augmente le chateau d'un niveau */
@@ -394,13 +395,13 @@ public class Castle extends Sprite implements Serializable
 	{
 		return this.productionTime;
 	}
-	
-	public void setLevel(int level)
+
+	public void setLevel(final int level)
 	{
 		this.level = level;
 	}
 
-	public void setColor(Color color)
+	public void setColor(final Color color)
 	{
 		this.myColor = color;
 	}

@@ -3,7 +3,6 @@ package DukesOfTheRealm;
 import java.io.Serializable;
 
 import Interface.IProductionUnit;
-import Interface.IUpdate;
 import Utility.Point2D;
 import Utility.Settings;
 import javafx.scene.Cursor;
@@ -61,15 +60,17 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	public void updateUIShape()
 	{
-		if(this.shape != null)
+		if (this.shape != null)
+		{
 			this.shape.relocate(getX(), getY());
+		}
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	protected void addCastleRepresentation(Pane pane, final double size)
+	protected void addCastleRepresentation(final Pane pane, final double size)
 	{
 		final Rectangle r = new Rectangle(getX(), getY(), size, size);
 		this.shape = r;
@@ -135,8 +136,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	public void RemoveShapeToLayer()
 	{
-		if(this.shape != null)
+		if (this.shape != null)
+		{
 			this.canvas.getChildren().remove(this.shape);
+		}
 	}
 
 	/*************************************************/

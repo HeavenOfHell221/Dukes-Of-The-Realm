@@ -7,11 +7,8 @@ import DukesOfTheRealm.Main;
 import UI.UIManager;
 import Utility.Settings;
 import Utility.Time;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class Player extends Actor implements Serializable
 {
@@ -20,7 +17,7 @@ public class Player extends Actor implements Serializable
 	{
 		super();
 	}
-	
+
 	@Override
 	public void addFirstCastle(final Castle castle)
 	{
@@ -28,26 +25,26 @@ public class Player extends Actor implements Serializable
 		switchCastle(castle);
 		castle.startSoldier();
 	}
-	
+
 	@Override
-	protected void switchCastle(Castle castle)
+	protected void switchCastle(final Castle castle)
 	{
 		UIManager.getInstance().switchCastle(castle, this, true, false);
 	}
-	
+
 	@Override
-	protected void updateFlorin(Castle castle)
+	protected void updateFlorin(final Castle castle)
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
 	}
-	
+
 	@Override
-	public void startTransient(Color color, Pane pane)
+	public void startTransient(final Color color, final Pane pane)
 	{
 		this.color = Color.LIMEGREEN;
-		if(!Main.isNewGame)
+		if (!Main.isNewGame)
 		{
-			castles.forEach(castle -> castle.setColor(this.color));
+			this.castles.forEach(castle -> castle.setColor(this.color));
 		}
 	}
 }
