@@ -24,24 +24,68 @@ public class Main extends Application
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	private Pane playfieldLayer;
+	
+	/**
+	 * 
+	 */
 	private Scene mainScene;
+	
+	/**
+	 * 
+	 */
 	private AnimationTimer lobbyGameLoop;
+	
+	/*
+	 * 
+	 */
 	private AnimationTimer mainGameLoop;
+	
+	/**
+	 * 
+	 */
 	private Group root;
+	
+	/**
+	 * 
+	 */
 	private Input input;
+	
+	/**
+	 * 
+	 */
 	private Time time;
+	
+	/**
+	 * 
+	 */
 	private Kingdom kingdom;
 
+	/**
+	 * 
+	 */
 	private long lastTime = 0;
+	
+	/**
+	 * 
+	 */
 	private boolean pause = false;
 
+	/**
+	 * 
+	 */
 	public static boolean isNewGame = false;
 
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	@Override
 	public void start(final Stage primaryStage)
 	{
@@ -95,6 +139,10 @@ public class Main extends Application
 		this.lobbyGameLoop.start();
 	}
 
+	/**
+	 * 
+	 * @param primaryStage
+	 */
 	private void Awake(final Stage primaryStage)
 	{
 		this.root = new Group();
@@ -159,6 +207,11 @@ public class Main extends Application
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+	/**
+	 * 
+	 * @param now
+	 * @param pause
+	 */
 	public void update(final long now, final boolean pause)
 	{
 		this.time.update(now, pause);
@@ -166,10 +219,18 @@ public class Main extends Application
 		UIManager.getInstance().update(now, pause);
 	}
 
+	/**
+	 * 
+	 */
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/**
+	 * 
+	 * @param now
+	 * @return
+	 */
 	private boolean Time(final long now)
 	{
 		if (now - this.lastTime > Settings.GAME_FREQUENCY / 5)
@@ -181,6 +242,9 @@ public class Main extends Application
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	private void newGame()
 	{
 		System.out.println("Start new game... ");
@@ -191,6 +255,9 @@ public class Main extends Application
 		System.out.println("New game done !");
 	}
 
+	/**
+	 * 
+	 */
 	private void loadGame()
 	{
 		System.out.println("Start load game... ");
@@ -207,6 +274,10 @@ public class Main extends Application
 		this.kingdom.startTransient(this.playfieldLayer);
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(final String[] args)
 	{
 		launch(args);

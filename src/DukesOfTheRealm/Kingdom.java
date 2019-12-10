@@ -154,6 +154,9 @@ public class Kingdom extends Parent implements Serializable
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	public void createActors()
 	{
 		Random rand = new Random();
@@ -198,6 +201,11 @@ public class Kingdom extends Parent implements Serializable
 		}
 	}
 
+	/**
+	 * 
+	 * @param rand
+	 * @return
+	 */
 	private Color randomColor(final Random rand)
 	{
 		int size = this.colors.size();
@@ -206,6 +214,12 @@ public class Kingdom extends Parent implements Serializable
 		return color;
 	}
 
+	/**
+	 * 
+	 * @param castles
+	 * @param coordinate
+	 * @return
+	 */
 	private boolean isCastleToClose(final ArrayList<Castle> castles, final Point2D coordinate)
 	{
 		final Iterator<Castle> it = castles.iterator();
@@ -221,12 +235,23 @@ public class Kingdom extends Parent implements Serializable
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param castle
+	 * @param coord
+	 * @return
+	 */
 	private double distanceBetween(final Castle castle, final Point2D coord)
 	{
 		return Math.sqrt((coord.getY() - castle.getY()) * (coord.getY() - castle.getY())
 				+ (coord.getX() - castle.getX()) * (coord.getX() - castle.getX()));
 	}
 
+	/**
+	 * 
+	 * @param rand
+	 * @return
+	 */
 	public Point2D getRandomCoordinates(final Random rand)
 	{
 		return new Point2D(
@@ -234,6 +259,9 @@ public class Kingdom extends Parent implements Serializable
 				rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
 
+	/**
+	 * 
+	 */
 	protected void setCollisionsManagement()
 	{
 		// Kingdom.collisionsManagement = new Collisions();
@@ -246,6 +274,10 @@ public class Kingdom extends Parent implements Serializable
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
+	/**
+	 * 
+	 * @param playfieldLayer
+	 */
 	public void setPlayfieldLayer(final Pane playfieldLayer)
 	{
 		this.playfieldLayer = playfieldLayer;

@@ -2,26 +2,67 @@ package Utility;
 
 import Interface.IUpdate;
 
-public class Time implements IUpdate
+/**
+ * 
+ * 
+ * @author Utilisateur
+ *
+ */
+public class Time
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	private final long cooldown;
+	
+	/**
+	 * 
+	 */
 	private int counter;
+	
+	/**
+	 * 
+	 */
 	private long lastUpdate;
+	
+	/**
+	 * 
+	 */
 	private final boolean print;
+	
+	/**
+	 * 
+	 */
 	private long oldTime;
+	
+	/**
+	 * 
+	 */
 	public static double deltaTime;
+	
+	/**
+	 * 
+	 */
 	private boolean firstFrame;
+	
+	/**
+	 * 
+	 */
 	public static int FPS;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 * 
+	 * @param print
+	 */
 	public Time(final boolean print)
 	{
 		this.cooldown = Settings.GAME_FREQUENCY;
@@ -36,17 +77,14 @@ public class Time implements IUpdate
 	/********************* START *********************/
 	/*************************************************/
 
-	@Override
-	public void start()
-	{
-
-	}
 
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	@Override
+	/**
+	 * 
+	 */
 	public void update(final long now, final boolean pause)
 	{
 		frameStart(now);
@@ -63,6 +101,10 @@ public class Time implements IUpdate
 		this.counter++;
 	}
 
+	/**
+	 * 
+	 * @param now
+	 */
 	public void frameStart(final long now)
 	{
 		if (this.firstFrame)

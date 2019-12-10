@@ -15,6 +15,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
+/**
+ * 
+ *
+ */
 public abstract class Sprite extends Parent implements IProductionUnit, Serializable
 {
 
@@ -22,29 +26,49 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	protected transient Pane canvas;
+	
+	/**
+	 * 
+	 */
 	protected transient Shape shape;
 
+	/**
+	 * 
+	 */
 	protected Point2D coordinate;
+	
+	/**
+	 * 
+	 */
 	protected double width;
+	
+	/**
+	 * 
+	 */
 	protected double height;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
-	public Sprite(final Pane canvas, final double x, final double y)
-	{
-		this.canvas = canvas;
-		this.coordinate = new Point2D(x, y);
-	}
-
+	/**
+	 * 
+	 * @param canvas
+	 * @param point2D
+	 */
 	public Sprite(final Pane canvas, final Point2D point2D)
 	{
 		this.canvas = canvas;
 		this.coordinate = new Point2D(point2D);
 	}
 
+	/**
+	 * 
+	 */
 	protected Sprite()
 	{
 
@@ -58,7 +82,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	public void updateUIShape()
+	/**
+	 * 
+	 */
+	public final void updateUIShape()
 	{
 		if (this.shape != null)
 		{
@@ -70,7 +97,12 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/******************* METHODES ********************/
 	/*************************************************/
 
-	protected void addCastleRepresentation(final Pane pane, final double size)
+	/**
+	 * 
+	 * @param pane
+	 * @param size
+	 */
+	protected final void addCastleRepresentation(final Pane pane, final double size)
 	{
 		final Rectangle r = new Rectangle(getX(), getY(), size, size);
 		this.shape = r;
@@ -94,7 +126,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		r.setStrokeWidth(1.5);
 	}
 
-	protected void AddPikerRepresentation()
+	/**
+	 * 
+	 */
+	protected final void AddPikerRepresentation()
 	{
 		final double r = Settings.PIKER_REPRESENTATION_RADIUS;
 		final Circle circle = new Circle(getX(), getY(), r);
@@ -107,7 +142,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		circle.setStrokeWidth(1.5);
 	}
 
-	protected void AddKnightRepresentation()
+	/**
+	 * 
+	 */
+	protected final void AddKnightRepresentation()
 	{
 		final double s = Settings.KNIGHT_REPRESENTATION_SIZE;
 		final Rectangle r = new Rectangle(getX(), getY(), s, s);
@@ -120,7 +158,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		r.setStrokeWidth(1.5);
 	}
 
-	protected void AddOnagerRepresentation()
+	/**
+	 * 
+	 */
+	protected final void AddOnagerRepresentation()
 	{
 		final double w = Settings.ONAGER_REPRESENTATION_WIDTH;
 		final double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
@@ -134,7 +175,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		r.setStrokeWidth(1.5);
 	}
 
-	public void RemoveShapeToLayer()
+	/**
+	 * 
+	 */
+	public final void RemoveShapeToLayer()
 	{
 		if (this.shape != null)
 		{
@@ -146,72 +190,129 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-	public Shape getShape()
+	/**
+	 * 
+	 * @return
+	 */
+	public final Shape getShape()
 	{
 		return this.shape;
 	}
 
-	public int getX()
+	/**
+	 * 
+	 * @return
+	 */
+	public final int getX()
 	{
 		return (int) this.coordinate.getX();
 	}
 
-	public int getY()
+	/**
+	 * 
+	 * @return
+	 */
+	public final int getY()
 	{
 		return (int) this.coordinate.getY();
 	}
 
-	public Point2D getCoordinate()
+	/**
+	 * 
+	 * @return
+	 */
+	public final Point2D getCoordinate()
 	{
 		return this.coordinate;
 	}
 
-	public Point2D getCastleCenter()
+	/**
+	 * 
+	 * @return
+	 */
+	public final Point2D getCastleCenter()
 	{
 		return new Point2D(getX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), getY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
 	}
 
-	public double getWidth()
+	/**
+	 * 
+	 * @return
+	 */
+	public final double getWidth()
 	{
 		return this.width;
 	}
 
-	public double getHeight()
+	/**
+	 * 
+	 * @return
+	 */
+	public final double getHeight()
 	{
 		return this.height;
 	}
 
-	public Pane getLayer()
+	/**
+	 * 
+	 * @return
+	 */
+	public final Pane getLayer()
 	{
 		return this.canvas;
 	}
 
-	public void setX(final int x)
+	/**
+	 * 
+	 * @param x
+	 */
+	public final void setX(final int x)
 	{
 		this.coordinate.setX(x);
 	}
 
-	public void setY(final int y)
+	/**
+	 * 
+	 * @param y
+	 */
+	public final void setY(final int y)
 	{
 		this.coordinate.setY(y);
 	}
 
-	public void addDx(final double dx)
+	/**
+	 * 
+	 * @param dx
+	 */
+	public final void addDx(final double dx)
 	{
 		this.coordinate.addDx(dx);
 	}
-
-	public void addDy(final double dy)
+	
+	/**
+	 * 
+	 * @param dy
+	 */
+	public final void addDy(final double dy)
 	{
 		this.coordinate.addDy(dy);
 	}
 
-	public void addMotion(final double dx, final double dy)
+	/**
+	 * 
+	 * @param dx
+	 * @param dy
+	 */
+	public final void addMotion(final double dx, final double dy)
 	{
 		this.coordinate.addMotion(dx, dy);
 	}
 
-	public void setCoordinate(final Point2D coordinate)
+	/**
+	 * 
+	 * @param coordinate
+	 */
+	public final void setCoordinate(final Point2D coordinate)
 	{
 		this.coordinate = coordinate;
 	}

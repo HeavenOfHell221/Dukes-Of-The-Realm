@@ -9,8 +9,16 @@ import java.io.ObjectOutputStream;
 
 import DukesOfTheRealm.Kingdom;
 
+/**
+ * 
+ *
+ */
 public class SaveSystem
 {
+	/**
+	 * 
+	 * @param kingdom
+	 */
 	public static void save(final Kingdom kingdom)
 	{
 		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("save/DukesOfTheRealm.bin")))
@@ -31,6 +39,10 @@ public class SaveSystem
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static Kingdom load()
 	{
 		Kingdom kingdom = null;

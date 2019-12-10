@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import Utility.Settings;
 
+/**
+ * 
+ *
+ */
 public class ReserveOfSoldiers implements Serializable
 {
 	private boolean stopAttack = false;
@@ -14,26 +18,42 @@ public class ReserveOfSoldiers implements Serializable
 	private transient int knigtHPRemaining = Settings.KNIGHT_HP;
 	private transient int onagerHPremaining = Settings.ONAGER_HP;
 
+	/**
+	 * 
+	 */
 	public ReserveOfSoldiers()
 	{
 
 	}
 
+	/**
+	 * 
+	 */
 	public void addPiker()
 	{
 		this.nbPikers++;
 	}
 
+	/**
+	 * 
+	 */
 	public void addKnight()
 	{
 		this.nbKnights++;
 	}
 
+	/**
+	 * 
+	 */
 	public void addOnager()
 	{
 		this.nbOnagers++;
 	}
 
+	/**
+	 * 
+	 * @param x
+	 */
 	public void randomRemoveHP(int x)
 	{
 		x = x % Settings.NB_TYPES_OF_TROOPS;
@@ -82,6 +102,9 @@ public class ReserveOfSoldiers implements Serializable
 		switchActor();
 	}
 
+	/**
+	 * 
+	 */
 	private void switchActor()
 	{
 		if (this.nbKnights == 0 && this.nbPikers == 0 && this.nbOnagers == 0)
@@ -90,6 +113,10 @@ public class ReserveOfSoldiers implements Serializable
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean removePikerHP()
 	{
 		if (this.nbPikers > 0)
@@ -109,6 +136,10 @@ public class ReserveOfSoldiers implements Serializable
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean removeKnightHP()
 	{
 		if (this.nbKnights > 0)
@@ -128,6 +159,10 @@ public class ReserveOfSoldiers implements Serializable
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean removeOnagerHP()
 	{
 		if (this.nbOnagers > 0)
@@ -147,37 +182,65 @@ public class ReserveOfSoldiers implements Serializable
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNbPikers()
 	{
 		return this.nbPikers;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNbKnights()
 	{
 		return this.nbKnights;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNbOnagers()
 	{
 		return this.nbOnagers;
 	}
 
+	/**
+	 * 
+	 * @param nbPikers
+	 */
 	public void setNbPikers(final int nbPikers)
 	{
 		this.nbPikers = nbPikers;
 	}
 
+	/**
+	 * 
+	 * @param nbKnights
+	 */
 	public void setNbKnights(final int nbKnights)
 	{
 		this.nbKnights = nbKnights;
 	}
 
+	/**
+	 * 
+	 * @param nbOnagers
+	 */
 	public void setNbOnagers(final int nbOnagers)
 	{
 		this.nbOnagers = nbOnagers;
 	}
 
-	public final boolean isStopAttack()
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isStopAttack()
 	{
 		return this.stopAttack;
 	}
