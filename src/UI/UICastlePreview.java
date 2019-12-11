@@ -23,21 +23,21 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
-	private transient ImageView imageKnight;
-	private transient ImageView imagePiker;
-	private transient ImageView imageOnager;
-	private transient ImageView imageFlorin;
+	private ImageView imageKnight;
+	private ImageView imagePiker;
+	private ImageView imageOnager;
+	private ImageView imageFlorin;
 
-	private transient Text level;
-	private transient Text owner;
-	private transient Text florinIncome;
+	private Text level;
+	private Text owner;
+	private Text florinIncome;
 
-	private transient Text nbKnight;
-	private transient Text nbPiker;
-	private transient Text nbOnager;
-	private transient Text nbFlorin;
+	private Text nbKnight;
+	private Text nbPiker;
+	private Text nbOnager;
+	private Text nbFlorin;
 
-	private transient Rectangle background;
+	private Rectangle background;
 
 	private Castle currentCastle;
 	private Actor currentActor;
@@ -130,11 +130,6 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		this.background.setStrokeWidth(3);
 		this.background.setArcHeight(60);
 		this.background.setArcWidth(60);
-	}
-
-	private ImageView newImageView(final String path)
-	{
-		return new ImageView(new Image(getClass().getResource(path).toExternalForm(), 64, 64, false, true));
 	}
 
 	@Override

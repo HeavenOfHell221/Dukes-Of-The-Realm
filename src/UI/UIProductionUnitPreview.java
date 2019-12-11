@@ -34,15 +34,15 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
-	private transient Button buttonCreatePiker;
-	private transient Button buttonCreateKnight;
-	private transient Button buttonCreateOnager;
-	private transient Button buttonUpgradeCastle;
+	private Button buttonCreatePiker;
+	private Button buttonCreateKnight;
+	private Button buttonCreateOnager;
+	private Button buttonUpgradeCastle;
 
-	private transient Rectangle background;
+	private Rectangle background;
 
-	private transient Rectangle backgroundTime;
-	private transient Rectangle fillTime;
+	private Rectangle backgroundTime;
+	private Rectangle fillTime;
 
 	private Castle currentCastle;
 

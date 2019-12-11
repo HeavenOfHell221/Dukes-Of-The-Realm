@@ -192,6 +192,7 @@ public abstract class Soldier extends Sprite implements Serializable
 		getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
 		if (getReserveOfSoldiers().isStopAttack())
 		{
+			this.isDead = true;
 			// TODO changement de proprietaire
 		}
 	}

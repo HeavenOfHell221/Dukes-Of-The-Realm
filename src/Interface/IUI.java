@@ -3,6 +3,8 @@ package Interface;
 import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -62,4 +64,15 @@ public interface IUI
 	{
 		node.setVisible(visible);
 	}
+	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 */
+	default ImageView newImageView(final String path)
+	{
+		return new ImageView(new Image(getClass().getResource(path).toExternalForm(), 64, 64, false, true));
+	}
+
 }

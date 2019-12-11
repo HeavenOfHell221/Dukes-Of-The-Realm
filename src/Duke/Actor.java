@@ -106,6 +106,11 @@ public class Actor implements Serializable, IUpdate
 	{
 		return this.color;
 	}
+	
+	public boolean isPlayer()
+	{
+		return false;
+	}
 
 	public ArrayList<Castle> getCastles()
 	{

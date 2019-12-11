@@ -37,6 +37,12 @@ public class Player extends Actor implements Serializable
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
 	}
+	
+	@Override
+	public boolean isPlayer()
+	{
+		return true;
+	}
 
 	@Override
 	public void startTransient(final Color color, final Pane pane)
