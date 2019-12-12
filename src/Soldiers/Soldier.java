@@ -212,7 +212,6 @@ public abstract class Soldier extends Sprite implements Serializable
 	
 	private void applyDamage()
 	{
-		System.out.println(this.stats.damage);
 		getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
 		
 		if (!getReserveOfSoldiers().isStopAttack())

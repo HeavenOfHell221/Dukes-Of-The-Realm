@@ -68,6 +68,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		
 		this.lastActor = null;
 		this.lastCastle = null;
+		
+		
 	}
 
 	/*************************************************/
@@ -91,7 +93,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-
+		setFill(this.currentCastle.getCaserne().getRatio());
 	}
 
 	/*************************************************/
@@ -119,6 +121,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	public void setFill(final double fractionFill)
 	{
 		if (fractionFill >= 1)
+		{
+			this.fillTime.setWidth(0);
+			return;
+		}
+		if(fractionFill == 0)
 		{
 			this.fillTime.setWidth(0);
 			return;
@@ -176,7 +183,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 	private void addProduction(final Button b, final IProductionUnit p)
 	{
-		if (this.currentCastle.addProduction(p))
+		if (this.currentCastle.getCaserne().addProduction(p))
 		{
 			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0));
 		}

@@ -6,7 +6,6 @@ import DukesOfTheRealm.Castle;
 
 public class DukeAI extends Actor implements Serializable
 {
-
 	public DukeAI()
 	{
 		super();
@@ -18,5 +17,11 @@ public class DukeAI extends Actor implements Serializable
 		super.addFirstCastle(castle);
 		castle.startSoldier();
 	}
-
+	
+	@Override
+	public void update(final long now, final boolean pause)
+	{
+		super.update(now, pause);
+		// TODO IA
+	}
 }

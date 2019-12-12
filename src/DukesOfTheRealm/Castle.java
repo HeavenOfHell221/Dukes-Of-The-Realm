@@ -60,14 +60,7 @@ public class Castle extends Sprite implements Serializable
 	/**
 	 * 
 	 */
-	private ArrayDeque<IProductionUnit> productionUnit; // L'unite de production. C'est une amelioration ou un
-														// soldat en
-														// cours de production
-	
-	/**
-	 * 
-	 */
-	private double productionTime; // Le temps restant a la production de l'unite de production
+	private Caserne caserne;
 	
 	/**
 	 * 
@@ -131,11 +124,9 @@ public class Castle extends Sprite implements Serializable
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
-		this.productionUnit = null;
-		this.productionTime = 0;
 		this.reserveOfSoldiers = new ReserveOfSoldiers();
+		this.caserne = new Caserne(this);
 		this.ost = null;
-		this.productionUnit = new ArrayDeque<>();
 		this.attackLocations = new Stack<>();
 		this.orientation = setOrientation();
 		startTransient(pane);
@@ -165,40 +156,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void updateProduction()
 	{
-		if (this.productionUnit.size() > 0)
-		{
-			this.productionTime -= (1 * Time.deltaTime);
-
-			final double ratio = 1 - (this.productionTime / this.productionUnit.getFirst().getProductionTime());
-			UIManager.getProductionUnitPreview().setFill(ratio);
-
-			if (this.productionTime <= 0)
-			{
-				final IProductionUnit p = this.productionUnit.pollFirst();
-
-				if (p.getClass() == Castle.class)
-				{
-					levelUp();
-				}
-				else if (p.getClass() == Piker.class)
-				{
-					this.reserveOfSoldiers.addPiker();
-				}
-				else if (p.getClass() == Onager.class)
-				{
-					this.reserveOfSoldiers.addOnager();
-				}
-				else if (p.getClass() == Knight.class)
-				{
-					this.reserveOfSoldiers.addKnight();
-				}
-
-				if (this.productionUnit.size() > 0)
-				{
-					this.productionTime = this.productionUnit.getFirst().getProductionTime();
-				}
-			}
-		}
+		caserne.updateProduction();
 	}
 
 	/**
@@ -352,27 +310,7 @@ public class Castle extends Sprite implements Serializable
 		return (amount <= this.totalFlorin);
 	}
 
-	/**
-	 * 
-	 * @param newProduction
-	 * @return
-	 */
-	public boolean addProduction(final IProductionUnit newProduction)
-	{
-		if (newProduction == null || !removeFlorin(newProduction.getProductionCost()))
-		{
-			return false;
-		}
-
-		this.productionUnit.addLast(newProduction);
-
-		if (this.productionUnit.size() == 1)
-		{
-			this.productionTime = newProduction.getProductionTime();
-		}
-
-		return true;
-	}
+	
 
 	/**
 	 * 
@@ -575,7 +513,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public ArrayDeque<IProductionUnit> getProductionUnit()
 	{
-		return this.productionUnit;
+		return caserne.getProductionUnit();
 	}
 
 	/**
@@ -584,7 +522,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public double getProductionTimeRemaining()
 	{
-		return this.productionTime;
+		return caserne.getProductionTime();
 	}
 
 	/**
@@ -630,6 +568,14 @@ public class Castle extends Sprite implements Serializable
 	public int getNbOnagers()
 	{
 		return reserveOfSoldiers.getNbOnagers();
+	}
+
+	/**
+	 * @return the caserne
+	 */
+	public final Caserne getCaserne()
+	{
+		return caserne;
 	}
 
 	@Override

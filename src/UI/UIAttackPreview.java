@@ -5,6 +5,7 @@ import java.io.Serializable;
 import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Kingdom;
+import DukesOfTheRealm.Main;
 import Interface.IUI;
 import Interface.IUpdate;
 import Soldiers.Knight;
@@ -241,6 +242,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 				this.nbKnight = 0;
 				this.nbOnager = 0;
 				this.nbPiker = 0;
+				setAllVisible(false);
+				Main.pause = false;
 			}
 		});
 	}
@@ -371,11 +374,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 			if(this.lastActor != null && this.lastActor.isPlayer())
 			{
 				setAllVisible(true);
+				Main.pause = true;
 				return;
 			}
 		}
-			
 		setAllVisible(false);
+		Main.pause = false;
 	}
 
 	/**

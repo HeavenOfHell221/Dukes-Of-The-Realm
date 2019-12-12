@@ -72,7 +72,12 @@ public class Main extends Application
 	/**
 	 * 
 	 */
-	private boolean pause = false;
+	public static boolean pause = false;
+	
+	/**
+	 * 
+	 */
+	public boolean pauseForce = false;
 
 	/**
 	 * 
@@ -118,7 +123,7 @@ public class Main extends Application
 			public void handle(final long now)
 			{
 				processInput(Main.this.input, now);
-				update(now, Main.this.pause);
+				update(now, Main.this.pause || pauseForce);
 			}
 
 			private void processInput(final Input input, final long now)
@@ -131,7 +136,7 @@ public class Main extends Application
 				}
 				if (input.isSpace() && Time(now))
 				{
-					Main.this.pause = !Main.this.pause;
+					pauseForce = !pauseForce;
 				}
 			}
 		};
