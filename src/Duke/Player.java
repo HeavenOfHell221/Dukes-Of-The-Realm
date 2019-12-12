@@ -27,12 +27,6 @@ public class Player extends Actor implements Serializable
 	}
 
 	@Override
-	protected void switchCastle(final Castle castle)
-	{
-		UIManager.getInstance().switchCastle(castle, this, true, false);
-	}
-
-	@Override
 	protected void updateFlorin(final Castle castle)
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);

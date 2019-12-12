@@ -248,31 +248,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		});
 	}
 	
-	private void addEventMouse(final Button b)
-	{
-		b.addEventHandler(MouseEvent.MOUSE_ENTERED, event ->
-		{
-			final Bloom bloom = new Bloom();
-			bloom.setThreshold(0.85);
-			bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 15, 0.25, 0, 0));
-			b.setEffect(bloom);
-		});
-
-		b.addEventHandler(MouseEvent.MOUSE_EXITED, event ->
-		{
-			b.setEffect(null);
-		});
-
-		b.setOnMouseClicked(event ->
-		{
-			b.setEffect(null);
-			final Bloom bloom = new Bloom();
-			bloom.setThreshold(0.85);
-			bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 15, 0.25, 0, 0));
-			b.setEffect(bloom);
-		});
-	}
-	
 	private void setBackground()
 	{
 		final Stop[] stops = new Stop[]
@@ -361,27 +336,22 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		resetOst();
 	}
 
-	@Override
-	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
+	public void switchCastle(final Castle castle, final Actor actor, final boolean attackVisible)
 	{
 		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 		this.currentActor = actor;
 		
-		if(attackVisible)
-		{
-			if(this.lastActor != null && this.lastActor.isPlayer())
-			{
-				setAllVisible(true);
-				Main.pause = true;
-				return;
-			}
-		}
-		setAllVisible(false);
-		Main.pause = false;
+		setAllVisible(attackVisible);
 	}
 
+
+
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+	
 	/**
 	 * @return
 	 * @see DukesOfTheRealm.Castle#getNbPikers()
@@ -408,10 +378,4 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	{
 		return lastCastle.getNbOnagers();
 	}
-
-	/*************************************************/
-	/*************** GETTERS / SETTERS ***************/
-	/*************************************************/
-	
-	
 }

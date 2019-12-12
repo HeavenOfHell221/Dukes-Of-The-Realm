@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import Duke.Actor;
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Main;
 import Interface.IUI;
 import Utility.Settings;
 import javafx.scene.Node;
@@ -26,10 +27,16 @@ public class UIManager extends Parent implements IUI, Serializable
 	private UIAttackPreview attackPreview;
 	private UIProductionUnitPreview productionUnitPreview;
 	private UICastlePreview castlePreview;
-
-	private transient Pane playfieldLayer;
-
-	private transient Rectangle background;
+	private Pane playfieldLayer;
+	private Rectangle background;
+	
+	private Castle currentCastle;
+	private Castle lastCastle;
+	private Actor currentActor;
+	private Actor lastActor;
+	
+	private boolean productionVisible = false;
+	private boolean attackVisible = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -46,7 +53,6 @@ public class UIManager extends Parent implements IUI, Serializable
 
 	public void start()
 	{
-
 		addAllNodes();
 		relocateAllNodes();
 		setBackground();
@@ -72,9 +78,9 @@ public class UIManager extends Parent implements IUI, Serializable
 
 	public void update(final long now, final boolean pause)
 	{
-		this.castlePreview.update(now, pause);
 		this.productionUnitPreview.update(now, pause);
 		this.attackPreview.update(now, pause);
+		this.castlePreview.update(now, pause);
 	}
 
 	/*************************************************/
@@ -127,11 +133,51 @@ public class UIManager extends Parent implements IUI, Serializable
 		relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
 	}
 
-	@Override
-	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
+	public void switchCastle(final Castle castle, final Actor actor)
 	{
-		this.attackPreview.switchCastle(castle, actor, productionVisible, attackVisible);
-		this.productionUnitPreview.switchCastle(castle, actor, productionVisible, attackVisible);
+		this.lastActor = this.currentActor;
+		this.lastCastle = this.currentCastle;
+		this.currentCastle = castle;
+		this.currentActor = actor;
+		
+		if(this.lastActor == null)
+		{
+			attackVisible = false;
+			productionVisible = true;
+		}
+		else if(!this.currentActor.isPlayer() && this.lastActor.isPlayer())
+		{
+			attackVisible = true;
+			productionVisible = false;
+		}
+		else if(this.currentActor.isPlayer() && this.lastActor.isPlayer())
+		{
+			if(this.currentCastle == this.lastCastle)
+			{
+				attackVisible = false;
+				productionVisible = true;
+			}
+			else
+			{
+				attackVisible = true;
+				productionVisible = false;
+			}
+		}
+		else if(!this.currentActor.isPlayer() && !this.lastActor.isPlayer())
+		{
+			attackVisible = false;
+			productionVisible = false;
+		}
+		else if(this.currentActor.isPlayer() && !this.lastActor.isPlayer())
+		{
+			attackVisible = false;
+			productionVisible = true;
+		}
+		
+		Main.pause = attackVisible;
+		
+		this.attackPreview.switchCastle(castle, actor, attackVisible);
+		this.productionUnitPreview.switchCastle(castle, actor, productionVisible);
 		this.castlePreview.switchCastle(castle, actor, productionVisible, attackVisible);
 	}
 

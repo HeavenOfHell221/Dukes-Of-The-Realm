@@ -255,9 +255,9 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.076f;
 
-		relocate(this.buttonCreateKnight, Settings.SCENE_WIDTH * margin + i * 0, offset);
-		relocate(this.buttonCreateOnager, Settings.SCENE_WIDTH * margin + i * 1, offset);
-		relocate(this.buttonCreatePiker, Settings.SCENE_WIDTH * margin + i * 2, offset);
+		relocate(this.buttonCreatePiker, Settings.SCENE_WIDTH * margin + i * 0, offset);
+		relocate(this.buttonCreateKnight, Settings.SCENE_WIDTH * margin + i * 1, offset);
+		relocate(this.buttonCreateOnager, Settings.SCENE_WIDTH * margin + i * 2, offset);
 
 		relocate(this.buttonUpgradeCastle, Settings.SCENE_WIDTH * margin + i * 1, offset + 90);
 
@@ -267,19 +267,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
 	}
 
-	@Override
-	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
+	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible)
 	{
 		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 		this.currentActor = actor;
-		
-		if(this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
-		{
-			setAllVisible(false);
-			return;
-		}
 		
 		setAllVisible(productionVisible);
 	}

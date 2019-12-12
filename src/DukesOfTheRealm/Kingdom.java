@@ -127,7 +127,7 @@ public class Kingdom extends Parent implements Serializable
 				actor.addEventAllCastles();
 			});
 
-			UIManager.getInstance().switchCastle(this.player.getCastles().get(0), this.player, true, false);
+			UIManager.getInstance().switchCastle(this.player.getCastles().get(0), this.player);
 
 			this.canUpdate = true;
 		}

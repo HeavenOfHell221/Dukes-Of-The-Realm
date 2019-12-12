@@ -102,6 +102,8 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 			relocate(this.imageCircleCurrentCastle, this.currentCastle.getX() - 128/2 + Settings.CASTLE_SIZE/2 + 1, 
 					this.currentCastle.getY() - 128/2 + Settings.CASTLE_SIZE/2 + 1);
 		}
+		else
+			setVisible(this.imageCircleCurrentCastle, false);
 			
 		if(this.lastCastle != null && this.lastCastle != this.currentCastle)
 		{
@@ -239,22 +241,86 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		setVisible(this.imageCircleLastCastle, visible);
 	}
 
-	@Override
 	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
 	{	
 		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
-		this.currentCastle = castle;
-		this.currentActor = actor;
 		changeCircle();
-		
-		if(this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
+		if(!attackVisible)
 		{
-			this.currentCastle = this.lastCastle;
+			this.currentCastle = castle;
 		}
+		
+		this.currentActor = actor;
+	}
+
+	/**
+	 * @return the currentCastle
+	 */
+	public final Castle getCurrentCastle()
+	{
+		return currentCastle;
+	}
+
+	/**
+	 * @return the lastCastle
+	 */
+	public final Castle getLastCastle()
+	{
+		return lastCastle;
+	}
+
+	/**
+	 * @return the currentActor
+	 */
+	public final Actor getCurrentActor()
+	{
+		return currentActor;
+	}
+
+	/**
+	 * @return the lastActor
+	 */
+	public final Actor getLastActor()
+	{
+		return lastActor;
+	}
+
+	/**
+	 * @param currentCastle the currentCastle to set
+	 */
+	public final void setCurrentCastle(Castle currentCastle)
+	{
+		this.currentCastle = currentCastle;
+	}
+
+	/**
+	 * @param lastCastle the lastCastle to set
+	 */
+	public final void setLastCastle(Castle lastCastle)
+	{
+		this.lastCastle = lastCastle;
+	}
+
+	/**
+	 * @param currentActor the currentActor to set
+	 */
+	public final void setCurrentActor(Actor currentActor)
+	{
+		this.currentActor = currentActor;
+	}
+
+	/**
+	 * @param lastActor the lastActor to set
+	 */
+	public final void setLastActor(Actor lastActor)
+	{
+		this.lastActor = lastActor;
 	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
+	
+	
 }

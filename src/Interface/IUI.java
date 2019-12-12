@@ -37,15 +37,6 @@ public interface IUI
 
 	/**
 	 * 
-	 * @param castle
-	 * @param actor
-	 * @param productionVisible
-	 * @param attackVisible
-	 */
-	void switchCastle(final Castle castle, final Actor actor, boolean productionVisible, boolean attackVisible);
-
-	/**
-	 * 
 	 * @param node
 	 * @param x
 	 * @param y
