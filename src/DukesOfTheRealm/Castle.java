@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.Random;
 import java.util.Stack;
 
+import Duke.Actor;
 import Interface.IProductionUnit;
 import Soldiers.Knight;
 import Soldiers.Onager;
@@ -381,11 +382,11 @@ public class Castle extends Sprite implements Serializable
 	 * @param nbOnagers
 	 * @return
 	 */
-	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
+	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, final Actor originActor, final Actor destinationActor)
 	{
 		if (this.ost == null)
 		{
-			this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor);
+			this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor, originActor, destinationActor);
 			this.ost.start();
 			return true;
 		}
@@ -398,6 +399,12 @@ public class Castle extends Sprite implements Serializable
 	public void removeOst()
 	{
 		this.ost = null;
+	}
+	
+	public void switchColor(final Color color)
+	{
+		setColor(color);
+		setColorShape(this.myColor);
 	}
 
 	/**
@@ -596,5 +603,38 @@ public class Castle extends Sprite implements Serializable
 	public void setColor(final Color color)
 	{
 		this.myColor = color;
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
+	 */
+	public int getNbPikers()
+	{
+		return reserveOfSoldiers.getNbPikers();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbKnights()
+	 */
+	public int getNbKnights()
+	{
+		return reserveOfSoldiers.getNbKnights();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbOnagers()
+	 */
+	public int getNbOnagers()
+	{
+		return reserveOfSoldiers.getNbOnagers();
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Castle [totalFlorin=" + (int)totalFlorin + ", level=" + level + ", orientation=" + orientation + ", myColor=" + myColor + "]";
 	}
 }

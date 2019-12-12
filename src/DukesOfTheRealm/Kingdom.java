@@ -81,7 +81,7 @@ public class Kingdom extends Parent implements Serializable
 		this.actors = new ArrayList<>();
 		startTransient(pane);
 		createActors();
-		this.player.getCastles().get(0).createOst(this.actors.get(1).getCastles().get(0), 20, 10, 0);
+		//this.player.getCastles().get(0).createOst(this.actors.get(1).getCastles().get(0), 20, 10, 0);
 		this.canUpdate = true;
 	}
 
@@ -146,7 +146,20 @@ public class Kingdom extends Parent implements Serializable
 	{
 		if (this.canUpdate && !pause)
 		{
-			this.actors.forEach(actor -> actor.update(now, pause));
+			Iterator<Actor> it = this.actors.iterator();
+			
+			while(it.hasNext())
+			{
+				Actor actor = (Actor) it.next();
+				if(actor.getCastles().size() != 0)
+				{
+					actor.update(now, pause);
+				}
+				else
+				{
+					it.remove();
+				}
+			}
 		}
 	}
 

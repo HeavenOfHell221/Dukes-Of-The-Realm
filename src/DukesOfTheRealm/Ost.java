@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;
 
+import Duke.Actor;
 import DukesOfTheRealm.Castle.Orientation;
 import Enum.SoldierEnum;
 import Interface.IUpdate;
@@ -36,16 +37,20 @@ public class Ost implements IUpdate, Serializable
 	private final ArrayList<Soldier> soldiers;
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
+	private Actor originActor;
+	private Actor destinationActor;
 
 	private transient Color color;
 	private transient long lastTime;
+	
+	private boolean stopAttack = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
 	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Color color)
+			final Color color, Actor originActor, Actor destinationActor)
 	{
 		this.origin = origin;
 		this.destination = destination;
@@ -55,6 +60,8 @@ public class Ost implements IUpdate, Serializable
 		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
+		this.originActor = originActor;
+		this.destinationActor = destinationActor;
 	}
 
 	/*************************************************/
@@ -372,11 +379,26 @@ public class Ost implements IUpdate, Serializable
 		return false;
 	}
 
-	/*
-	 * public void SetOstData(OstData ostData) {
-	 *
-	 * }
-	 */
+	public void win()
+	{
+		if(!stopAttack)
+		{
+			this.stopAttack = true;
+			Iterator it = this.destinationActor.getCastles().iterator();
+			while(it.hasNext())
+			{
+				Castle castle = (Castle) it.next();
+				if(castle == this.destination)
+				{
+					it.remove();
+					this.originActor.castlesWaitForAdding.add(castle);
+					this.destination.switchColor(this.origin.getMyColor());
+					break;
+				}
+			}
+		}
+		
+	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/

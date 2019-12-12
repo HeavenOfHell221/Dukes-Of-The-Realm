@@ -40,7 +40,9 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	private Rectangle background;
 
 	private Castle currentCastle;
+	private Castle lastCastle;
 	private Actor currentActor;
+	private Actor lastActor;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -60,6 +62,9 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		this.nbPiker = new Text();
 		this.florinIncome = new Text();
 		this.background = new Rectangle(240, 440);
+		
+		this.lastActor = null;
+		this.lastCastle = null;
 	}
 
 	/*************************************************/
@@ -88,9 +93,19 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 
 	private void updateTexts()
 	{
-		this.florinIncome.setText(this.currentActor.florinIncome(this.currentCastle));
-		this.owner.setText(this.currentActor.getName());
-		this.level.setText("Level: " + this.currentCastle.getLevel());
+		if(this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
+		{
+			this.florinIncome.setText(this.lastActor.florinIncome(this.currentCastle));
+			this.owner.setText(this.lastActor.getName(this.currentCastle));
+			this.level.setText("Level: " + this.lastCastle.getLevel());
+		}
+		else
+		{
+			this.florinIncome.setText(this.currentActor.florinIncome(this.currentCastle));
+			this.owner.setText(this.currentActor.getName(this.currentCastle));
+			this.level.setText("Level: " + this.currentCastle.getLevel());
+		}
+		
 		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
 		this.nbPiker.setText("" + this.currentCastle.getReserveOfSoldiers().getNbPikers());
 		this.nbKnight.setText("" + this.currentCastle.getReserveOfSoldiers().getNbKnights());
@@ -200,9 +215,16 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 
 	@Override
 	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
-	{
+	{	
+		this.lastActor = this.currentActor;
+		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 		this.currentActor = actor;
+		
+		if(this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
+		{
+			this.currentCastle = this.lastCastle;
+		}
 	}
 
 	/*************************************************/

@@ -188,12 +188,15 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private void Attack()
 	{
-		this.isDead = (--this.stats.damage <= 0) ? true : false;
-		getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
 		if (getReserveOfSoldiers().isStopAttack())
 		{
 			this.isDead = true;
-			// TODO changement de proprietaire
+			this.itsOst.win();
+		}
+		else
+		{
+			this.isDead = (--this.stats.damage <= 0) ? true : false;
+			getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
 		}
 	}
 

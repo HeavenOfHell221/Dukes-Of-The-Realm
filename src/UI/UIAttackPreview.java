@@ -109,11 +109,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 	@Override
 	public void update(final long now, final boolean pause)
-	{
-		if(this.nbKnight < 0) this.nbKnight = 0;
-		if(this.nbOnager < 0) this.nbOnager = 0;
-		if(this.nbPiker < 0) this.nbPiker = 0;
-		
+	{	
 		this.nbKnightText.setText(this.nbKnight + "");
 		this.nbPikerText.setText(this.nbPiker + "");
 		this.nbOnagerText.setText(this.nbOnager + "");
@@ -157,12 +153,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	
 	private void setAllButtons()
 	{
-		//this.buttonAttack.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('images/upgrade.png'); "
-				//+ "-fx-background-size: 256px 64px; " + "-fx-background-repeat: no-repeat; ");
-		
-		this.buttonAttack.setMinSize(256, 64);
-		this.buttonAttack.setMaxSize(256, 64);
-		this.buttonAttack.setCursor(Cursor.HAND);
+
+		setStyle(this.buttonAttack, "images/wide.png");
 		
 		setStyle(this.upKnight, "images/upgrade.png");
 		setStyle(this.upOnager, "images/upgrade.png");
@@ -172,13 +164,49 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		setStyle(this.downOnager, "images/downgrade.png");
 		setStyle(this.downPiker, "images/downgrade.png");
 		
-		this.upKnight.setOnMousePressed(e ->this.nbKnight++);
-		this.upPiker.setOnMousePressed(e ->this.nbPiker++);
-		this.upOnager.setOnMousePressed(e ->this.nbOnager++);
+		this.upKnight.setOnMousePressed(e ->
+		{
+			if(getNbKnights() > this.nbKnight)
+				this.nbKnight++;
+		});
+		this.upPiker.setOnMousePressed(e ->
+		{
+			if(getNbPikers() > this.nbPiker)
+				this.nbPiker++;
+		});
+		this.upOnager.setOnMousePressed(e ->
+		{
+			if(getNbOnagers() > this.nbOnager )
+				this.nbOnager++;
+		});
 		
-		this.downKnight.setOnMousePressed(e ->this.nbKnight--);
-		this.downPiker.setOnMousePressed(e ->this.nbPiker--);
-		this.downOnager.setOnMousePressed(e ->this.nbOnager--);
+		this.downKnight.setOnMousePressed(e ->
+		{
+			this.nbKnight = this.nbKnight > 0 ? this.nbKnight - 1 : this.nbKnight;
+		});
+		
+		this.downPiker.setOnMousePressed(e ->
+		{
+			this.nbPiker = this.nbPiker > 0 ? this.nbPiker - 1 : this.nbPiker;
+		});
+		
+		this.downOnager.setOnMousePressed(e ->
+		{
+			this.nbOnager = this.nbOnager > 0 ? this.nbOnager - 1 : this.nbOnager;
+		});
+		
+		this.buttonAttack.setOnMousePressed(e ->
+		{
+			if(this.lastCastle.getOst() == null)
+			{
+				this.lastCastle.getReserveOfSoldiers().removeSoldiers(nbPiker, nbKnight, nbOnager);
+				
+				this.lastCastle.createOst(this.currentCastle, nbPiker, nbKnight, nbOnager, this.lastActor, this.currentActor);
+				this.nbKnight = 0;
+				this.nbOnager = 0;
+				this.nbPiker = 0;
+			}
+		});
 	}
 	
 	private void addEventMouse(final Button b)
@@ -269,7 +297,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		relocate(this.downKnight, Settings.SCENE_WIDTH * margin + 20 + i * 3, 20 + offset + i * 1);
 		relocate(this.downOnager, Settings.SCENE_WIDTH * margin + 20 + i * 3,20 + offset + i * 2);
 		
-		relocate(this.buttonAttack, Settings.SCENE_WIDTH * margin + 40, offset + 250);
+		relocate(this.buttonAttack, Settings.SCENE_WIDTH * margin + 30 + i * 1.5, offset + 250);
 		
 		relocate(this.background, Settings.SCENE_WIDTH * margin, offset);
 	}
@@ -314,7 +342,36 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		setAllVisible(false);
 	}
 
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Castle#getNbPikers()
+	 */
+	public int getNbPikers()
+	{
+		return lastCastle.getNbPikers();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Castle#getNbKnights()
+	 */
+	public int getNbKnights()
+	{
+		return lastCastle.getNbKnights();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Castle#getNbOnagers()
+	 */
+	public int getNbOnagers()
+	{
+		return lastCastle.getNbOnagers();
+	}
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
+	
+	
 }

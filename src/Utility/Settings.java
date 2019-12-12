@@ -66,9 +66,9 @@ public class Settings
 	/****************************************************/
 
 	/* HP */ /* Can be balanced */
-	public static final int PIKER_HP = 10;
-	public static final int KNIGHT_HP = 20;
-	public static final int ONAGER_HP = 50;
+	public static final int PIKER_HP = 1;
+	public static final int KNIGHT_HP = 2;
+	public static final int ONAGER_HP = 5;
 
 	/* Damage */ /* Can be balanced */
 	public static final int PIKER_DAMAGE = 120;
@@ -81,9 +81,9 @@ public class Settings
 	public static final int ONAGER_COST = 8;
 
 	/* Speed */ /* Can be balanced */
-	public static final int PIKER_SPEED = 40;
+	public static final int PIKER_SPEED = 60;
 	public static final int KNIGHT_SPEED = 60;
-	public static final int ONAGER_SPEED = 20;
+	public static final int ONAGER_SPEED = 60;
 
 	/* Production time in frame */ /* Can be balanced */
 	public static final int PIKER_TIME_PRODUCTION = 1;

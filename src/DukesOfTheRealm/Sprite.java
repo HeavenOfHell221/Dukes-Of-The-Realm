@@ -133,6 +133,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	{
 		final double r = Settings.PIKER_REPRESENTATION_RADIUS;
 		final Circle circle = new Circle(getX(), getY(), r);
+		circle.setMouseTransparent(true);
 		this.shape = circle;
 		this.width = 2 * r;
 		this.height = 2 * r;
@@ -149,6 +150,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	{
 		final double s = Settings.KNIGHT_REPRESENTATION_SIZE;
 		final Rectangle r = new Rectangle(getX(), getY(), s, s);
+		r.setMouseTransparent(true);
 		this.shape = r;
 		this.width = s;
 		this.height = s;
@@ -166,6 +168,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		final double w = Settings.ONAGER_REPRESENTATION_WIDTH;
 		final double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
 		final Rectangle r = new Rectangle(getX(), getY(), w, h);
+		r.setMouseTransparent(true);
 		this.shape = r;
 		this.width = w;
 		this.height = h;
@@ -315,5 +318,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	public final void setCoordinate(final Point2D coordinate)
 	{
 		this.coordinate = coordinate;
+	}
+	
+	public void setColorShape(Color color)
+	{
+		this.shape.setFill(color);
 	}
 }

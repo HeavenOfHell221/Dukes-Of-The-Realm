@@ -2,6 +2,7 @@ package Duke;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
@@ -21,6 +22,7 @@ public class Actor implements Serializable, IUpdate
 	protected ArrayList<Castle> castles;
 	protected transient Color color;
 	protected transient Pane pane;
+	public ArrayList<Castle> castlesWaitForAdding;
 
 	Actor()
 	{
@@ -31,6 +33,7 @@ public class Actor implements Serializable, IUpdate
 	public void start()
 	{
 		this.castles = new ArrayList<>();
+		this.castlesWaitForAdding = new ArrayList<>();
 	}
 
 	public void startTransient(final Color color, final Pane pane)
@@ -58,7 +61,9 @@ public class Actor implements Serializable, IUpdate
 
 	public String florinIncome(final Castle castle)
 	{
-		return Settings.FLORIN_PER_SECOND * castle.getLevel() + " Florin/s";
+		if(castles.contains(castle))
+			return Settings.FLORIN_PER_SECOND * castle.getLevel() + " Florin/s";
+		return " -- Florin/s";
 	}
 
 	public void addFirstCastle(final Castle castle)
@@ -111,6 +116,13 @@ public class Actor implements Serializable, IUpdate
 	{
 		return false;
 	}
+	
+	public String getName(Castle caslte)
+	{
+		if(castles.contains(caslte))
+			return name;
+		return "--";
+	}
 
 	public ArrayList<Castle> getCastles()
 	{
@@ -120,12 +132,22 @@ public class Actor implements Serializable, IUpdate
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		this.castles.forEach(castle ->
+		Iterator<Castle> it = castles.iterator();
+		
+		while(it.hasNext())
 		{
+			Castle castle = (Castle) it.next();
 			updateFlorin(castle);
 			castle.updateProduction();
 			castle.updateUIShape();
 			castle.updateOst(now, pause);
-		});
+		}
+		
+		if(this.castlesWaitForAdding.size() > 0)
+		{
+			this.castles.addAll(this.castlesWaitForAdding);
+			this.castlesWaitForAdding.forEach(c -> addEvent(c));
+			this.castlesWaitForAdding.clear();
+		}
 	}
 }

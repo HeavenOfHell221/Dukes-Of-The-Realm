@@ -181,6 +181,24 @@ public class ReserveOfSoldiers implements Serializable
 		}
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param nbPikers
+	 * @param nbKnights
+	 * @param nbOnagers
+	 */
+	public void removeSoldiers(int nbPikers, int nbKnights, int nbOnagers)
+	{
+		this.nbKnights -= nbKnights;
+		this.nbPikers -= nbPikers;
+		this.nbOnagers -= nbOnagers;
+	}
+	
+	public void reactivateAttack()
+	{
+		this.stopAttack = false;
+	}
 
 	/**
 	 * 
@@ -243,5 +261,12 @@ public class ReserveOfSoldiers implements Serializable
 	public boolean isStopAttack()
 	{
 		return this.stopAttack;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ReserveOfSoldiers [stopAttack=" + stopAttack + ", nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers="
+				+ nbOnagers + "]";
 	}
 }
