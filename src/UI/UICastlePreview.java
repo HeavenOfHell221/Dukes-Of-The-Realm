@@ -27,6 +27,8 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	private ImageView imagePiker;
 	private ImageView imageOnager;
 	private ImageView imageFlorin;
+	private ImageView imageCircleCurrentCastle;
+	private ImageView imageCircleLastCastle;
 
 	private Text level;
 	private Text owner;
@@ -50,10 +52,12 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 
 	public UICastlePreview()
 	{
-		this.imageKnight = newImageView("/images/mounted-knight-white.png");
-		this.imagePiker = newImageView("/images/spartan-white.png");
-		this.imageOnager = newImageView("/images/catapult-white.png");
-		this.imageFlorin = newImageView("/images/coins.png");
+		this.imageKnight = newImageView("/images/mounted-knight-white.png", 64, 64);
+		this.imagePiker = newImageView("/images/spartan-white.png", 64, 64);
+		this.imageOnager = newImageView("/images/catapult-white.png", 64, 64);
+		this.imageFlorin = newImageView("/images/coins.png", 64, 64);
+		this.imageCircleCurrentCastle = newImageView("/images/circle.png", 128, 128);
+		this.imageCircleLastCastle = newImageView("/images/circle2.png", 128, 128);
 		this.level = new Text();
 		this.owner = new Text();
 		this.nbFlorin = new Text();
@@ -89,6 +93,24 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		{
 			updateTexts();
 		}
+	}
+	
+	private void changeCircle()
+	{
+		if(this.currentCastle != null)
+		{
+			relocate(this.imageCircleCurrentCastle, this.currentCastle.getX() - 128/2 + Settings.CASTLE_SIZE/2 + 1, 
+					this.currentCastle.getY() - 128/2 + Settings.CASTLE_SIZE/2 + 1);
+		}
+			
+		if(this.lastCastle != null && this.lastCastle != this.currentCastle)
+		{
+			setVisible(this.imageCircleLastCastle, true);
+			relocate(this.imageCircleLastCastle, this.lastCastle.getX() - 128/2 + Settings.CASTLE_SIZE/2 + 1, 
+				this.lastCastle.getY() - 128/2 + Settings.CASTLE_SIZE/2 + 1);
+		}
+		else
+			setVisible(this.imageCircleLastCastle, false);
 	}
 
 	private void updateTexts()
@@ -186,6 +208,8 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		addNode(this.nbKnight);
 		addNode(this.nbOnager);
 		addNode(this.nbPiker);
+		addNode(this.imageCircleCurrentCastle);
+		addNode(this.imageCircleLastCastle);
 	}
 
 	private void setText(final Text text, final int font)
@@ -211,6 +235,8 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		setVisible(this.nbKnight, visible);
 		setVisible(this.nbOnager, visible);
 		setVisible(this.nbPiker, visible);
+		setVisible(this.imageCircleCurrentCastle, visible);
+		setVisible(this.imageCircleLastCastle, visible);
 	}
 
 	@Override
@@ -220,6 +246,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 		this.currentActor = actor;
+		changeCircle();
 		
 		if(this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
 		{

@@ -70,9 +70,9 @@ public interface IUI
 	 * @param path
 	 * @return
 	 */
-	default ImageView newImageView(final String path)
+	default ImageView newImageView(final String path, int width, int height)
 	{
-		return new ImageView(new Image(getClass().getResource(path).toExternalForm(), 64, 64, false, true));
+		return new ImageView(new Image(getClass().getResource(path).toExternalForm(), width, height, true, true));
 	}
 
 }

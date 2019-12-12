@@ -70,9 +70,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 	public UIAttackPreview()
 	{
-		this.imageKnight = newImageView("/images/mounted-knight-white.png");
-		this.imagePiker = newImageView("/images/spartan-white.png");
-		this.imageOnager = newImageView("/images/catapult-white.png");
+		this.imageKnight = newImageView("/images/mounted-knight-white.png", 64, 64);
+		this.imagePiker = newImageView("/images/spartan-white.png", 64, 64);
+		this.imageOnager = newImageView("/images/catapult-white.png", 64, 64);
 		this.background = new Rectangle(340, 350);
 		this.buttonAttack = new Button();
 		this.upKnight = new Button();
