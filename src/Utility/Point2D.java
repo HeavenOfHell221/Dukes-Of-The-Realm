@@ -81,30 +81,30 @@ public class Point2D implements Serializable
 
 	/**
 	 * 
-	 * @param x
+	 * @param dx
 	 */
-	public void addDx(final double x)
+	public void addDx(final double dx)
 	{
-		this.x += x;
+		this.x += dx;
 	}
 	
 	/**
 	 * 
-	 * @param y
+	 * @param dy
 	 */
-	public void addDy(final double y)
+	public void addDy(final double dy)
 	{
-		this.y += y;
+		this.y += dy;
 	}
 
 	/**
 	 * 
-	 * @param x
-	 * @param y
+	 * @param dx
+	 * @param dy
 	 */
-	public void addMotion(final double x, final double y)
+	public void addMotion(final double dx, final double dy)
 	{
-		this.x += x;
-		this.y += y;
+		this.x += dx;
+		this.y += dy;
 	}
 }

@@ -168,7 +168,15 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		{
 			if(getNbKnights() > this.nbKnight)
 				this.nbKnight++;
+		});	
+		
+		this.upKnight.setOnScroll(e -> 
+		{
+			if(e.getDeltaY() > 0)
+				if(getNbKnights() > this.nbKnight)
+					this.nbKnight++;
 		});
+		
 		this.upPiker.setOnMousePressed(e ->
 		{
 			if(getNbPikers() > this.nbPiker)
@@ -180,9 +188,22 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 				this.nbOnager++;
 		});
 		
+		this.upPiker.setOnScroll(e ->
+		{
+			if(e.getDeltaY() > 0)
+				if(getNbPikers() > this.nbPiker)
+					this.nbPiker++;
+		});
+		this.upOnager.setOnScroll(e ->
+		{
+			if(e.getDeltaY() > 0)
+				if(getNbOnagers() > this.nbOnager )
+					this.nbOnager++;
+		});
+		
 		this.downKnight.setOnMousePressed(e ->
 		{
-			this.nbKnight = this.nbKnight > 0 ? this.nbKnight - 1 : this.nbKnight;
+				this.nbKnight = this.nbKnight > 0 ? this.nbKnight - 1 : this.nbKnight;
 		});
 		
 		this.downPiker.setOnMousePressed(e ->
@@ -193,6 +214,21 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		this.downOnager.setOnMousePressed(e ->
 		{
 			this.nbOnager = this.nbOnager > 0 ? this.nbOnager - 1 : this.nbOnager;
+		});
+		
+		this.downKnight.setOnScroll(e ->
+		{
+			if(e.getDeltaY() < 0) this.nbKnight = this.nbKnight > 0 ? this.nbKnight - 1 : this.nbKnight;
+		});
+		
+		this.downPiker.setOnScroll(e ->
+		{
+			if(e.getDeltaY() < 0) this.nbPiker = this.nbPiker > 0 ? this.nbPiker - 1 : this.nbPiker;
+		});
+		
+		this.downOnager.setOnScroll(e ->
+		{
+			if(e.getDeltaY() < 0) this.nbOnager = this.nbOnager > 0 ? this.nbOnager - 1 : this.nbOnager;
 		});
 		
 		this.buttonAttack.setOnMousePressed(e ->

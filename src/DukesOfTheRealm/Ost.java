@@ -21,6 +21,11 @@ import javafx.scene.paint.Color;
 public class Ost implements IUpdate, Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -195,8 +200,8 @@ public class Ost implements IUpdate, Serializable
 
 	private void DeployOneSoldiersWave()
 	{
-		final int nbSpawn = (this.soldiers.size() <= (this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS
-				: (this.nbSoldiers - this.soldiers.size());
+		final int nbSpawn = (this.nbSoldiersSpawned <= (this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS
+				: (this.nbSoldiers - this.nbSoldiersSpawned);
 
 		switch (this.origin.getOrientation())
 		{
@@ -217,7 +222,7 @@ public class Ost implements IUpdate, Serializable
 			default:
 				break;
 		}
-
+		
 		if (this.nbSoldiersSpawned == this.nbSoldiers)
 		{
 			this.fullyDeployed = true;
@@ -226,7 +231,7 @@ public class Ost implements IUpdate, Serializable
 
 	private void SpawnSoldier(final int x, final int y)
 	{
-		final AtomicReference<SoldierEnum> soldierType = GetNextAvailableSoldier();
+		final AtomicReference<SoldierEnum> soldierType = getNextAvailableSoldier();
 		final Pane layer = this.origin.getLayer();
 
 		switch (this.origin.getOrientation())
@@ -344,7 +349,7 @@ public class Ost implements IUpdate, Serializable
 
 	}
 
-	private AtomicReference<SoldierEnum> GetNextAvailableSoldier()
+	private AtomicReference<SoldierEnum> getNextAvailableSoldier()
 	{
 		final AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
 		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Piker).count();
@@ -371,7 +376,7 @@ public class Ost implements IUpdate, Serializable
 		{
 			this.lastTime = now;
 		}
-		if (now - this.lastTime > Settings.GAME_FREQUENCY)
+		if (now - this.lastTime > Settings.GAME_FREQUENCY/2)
 		{
 			this.lastTime = now;
 			return true;
@@ -384,10 +389,10 @@ public class Ost implements IUpdate, Serializable
 		if(!stopAttack)
 		{
 			this.stopAttack = true;
-			Iterator it = this.destinationActor.getCastles().iterator();
+			Iterator<Castle> it = this.destinationActor.getCastles().iterator();
 			while(it.hasNext())
 			{
-				Castle castle = (Castle) it.next();
+				Castle castle = it.next();
 				if(castle == this.destination)
 				{
 					it.remove();
@@ -404,12 +409,12 @@ public class Ost implements IUpdate, Serializable
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-	public Castle GetOrigin()
+	public Castle getOrigin()
 	{
 		return this.origin;
 	}
 
-	public Castle GetDestination()
+	public Castle getDestination()
 	{
 		return this.destination;
 	}
@@ -429,9 +434,14 @@ public class Ost implements IUpdate, Serializable
 		return this.speed;
 	}
 
-	public ArrayList<Soldier> GetSoldiers()
+	public ArrayList<Soldier> getSoldiers()
 	{
 		return this.soldiers;
+	}
+	
+	public boolean getStopAttack()
+	{
+		return this.stopAttack;
 	}
 
 	@Override

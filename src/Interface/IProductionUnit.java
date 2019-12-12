@@ -10,7 +10,7 @@ public interface IProductionUnit
 	 * 
 	 * @return
 	 */
-	int getProductionTime();
+	double getProductionTime();
 
 	/**
 	 * 

@@ -30,7 +30,7 @@ public class Piker extends Soldier
 	}
 
 	@Override
-	public int getProductionTime()
+	public double getProductionTime()
 	{
 		return Settings.PIKER_TIME_PRODUCTION;
 	}

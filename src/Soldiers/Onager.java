@@ -30,7 +30,7 @@ public class Onager extends Soldier
 	}
 
 	@Override
-	public int getProductionTime()
+	public double getProductionTime()
 	{
 		return Settings.ONAGER_TIME_PRODUCTION;
 	}

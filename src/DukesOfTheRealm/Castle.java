@@ -492,7 +492,7 @@ public class Castle extends Sprite implements Serializable
 	 * 
 	 */
 	@Override
-	public int getProductionTime()
+	public double getProductionTime()
 	{
 		return Settings.LEVEL_UP_DURATION_OFFSET + Settings.LEVEL_UP_DURATION_FACTOR * this.level;
 	}
