@@ -34,21 +34,18 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
-	private Button buttonCreatePiker;
-	private Button buttonCreateKnight;
-	private Button buttonCreateOnager;
-	private Button buttonUpgradeCastle;
+	private final Button buttonCreatePiker;
+	private final Button buttonCreateKnight;
+	private final Button buttonCreateOnager;
+	private final Button buttonUpgradeCastle;
 
-	private Rectangle background;
+	private final Rectangle background;
 
-	private Rectangle backgroundTime;
-	private Rectangle fillTime;
+	private final Rectangle backgroundTime;
+	private final Rectangle fillTime;
 
 	private Castle currentCastle;
 	private Actor currentActor;
-	
-	private Actor lastActor;
-	private Castle lastCastle;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -65,11 +62,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 		this.backgroundTime = new Rectangle(240, 40);
 		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
-		
-		this.lastActor = null;
-		this.lastCastle = null;
-		
-		
+
 	}
 
 	/*************************************************/
@@ -125,7 +118,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 			this.fillTime.setWidth(0);
 			return;
 		}
-		if(fractionFill == 0)
+		if (fractionFill == 0)
 		{
 			this.fillTime.setWidth(0);
 			return;
@@ -269,11 +262,9 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible)
 	{
-		this.lastActor = this.currentActor;
-		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 		this.currentActor = actor;
-		
+
 		setAllVisible(productionVisible);
 	}
 

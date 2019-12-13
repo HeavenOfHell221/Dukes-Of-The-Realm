@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
-import UI.UIManager;
 import Utility.Settings;
 import Utility.Time;
 import javafx.scene.layout.Pane;
@@ -31,7 +30,7 @@ public class Player extends Actor implements Serializable
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
 	}
-	
+
 	@Override
 	public boolean isPlayer()
 	{

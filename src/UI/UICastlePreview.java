@@ -8,7 +8,6 @@ import Interface.IUI;
 import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,23 +22,23 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
-	private ImageView imageKnight;
-	private ImageView imagePiker;
-	private ImageView imageOnager;
-	private ImageView imageFlorin;
-	private ImageView imageCircleCurrentCastle;
-	private ImageView imageCircleLastCastle;
+	private final ImageView imageKnight;
+	private final ImageView imagePiker;
+	private final ImageView imageOnager;
+	private final ImageView imageFlorin;
+	private final ImageView imageCircleCurrentCastle;
+	private final ImageView imageCircleLastCastle;
 
-	private Text level;
-	private Text owner;
-	private Text florinIncome;
+	private final Text level;
+	private final Text owner;
+	private final Text florinIncome;
 
-	private Text nbKnight;
-	private Text nbPiker;
-	private Text nbOnager;
-	private Text nbFlorin;
+	private final Text nbKnight;
+	private final Text nbPiker;
+	private final Text nbOnager;
+	private final Text nbFlorin;
 
-	private Rectangle background;
+	private final Rectangle background;
 
 	private Castle currentCastle;
 	private Castle lastCastle;
@@ -66,7 +65,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		this.nbPiker = new Text();
 		this.florinIncome = new Text();
 		this.background = new Rectangle(240, 440);
-		
+
 		this.lastActor = null;
 		this.lastCastle = null;
 	}
@@ -94,30 +93,34 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 			updateTexts();
 		}
 	}
-	
+
 	private void changeCircle()
 	{
-		if(this.currentCastle != null)
+		if (this.currentCastle != null)
 		{
-			relocate(this.imageCircleCurrentCastle, this.currentCastle.getX() - 128/2 + Settings.CASTLE_SIZE/2 + 1, 
-					this.currentCastle.getY() - 128/2 + Settings.CASTLE_SIZE/2 + 1);
+			relocate(this.imageCircleCurrentCastle, this.currentCastle.getX() - 128 / 2 + Settings.CASTLE_SIZE / 2 + 1,
+					this.currentCastle.getY() - 128 / 2 + Settings.CASTLE_SIZE / 2 + 1);
 		}
 		else
+		{
 			setVisible(this.imageCircleCurrentCastle, false);
-			
-		if(this.lastCastle != null && this.lastCastle != this.currentCastle)
+		}
+
+		if (this.lastCastle != null && this.lastCastle != this.currentCastle)
 		{
 			setVisible(this.imageCircleLastCastle, true);
-			relocate(this.imageCircleLastCastle, this.lastCastle.getX() - 128/2 + Settings.CASTLE_SIZE/2 + 1, 
-				this.lastCastle.getY() - 128/2 + Settings.CASTLE_SIZE/2 + 1);
+			relocate(this.imageCircleLastCastle, this.lastCastle.getX() - 128 / 2 + Settings.CASTLE_SIZE / 2 + 1,
+					this.lastCastle.getY() - 128 / 2 + Settings.CASTLE_SIZE / 2 + 1);
 		}
 		else
+		{
 			setVisible(this.imageCircleLastCastle, false);
+		}
 	}
 
 	private void updateTexts()
 	{
-		if(this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
+		if (this.lastActor != null && this.lastActor.isPlayer() && !this.currentActor.isPlayer())
 		{
 			this.florinIncome.setText(this.lastActor.florinIncome(this.currentCastle));
 			this.owner.setText(this.lastActor.getName(this.currentCastle));
@@ -129,17 +132,16 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 			this.owner.setText(this.currentActor.getName(this.currentCastle));
 			this.level.setText("Level: " + this.currentCastle.getLevel());
 		}
-		
+
 		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
-		this.nbPiker.setText("" + this.currentCastle.getReserveOfSoldiers().getNbPikers());
-		this.nbKnight.setText("" + this.currentCastle.getReserveOfSoldiers().getNbKnights());
-		this.nbOnager.setText("" + this.currentCastle.getReserveOfSoldiers().getNbOnagers());
+		this.nbPiker.setText("" + this.currentCastle.getNbPikers());
+		this.nbKnight.setText("" + this.currentCastle.getNbKnights());
+		this.nbOnager.setText("" + this.currentCastle.getNbOnagers());
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
 
 	private void setAllTexts()
 	{
@@ -242,54 +244,54 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	}
 
 	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible, final boolean attackVisible)
-	{	
+	{
 		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
 		changeCircle();
-		if(!attackVisible)
+		if (!attackVisible)
 		{
 			this.currentCastle = castle;
 		}
-		
+
 		this.currentActor = actor;
 	}
 
 	/**
 	 * @return the currentCastle
 	 */
-	public final Castle getCurrentCastle()
+	public Castle getCurrentCastle()
 	{
-		return currentCastle;
+		return this.currentCastle;
 	}
 
 	/**
 	 * @return the lastCastle
 	 */
-	public final Castle getLastCastle()
+	public Castle getLastCastle()
 	{
-		return lastCastle;
+		return this.lastCastle;
 	}
 
 	/**
 	 * @return the currentActor
 	 */
-	public final Actor getCurrentActor()
+	public Actor getCurrentActor()
 	{
-		return currentActor;
+		return this.currentActor;
 	}
 
 	/**
 	 * @return the lastActor
 	 */
-	public final Actor getLastActor()
+	public Actor getLastActor()
 	{
-		return lastActor;
+		return this.lastActor;
 	}
 
 	/**
 	 * @param currentCastle the currentCastle to set
 	 */
-	public final void setCurrentCastle(Castle currentCastle)
+	public void setCurrentCastle(final Castle currentCastle)
 	{
 		this.currentCastle = currentCastle;
 	}
@@ -297,7 +299,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/**
 	 * @param lastCastle the lastCastle to set
 	 */
-	public final void setLastCastle(Castle lastCastle)
+	public void setLastCastle(final Castle lastCastle)
 	{
 		this.lastCastle = lastCastle;
 	}
@@ -305,7 +307,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/**
 	 * @param currentActor the currentActor to set
 	 */
-	public final void setCurrentActor(Actor currentActor)
+	public void setCurrentActor(final Actor currentActor)
 	{
 		this.currentActor = currentActor;
 	}
@@ -313,7 +315,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/**
 	 * @param lastActor the lastActor to set
 	 */
-	public final void setLastActor(Actor lastActor)
+	public void setLastActor(final Actor lastActor)
 	{
 		this.lastActor = lastActor;
 	}
@@ -321,6 +323,5 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
-	
-	
+
 }

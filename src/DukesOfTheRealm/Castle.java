@@ -7,13 +7,8 @@ import java.util.Stack;
 
 import Duke.Actor;
 import Interface.IProductionUnit;
-import Soldiers.Knight;
-import Soldiers.Onager;
-import Soldiers.Piker;
-import UI.UIManager;
 import Utility.Point2D;
 import Utility.Settings;
-import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -86,6 +81,11 @@ public class Castle extends Sprite implements Serializable
 	 * 
 	 */
 	private Stack<Point2D> attackLocations;
+	
+	/**
+	 * 
+	 */
+	private int nbOstsarriving = 0;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -443,14 +443,33 @@ public class Castle extends Sprite implements Serializable
 	{
 		return this.level;
 	}
+	
+	
+	/**
+	 * 
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#addPiker()
+	 */
+	public void addPiker()
+	{
+		reserveOfSoldiers.addPiker();
+	}
 
 	/**
 	 * 
-	 * @return
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#addKnight()
 	 */
-	public ReserveOfSoldiers getReserveOfSoldiers()
+	public void addKnight()
 	{
-		return this.reserveOfSoldiers;
+		reserveOfSoldiers.addKnight();
+	}
+
+	/**
+	 * 
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#addOnager()
+	 */
+	public void addOnager()
+	{
+		reserveOfSoldiers.addOnager();
 	}
 
 	/**
@@ -484,9 +503,9 @@ public class Castle extends Sprite implements Serializable
 	 * 
 	 * @return
 	 */
-	public Ost getOst()
+	public boolean isOstExist()
 	{
-		return this.ost;
+		return this.ost == null;
 	}
 
 	/**
@@ -577,6 +596,72 @@ public class Castle extends Sprite implements Serializable
 	{
 		return caserne;
 	}
+
+	
+
+	/**
+	 * @return the nbOstsarriving
+	 */
+	public final int getNbOstsarriving()
+	{
+		return nbOstsarriving;
+	}
+
+	/**
+	 * 
+	 */
+	public final void addNbOstsarriving()
+	{
+		this.nbOstsarriving += 1;
+	}
+	
+	/**
+	 * 
+	 */
+	public final void removeNbOstsarriving()
+	{
+		this.nbOstsarriving -= 1;
+	}
+
+	/**
+	 * @param x
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(int)
+	 */
+	public void randomRemoveHP(int x)
+	{
+		reserveOfSoldiers.randomRemoveHP(x);
+	}
+
+	/**
+	 * @param nbPikers
+	 * @param nbKnights
+	 * @param nbOnagers
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
+	 */
+	public void removeSoldiers(int nbPikers, int nbKnights, int nbOnagers)
+	{
+		reserveOfSoldiers.removeSoldiers(nbPikers, nbKnights, nbOnagers);
+	}
+
+	/**
+	 * 
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#reactivateAttack()
+	 */
+	public void reactivateAttack()
+	{
+		reserveOfSoldiers.reactivateAttack();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#isStopAttack()
+	 */
+	public boolean isStopAttack()
+	{
+		return reserveOfSoldiers.isStopAttack();
+	}
+	
+	
 
 	@Override
 	public String toString()

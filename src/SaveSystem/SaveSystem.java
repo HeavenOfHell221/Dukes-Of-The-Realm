@@ -10,13 +10,13 @@ import java.io.ObjectOutputStream;
 import DukesOfTheRealm.Kingdom;
 
 /**
- * 
+ *
  *
  */
 public class SaveSystem
 {
 	/**
-	 * 
+	 *
 	 * @param kingdom
 	 */
 	public static void save(final Kingdom kingdom)
@@ -40,7 +40,7 @@ public class SaveSystem
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static Kingdom load()

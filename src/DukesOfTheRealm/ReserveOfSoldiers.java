@@ -5,7 +5,7 @@ import java.io.Serializable;
 import Utility.Settings;
 
 /**
- * 
+ *
  *
  */
 public class ReserveOfSoldiers implements Serializable
@@ -19,7 +19,7 @@ public class ReserveOfSoldiers implements Serializable
 	private transient int onagerHPremaining = Settings.ONAGER_HP;
 
 	/**
-	 * 
+	 *
 	 */
 	public ReserveOfSoldiers()
 	{
@@ -27,7 +27,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void addPiker()
 	{
@@ -35,7 +35,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void addKnight()
 	{
@@ -43,7 +43,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void addOnager()
 	{
@@ -51,7 +51,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 */
 	public void randomRemoveHP(int x)
@@ -103,7 +103,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void switchActor()
 	{
@@ -114,7 +114,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean removePikerHP()
@@ -137,7 +137,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean removeKnightHP()
@@ -160,7 +160,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean removeOnagerHP()
@@ -181,27 +181,27 @@ public class ReserveOfSoldiers implements Serializable
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param nbPikers
 	 * @param nbKnights
 	 * @param nbOnagers
 	 */
-	public void removeSoldiers(int nbPikers, int nbKnights, int nbOnagers)
+	public void removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
 		this.nbKnights -= nbKnights;
 		this.nbPikers -= nbPikers;
 		this.nbOnagers -= nbOnagers;
 	}
-	
+
 	public void reactivateAttack()
 	{
 		this.stopAttack = false;
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public int getNbPikers()
@@ -210,7 +210,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public int getNbKnights()
@@ -219,7 +219,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public int getNbOnagers()
@@ -228,7 +228,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param nbPikers
 	 */
 	public void setNbPikers(final int nbPikers)
@@ -237,7 +237,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param nbKnights
 	 */
 	public void setNbKnights(final int nbKnights)
@@ -246,7 +246,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param nbOnagers
 	 */
 	public void setNbOnagers(final int nbOnagers)
@@ -255,7 +255,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isStopAttack()
@@ -266,7 +266,7 @@ public class ReserveOfSoldiers implements Serializable
 	@Override
 	public String toString()
 	{
-		return "ReserveOfSoldiers [stopAttack=" + stopAttack + ", nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers="
-				+ nbOnagers + "]";
+		return "ReserveOfSoldiers [stopAttack=" + this.stopAttack + ", nbPikers=" + this.nbPikers + ", nbKnights=" + this.nbKnights
+				+ ", nbOnagers=" + this.nbOnagers + "]";
 	}
 }

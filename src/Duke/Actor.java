@@ -61,8 +61,10 @@ public class Actor implements Serializable, IUpdate
 
 	public String florinIncome(final Castle castle)
 	{
-		if(castles.contains(castle))
+		if (this.castles.contains(castle))
+		{
 			return Settings.FLORIN_PER_SECOND * castle.getLevel() + " Florin/s";
+		}
 		return " -- Florin/s";
 	}
 
@@ -111,16 +113,18 @@ public class Actor implements Serializable, IUpdate
 	{
 		return this.color;
 	}
-	
+
 	public boolean isPlayer()
 	{
 		return false;
 	}
-	
-	public String getName(Castle caslte)
+
+	public String getName(final Castle caslte)
 	{
-		if(castles.contains(caslte))
-			return name;
+		if (this.castles.contains(caslte))
+		{
+			return this.name;
+		}
 		return "--";
 	}
 
@@ -132,18 +136,18 @@ public class Actor implements Serializable, IUpdate
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		Iterator<Castle> it = castles.iterator();
-		
-		while(it.hasNext())
+		Iterator<Castle> it = this.castles.iterator();
+
+		while (it.hasNext())
 		{
-			Castle castle = (Castle) it.next();
+			Castle castle = it.next();
 			updateFlorin(castle);
 			castle.updateProduction();
 			castle.updateUIShape();
 			castle.updateOst(now, pause);
 		}
-		
-		if(this.castlesWaitForAdding.size() > 0)
+
+		if (this.castlesWaitForAdding.size() > 0)
 		{
 			this.castles.addAll(this.castlesWaitForAdding);
 			this.castlesWaitForAdding.forEach(c -> addEvent(c));

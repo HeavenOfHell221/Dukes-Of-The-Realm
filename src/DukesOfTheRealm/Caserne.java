@@ -7,50 +7,50 @@ import Interface.IProductionUnit;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
-import UI.UIManager;
 import Utility.Time;
 
 public class Caserne implements Serializable
 {
-	private ArrayDeque<IProductionUnit> productionUnit;
+	private static final long serialVersionUID = 1L;
+	private final ArrayDeque<IProductionUnit> productionUnit;
 	private double productionTime;
 	private final Castle castle;
 	private double ratio;
-	
-	public Caserne(Castle castle)
+
+	public Caserne(final Castle castle)
 	{
 		this.productionTime = 0;
 		this.productionUnit = new ArrayDeque<>();
 		this.castle = castle;
 	}
-	
+
 	public void updateProduction()
 	{
 		if (this.productionUnit.size() > 0)
 		{
 			this.productionTime -= (1 * Time.deltaTime);
 
-			ratio = 1 - (this.productionTime / this.productionUnit.getFirst().getProductionTime());
-			
+			this.ratio = 1 - (this.productionTime / this.productionUnit.getFirst().getProductionTime());
+
 			if (this.productionTime <= 0)
 			{
 				final IProductionUnit p = this.productionUnit.pollFirst();
-				
+
 				if (p.getClass() == Castle.class)
 				{
-					castle.levelUp();
+					this.castle.levelUp();
 				}
 				else if (p.getClass() == Piker.class)
 				{
-					castle.getReserveOfSoldiers().addPiker();
+					this.castle.addPiker();
 				}
 				else if (p.getClass() == Onager.class)
 				{
-					castle.getReserveOfSoldiers().addOnager();
+					this.castle.addOnager();
 				}
 				else if (p.getClass() == Knight.class)
 				{
-					castle.getReserveOfSoldiers().addKnight();
+					this.castle.addKnight();
 				}
 
 				if (this.productionUnit.size() > 0)
@@ -60,26 +60,26 @@ public class Caserne implements Serializable
 			}
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public void removeLastProduction()
 	{
-		IProductionUnit i  = this.productionUnit.pollLast();
+		IProductionUnit i = this.productionUnit.pollLast();
 		this.castle.addFlorin(i.getProductionCost());
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
-	public void resetQueue(boolean refundFlorin)
+	public void resetQueue(final boolean refundFlorin)
 	{
-		if(refundFlorin)
+		if (refundFlorin)
 		{
-			while(!this.productionUnit.isEmpty())
+			while (!this.productionUnit.isEmpty())
 			{
-				IProductionUnit i  = this.productionUnit.pollFirst();
+				IProductionUnit i = this.productionUnit.pollFirst();
 				this.castle.addFlorin(i.getProductionCost());
 			}
 		}
@@ -89,15 +89,15 @@ public class Caserne implements Serializable
 			this.productionTime = 0;
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @param newProduction
+	 *
+	 * @param  newProduction
 	 * @return
 	 */
 	public boolean addProduction(final IProductionUnit newProduction)
 	{
-		if (newProduction == null || !castle.removeFlorin(newProduction.getProductionCost()))
+		if (newProduction == null || !this.castle.removeFlorin(newProduction.getProductionCost()))
 		{
 			return false;
 		}
@@ -117,7 +117,7 @@ public class Caserne implements Serializable
 	 */
 	public final ArrayDeque<IProductionUnit> getProductionUnit()
 	{
-		return productionUnit;
+		return this.productionUnit;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Caserne implements Serializable
 	 */
 	public final double getProductionTime()
 	{
-		return productionTime;
+		return this.productionTime;
 	}
 
 	/**
@@ -133,6 +133,6 @@ public class Caserne implements Serializable
 	 */
 	public final double getRatio()
 	{
-		return ratio;
+		return this.ratio;
 	}
 }

@@ -1,7 +1,7 @@
 package Utility;
 
 /**
- * 
+ *
  *
  */
 public class Settings

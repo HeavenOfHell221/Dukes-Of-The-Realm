@@ -25,62 +25,62 @@ public class Main extends Application
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	private Pane playfieldLayer;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Scene mainScene;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private AnimationTimer lobbyGameLoop;
-	
+
 	/*
-	 * 
+	 *
 	 */
 	private AnimationTimer mainGameLoop;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Group root;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Input input;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Time time;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Kingdom kingdom;
 
 	/**
-	 * 
+	 *
 	 */
 	private long lastTime = 0;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static boolean pause = false;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public boolean pauseForce = false;
 
 	/**
-	 * 
+	 *
 	 */
 	public static boolean isNewGame = false;
 
@@ -89,7 +89,7 @@ public class Main extends Application
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void start(final Stage primaryStage)
@@ -123,7 +123,7 @@ public class Main extends Application
 			public void handle(final long now)
 			{
 				processInput(Main.this.input, now);
-				update(now, Main.this.pause || pauseForce);
+				update(now, Main.this.pause || Main.this.pauseForce);
 			}
 
 			private void processInput(final Input input, final long now)
@@ -136,7 +136,7 @@ public class Main extends Application
 				}
 				if (input.isSpace() && Time(now))
 				{
-					pauseForce = !pauseForce;
+					Main.this.pauseForce = !Main.this.pauseForce;
 				}
 			}
 		};
@@ -145,7 +145,7 @@ public class Main extends Application
 	}
 
 	/**
-	 * 
+	 *
 	 * @param primaryStage
 	 */
 	private void Awake(final Stage primaryStage)
@@ -213,7 +213,7 @@ public class Main extends Application
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param now
 	 * @param pause
 	 */
@@ -225,15 +225,15 @@ public class Main extends Application
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
 	/**
-	 * 
-	 * @param now
+	 *
+	 * @param  now
 	 * @return
 	 */
 	private boolean Time(final long now)
@@ -248,7 +248,7 @@ public class Main extends Application
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void newGame()
 	{
@@ -261,7 +261,7 @@ public class Main extends Application
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void loadGame()
 	{
@@ -280,7 +280,7 @@ public class Main extends Application
 	}
 
 	/**
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(final String[] args)

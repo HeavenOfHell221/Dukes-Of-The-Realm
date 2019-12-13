@@ -22,10 +22,10 @@ public class Ost implements IUpdate, Serializable
 {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -42,12 +42,12 @@ public class Ost implements IUpdate, Serializable
 	private final ArrayList<Soldier> soldiers;
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
-	private Actor originActor;
-	private Actor destinationActor;
+	private final Actor originActor;
+	private final Actor destinationActor;
 
 	private transient Color color;
 	private transient long lastTime;
-	
+
 	private boolean stopAttack = false;
 
 	/*************************************************/
@@ -55,7 +55,7 @@ public class Ost implements IUpdate, Serializable
 	/*************************************************/
 
 	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Color color, Actor originActor, Actor destinationActor)
+			final Color color, final Actor originActor, final Actor destinationActor)
 	{
 		this.origin = origin;
 		this.destination = destination;
@@ -67,6 +67,7 @@ public class Ost implements IUpdate, Serializable
 		this.color = color;
 		this.originActor = originActor;
 		this.destinationActor = destinationActor;
+
 	}
 
 	/*************************************************/
@@ -76,6 +77,7 @@ public class Ost implements IUpdate, Serializable
 	@Override
 	public void start()
 	{
+		this.destination.addNbOstsarriving();
 		this.speed = SetOstSpeed();
 		this.separationPoint = SetSeparationPoint();
 		this.waitingPoint = SetWaitingPoint();
@@ -116,7 +118,7 @@ public class Ost implements IUpdate, Serializable
 					if (s.isDead)
 					{
 						s.RemoveShapeToLayer();
-						this.destination.freeAttackLocation(s.GetAttackLocation());
+						this.destination.freeAttackLocation(s.getAttackLocation());
 						it.remove();
 					}
 					else
@@ -128,6 +130,7 @@ public class Ost implements IUpdate, Serializable
 			else
 			{
 				this.origin.removeOst();
+				this.destination.removeNbOstsarriving();
 			}
 		}
 	}
@@ -222,7 +225,7 @@ public class Ost implements IUpdate, Serializable
 			default:
 				break;
 		}
-		
+
 		if (this.nbSoldiersSpawned == this.nbSoldiers)
 		{
 			this.fullyDeployed = true;
@@ -376,7 +379,7 @@ public class Ost implements IUpdate, Serializable
 		{
 			this.lastTime = now;
 		}
-		if (now - this.lastTime > Settings.GAME_FREQUENCY/2)
+		if (now - this.lastTime > Settings.GAME_FREQUENCY / 2)
 		{
 			this.lastTime = now;
 			return true;
@@ -386,14 +389,14 @@ public class Ost implements IUpdate, Serializable
 
 	public void win()
 	{
-		if(!stopAttack)
+		if (!this.stopAttack)
 		{
 			this.stopAttack = true;
 			Iterator<Castle> it = this.destinationActor.getCastles().iterator();
-			while(it.hasNext())
+			while (it.hasNext())
 			{
 				Castle castle = it.next();
-				if(castle == this.destination)
+				if (castle == this.destination)
 				{
 					it.remove();
 					this.originActor.castlesWaitForAdding.add(castle);
@@ -403,7 +406,7 @@ public class Ost implements IUpdate, Serializable
 				}
 			}
 		}
-		
+
 	}
 
 	/*************************************************/
@@ -420,17 +423,17 @@ public class Ost implements IUpdate, Serializable
 		return this.destination;
 	}
 
-	public Point2D GetSeparationPoint()
+	public Point2D getSeparationPoint()
 	{
 		return this.separationPoint;
 	}
 
-	public Point2D GetWaitingPoint()
+	public Point2D getWaitingPoint()
 	{
 		return this.waitingPoint;
 	}
 
-	public double GetSpeed()
+	public double getSpeed()
 	{
 		return this.speed;
 	}
@@ -439,8 +442,8 @@ public class Ost implements IUpdate, Serializable
 	{
 		return this.soldiers;
 	}
-	
-	public boolean getStopAttack()
+
+	public boolean isStopAttack()
 	{
 		return this.stopAttack;
 	}

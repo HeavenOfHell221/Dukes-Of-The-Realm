@@ -81,7 +81,7 @@ public class Kingdom extends Parent implements Serializable
 		this.actors = new ArrayList<>();
 		startTransient(pane);
 		createActors();
-		//this.player.getCastles().get(0).createOst(this.actors.get(1).getCastles().get(0), 20, 10, 0);
+		// this.player.getCastles().get(0).createOst(this.actors.get(1).getCastles().get(0), 20, 10, 0);
 		this.canUpdate = true;
 	}
 
@@ -147,11 +147,11 @@ public class Kingdom extends Parent implements Serializable
 		if (this.canUpdate && !pause)
 		{
 			Iterator<Actor> it = this.actors.iterator();
-			
-			while(it.hasNext())
+
+			while (it.hasNext())
 			{
-				Actor actor = (Actor) it.next();
-				if(actor.getCastles().size() != 0)
+				Actor actor = it.next();
+				if (actor.getCastles().size() != 0)
 				{
 					actor.update(now, pause);
 				}
@@ -168,7 +168,7 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	public void createActors()
 	{
@@ -215,8 +215,8 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param rand
+	 *
+	 * @param  rand
 	 * @return
 	 */
 	private Color randomColor(final Random rand)
@@ -228,9 +228,9 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param castles
-	 * @param coordinate
+	 *
+	 * @param  castles
+	 * @param  coordinate
 	 * @return
 	 */
 	private boolean isCastleToClose(final ArrayList<Castle> castles, final Point2D coordinate)
@@ -249,9 +249,9 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param castle
-	 * @param coord
+	 *
+	 * @param  castle
+	 * @param  coord
 	 * @return
 	 */
 	private double distanceBetween(final Castle castle, final Point2D coord)
@@ -261,8 +261,8 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param rand
+	 *
+	 * @param  rand
 	 * @return
 	 */
 	public Point2D getRandomCoordinates(final Random rand)
@@ -273,7 +273,7 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void setCollisionsManagement()
 	{
@@ -288,7 +288,7 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param playfieldLayer
 	 */
 	public void setPlayfieldLayer(final Pane playfieldLayer)

@@ -17,7 +17,7 @@ public class DukeAI extends Actor implements Serializable
 		super.addFirstCastle(castle);
 		castle.startSoldier();
 	}
-	
+
 	@Override
 	public void update(final long now, final boolean pause)
 	{

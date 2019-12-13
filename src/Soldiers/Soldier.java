@@ -1,10 +1,11 @@
 package Soldiers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
+import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
-import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
 import Utility.Point2D;
@@ -80,7 +81,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	{
 		if (!this.isArrived)
 		{
-			Move(this.itsOst.GetSeparationPoint());
+			Move(getSeparationPoint());
 		}
 
 		if (this.isArrived && !this.isInPosition)
@@ -91,7 +92,7 @@ public abstract class Soldier extends Sprite implements Serializable
 			}
 			else
 			{
-				Move(this.itsOst.GetWaitingPoint());
+				Move(getWaitingPoint());
 			}
 		}
 
@@ -112,9 +113,9 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private final void SetAttackLocation()
 	{
-		if (this.itsOst.getDestination().isAvailableAttackLocation())
+		if (getDestination().isAvailableAttackLocation())
 		{
-			this.attackLocation = this.itsOst.getDestination().getNextAttackLocation();
+			this.attackLocation = getDestination().getNextAttackLocation();
 			this.isWaitingForAttackLocation = false;
 			this.canMove = true;
 		}
@@ -143,14 +144,14 @@ public abstract class Soldier extends Sprite implements Serializable
 		// System.out.println("off y bloqué");
 		// }
 
-		if(canMove)
+		if (this.canMove)
 		{
 			addMotion(this.stats.speed * Time.deltaTime * directionX, this.stats.speed * Time.deltaTime * directionY);
 			updateUIShape();
 		}
-		
+
 		isOutOfScreen();
-		
+
 		if (!this.isArrived)
 		{
 			isArrived();
@@ -159,7 +160,7 @@ public abstract class Soldier extends Sprite implements Serializable
 		{
 			isInPosition();
 		}
-		
+
 	}
 
 	private void isOutOfScreen()
@@ -175,7 +176,7 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private void isArrived()
 	{
-		if (getX() == this.itsOst.GetSeparationPoint().getX() && getY() == this.itsOst.GetSeparationPoint().getY())
+		if (getX() == getSeparationPoint().getX() && getY() == getSeparationPoint().getY())
 		{
 			this.isArrived = true;
 			this.canMove = false;
@@ -196,8 +197,8 @@ public abstract class Soldier extends Sprite implements Serializable
 	}
 
 	private void Attack()
-	{	
-		if(!this.itsOst.getStopAttack())
+	{
+		if (!isStopAttack())
 		{
 			applyDamage();
 		}
@@ -205,23 +206,22 @@ public abstract class Soldier extends Sprite implements Serializable
 		{
 			this.isDead = true;
 			// TODO aller dans la reserve
-		}		
-		
-		
+		}
+
 	}
-	
+
 	private void applyDamage()
 	{
-		getReserveOfSoldiers().randomRemoveHP(new Random().nextInt());
-		
-		if (!getReserveOfSoldiers().isStopAttack())
+		getDestination().randomRemoveHP(new Random().nextInt());
+
+		if (!getDestination().isStopAttack())
 		{
 			this.isDead = (--this.stats.damage <= 0) ? true : false;
 		}
 		else
 		{
 			this.isDead = true;
-			this.itsOst.win();
+			win();
 		}
 	}
 
@@ -232,6 +232,60 @@ public abstract class Soldier extends Sprite implements Serializable
 	@Override
 	public abstract double getProductionTime();
 
+	/**
+	 * @return
+	 * @see    DukesOfTheRealm.Ost#getSeparationPoint()
+	 */
+	public Point2D getSeparationPoint()
+	{
+		return this.itsOst.getSeparationPoint();
+	}
+
+	/**
+	 * @return
+	 * @see    DukesOfTheRealm.Ost#getWaitingPoint()
+	 */
+	public Point2D getWaitingPoint()
+	{
+		return this.itsOst.getWaitingPoint();
+	}
+
+	/**
+	 * @return
+	 * @see    DukesOfTheRealm.Ost#getSoldiers()
+	 */
+	public ArrayList<Soldier> getSoldiers()
+	{
+		return this.itsOst.getSoldiers();
+	}
+
+	/**
+	 *
+	 * @see DukesOfTheRealm.Ost#win()
+	 */
+	public void win()
+	{
+		this.itsOst.win();
+	}
+
+	/**
+	 * @return
+	 * @see    DukesOfTheRealm.Ost#isStopAttack()
+	 */
+	public boolean isStopAttack()
+	{
+		return this.itsOst.isStopAttack();
+	}
+
+	/**
+	 * @return
+	 * @see    DukesOfTheRealm.Ost#getDestination()
+	 */
+	public Castle getDestination()
+	{
+		return this.itsOst.getDestination();
+	}
+
 	@Override
 	public abstract int getProductionCost();
 
@@ -240,22 +294,18 @@ public abstract class Soldier extends Sprite implements Serializable
 		return this.type;
 	}
 
-	public int GetSpeed()
-	{
-		return this.stats.speed;
-	}
-
-	public int GetDamage()
-	{
-		return this.stats.damage;
-	}
-
-	public boolean isOnField()
+	/**
+	 * @return the onField
+	 */
+	public final boolean isOnField()
 	{
 		return this.onField;
 	}
 
-	public Point2D GetAttackLocation()
+	/**
+	 * @return the attackLocation
+	 */
+	public final Point2D getAttackLocation()
 	{
 		return this.attackLocation;
 	}
@@ -264,10 +314,5 @@ public abstract class Soldier extends Sprite implements Serializable
 	public String toString()
 	{
 		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" + this.canMove + "]";
-	}
-
-	private ReserveOfSoldiers getReserveOfSoldiers()
-	{
-		return this.itsOst.getDestination().getReserveOfSoldiers();
 	}
 }

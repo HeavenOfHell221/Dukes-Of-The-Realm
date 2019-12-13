@@ -3,7 +3,7 @@ package Enum;
 import java.io.Serializable;
 
 /**
- * 
+ *
  *
  */
 public enum DirectionEnum implements Serializable

@@ -16,7 +16,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
 /**
- * 
+ *
  *
  */
 public abstract class Sprite extends Parent implements IProductionUnit, Serializable
@@ -27,27 +27,27 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	protected transient Pane canvas;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	protected transient Shape shape;
 
 	/**
-	 * 
+	 *
 	 */
 	protected Point2D coordinate;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	protected double width;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	protected double height;
 
@@ -56,7 +56,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param canvas
 	 * @param point2D
 	 */
@@ -67,7 +67,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected Sprite()
 	{
@@ -83,7 +83,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	public final void updateUIShape()
 	{
@@ -98,7 +98,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param pane
 	 * @param size
 	 */
@@ -127,7 +127,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected final void AddPikerRepresentation()
 	{
@@ -144,7 +144,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected final void AddKnightRepresentation()
 	{
@@ -161,7 +161,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected final void AddOnagerRepresentation()
 	{
@@ -179,7 +179,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public final void RemoveShapeToLayer()
 	{
@@ -194,7 +194,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final Shape getShape()
@@ -203,7 +203,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final int getX()
@@ -212,7 +212,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final int getY()
@@ -221,7 +221,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final Point2D getCoordinate()
@@ -230,7 +230,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final Point2D getCastleCenter()
@@ -239,7 +239,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final double getWidth()
@@ -248,7 +248,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final double getHeight()
@@ -257,7 +257,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public final Pane getLayer()
@@ -266,7 +266,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 */
 	public final void setX(final int x)
@@ -275,7 +275,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @param y
 	 */
 	public final void setY(final int y)
@@ -284,16 +284,16 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dx
 	 */
 	public final void addDx(final double dx)
 	{
 		this.coordinate.addDx(dx);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param dy
 	 */
 	public final void addDy(final double dy)
@@ -302,7 +302,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dx
 	 * @param dy
 	 */
@@ -312,15 +312,15 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @param coordinate
 	 */
 	public final void setCoordinate(final Point2D coordinate)
 	{
 		this.coordinate = coordinate;
 	}
-	
-	public void setColorShape(Color color)
+
+	public void setColorShape(final Color color)
 	{
 		this.shape.setFill(color);
 	}

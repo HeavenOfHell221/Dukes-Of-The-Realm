@@ -1,42 +1,40 @@
 package Interface;
 
-import Duke.Actor;
-import DukesOfTheRealm.Castle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * 
+ *
  * @author Utilisateur
  *
  */
 public interface IUI
 {
 	/**
-	 * 
+	 *
 	 * @param node
 	 */
 	void addNode(final Node node);
 
 	/**
-	 * 
+	 *
 	 */
 	void relocateAllNodes();
-	
+
 	/**
-	 * 
+	 *
 	 */
 	void addAllNodes();
-	
+
 	/**
-	 * 
+	 *
 	 * @param visible
 	 */
 	void setAllVisible(final boolean visible);
 
 	/**
-	 * 
+	 *
 	 * @param node
 	 * @param x
 	 * @param y
@@ -47,7 +45,7 @@ public interface IUI
 	}
 
 	/**
-	 * 
+	 *
 	 * @param node
 	 * @param visible
 	 */
@@ -55,13 +53,13 @@ public interface IUI
 	{
 		node.setVisible(visible);
 	}
-	
+
 	/**
-	 * 
-	 * @param path
+	 *
+	 * @param  path
 	 * @return
 	 */
-	default ImageView newImageView(final String path, int width, int height)
+	default ImageView newImageView(final String path, final int width, final int height)
 	{
 		return new ImageView(new Image(getClass().getResource(path).toExternalForm(), width, height, true, true));
 	}

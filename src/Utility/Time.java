@@ -1,10 +1,8 @@
 package Utility;
 
-import Interface.IUpdate;
-
 /**
- * 
- * 
+ *
+ *
  * @author Utilisateur
  *
  */
@@ -16,42 +14,42 @@ public class Time
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	private final long cooldown;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private int counter;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private long lastUpdate;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private final boolean print;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private long oldTime;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static double deltaTime;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private boolean firstFrame;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static int FPS;
 
@@ -60,7 +58,7 @@ public class Time
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param print
 	 */
 	public Time(final boolean print)
@@ -77,13 +75,12 @@ public class Time
 	/********************* START *********************/
 	/*************************************************/
 
-
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	public void update(final long now, final boolean pause)
 	{
@@ -102,7 +99,7 @@ public class Time
 	}
 
 	/**
-	 * 
+	 *
 	 * @param now
 	 */
 	public void frameStart(final long now)

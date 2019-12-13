@@ -17,8 +17,10 @@ public class Baron extends Actor implements Serializable
 	@Override
 	public String florinIncome(final Castle castle)
 	{
-		if(castles.contains(castle))
-			return (int) (Settings.FLORIN_PER_SECOND * castle.getLevel() * Settings.FLORIN_FACTOR_BARON)+ " Florin/s";
+		if (this.castles.contains(castle))
+		{
+			return (int) (Settings.FLORIN_PER_SECOND * castle.getLevel() * Settings.FLORIN_FACTOR_BARON) + " Florin/s";
+		}
 		return " -- Florin/s";
 	}
 

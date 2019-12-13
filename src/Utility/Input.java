@@ -11,24 +11,24 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * 
+ *
  * @author Utilisateur
  *
  */
 public class Input
 {
 	/**
-	 * 
+	 *
 	 */
 	private final BitSet keyboardBitSet = new BitSet();
 
 	/**
-	 * 
+	 *
 	 */
 	private Scene scene = null;
 
 	/**
-	 * 
+	 *
 	 * @param scene
 	 */
 	public Input(final Scene scene)
@@ -37,7 +37,7 @@ public class Input
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void addListeners()
 	{
@@ -46,7 +46,7 @@ public class Input
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void removeListeners()
 	{
@@ -55,7 +55,7 @@ public class Input
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private final EventHandler<KeyEvent> keyPressedEventHandler = event ->
 	{
@@ -65,7 +65,7 @@ public class Input
 	};
 
 	/**
-	 * 
+	 *
 	 */
 	private final EventHandler<KeyEvent> keyReleasedEventHandler = event ->
 	{
@@ -75,8 +75,8 @@ public class Input
 	};
 
 	/**
-	 * 
-	 * @param key
+	 *
+	 * @param  key
 	 * @return
 	 */
 	private boolean is(final KeyCode key)
@@ -85,7 +85,7 @@ public class Input
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isExit()
@@ -94,7 +94,7 @@ public class Input
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isSpace()

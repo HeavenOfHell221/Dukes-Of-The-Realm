@@ -5,17 +5,17 @@ import java.io.Serializable;
 public class Point2D implements Serializable
 {
 	/**
-	 * 
+	 *
 	 */
 	private double x;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private double y;
 
 	/**
-	 * 
+	 *
 	 */
 	public Point2D()
 	{
@@ -24,7 +24,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 */
@@ -35,7 +35,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param p
 	 */
 	public Point2D(final Point2D p)
@@ -44,7 +44,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public double getX()
@@ -53,7 +53,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public double getY()
@@ -62,7 +62,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 */
 	public void setX(final double x)
@@ -71,7 +71,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param y
 	 */
 	public void setY(final double y)
@@ -80,16 +80,16 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dx
 	 */
 	public void addDx(final double dx)
 	{
 		this.x += dx;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param dy
 	 */
 	public void addDy(final double dy)
@@ -98,7 +98,7 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dx
 	 * @param dy
 	 */

@@ -1,18 +1,18 @@
 package Interface;
 
 /**
- * 
+ *
  *
  */
 public interface IUpdate
 {
 	/**
-	 * 
+	 *
 	 */
 	void start();
 
 	/**
-	 * 
+	 *
 	 * @param now
 	 * @param pause
 	 */

@@ -29,12 +29,12 @@ public class UIManager extends Parent implements IUI, Serializable
 	private UICastlePreview castlePreview;
 	private Pane playfieldLayer;
 	private Rectangle background;
-	
+
 	private Castle currentCastle;
 	private Castle lastCastle;
 	private Actor currentActor;
 	private Actor lastActor;
-	
+
 	private boolean productionVisible = false;
 	private boolean attackVisible = false;
 
@@ -139,46 +139,46 @@ public class UIManager extends Parent implements IUI, Serializable
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 		this.currentActor = actor;
-		
-		if(this.lastActor == null)
+
+		if (this.lastActor == null)
 		{
-			attackVisible = false;
-			productionVisible = true;
+			this.attackVisible = false;
+			this.productionVisible = true;
 		}
-		else if(!this.currentActor.isPlayer() && this.lastActor.isPlayer())
+		else if (!this.currentActor.isPlayer() && this.lastActor.isPlayer())
 		{
-			attackVisible = true;
-			productionVisible = false;
+			this.attackVisible = true;
+			this.productionVisible = false;
 		}
-		else if(this.currentActor.isPlayer() && this.lastActor.isPlayer())
+		else if (this.currentActor.isPlayer() && this.lastActor.isPlayer())
 		{
-			if(this.currentCastle == this.lastCastle)
+			if (this.currentCastle == this.lastCastle)
 			{
-				attackVisible = false;
-				productionVisible = true;
+				this.attackVisible = false;
+				this.productionVisible = true;
 			}
 			else
 			{
-				attackVisible = true;
-				productionVisible = false;
+				this.attackVisible = true;
+				this.productionVisible = false;
 			}
 		}
-		else if(!this.currentActor.isPlayer() && !this.lastActor.isPlayer())
+		else if (!this.currentActor.isPlayer() && !this.lastActor.isPlayer())
 		{
-			attackVisible = false;
-			productionVisible = false;
+			this.attackVisible = false;
+			this.productionVisible = false;
 		}
-		else if(this.currentActor.isPlayer() && !this.lastActor.isPlayer())
+		else if (this.currentActor.isPlayer() && !this.lastActor.isPlayer())
 		{
-			attackVisible = false;
-			productionVisible = true;
+			this.attackVisible = false;
+			this.productionVisible = true;
 		}
-		
-		Main.pause = attackVisible;
-		
-		this.attackPreview.switchCastle(castle, actor, attackVisible);
-		this.productionUnitPreview.switchCastle(castle, actor, productionVisible);
-		this.castlePreview.switchCastle(castle, actor, productionVisible, attackVisible);
+
+		Main.pause = this.attackVisible;
+
+		this.attackPreview.switchCastle(castle, actor, this.attackVisible);
+		this.productionUnitPreview.switchCastle(castle, actor, this.productionVisible);
+		this.castlePreview.switchCastle(castle, actor, this.productionVisible, this.attackVisible);
 	}
 
 	public void setPlayfieldLayer(final Pane playfieldLayer)
