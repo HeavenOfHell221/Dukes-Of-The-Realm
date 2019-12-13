@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- * 
+ *
  *
  */
 public class Castle extends Sprite implements Serializable
@@ -25,7 +25,7 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 *
 	 */
 	public enum Orientation
@@ -38,52 +38,52 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private double totalFlorin; // L'argent que contient le chateau
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private int level; // Le niveau du chateau
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private ReserveOfSoldiers reserveOfSoldiers; // La reserve de soldat du chateau. Contient des Piker, des Onager et des Knight
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Caserne caserne;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Ost ost;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Orientation orientation;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private transient Color myColor;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private transient Rectangle door;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Stack<Point2D> attackLocations;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private int nbOstsarriving = 0;
 
@@ -93,6 +93,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Constructeur Castle.
+	 * 
 	 * @param level
 	 */
 	public Castle(final int level)
@@ -114,7 +115,7 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param level
 	 * @param pane
 	 * @param coord
@@ -134,7 +135,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pane
 	 */
 	public void startTransient(final Pane pane)
@@ -152,15 +153,15 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	public void updateProduction()
 	{
-		caserne.updateProduction();
+		this.caserne.updateProduction();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param now
 	 * @param pause
 	 */
@@ -177,7 +178,7 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	public void randomSoldier()
 	{
@@ -188,7 +189,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void startSoldier()
 	{
@@ -198,7 +199,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private Orientation setOrientation()
@@ -228,7 +229,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pane
 	 */
 	public void addRepresentation(final Pane pane)
@@ -239,7 +240,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pane
 	 */
 	private void addDoorRepresentation(final Pane pane)
@@ -269,7 +270,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void levelUp()
 	{
@@ -277,7 +278,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param amount
 	 */
 	public void addFlorin(final double amount)
@@ -286,9 +287,9 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param amount
-	 * @return Si les Florins ont ete retire ou non.
+	 *
+	 * @param  amount
+	 * @return        Si les Florins ont ete retire ou non.
 	 */
 	public boolean removeFlorin(final double amount)
 	{
@@ -301,26 +302,25 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param amount
-	 * @return Si il y a assez de Florin
+	 *
+	 * @param  amount
+	 * @return        Si il y a assez de Florin
 	 */
 	public boolean enoughOfFlorin(final double amount)
 	{
 		return (amount <= this.totalFlorin);
 	}
 
-	
-
 	/**
-	 * 
-	 * @param destination
-	 * @param nbPikers
-	 * @param nbKnights
-	 * @param nbOnagers
+	 *
+	 * @param  destination
+	 * @param  nbPikers
+	 * @param  nbKnights
+	 * @param  nbOnagers
 	 * @return
 	 */
-	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, final Actor originActor, final Actor destinationActor)
+	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
+			final Actor originActor, final Actor destinationActor)
 	{
 		if (this.ost == null)
 		{
@@ -332,13 +332,13 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void removeOst()
 	{
 		this.ost = null;
 	}
-	
+
 	public void switchColor(final Color color)
 	{
 		setColor(color);
@@ -346,7 +346,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void setAttackLocations()
 	{
@@ -378,7 +378,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isAvailableAttackLocation()
@@ -387,7 +387,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Point2D getNextAttackLocation()
@@ -396,7 +396,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param FreedAttackLocation
 	 */
 	public void freeAttackLocation(final Point2D FreedAttackLocation)
@@ -409,7 +409,7 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public int getProductionCost()
@@ -418,7 +418,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public double getTotalFlorin()
@@ -427,7 +427,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public double getProductionTime()
@@ -436,44 +436,43 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public int getLevel()
 	{
 		return this.level;
 	}
-	
-	
+
 	/**
-	 * 
+	 *
 	 * @see DukesOfTheRealm.ReserveOfSoldiers#addPiker()
 	 */
 	public void addPiker()
 	{
-		reserveOfSoldiers.addPiker();
+		this.reserveOfSoldiers.addPiker();
 	}
 
 	/**
-	 * 
+	 *
 	 * @see DukesOfTheRealm.ReserveOfSoldiers#addKnight()
 	 */
 	public void addKnight()
 	{
-		reserveOfSoldiers.addKnight();
+		this.reserveOfSoldiers.addKnight();
 	}
 
 	/**
-	 * 
+	 *
 	 * @see DukesOfTheRealm.ReserveOfSoldiers#addOnager()
 	 */
 	public void addOnager()
 	{
-		reserveOfSoldiers.addOnager();
+		this.reserveOfSoldiers.addOnager();
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Rectangle getDoor()
@@ -482,7 +481,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Orientation getOrientation()
@@ -491,7 +490,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Color getMyColor()
@@ -500,7 +499,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isOstExist()
@@ -509,7 +508,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ost
 	 */
 	public void setOst(final Ost ost)
@@ -518,7 +517,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Stack<Point2D> getAttackLocations()
@@ -527,25 +526,25 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public ArrayDeque<IProductionUnit> getProductionUnit()
 	{
-		return caserne.getProductionUnit();
+		return this.caserne.getProductionUnit();
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public double getProductionTimeRemaining()
 	{
-		return caserne.getProductionTime();
+		return this.caserne.getProductionTime();
 	}
 
 	/**
-	 * 
+	 *
 	 * @param level
 	 */
 	public void setLevel(final int level)
@@ -554,7 +553,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * 
+	 *
 	 * @param color
 	 */
 	public void setColor(final Color color)
@@ -564,59 +563,88 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
 	 */
 	public int getNbPikers()
 	{
-		return reserveOfSoldiers.getNbPikers();
+		return this.reserveOfSoldiers.getNbPikers();
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbKnights()
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbKnights()
 	 */
 	public int getNbKnights()
 	{
-		return reserveOfSoldiers.getNbKnights();
+		return this.reserveOfSoldiers.getNbKnights();
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbOnagers()
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbOnagers()
 	 */
 	public int getNbOnagers()
 	{
-		return reserveOfSoldiers.getNbOnagers();
-	}
-
-	/**
-	 * @return the caserne
-	 */
-	public final Caserne getCaserne()
-	{
-		return caserne;
+		return this.reserveOfSoldiers.getNbOnagers();
 	}
 
 	
+	
+	/**
+	 * 
+	 * @see DukesOfTheRealm.Caserne#removeLastProduction()
+	 */
+	public void removeLastProduction()
+	{
+		caserne.removeLastProduction();
+	}
+
+	/**
+	 * @param refundFlorin
+	 * @see DukesOfTheRealm.Caserne#resetQueue(boolean)
+	 */
+	public void resetQueue(boolean refundFlorin)
+	{
+		caserne.resetQueue(refundFlorin);
+	}
+
+	/**
+	 * @param newProduction
+	 * @return
+	 * @see DukesOfTheRealm.Caserne#addProduction(Interface.IProductionUnit)
+	 */
+	public boolean addProduction(IProductionUnit newProduction)
+	{
+		return caserne.addProduction(newProduction);
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Caserne#getRatio()
+	 */
+	public final double getRatio()
+	{
+		return caserne.getRatio();
+	}
 
 	/**
 	 * @return the nbOstsarriving
 	 */
 	public final int getNbOstsarriving()
 	{
-		return nbOstsarriving;
+		return this.nbOstsarriving;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public final void addNbOstsarriving()
 	{
 		this.nbOstsarriving += 1;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public final void removeNbOstsarriving()
 	{
@@ -625,47 +653,46 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * @param x
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(int)
+	 * @see     DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(int)
 	 */
-	public void randomRemoveHP(int x)
+	public void randomRemoveHP(final int x)
 	{
-		reserveOfSoldiers.randomRemoveHP(x);
+		this.reserveOfSoldiers.randomRemoveHP(x);
 	}
 
 	/**
 	 * @param nbPikers
 	 * @param nbKnights
 	 * @param nbOnagers
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
+	 * @see             DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
-	public void removeSoldiers(int nbPikers, int nbKnights, int nbOnagers)
+	public void removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
-		reserveOfSoldiers.removeSoldiers(nbPikers, nbKnights, nbOnagers);
+		this.reserveOfSoldiers.removeSoldiers(nbPikers, nbKnights, nbOnagers);
 	}
 
 	/**
-	 * 
+	 *
 	 * @see DukesOfTheRealm.ReserveOfSoldiers#reactivateAttack()
 	 */
 	public void reactivateAttack()
 	{
-		reserveOfSoldiers.reactivateAttack();
+		this.reserveOfSoldiers.reactivateAttack();
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#isStopAttack()
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#isStopAttack()
 	 */
 	public boolean isStopAttack()
 	{
-		return reserveOfSoldiers.isStopAttack();
+		return this.reserveOfSoldiers.isStopAttack();
 	}
-	
-	
 
 	@Override
 	public String toString()
 	{
-		return "Castle [totalFlorin=" + (int)totalFlorin + ", level=" + level + ", orientation=" + orientation + ", myColor=" + myColor + "]";
+		return "Castle [totalFlorin=" + (int) this.totalFlorin + ", level=" + this.level + ", orientation=" + this.orientation
+				+ ", myColor=" + this.myColor + "]";
 	}
 }

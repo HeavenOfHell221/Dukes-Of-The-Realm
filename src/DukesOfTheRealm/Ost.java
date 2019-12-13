@@ -401,7 +401,7 @@ public class Ost implements IUpdate, Serializable
 					it.remove();
 					this.originActor.castlesWaitForAdding.add(castle);
 					this.destination.switchColor(this.origin.getMyColor());
-					this.destination.getCaserne().resetQueue(false);
+					this.destination.resetQueue(false);
 					break;
 				}
 			}
