@@ -2,59 +2,67 @@ package Utility;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import static Utility.Settings.*;
 
 public class Collisions
 {
-
+	
+	private static final Collisions instance = new Collisions();
 	private final ArrayList<Point2D> castlesCoordinates;
 
-	public Collisions()
+	private Collisions()
 	{
 		this.castlesCoordinates = new ArrayList<>();
 	}
 
-	public void addPoint(final Point2D point)
+	public static void addPoint(final Point2D point)
 	{
-		this.castlesCoordinates.add(point);
+		instance.castlesCoordinates.add(point);
 	}
 
-	public boolean isCollisionApproaching(final Point2D soldierCoordinates, final double offset, final int direction)
+	public static int isCollisionApproaching(final Point2D soldierCoordinates, final double offset)
 	{
-		Iterator<Point2D> it = this.castlesCoordinates.iterator();
-
-		if (direction == Settings.X_DIRECTION)
+		Iterator<Point2D> it = instance.castlesCoordinates.iterator();
+		while (it.hasNext())
 		{
-			while (it.hasNext())
+			Point2D castleCoordinates = it.next();
+			if (XCollision(castleCoordinates, soldierCoordinates.getX() + offset) && YCollision(castleCoordinates, soldierCoordinates.getY()))
 			{
-				if (XCollision(it.next(), soldierCoordinates.getX()) && YCollision(it.next(), soldierCoordinates.getY()))
-				{
-					return true;
-				}
+				return X_COLLISION;
 			}
-		}
-		else
-		{
-			while (it.hasNext())
+			
+			if (XCollision(castleCoordinates, soldierCoordinates.getX()) && YCollision(castleCoordinates, soldierCoordinates.getY() + offset))
 			{
-				if (XCollision(it.next(), soldierCoordinates.getX()) && YCollision(it.next(), soldierCoordinates.getY()))
-				{
-					return true;
-				}
+				return Y_COLLISION;
 			}
 		}
 
-		return false;
+		return NO_COLLISION;
 	}
 
-	private boolean XCollision(final Point2D point, final double coordinate)
+	private static boolean XCollision(final Point2D castleCoordinates, final double coordinate)
 	{
-		return (coordinate >= (point.getX() - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
-				&& coordinate <= (point.getX() + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER));
+		return (coordinate > (castleCoordinates.getX() - GAP_WITH_SOLDIER - SOLDIER_SIZE) && coordinate < (castleCoordinates.getX() + CASTLE_SIZE + GAP_WITH_SOLDIER));
 	}
 
-	private boolean YCollision(final Point2D point, final double coordinate)
+	private static boolean YCollision(final Point2D castleCoordinates, final double coordinate)
 	{
-		return (coordinate >= (point.getY() - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
-				&& coordinate <= (point.getY() + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER));
+		return (coordinate > (castleCoordinates.getY() - GAP_WITH_SOLDIER - SOLDIER_SIZE) && coordinate < (castleCoordinates.getY() + CASTLE_SIZE + GAP_WITH_SOLDIER));
+	}
+
+	/**
+	 * @return the instance
+	 */
+	public static Collisions getInstance()
+	{
+		return instance;
+	}
+
+	/**
+	 * @return the castlesCoordinates
+	 */
+	public static ArrayList<Point2D> getCastlesCoordinates()
+	{
+		return instance.castlesCoordinates;
 	}
 }

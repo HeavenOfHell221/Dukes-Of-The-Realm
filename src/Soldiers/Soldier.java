@@ -8,6 +8,7 @@ import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
+import Utility.Collisions;
 import Utility.Point2D;
 import Utility.Settings;
 import Utility.Time;
@@ -125,28 +126,41 @@ public abstract class Soldier extends Sprite implements Serializable
 			this.canMove = false;
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param dst
+	 */
 	private void Move(final Point2D dst)
 	{
 		final int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
 		final int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
+		
+		double offsetX = this.stats.speed * Time.deltaTime * directionX;
+		double offsetY = this.stats.speed * Time.deltaTime * directionY;
 
-		// if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetX,
-		// Settings.X_DIRECTION))
-		// {
-		// offsetX = 0;
-		// System.out.println("off x bloqué");
-		// }
-		// if (Kingdom.collisionsManagement.isCollisionApproaching(this.GetCoordinate(), offsetY,
-		// Settings.Y_DIRECTION))
-		// {
-		// offsetY = 0;
-		// System.out.println("off y bloqué");
-		// }
+//		int alternateDirectionX;
+//		int alternateDirectionY;
+//		switch (Collisions.isCollisionApproaching(this.getCoordinate(), offsetX))
+//		{
+//			case Settings.X_COLLISION:
+//				offsetX = 0;
+//				System.out.println("off x bloqué");
+//				alternateDirectionY = getY() < dst.getY() ? 1 : -1;
+//				offsetY = this.stats.speed * Time.deltaTime * alternateDirectionY;
+//				break;
+//			case Settings.Y_COLLISION:
+//				System.out.println("off y bloqué");
+//				offsetY = 0;
+//				alternateDirectionX = getX() < dst.getX() ? 1 : -1;
+//				offsetX = this.stats.speed * Time.deltaTime * alternateDirectionX;
+//				break;
+//			default: break;
+//		}
 
 		if (this.canMove)
 		{
-			addMotion(this.stats.speed * Time.deltaTime * directionX, this.stats.speed * Time.deltaTime * directionY);
+			addMotion(offsetX, offsetY);
 			updateUIShape();
 		}
 
@@ -200,7 +214,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	{
 		if (!isStopAttack())
 		{
-			applyDamage();
+			//applyDamage();
 		}
 		else
 		{
