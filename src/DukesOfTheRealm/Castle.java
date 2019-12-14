@@ -289,7 +289,7 @@ public class Castle extends Sprite implements Serializable
 	/**
 	 *
 	 * @param  amount
-	 * @return        Si les Florins ont ete retire ou non.
+	 * @retur
 	 */
 	public boolean removeFlorin(final double amount)
 	{
@@ -587,8 +587,6 @@ public class Castle extends Sprite implements Serializable
 	{
 		return this.reserveOfSoldiers.getNbOnagers();
 	}
-
-	
 	
 	/**
 	 * 

@@ -1,29 +1,29 @@
 package Goal;
 
+import java.io.Serializable;
+
 import DukesOfTheRealm.Castle;
 import Enum.SoldierEnum;
 import Interface.IParameter;
 
-public class AtomicSoldierParameter implements IParameter
+public class AtomicSoldierParameter implements IParameter, Serializable
 {
 	/**
 	 * 
 	 */
 	public final SoldierEnum type;
 	
-	/*
-	 * 
-	 */
-	public final Castle castle;
-	
 	/**
-	 * @param number
 	 * @param type
 	 */
-	public AtomicSoldierParameter(final Castle castle, final SoldierEnum type)
+	public AtomicSoldierParameter(final SoldierEnum type)
 	{
 		this.type = type;
-		this.castle = castle;
+	}
+
+	public AtomicSoldierParameter(final AtomicSoldierParameter parameter)
+	{
+		this.type = parameter.type;
 	}
 	
 	

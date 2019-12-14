@@ -1,23 +1,23 @@
 package Goal;
 
+import DukesOfTheRealm.Castle;
 import Interface.IParameter;
 
 public class AtomicSoldierGoal extends AtomicGoal
 {
-	public AtomicSoldierGoal(IParameter parameter)
+	public AtomicSoldierGoal(final IParameter parameter)
 	{
 		super(parameter);
 	}
 	
-	public boolean goal()
+	public AtomicSoldierGoal(final AtomicGoal goal)
+	{
+		super(new AtomicSoldierParameter((AtomicSoldierParameter) goal.parameter));
+	}
+	
+	public boolean goal(final Castle castle)
 	{
 		AtomicSoldierParameter p = (AtomicSoldierParameter) parameter;
-		
-		if(p.castle.removeFlorin(p.type.getCost()))
-		{
-			p.castle.addProduction(p.type.getProduction());
-			return true;
-		}
-		return false;
+		return castle.addProduction(p.type.getProduction());
 	}
 }

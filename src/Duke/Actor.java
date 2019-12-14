@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
+import Goal.AtomicGoal;
+import Goal.GeneratorAtomicGoal;
 import Interface.IUpdate;
 import UI.UIManager;
 import Utility.Settings;
@@ -18,17 +20,29 @@ import javafx.scene.shape.Rectangle;
 
 public class Actor implements Serializable, IUpdate
 {
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+	
 	protected String name = "";
 	protected ArrayList<Castle> castles;
 	protected transient Color color;
 	protected transient Pane pane;
 	public ArrayList<Castle> castlesWaitForAdding;
+	
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
 
 	Actor()
 	{
 
 	}
 
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
 	@Override
 	public void start()
 	{
@@ -44,7 +58,42 @@ public class Actor implements Serializable, IUpdate
 			this.castles.forEach(castle -> castle.setColor(color));
 		}
 	}
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
 
+	@Override
+	public void update(final long now, final boolean pause)
+	{
+		Iterator<Castle> it = this.castles.iterator();
+
+		while (it.hasNext())
+		{
+			Castle castle = it.next();
+			updateFlorin(castle);
+			castle.updateProduction();
+			castle.updateUIShape();
+			castle.updateOst(now, pause);
+		}
+
+		if (this.castlesWaitForAdding.size() > 0)
+		{
+			this.castles.addAll(this.castlesWaitForAdding);
+			this.castlesWaitForAdding.forEach(c -> addEvent(c));
+			this.castlesWaitForAdding.clear();
+		}
+	}
+	
+	protected void updateFlorin(final Castle castle)
+	{
+		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
+	}
+
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
 	protected void castleHandle(final MouseEvent e)
 	{
 		if (e.getButton() == MouseButton.PRIMARY)
@@ -89,11 +138,11 @@ public class Actor implements Serializable, IUpdate
 		UIManager.getInstance().switchCastle(castle, this);
 	}
 
-	protected void updateFlorin(final Castle castle)
-	{
-		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
-	}
-
+	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+	
 	public void setName(final String name)
 	{
 		this.name = name;
@@ -118,7 +167,7 @@ public class Actor implements Serializable, IUpdate
 	{
 		return false;
 	}
-
+	
 	public String getName(final Castle caslte)
 	{
 		if (this.castles.contains(caslte))
@@ -131,27 +180,5 @@ public class Actor implements Serializable, IUpdate
 	public ArrayList<Castle> getCastles()
 	{
 		return this.castles;
-	}
-
-	@Override
-	public void update(final long now, final boolean pause)
-	{
-		Iterator<Castle> it = this.castles.iterator();
-
-		while (it.hasNext())
-		{
-			Castle castle = it.next();
-			updateFlorin(castle);
-			castle.updateProduction();
-			castle.updateUIShape();
-			castle.updateOst(now, pause);
-		}
-
-		if (this.castlesWaitForAdding.size() > 0)
-		{
-			this.castles.addAll(this.castlesWaitForAdding);
-			this.castlesWaitForAdding.forEach(c -> addEvent(c));
-			this.castlesWaitForAdding.clear();
-		}
 	}
 }

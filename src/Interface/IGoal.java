@@ -1,5 +1,7 @@
 package Interface;
 
+import DukesOfTheRealm.Castle;
+
 /**
  *
  *
@@ -10,14 +12,14 @@ public interface IGoal
 	 *
 	 * @return
 	 */
-	boolean goal();
+	boolean goal(Castle castle);
 	
 	/**
 	 *
 	 * @return
 	 */
-	default boolean isGoalIsCompleted()
+	default boolean isGoalIsCompleted(Castle castle)
 	{
-		return goal();
+		return goal(castle);
 	}
 }

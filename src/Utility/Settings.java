@@ -47,14 +47,14 @@ public class Settings
 	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 250; /* Can be balanced */
 
 	/* Castle number */
-	public static final int AI_NUMBER = 3;
+	public static final int AI_NUMBER = 4;
 	public static final int BARON_NUMBER = 7;
 	public static final int NB_TOTAL_TEST_CREATE_CASTLE = 1000 * 1000;
 
 	/* Starter */ /* Can be balanced */
-	public static final int STARTER_KNIGHT = 10;
-	public static final int STARTER_PIKER = 30;
-	public static final int STARTER_ONAGER = 5;
+	public static final int STARTER_KNIGHT = 0;
+	public static final int STARTER_PIKER = 0;
+	public static final int STARTER_ONAGER = 0;
 
 	/* Other */
 	public static final int NB_ATTACK_LOCATIONS = 12;
@@ -76,9 +76,9 @@ public class Settings
 	public static final int ONAGER_DAMAGE = 75;
 
 	/* Cost */ /* Can be balanced */
-	public static final int PIKER_COST = 2;
-	public static final int KNIGHT_COST = 4;
-	public static final int ONAGER_COST = 8;
+	public static final int PIKER_COST = 20;
+	public static final int KNIGHT_COST = 40;
+	public static final int ONAGER_COST = 80;
 
 	/* Speed */ /* Can be balanced */ /* Pas depasser 80 */
 	public static final int PIKER_SPEED = 60;
@@ -86,9 +86,9 @@ public class Settings
 	public static final int ONAGER_SPEED = 40;
 
 	/* Production time in frame */ /* Can be balanced */
-	public static final double PIKER_TIME_PRODUCTION = 0.5f;
-	public static final double KNIGHT_TIME_PRODUCTION = 0.5f;
-	public static final double ONAGER_TIME_PRODUCTION = 0.5f;
+	public static final double PIKER_TIME_PRODUCTION = 0.01f;
+	public static final double KNIGHT_TIME_PRODUCTION = 0.01f;
+	public static final double ONAGER_TIME_PRODUCTION = 0.01f;
 
 	/* Graphics */
 	public static final int SOLDIER_SIZE = 16;
