@@ -3,7 +3,7 @@ package Goal;
 import DukesOfTheRealm.Castle;
 import Interface.IParameter;
 
-public class AtomicCastleGoal extends AtomicGoal
+public class AtomicCastleGoal extends Goal
 {
 	public AtomicCastleGoal()
 	{

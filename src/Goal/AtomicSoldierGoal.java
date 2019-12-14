@@ -3,14 +3,14 @@ package Goal;
 import DukesOfTheRealm.Castle;
 import Interface.IParameter;
 
-public class AtomicSoldierGoal extends AtomicGoal
+public class AtomicSoldierGoal extends Goal
 {
 	public AtomicSoldierGoal(final IParameter parameter)
 	{
 		super(parameter);
 	}
 	
-	public AtomicSoldierGoal(final AtomicGoal goal)
+	public AtomicSoldierGoal(final Goal goal)
 	{
 		super(new AtomicSoldierParameter((AtomicSoldierParameter) goal.parameter));
 	}

@@ -6,8 +6,8 @@ import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
-import Goal.AtomicGoal;
 import Goal.GeneratorAtomicGoal;
+import Goal.Goal;
 import Interface.IUpdate;
 import UI.UIManager;
 import Utility.Settings;

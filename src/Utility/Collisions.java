@@ -25,7 +25,7 @@ public class Collisions
 		if (direction == Settings.X_DIRECTION)
 		{
 			while (it.hasNext())
-			{
+				{
 				if (XCollision(it.next(), soldierCoordinates.getX()) && YCollision(it.next(), soldierCoordinates.getY()))
 				{
 					return true;

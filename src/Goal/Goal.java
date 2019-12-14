@@ -6,19 +6,20 @@ import DukesOfTheRealm.Castle;
 import Interface.IGoal;
 import Interface.IParameter;
 
-public abstract class AtomicGoal implements IGoal, Serializable
+public abstract class Goal implements IGoal, Serializable
 {
 	final IParameter parameter;
 	
-	public AtomicGoal(final IParameter parameter)
+	public Goal(final IParameter parameter)
 	{
 		this.parameter = parameter;
 	}
 	
-	public AtomicGoal()
+	public Goal()
 	{
 		this.parameter = null;
 	}
 	
+	@Override
 	public abstract boolean goal(final Castle castle);
 }

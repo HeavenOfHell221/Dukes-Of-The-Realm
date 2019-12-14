@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
-import Goal.AtomicGoal;
 import Goal.GeneratorAtomicGoal;
+import Goal.GeneratorComplexeGoal;
+import Goal.Goal;
 import Utility.Settings;
 
 public class DukeAI extends Actor implements Serializable
 {
 	private long lastTime;
-	private HashMap<Castle, AtomicGoal> map;
+	private HashMap<Castle, Goal> map;
 	
 	public DukeAI()
 	{
@@ -46,7 +47,7 @@ public class DukeAI extends Actor implements Serializable
 				}
 				else
 				{
-					map.put(castle, GeneratorAtomicGoal.getRandomGoal());
+					map.put(castle, GeneratorComplexeGoal.getRandomGoal());
 					goal(castle);
 				}
 			}
@@ -58,7 +59,7 @@ public class DukeAI extends Actor implements Serializable
 		if(map.get(castle).isGoalIsCompleted(castle)) // J'essaie de faire l'objectif
 		{
 			// Si l'objectif a ete acomplie, j'en reprend un nouveau
-			map.put(castle, GeneratorAtomicGoal.getRandomGoal()); 
+			map.put(castle, GeneratorComplexeGoal.getRandomGoal()); 
 		}
 	}
 	
