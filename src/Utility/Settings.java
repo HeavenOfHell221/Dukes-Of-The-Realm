@@ -21,9 +21,12 @@ public class Settings
 	/* Graphics */
 	public static final double MARGIN_PERCENTAGE = 0.75;
 
+	/* Collisions */
+	public static final int NO_COLLISION = 0;
+	public static final int X_COLLISION = 1;
+	public static final int Y_COLLISION = 2;
+	
 	/* Other */
-	public static final int X_DIRECTION = 1;
-	public static final int Y_DIRECTION = 0;
 	public static final int NB_TYPES_OF_TROOPS = 3;
 	public static final int SIMULTANEOUS_SPAWNS = 3;
 	public static final int SLODIERS_MAX_PER_OST = 12;
@@ -80,8 +83,8 @@ public class Settings
 	public static final int KNIGHT_COST = 40;
 	public static final int ONAGER_COST = 80;
 
-	/* Speed */ /* Can be balanced */ /* Pas depasser 80 */
-	public static final int PIKER_SPEED = 60;
+	/* Speed */ /* Can be balanced */ /* Not above 80 */
+	public static final int PIKER_SPEED = 120;
 	public static final int KNIGHT_SPEED = 80;
 	public static final int ONAGER_SPEED = 40;
 

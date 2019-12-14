@@ -10,6 +10,7 @@ import Duke.Baron;
 import Duke.DukeAI;
 import Duke.Player;
 import UI.UIManager;
+import Utility.Collisions;
 import Utility.Point2D;
 import Utility.Settings;
 import javafx.scene.Parent;
@@ -33,13 +34,13 @@ public class Kingdom extends Parent implements Serializable
 	private ArrayList<Actor> actors;
 
 	/**
-	 * Liste des couleurs atribuable ï¿½ chaque acteur.
+	 * Liste des couleurs atribuable a chaque acteur.
 	 *
 	 */
 	private transient ArrayList<Color> colors;
 
 	/**
-	 * Reference à l'acteur "player" qui est l'utilisateur.
+	 * Reference a l'acteur "player" qui est l'utilisateur.
 	 */
 	private Player player;
 
@@ -122,7 +123,7 @@ public class Kingdom extends Parent implements Serializable
 				actor.getCastles().forEach(castle ->
 				{
 					castle.startTransient(pane);
-					// System.out.println(castle.getOst());
+					Collisions.addPoint(castle.getCoordinate());
 				});
 				actor.addEventAllCastles();
 			});
@@ -211,6 +212,7 @@ public class Kingdom extends Parent implements Serializable
 			c.setColor(this.actors.get(i).getColor());
 			c.start(1, this.playfieldLayer, p);
 			this.actors.get(i).addFirstCastle(c);
+			Collisions.addPoint(c.getCoordinate());
 		}
 	}
 
@@ -270,17 +272,6 @@ public class Kingdom extends Parent implements Serializable
 		return new Point2D(
 				rand.nextInt((int) (Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE,
 				rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
-	}
-
-	/**
-	 *
-	 */
-	protected void setCollisionsManagement()
-	{
-		// Kingdom.collisionsManagement = new Collisions();
-		/*
-		 * this.castles.forEach(castle -> { collisionsManagement.addPoint(castle.getCoordinate()); });
-		 */
 	}
 
 	/*************************************************/
