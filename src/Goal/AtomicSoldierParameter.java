@@ -21,6 +21,10 @@ public class AtomicSoldierParameter implements IParameter, Serializable
 		this.type = type;
 	}
 
+	/**
+	 * 
+	 * @param parameter
+	 */
 	public AtomicSoldierParameter(final AtomicSoldierParameter parameter)
 	{
 		this.type = parameter.type;
