@@ -25,7 +25,7 @@ public class Settings
 	public static final int NO_COLLISION = 0;
 	public static final int X_COLLISION = 1;
 	public static final int Y_COLLISION = 2;
-	
+
 	/* Other */
 	public static final int NB_TYPES_OF_TROOPS = 3;
 	public static final int SIMULTANEOUS_SPAWNS = 3;

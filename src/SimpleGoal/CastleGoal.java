@@ -1,13 +1,12 @@
-package Goal;
+package SimpleGoal;
 
 import DukesOfTheRealm.Castle;
-import Interface.IParameter;
 
-public class AtomicCastleGoal extends Goal
+public class CastleGoal extends Goal
 {
-	public AtomicCastleGoal()
+	public CastleGoal()
 	{
-		super();
+
 	}
 
 	@Override
@@ -15,4 +14,5 @@ public class AtomicCastleGoal extends Goal
 	{
 		return castle.addProduction(new Castle(castle.getLevel()));
 	}
+
 }

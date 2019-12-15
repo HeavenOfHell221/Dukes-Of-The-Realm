@@ -1,10 +1,9 @@
-/Goal/
-/DukesOfTheRealm/
 /Soldiers/
+/UI/
 /Utility/
-/SaveSystem/
-/Enum/
-/images/
 /Goal/
-/ComplexeGoal/
-/AtomicGoal/
+/Duke/
+/DukesOfTheRealm/
+/Enum/
+/Interface/
+/SimpleGoal/

@@ -93,7 +93,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Constructeur Castle.
-	 * 
+	 *
 	 * @param level
 	 */
 	public Castle(final int level)
@@ -288,7 +288,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 *
-	 * @param  amount
+	 * @param amount
 	 * @retur
 	 */
 	public boolean removeFlorin(final double amount)
@@ -504,7 +504,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public boolean isOstExist()
 	{
-		return this.ost == null;
+		return this.ost != null;
 	}
 
 	/**
@@ -587,42 +587,42 @@ public class Castle extends Sprite implements Serializable
 	{
 		return this.reserveOfSoldiers.getNbOnagers();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @see DukesOfTheRealm.Caserne#removeLastProduction()
 	 */
 	public void removeLastProduction()
 	{
-		caserne.removeLastProduction();
+		this.caserne.removeLastProduction();
 	}
 
 	/**
 	 * @param refundFlorin
-	 * @see DukesOfTheRealm.Caserne#resetQueue(boolean)
+	 * @see                DukesOfTheRealm.Caserne#resetQueue(boolean)
 	 */
-	public void resetQueue(boolean refundFlorin)
+	public void resetQueue(final boolean refundFlorin)
 	{
-		caserne.resetQueue(refundFlorin);
+		this.caserne.resetQueue(refundFlorin);
 	}
 
 	/**
-	 * @param newProduction
+	 * @param  newProduction
 	 * @return
-	 * @see DukesOfTheRealm.Caserne#addProduction(Interface.IProductionUnit)
+	 * @see                  DukesOfTheRealm.Caserne#addProduction(Interface.IProductionUnit)
 	 */
-	public boolean addProduction(IProductionUnit newProduction)
+	public boolean addProduction(final IProductionUnit newProduction)
 	{
-		return caserne.addProduction(newProduction);
+		return this.caserne.addProduction(newProduction);
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.Caserne#getRatio()
+	 * @see    DukesOfTheRealm.Caserne#getRatio()
 	 */
 	public final double getRatio()
 	{
-		return caserne.getRatio();
+		return this.caserne.getRatio();
 	}
 
 	/**

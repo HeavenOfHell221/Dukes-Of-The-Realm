@@ -5,20 +5,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
-import Goal.GeneratorAtomicGoal;
-import Goal.GeneratorComplexeGoal;
-import Goal.Goal;
-import Utility.Settings;
+import SimpleGoal.Goal;
 
 public class DukeAI extends Actor implements Serializable
 {
 	private long lastTime;
-	private HashMap<Castle, Goal> map;
-	
+	private final HashMap<Castle, Goal> map;
+
 	public DukeAI()
 	{
 		super();
-		map = new HashMap<>();
+		this.map = new HashMap<>();
 	}
 
 	@Override
@@ -32,48 +29,6 @@ public class DukeAI extends Actor implements Serializable
 	public void update(final long now, final boolean pause)
 	{
 		super.update(now, pause);
-		
-		if(cooldown(now, pause))
-		{
-			Iterator<Castle> it = this.castles.iterator();
-	
-			while (it.hasNext())
-			{
-				Castle castle = it.next();
-				
-				if(map.containsKey(castle))
-				{
-					goal(castle);
-				}
-				else
-				{
-					map.put(castle, GeneratorComplexeGoal.getRandomGoal());
-					goal(castle);
-				}
-			}
-		}
 	}
-	
-	private void goal(Castle castle)
-	{
-		if(map.get(castle).isGoalIsCompleted(castle)) // J'essaie de faire l'objectif
-		{
-			// Si l'objectif a ete acomplie, j'en reprend un nouveau
-			map.put(castle, GeneratorComplexeGoal.getRandomGoal()); 
-		}
-	}
-	
-	private boolean cooldown(final long now, final boolean pause)
-	{
-		if (pause)
-		{
-			this.lastTime = now;
-		}
-		if (now - this.lastTime > Settings.GAME_FREQUENCY)
-		{
-			this.lastTime = now;
-			return true;
-		}
-		return false;
-	}
+
 }

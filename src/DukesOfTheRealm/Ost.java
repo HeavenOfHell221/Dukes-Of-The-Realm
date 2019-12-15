@@ -20,10 +20,6 @@ import javafx.scene.paint.Color;
 
 public class Ost implements IUpdate, Serializable
 {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/*************************************************/
@@ -372,7 +368,7 @@ public class Ost implements IUpdate, Serializable
 		}
 		return slowestType;
 	}
-	
+
 	private boolean Time(final long now, final boolean pause)
 	{
 		if (pause)

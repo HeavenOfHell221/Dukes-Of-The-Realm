@@ -6,8 +6,6 @@ import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
-import Goal.GeneratorAtomicGoal;
-import Goal.Goal;
 import Interface.IUpdate;
 import UI.UIManager;
 import Utility.Settings;
@@ -23,13 +21,13 @@ public class Actor implements Serializable, IUpdate
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	protected String name = "";
 	protected ArrayList<Castle> castles;
 	protected transient Color color;
 	protected transient Pane pane;
 	public ArrayList<Castle> castlesWaitForAdding;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -42,7 +40,7 @@ public class Actor implements Serializable, IUpdate
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	@Override
 	public void start()
 	{
@@ -58,7 +56,7 @@ public class Actor implements Serializable, IUpdate
 			this.castles.forEach(castle -> castle.setColor(color));
 		}
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
@@ -75,6 +73,7 @@ public class Actor implements Serializable, IUpdate
 			castle.updateProduction();
 			castle.updateUIShape();
 			castle.updateOst(now, pause);
+			
 		}
 
 		if (this.castlesWaitForAdding.size() > 0)
@@ -84,7 +83,7 @@ public class Actor implements Serializable, IUpdate
 			this.castlesWaitForAdding.clear();
 		}
 	}
-	
+
 	protected void updateFlorin(final Castle castle)
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
@@ -93,7 +92,7 @@ public class Actor implements Serializable, IUpdate
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	protected void castleHandle(final MouseEvent e)
 	{
 		if (e.getButton() == MouseButton.PRIMARY)
@@ -138,11 +137,10 @@ public class Actor implements Serializable, IUpdate
 		UIManager.getInstance().switchCastle(castle, this);
 	}
 
-	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
-	
+
 	public void setName(final String name)
 	{
 		this.name = name;
@@ -167,7 +165,7 @@ public class Actor implements Serializable, IUpdate
 	{
 		return false;
 	}
-	
+
 	public String getName(final Castle caslte)
 	{
 		if (this.castles.contains(caslte))

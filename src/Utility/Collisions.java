@@ -1,12 +1,18 @@
 package Utility;
 
+import static Utility.Settings.CASTLE_SIZE;
+import static Utility.Settings.GAP_WITH_SOLDIER;
+import static Utility.Settings.NO_COLLISION;
+import static Utility.Settings.SOLDIER_SIZE;
+import static Utility.Settings.X_COLLISION;
+import static Utility.Settings.Y_COLLISION;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import static Utility.Settings.*;
 
 public class Collisions
 {
-	
+
 	private static final Collisions instance = new Collisions();
 	private final ArrayList<Point2D> castlesCoordinates;
 
@@ -26,12 +32,14 @@ public class Collisions
 		while (it.hasNext())
 		{
 			Point2D castleCoordinates = it.next();
-			if (XCollision(castleCoordinates, soldierCoordinates.getX() + offset) && YCollision(castleCoordinates, soldierCoordinates.getY()))
+			if (XCollision(castleCoordinates, soldierCoordinates.getX() + offset)
+					&& YCollision(castleCoordinates, soldierCoordinates.getY()))
 			{
 				return X_COLLISION;
 			}
-			
-			if (XCollision(castleCoordinates, soldierCoordinates.getX()) && YCollision(castleCoordinates, soldierCoordinates.getY() + offset))
+
+			if (XCollision(castleCoordinates, soldierCoordinates.getX())
+					&& YCollision(castleCoordinates, soldierCoordinates.getY() + offset))
 			{
 				return Y_COLLISION;
 			}
@@ -42,12 +50,14 @@ public class Collisions
 
 	private static boolean XCollision(final Point2D castleCoordinates, final double coordinate)
 	{
-		return (coordinate > (castleCoordinates.getX() - GAP_WITH_SOLDIER - SOLDIER_SIZE) && coordinate < (castleCoordinates.getX() + CASTLE_SIZE + GAP_WITH_SOLDIER));
+		return (coordinate > (castleCoordinates.getX() - GAP_WITH_SOLDIER - SOLDIER_SIZE)
+				&& coordinate < (castleCoordinates.getX() + CASTLE_SIZE + GAP_WITH_SOLDIER));
 	}
 
 	private static boolean YCollision(final Point2D castleCoordinates, final double coordinate)
 	{
-		return (coordinate > (castleCoordinates.getY() - GAP_WITH_SOLDIER - SOLDIER_SIZE) && coordinate < (castleCoordinates.getY() + CASTLE_SIZE + GAP_WITH_SOLDIER));
+		return (coordinate > (castleCoordinates.getY() - GAP_WITH_SOLDIER - SOLDIER_SIZE)
+				&& coordinate < (castleCoordinates.getY() + CASTLE_SIZE + GAP_WITH_SOLDIER));
 	}
 
 	/**

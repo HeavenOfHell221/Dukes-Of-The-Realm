@@ -13,12 +13,12 @@ public interface IGoal
 	 * @return
 	 */
 	boolean goal(Castle castle);
-	
+
 	/**
 	 *
 	 * @return
 	 */
-	default boolean isGoalIsCompleted(Castle castle)
+	default boolean isGoalIsCompleted(final Castle castle)
 	{
 		return goal(castle);
 	}
