@@ -142,16 +142,16 @@ public abstract class Soldier extends Sprite implements Serializable
 
 		// int alternateDirectionX;
 		// int alternateDirectionY;
-		// switch (Collisions.isCollisionApproaching(this.getCoordinate(), offsetX))
+		// switch (Collisions.isCollisionApproaching(this.getCoordinate(), offsetX, offsetY))
 		// {
 		// case Settings.X_COLLISION:
 		// offsetX = 0;
-		// System.out.println("off x bloqué");
-		// alternateDirectionY = getY() < dst.getY() ? 1 : -1;
+		// System.out.println("off x bloque");
+		// alternateDirectionY = getY() < dst.getY() ? 1 : -1;	//blocage infini, � changer
 		// offsetY = this.stats.speed * Time.deltaTime * alternateDirectionY;
 		// break;
 		// case Settings.Y_COLLISION:
-		// System.out.println("off y bloqué");
+		// System.out.println("off y bloque");
 		// offsetY = 0;
 		// alternateDirectionX = getX() < dst.getX() ? 1 : -1;
 		// offsetX = this.stats.speed * Time.deltaTime * alternateDirectionX;

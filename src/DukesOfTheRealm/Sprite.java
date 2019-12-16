@@ -2,15 +2,19 @@ package DukesOfTheRealm;
 
 import java.io.Serializable;
 
+import DukesOfTheRealm.Castle.Orientation;
 import Interface.IProductionUnit;
 import Utility.Point2D;
 import Utility.Settings;
+
+import static Utility.Settings.*;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
@@ -118,30 +122,49 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/**
 	 *
 	 * @param pane
-	 * @param size
 	 */
-	protected final void addCastleRepresentation(final Pane pane, final double size)
+	protected final void addCastleRepresentation(final Pane pane)
 	{
-		final Rectangle r = new Rectangle(getX(), getY(), size, size);
+		final Rectangle r = new Rectangle(getX(), getY(), CASTLE_SIZE, CASTLE_SIZE);
 		this.shape = r;
 		pane.getChildren().add(this.shape);
 		r.setCursor(Cursor.HAND);
 
-		final DropShadow e = new DropShadow();
-		e.setWidth(5);
-		e.setHeight(5);
-		e.setOffsetX(2);
-		e.setOffsetY(2);
-		e.setRadius(10);
-		e.setColor(Color.BLACK);
-		r.setEffect(e);
+		this.width = CASTLE_SIZE;
+		this.height = CASTLE_SIZE;
+		
+		addShadow(r, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_RADIUS, CASTLE_SHADOW_COLOR);
+		addStroke(r, CASTLE_STROKE_THICKNESS, CASTLE_STROKE_TYPE, CASTLE_STROKE_COLOR);
+	}
 
-		this.width = size;
-		this.height = size;
-
-		r.setStroke(Color.BLACK);
-		r.setStrokeType(StrokeType.OUTSIDE);
-		r.setStrokeWidth(1.5);
+	/**
+	 *
+	 * @param pane
+	 */
+	protected Rectangle addDoorRepresentation(final Pane pane, Orientation orientation)
+	{
+		Rectangle door;
+		switch (orientation)
+		{
+			case North:
+				door = new Rectangle(getX() + DOOR_POSITION, getY(), DOOR_WIDTH, DOOR_HEIGHT);
+				break;
+			case South:
+				door = new Rectangle(getX() + DOOR_POSITION, getY() + CASTLE_SIZE - DOOR_HEIGHT, DOOR_WIDTH, DOOR_HEIGHT);
+				break;
+			case East:
+				door = new Rectangle(getX() + CASTLE_SIZE - DOOR_HEIGHT, getY() + DOOR_POSITION, DOOR_HEIGHT, DOOR_WIDTH);
+				break;
+			case West:
+				door = new Rectangle(getX(), getY() + DOOR_POSITION, DOOR_HEIGHT, DOOR_WIDTH);
+				break;
+			default:
+				door = new Rectangle(0, 0, 0, 0);
+				break;
+		}
+		door.setMouseTransparent(true);
+		pane.getChildren().add(door);
+		return door;
 	}
 
 	/**
@@ -149,33 +172,36 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	protected final void AddPikerRepresentation()
 	{
-		final double r = Settings.PIKER_REPRESENTATION_RADIUS;
-		final Circle circle = new Circle(getX(), getY(), r);
-		circle.setMouseTransparent(true);
-		this.shape = circle;
+		final double r = PIKER_REPRESENTATION_RADIUS;
+		final Circle c = new Circle(getX(), getY(), r);
+		c.setMouseTransparent(true);
+		this.shape = c;
 		this.width = 2 * r;
 		this.height = 2 * r;
 
-		circle.setStroke(Color.BLACK);
-		circle.setStrokeType(StrokeType.OUTSIDE);
-		circle.setStrokeWidth(1.5);
+		addStroke(c, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(c, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
 	}
-
+	
 	/**
 	 *
 	 */
 	protected final void AddKnightRepresentation()
 	{
-		final double s = Settings.KNIGHT_REPRESENTATION_SIZE;
-		final Rectangle r = new Rectangle(getX(), getY(), s, s);
-		r.setMouseTransparent(true);
-		this.shape = r;
+		final double s = KNIGHT_REPRESENTATION_SIZE;
+		Polygon t = new Polygon();
+		t.getPoints().addAll(
+				(double) (getX() + s/2), (double) getY(),
+				(double) getX(), (double) (getY() + s),
+				(double) (getX() + s), (double) (getY() + s) );
+		
+		t.setMouseTransparent(true);
+		this.shape = t;
 		this.width = s;
 		this.height = s;
 
-		r.setStroke(Color.BLACK);
-		r.setStrokeType(StrokeType.OUTSIDE);
-		r.setStrokeWidth(1.5);
+		addStroke(t, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(t, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
 	}
 
 	/**
@@ -183,17 +209,49 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	protected final void AddOnagerRepresentation()
 	{
-		final double w = Settings.ONAGER_REPRESENTATION_WIDTH;
-		final double h = Settings.ONAGER_REPRESENTATION_HEIGHT;
-		final Rectangle r = new Rectangle(getX(), getY(), w, h);
+		final double s = ONAGER_REPRESENTATION_SIZE;
+		final Rectangle r = new Rectangle(getX(), getY(), s, s);
 		r.setMouseTransparent(true);
 		this.shape = r;
-		this.width = w;
-		this.height = h;
+		this.width = s;
+		this.height = s;
 
-		r.setStroke(Color.BLACK);
-		r.setStrokeType(StrokeType.OUTSIDE);
-		r.setStrokeWidth(1.5);
+		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
+	}
+	
+	/**
+	 * 
+	 * @param shape
+	 * @param width
+	 * @param height
+	 * @param offsetX
+	 * @param offsetY
+	 * @param radius
+	 * @param color
+	 */
+	private final void addShadow(Shape shape, int width, int height, int offsetX, int offsetY, int radius, Color color) {
+		final DropShadow e = new DropShadow();
+		e.setWidth(width);
+		e.setHeight(height);
+		e.setOffsetX(offsetX);
+		e.setOffsetY(offsetY);
+		e.setRadius(radius);
+		e.setColor(color);
+		shape.setEffect(e);
+	}
+	
+	/**
+	 * 
+	 * @param shape
+	 * @param thickness
+	 * @param strokeType
+	 * @param color
+	 */
+	private final void addStroke(Shape shape, double thickness, StrokeType strokeType, Color color) {
+		shape.setStrokeWidth(thickness);
+		shape.setStrokeType(strokeType);
+		shape.setStroke(color);
 	}
 
 	/**
@@ -253,7 +311,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	public final Point2D getCastleCenter()
 	{
-		return new Point2D(getX() + (((Settings.CASTLE_SIZE - 1) / 2) + 1), getY() + (((Settings.CASTLE_SIZE - 1) / 2) + 1));
+		return new Point2D(getX() + (((CASTLE_SIZE - 1) / 2) + 1), getY() + (((CASTLE_SIZE - 1) / 2) + 1));
 	}
 
 	/**
