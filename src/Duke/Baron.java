@@ -34,8 +34,8 @@ public class Baron extends Actor implements Serializable
 	public void addFirstCastle(final Castle castle)
 	{
 		final Random rand = new Random();
-		castle.addFlorin(rand.nextInt(801) + 200);
-		castle.setLevel(rand.nextInt(10) + 1);
+		castle.addFlorin(rand.nextInt(8001) + 200);
+		castle.setLevel(rand.nextInt(20) + 11);
 		castle.randomSoldier();
 		super.addFirstCastle(castle);
 	}

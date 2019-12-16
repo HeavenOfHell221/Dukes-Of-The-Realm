@@ -130,6 +130,7 @@ public class Main extends Application
 			{
 				if (input.isExit())
 				{
+					SaveSystem.save(kingdom);
 					Platform.exit();
 					System.exit(0);
 				}
