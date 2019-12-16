@@ -234,39 +234,9 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void addRepresentation(final Pane pane)
 	{
-		addCastleRepresentation(pane, Settings.CASTLE_SIZE);
-		addDoorRepresentation(pane);
+		addCastleRepresentation(pane);
+		this.door = addDoorRepresentation(pane, this.orientation);
 		this.shape.setFill(this.myColor);
-	}
-
-	/**
-	 *
-	 * @param pane
-	 */
-	private void addDoorRepresentation(final Pane pane)
-	{
-		switch (this.orientation)
-		{
-			case North:
-				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE / 4, getY(), Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6);
-				break;
-			case South:
-				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE / 4, getY() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6 + 1,
-						Settings.CASTLE_SIZE / 2, Settings.CASTLE_SIZE / 6);
-				break;
-			case East:
-				this.door = new Rectangle(getX() + Settings.CASTLE_SIZE - Settings.CASTLE_SIZE / 6 + 1, getY() + Settings.CASTLE_SIZE / 4,
-						Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2);
-				break;
-			case West:
-				this.door = new Rectangle(getX(), getY() + Settings.CASTLE_SIZE / 4, Settings.CASTLE_SIZE / 6, Settings.CASTLE_SIZE / 2);
-				break;
-			default:
-				this.door = new Rectangle(0, 0, 0, 0);
-				break;
-		}
-		this.door.setMouseTransparent(true);
-		pane.getChildren().add(this.door);
 	}
 
 	/**
@@ -352,26 +322,27 @@ public class Castle extends Sprite implements Serializable
 	{
 		final int x = getX();
 		final int y = getY();
+		final double offset = (Settings.THIRD_OF_CASTLE - Settings.SOLDIER_SIZE) / 2;
 		for (int i = 0; i < Settings.NB_ATTACK_LOCATIONS; i++)
 		{
-			final int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE; // 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
-			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE) // 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
+			final int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE; 	// 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
+			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE) 		// 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
 			{
 				// North
 				case 0:
-					this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y - 10 - Settings.SOLDIER_SIZE));
+					this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j) + offset, y - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE));
 					break;
 				// East
 				case 1:
-					this.attackLocations.push(new Point2D(x + Settings.CASTLE_SIZE + 10, y + (Settings.THIRD_OF_CASTLE * j)));
+					this.attackLocations.push(new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y + (Settings.THIRD_OF_CASTLE * j) + offset));
 					break;
 				// South
 				case 2:
-					this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j), y + Settings.CASTLE_SIZE + 10));
+					this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j) + offset, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER));
 					break;
 				// West
 				case 3:
-					this.attackLocations.push(new Point2D(x - 10 - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j)));
+					this.attackLocations.push(new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j) + offset));
 					break;
 			}
 		}
@@ -504,7 +475,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public boolean isOstExist()
 	{
-		return this.ost != null;
+		return this.ost == null;
 	}
 
 	/**
