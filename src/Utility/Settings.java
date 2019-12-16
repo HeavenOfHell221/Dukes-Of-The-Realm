@@ -83,10 +83,10 @@ public class Settings
 	public static final int KNIGHT_SPEED = 80;	//80
 	public static final int ONAGER_SPEED = 40;	//40
 
-	/* Production time in frame */ /* Can be balanced */
-	public static final double PIKER_TIME_PRODUCTION = 0.01f;
-	public static final double KNIGHT_TIME_PRODUCTION = 0.01f;
-	public static final double ONAGER_TIME_PRODUCTION = 0.01f;
+	/* Production time in second */ /* Can be balanced */
+	public static final double PIKER_TIME_PRODUCTION = 3f;
+	public static final double KNIGHT_TIME_PRODUCTION = 6f;
+	public static final double ONAGER_TIME_PRODUCTION = 12f;
 	
 	/****************************************************/
 	/********************* GRAPHICS *********************/
