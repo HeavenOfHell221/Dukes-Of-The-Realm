@@ -40,6 +40,11 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 *
 	 */
 	protected Point2D coordinate;
+	
+	/**
+	 * 
+	 */
+	protected Point2D lastCoordinate;
 
 	/**
 	 *
@@ -64,6 +69,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	{
 		this.canvas = canvas;
 		this.coordinate = new Point2D(point2D);
+		this.lastCoordinate = new Point2D(point2D);
 	}
 
 	/**
@@ -71,7 +77,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	protected Sprite()
 	{
-
+		this.lastCoordinate = new Point2D();
 	}
 
 	/*************************************************/
@@ -87,9 +93,21 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	public final void updateUIShape()
 	{
+		final float gap = 0.25f;
 		if (this.shape != null)
 		{
-			this.shape.relocate(getX(), getY());
+			final Point2D p = this.coordinate.delta(this.lastCoordinate);
+			if(p != null)
+			{
+				if(p.getX() < gap && p.getY() < gap)
+					return;
+				else if(p.getX() < gap && p.getY() >= gap)
+					this.shape.relocate(this.lastCoordinate.getX(), this.coordinate.getY());
+				else if(p.getX() >= gap && p.getY() < gap)
+					this.shape.relocate(this.coordinate.getX(), this.lastCoordinate.getY());
+				else
+					this.shape.relocate(this.coordinate.getX(), this.coordinate.getY());
+			}
 		}
 	}
 
@@ -286,28 +304,12 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/**
 	 *
 	 * @param dx
-	 */
-	public final void addDx(final double dx)
-	{
-		this.coordinate.addDx(dx);
-	}
-
-	/**
-	 *
-	 * @param dy
-	 */
-	public final void addDy(final double dy)
-	{
-		this.coordinate.addDy(dy);
-	}
-
-	/**
-	 *
-	 * @param dx
 	 * @param dy
 	 */
 	public final void addMotion(final double dx, final double dy)
 	{
+		this.lastCoordinate.setX(this.coordinate.getX());
+		this.lastCoordinate.setY(this.coordinate.getY());
 		this.coordinate.addMotion(dx, dy);
 	}
 

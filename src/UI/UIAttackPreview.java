@@ -250,12 +250,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 		this.buttonAttack.setOnMousePressed(e ->
 		{
-			if (this.lastCastle.isOstExist())
+			if(this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager))
 			{
-				this.lastCastle.removeSoldiers(this.nbPiker, this.nbKnight, this.nbOnager);
-
-				this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager, this.lastActor,
-						this.currentActor);
 				this.nbKnight = 0;
 				this.nbOnager = 0;
 				this.nbPiker = 0;

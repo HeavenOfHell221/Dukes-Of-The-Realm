@@ -1,53 +1,82 @@
 package Goal;
 
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Kingdom;
 import SimpleGoal.Goal;
 import SimpleGoal.SendOstGoal;
+
+import static Goal.GeneratorGoal.rand;
+
+import java.util.Random;
+
 import Duke.Actor;
+import Duke.DukeAI;
 
 public class AttackGoal extends Goal
 {
 	private final GenericGoal goals;
-	private final int nbPikers;
-	private final int nbKnights;
-	private final int nbOnagers; 
+	private final Castle castleOrigin;
+	private Castle castleDestination;
+	private int nbPikers;
+	private int nbKnights;
+	private int nbOnagers;
 	
-	public AttackGoal(final Castle castleOrigin, final Castle castleDestination, final int nbPikers, final int nbKnights, final int nbOnagers, 
-			Actor oActor, Actor dActor)
+	public AttackGoal(final Castle castleOrigin)
 	{
 		this.goals = new GenericGoal();
+		this.castleOrigin = castleOrigin;
+	}
+	
+	public void setGoal(final Castle castleDestination, final int nbPikers, final int nbKnights, final int nbOnagers)
+	{
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
+		this.castleDestination = castleDestination;
 		
 		int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;
 		int realNbKnights = castleOrigin.getNbKnights() < nbKnights ? nbKnights - castleOrigin.getNbKnights() : 0;
 		int realNbOnagers = castleOrigin.getNbOnagers() < nbOnagers ? nbOnagers - castleOrigin.getNbOnagers() : 0;
 		
-		this.goals.add(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
-		this.goals.add(new SendOstGoal(castleDestination, nbPikers, nbKnights, nbOnagers, oActor, dActor));
+		this.goals.addLast(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
+		this.goals.addLast(new SendOstGoal(castleDestination, nbPikers, nbKnights, nbOnagers));
 	}
 
 	@Override
-	public boolean goal(Castle castle)
+	public boolean goal(Castle castleOrigin)
 	{
 		if(goals.size() == 1)
-		{
-			if(castle.getNbPikers() >= this.nbPikers && castle.getNbKnights() >= this.nbKnights && castle.getNbOnagers() >= this.nbOnagers)
+		{ 	
+			
+			if(this.castleOrigin.getActor() == this.castleDestination.getActor())
 			{
-				return goals.goal(castle);
+				this.goals.pollFirst();
+				return true;
+			}
+			
+			// Si nous n'avons plus assez d'unites
+			if(castleOrigin.getNbPikers() >= this.nbPikers && castleOrigin.getNbKnights() >= this.nbKnights && castleOrigin.getNbOnagers() >= this.nbOnagers)
+			{
+				return goals.goal(castleOrigin);
 			}
 			else
 			{
-				int realNbPikers = castle.getNbPikers() < nbPikers ? nbPikers - castle.getNbPikers() : 0;
-				int realNbKnights = castle.getNbKnights() < nbKnights ? nbKnights - castle.getNbKnights() : 0;
-				int realNbOnagers = castle.getNbOnagers() < nbOnagers ? nbOnagers - castle.getNbOnagers() : 0;
+				int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;
+				int realNbKnights = castleOrigin.getNbKnights() < nbKnights ? nbKnights - castleOrigin.getNbKnights() : 0;
+				int realNbOnagers = castleOrigin.getNbOnagers() < nbOnagers ? nbOnagers - castleOrigin.getNbOnagers() : 0;
 				
-				this.goals.add(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
+				this.goals.addFirst(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
 				return false;
 			}
 		}
 		
-		return goals.goal(castle);
+		return goals.goal(castleOrigin);
 	}
+
+	@Override
+	public String toString()
+	{
+		return "AttackGoal [ nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers=" + nbOnagers + "]";
+	}
+	
 }

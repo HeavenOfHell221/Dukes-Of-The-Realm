@@ -78,9 +78,13 @@ public class UIManager extends Parent implements IUI, Serializable
 
 	public void update(final long now, final boolean pause)
 	{
-		this.productionUnitPreview.update(now, pause);
-		this.attackPreview.update(now, pause);
-		this.castlePreview.update(now, pause);
+		if(this.currentCastle != null && this.currentCastle.getActor() != null
+				&& this.lastCastle != null && this.lastCastle.getActor() != null)
+		{
+			this.productionUnitPreview.update(now, pause);
+			this.attackPreview.update(now, pause);
+			this.castlePreview.update(now, pause);
+		}
 	}
 
 	/*************************************************/

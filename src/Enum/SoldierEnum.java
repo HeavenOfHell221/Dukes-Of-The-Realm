@@ -1,6 +1,7 @@
 package Enum;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import Interface.IProductionUnit;
 import Soldiers.Knight;
@@ -44,5 +45,16 @@ public enum SoldierEnum implements Serializable
 			default:
 				return null;
 		}
+	}
+	
+	public static SoldierEnum getRandomType(Random rand)
+	{
+		switch(rand.nextInt(3))
+		{
+			case 0: return Piker;
+			case 1: return Knight;
+			case 2: return Onager;
+		}
+		return null;
 	}
 }

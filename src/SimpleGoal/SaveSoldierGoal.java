@@ -12,7 +12,7 @@ public class SaveSoldierGoal extends Goal
 	@Override
 	public boolean goal(Castle castle)
 	{
-
+		//TODO
 		return false;
 	}
 }

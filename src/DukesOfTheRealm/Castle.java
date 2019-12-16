@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import Duke.Actor;
+import Enum.SoldierEnum;
 import Interface.IProductionUnit;
 import Utility.Point2D;
 import Utility.Settings;
@@ -81,6 +82,11 @@ public class Castle extends Sprite implements Serializable
 	 *
 	 */
 	private Stack<Point2D> attackLocations;
+	
+	/**
+	 * 
+	 */
+	private Actor actor;
 
 	/**
 	 *
@@ -120,8 +126,9 @@ public class Castle extends Sprite implements Serializable
 	 * @param pane
 	 * @param coord
 	 */
-	public void start(final int level, final Pane pane, final Point2D coord)
+	public void start(final int level, final Pane pane, final Point2D coord, final Actor actor)
 	{
+		this.actor = actor;
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
@@ -167,6 +174,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void updateOst(final long now, final boolean pause)
 	{
+		//System.out.println(this);
 		if (this.ost != null)
 		{
 			this.ost.update(now, pause);
@@ -319,14 +327,16 @@ public class Castle extends Sprite implements Serializable
 	 * @param  nbOnagers
 	 * @return
 	 */
-	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Actor originActor, final Actor destinationActor)
+	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
 		if (this.ost == null)
 		{
-			this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor, originActor, destinationActor);
-			this.ost.start();
-			return true;
+			if(removeSoldiers(nbPikers, nbKnights, nbOnagers) && this != destination)
+			{
+				this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor);
+				this.ost.start();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -653,20 +663,21 @@ public class Castle extends Sprite implements Serializable
 	 * @param x
 	 * @see     DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(int)
 	 */
-	public void randomRemoveHP(final int x)
+	public void randomRemoveHP()
 	{
-		this.reserveOfSoldiers.randomRemoveHP(x);
+		this.reserveOfSoldiers.randomRemoveHP(SoldierEnum.getRandomType(new Random()));
 	}
 
 	/**
 	 * @param nbPikers
 	 * @param nbKnights
 	 * @param nbOnagers
+	 * @return
 	 * @see             DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
-	public void removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
+	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
-		this.reserveOfSoldiers.removeSoldiers(nbPikers, nbKnights, nbOnagers);
+		return this.reserveOfSoldiers.removeSoldiers(nbPikers, nbKnights, nbOnagers);
 	}
 
 	/**
@@ -687,10 +698,27 @@ public class Castle extends Sprite implements Serializable
 		return this.reserveOfSoldiers.isStopAttack();
 	}
 
+	
+
 	@Override
 	public String toString()
 	{
-		return "Castle [totalFlorin=" + (int) this.totalFlorin + ", level=" + this.level + ", orientation=" + this.orientation
-				+ ", myColor=" + this.myColor + "]";
+		return "Castle [actor=" + actor + "]";
+	}
+
+	/**
+	 * @return the actor
+	 */
+	public final Actor getActor()
+	{
+		return actor;
+	}
+
+	/**
+	 * @param actor the actor to set
+	 */
+	public final void setActor(Actor actor)
+	{
+		this.actor = actor;
 	}
 }

@@ -107,4 +107,11 @@ public class Point2D implements Serializable
 		this.x += dx;
 		this.y += dy;
 	}
+	
+	public Point2D delta(final Point2D p)
+	{
+		if(p != null)
+			return new Point2D(Math.abs(this.x - p.x), Math.abs(this.y - p.y));
+		return null;
+	}
 }

@@ -27,7 +27,7 @@ public class Ost implements IUpdate, Serializable
 	/*************************************************/
 
 	private final Castle origin;
-	private final Castle destination;
+	private Castle destination;
 	private Point2D separationPoint = null;
 	private Point2D waitingPoint = null;
 	private final int nbPikers;
@@ -38,20 +38,20 @@ public class Ost implements IUpdate, Serializable
 	private final ArrayList<Soldier> soldiers;
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
-	private final Actor originActor;
-	private final Actor destinationActor;
 
 	private transient Color color;
 	private transient long lastTime;
 
 	private boolean stopAttack = false;
+	
+	private boolean canRemoveOst = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
 	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Color color, final Actor originActor, final Actor destinationActor)
+			final Color color)
 	{
 		this.origin = origin;
 		this.destination = destination;
@@ -61,8 +61,6 @@ public class Ost implements IUpdate, Serializable
 		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
-		this.originActor = originActor;
-		this.destinationActor = destinationActor;
 
 	}
 
@@ -109,7 +107,7 @@ public class Ost implements IUpdate, Serializable
 
 				while (it.hasNext())
 				{
-					final Soldier s = it.next();
+					Soldier s = it.next();
 
 					if (s.isDead)
 					{
@@ -120,13 +118,17 @@ public class Ost implements IUpdate, Serializable
 					else
 					{
 						s.update(now, pause);
+						s.updateUIShape();
 					}
 				}
 			}
 			else
 			{
-				this.origin.removeOst();
-				this.destination.removeNbOstsarriving();
+				if(this.canRemoveOst)
+				{
+					this.origin.removeOst();
+					this.destination.removeNbOstsarriving();
+				}
 			}
 		}
 	}
@@ -388,21 +390,23 @@ public class Ost implements IUpdate, Serializable
 		if (!this.stopAttack)
 		{
 			this.stopAttack = true;
-			Iterator<Castle> it = this.destinationActor.getCastles().iterator();
-			while (it.hasNext())
+			if(this.origin.getActor() != this.destination.getActor() && !this.origin.getActor().isDead)
 			{
-				Castle castle = it.next();
-				if (castle == this.destination)
-				{
-					it.remove();
-					this.originActor.castlesWaitForAdding.add(castle);
-					this.destination.switchColor(this.origin.getMyColor());
-					this.destination.resetQueue(false);
-					break;
-				}
+				this.origin.getActor().castlesWaitForAdding.add(this.destination);
+				
+				this.destination.getActor().castlesWaitForDelete.add(this.destination);
+				this.destination.setActor(this.origin.getActor());
+				
+				this.destination.switchColor(this.origin.getActor().getColor());
+				this.destination.resetQueue(false);
+				this.destination.reactivateAttack();
 			}
+			else
+			{
+				
+			}
+			this.canRemoveOst = true;
 		}
-
 	}
 
 	/*************************************************/
@@ -443,13 +447,4 @@ public class Ost implements IUpdate, Serializable
 	{
 		return this.stopAttack;
 	}
-
-	@Override
-	public String toString()
-	{
-		return "Ost [nbPikers=" + this.nbPikers + ", nbKnights=" + this.nbKnights + ", nbOnagers=" + this.nbOnagers + ", nbSoldiers="
-				+ this.nbSoldiers + ", speed=" + this.speed + ", soldiers=" + this.soldiers + ", nbSoldiersSpawned="
-				+ this.nbSoldiersSpawned + ", fullyDeployed=" + this.fullyDeployed + ", color=" + this.color + "]";
-	}
-
 }

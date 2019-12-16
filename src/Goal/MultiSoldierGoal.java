@@ -19,11 +19,32 @@ public class MultiSoldierGoal extends Goal
 		
 		while(count > 0)
 		{
-			switch(rand.nextInt(2))
+			switch(rand.nextInt(3))
 			{
-				case 0: if(nbPikers > 0) {goals.add(new SoldierGoal(SoldierEnum.Piker)); nbPikers--;} break;
-				case 1: if(nbKnights > 0) {goals.add(new SoldierGoal(SoldierEnum.Knight)); nbKnights--;} break;
-				case 2: if(nbOnagers > 0) {goals.add(new SoldierGoal(SoldierEnum.Onager)); nbOnagers--;} break;
+				case 0: 
+					if(nbPikers > 0) 
+					{
+						goals.addLast(new SoldierGoal(SoldierEnum.Piker)); 
+						nbPikers--;
+					} 
+					break;
+					
+				case 1: 
+					if(nbKnights > 0) 
+					{
+						goals.addLast(new SoldierGoal(SoldierEnum.Knight)); 
+						nbKnights--;
+					} 
+					break;
+					
+				case 2: 
+					if(nbOnagers > 0) 
+					{
+						goals.addLast(new SoldierGoal(SoldierEnum.Onager)); 
+						nbOnagers--;
+					} 
+					break;
+					
 				default: break;
 			}
 			count = nbPikers + nbKnights + nbOnagers;

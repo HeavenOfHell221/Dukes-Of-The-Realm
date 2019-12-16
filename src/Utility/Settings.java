@@ -36,7 +36,7 @@ public class Settings
 	/****************************************************/
 
 	/* Florin */ /* Can be balanced */
-	public static final int FLORIN_PER_SECOND = 10;
+	public static final int FLORIN_PER_SECOND = 100;
 	public static final float FLORIN_FACTOR_BARON = 0.1f;
 
 	/* Levels */ /* Can be balanced */
@@ -50,8 +50,8 @@ public class Settings
 	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = 250; /* Can be balanced */
 
 	/* Castle number */
-	public static final int AI_NUMBER = 4;
-	public static final int BARON_NUMBER = 7;
+	public static final int AI_NUMBER = 8;
+	public static final int BARON_NUMBER = 0;
 	public static final int NB_TOTAL_TEST_CREATE_CASTLE = 1000 * 1000;
 
 	/* Starter */ /* Can be balanced */
@@ -69,9 +69,9 @@ public class Settings
 	/****************************************************/
 
 	/* HP */ /* Can be balanced */
-	public static final int PIKER_HP = 25;
-	public static final int KNIGHT_HP = 50;
-	public static final int ONAGER_HP = 10;
+	public static final int PIKER_HP = 2;
+	public static final int KNIGHT_HP = 5;
+	public static final int ONAGER_HP = 1;
 
 	/* Damage */ /* Can be balanced */
 	public static final int PIKER_DAMAGE = 25;
@@ -84,14 +84,14 @@ public class Settings
 	public static final int ONAGER_COST = 80;
 
 	/* Speed */ /* Can be balanced */ /* Not above 80 */
-	public static final int PIKER_SPEED = 120;
-	public static final int KNIGHT_SPEED = 80;
-	public static final int ONAGER_SPEED = 40;
+	public static final int PIKER_SPEED = 100;
+	public static final int KNIGHT_SPEED = 100;
+	public static final int ONAGER_SPEED = 100;
 
 	/* Production time in frame */ /* Can be balanced */
-	public static final double PIKER_TIME_PRODUCTION = 0.01f;
-	public static final double KNIGHT_TIME_PRODUCTION = 0.01f;
-	public static final double ONAGER_TIME_PRODUCTION = 0.01f;
+	public static final double PIKER_TIME_PRODUCTION = 0.1f;
+	public static final double KNIGHT_TIME_PRODUCTION = 0.1f;
+	public static final double ONAGER_TIME_PRODUCTION = 0.1f;
 
 	/* Graphics */
 	public static final int SOLDIER_SIZE = 16;

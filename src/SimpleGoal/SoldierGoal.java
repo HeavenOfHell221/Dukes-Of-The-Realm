@@ -17,4 +17,12 @@ public class SoldierGoal extends Goal
 	{
 		return castle.addProduction(this.type.getProduction());
 	}
+
+	@Override
+	public String toString()
+	{
+		return "SoldierGoal [type=" + type + "]";
+	}
+	
+	
 }

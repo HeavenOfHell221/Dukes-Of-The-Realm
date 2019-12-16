@@ -2,9 +2,11 @@ package Soldiers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
+import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
 import Utility.Point2D;
@@ -24,7 +26,6 @@ public abstract class Soldier extends Sprite implements Serializable
 	protected Stats stats;
 	protected Ost itsOst = null;
 	public boolean onField = false;
-	protected boolean canMove = false;
 	protected boolean isArrived = false;
 	protected boolean isInPosition = false;
 	public boolean isDead = false;
@@ -52,10 +53,7 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	public void start()
 	{
-		if (this.attackLocation == null || this.isWaitingForAttackLocation)
-		{
-			this.canMove = true;
-		}
+
 	}
 
 	public void Awake(final Color color)
@@ -76,22 +74,24 @@ public abstract class Soldier extends Sprite implements Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+
+	
 	public void update(final long now, final boolean pause)
-	{
+	{				
 		if (!this.isArrived)
 		{
-			Move(getSeparationPoint());
+			Move(getSeparationPoint(), 1d);
 		}
 
 		if (this.isArrived && !this.isInPosition)
 		{
 			if (this.attackLocation != null)
 			{
-				Move(this.attackLocation);
+				Move(this.attackLocation, 1d);
 			}
 			else
 			{
-				Move(getWaitingPoint());
+				Move(getWaitingPoint(), 0.5d);
 			}
 		}
 
@@ -116,12 +116,10 @@ public abstract class Soldier extends Sprite implements Serializable
 		{
 			this.attackLocation = getDestination().getNextAttackLocation();
 			this.isWaitingForAttackLocation = false;
-			this.canMove = true;
 		}
 		else
 		{
 			this.isWaitingForAttackLocation = true;
-			this.canMove = false;
 		}
 	}
 
@@ -129,13 +127,18 @@ public abstract class Soldier extends Sprite implements Serializable
 	 *
 	 * @param dst
 	 */
-	private void Move(final Point2D dst)
+	private void Move(final Point2D dst, double factorSpeed)
 	{
-		final int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
-		final int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
+		if(this.isWaitingForAttackLocation)
+			return;
+		
+		final int directionX = getX() < dst.getX() ? 1 : (getX() == (int)dst.getX()) || (dst.delta(this.coordinate).getX() <= 0.5d) ? 0 : -1;
+		final int directionY = getY() < dst.getY() ? 1 : (getY() == (int)dst.getY()) || (dst.delta(this.coordinate).getY() <= 0.5d) ? 0 : -1;
 
-		double offsetX = this.stats.speed * Time.deltaTime * directionX;
-		double offsetY = this.stats.speed * Time.deltaTime * directionY;
+		double offsetX = this.stats.speed * Time.deltaTime * directionX * factorSpeed;
+		double offsetY = this.stats.speed * Time.deltaTime * directionY * factorSpeed;
+		
+		
 
 		// int alternateDirectionX;
 		// int alternateDirectionY;
@@ -155,12 +158,7 @@ public abstract class Soldier extends Sprite implements Serializable
 		// break;
 		// default: break;
 		// }
-
-		if (this.canMove)
-		{
-			addMotion(offsetX, offsetY);
-			updateUIShape();
-		}
+		addMotion(offsetX, offsetY);
 
 		isOutOfScreen();
 
@@ -180,8 +178,6 @@ public abstract class Soldier extends Sprite implements Serializable
 		if (getX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04) || getY() > Settings.SCENE_HEIGHT || getX() <= 0
 				|| getY() <= 0)
 		{
-			RemoveShapeToLayer();
-			this.canMove = false;
 			this.isDead = true;
 		}
 	}
@@ -191,7 +187,6 @@ public abstract class Soldier extends Sprite implements Serializable
 		if (getX() == getSeparationPoint().getX() && getY() == getSeparationPoint().getY())
 		{
 			this.isArrived = true;
-			this.canMove = false;
 			SetAttackLocation();
 		}
 	}
@@ -203,29 +198,45 @@ public abstract class Soldier extends Sprite implements Serializable
 			if (getX() == this.attackLocation.getX() && getY() == this.attackLocation.getY())
 			{
 				this.isInPosition = true;
-				this.canMove = false;
 			}
 		}
 	}
 
 	private void Attack()
 	{
-		if (!isStopAttack())
+		if(!isStopAttack())
 		{
-			// applyDamage();
+			applyDamage();
 		}
 		else
 		{
 			this.isDead = true;
-			// TODO aller dans la reserve
 		}
+	}
 
+	private void applyDamage()
+	{
+		// Il va vouloir faire 1 point de damage
+		getDestination().randomRemoveHP();
+		
+		// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
+		if (!getDestination().isStopAttack())
+		{
+			this.isDead = (--this.stats.damage <= 0) ? true : false;
+		}
+		else
+		{
+			this.itsOst.win();
+			this.isDead = true;
+		}
 	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
+
+	
 	@Override
 	public abstract double getProductionTime();
 
@@ -310,6 +321,6 @@ public abstract class Soldier extends Sprite implements Serializable
 	@Override
 	public String toString()
 	{
-		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" + this.canMove + "]";
+		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" /*+ this.canMove*/ + "]";
 	}
 }

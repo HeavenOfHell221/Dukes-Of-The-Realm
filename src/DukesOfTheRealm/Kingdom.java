@@ -82,7 +82,6 @@ public class Kingdom extends Parent implements Serializable
 		this.actors = new ArrayList<>();
 		startTransient(pane);
 		createWorld();
-		// this.player.getCastles().get(0).createOst(this.actors.get(1).getCastles().get(0), 20, 10, 0);
 		this.canUpdate = true;
 	}
 
@@ -101,6 +100,8 @@ public class Kingdom extends Parent implements Serializable
 		this.colors.add(Color.GOLDENROD);
 		this.colors.add(Color.LIGHTPINK);
 		this.colors.add(Color.MAROON);
+		this.colors.add(Color.CHOCOLATE);
+		this.colors.add(Color.IVORY);
 
 		if (Main.isNewGame)
 		{
@@ -152,7 +153,7 @@ public class Kingdom extends Parent implements Serializable
 			while (it.hasNext())
 			{
 				Actor actor = it.next();
-				if (actor.getCastles().size() != 0)
+				if (!actor.isDead)
 				{
 					actor.update(now, pause);
 				}
@@ -171,6 +172,7 @@ public class Kingdom extends Parent implements Serializable
 	/**
 	 *
 	 */
+	@SuppressWarnings("unused")
 	public void createWorld()
 	{
 		Random rand = new Random();
@@ -178,13 +180,15 @@ public class Kingdom extends Parent implements Serializable
 		for (int i = 0; i < Settings.AI_NUMBER; i++)
 		{
 			Actor a = new DukeAI();
-			a.start();
+			((DukeAI) a).start(this);
 			a.setName("Duke " + (i + 1));
 			this.actors.add(a);
 			a.setColor(randomColor(rand));
 		}
 
-		Color colorBaron = randomColor(rand);
+		Color colorBaron = null;
+		if(Settings.BARON_NUMBER > 0)
+			colorBaron = randomColor(rand);
 
 		for (int i = 0; i < Settings.BARON_NUMBER; i++)
 		{
@@ -194,7 +198,7 @@ public class Kingdom extends Parent implements Serializable
 			this.actors.add(a);
 			a.setColor(colorBaron);
 		}
-
+		
 		ArrayList<Castle> list = new ArrayList<>();
 
 		for (int i = 0; i < (Settings.AI_NUMBER + Settings.BARON_NUMBER + 1); i++)
@@ -210,7 +214,7 @@ public class Kingdom extends Parent implements Serializable
 			Castle c = new Castle();
 			list.add(c);
 			c.setColor(this.actors.get(i).getColor());
-			c.start(1, this.playfieldLayer, p);
+			c.start(1, this.playfieldLayer, p, this.actors.get(i));
 			this.actors.get(i).addFirstCastle(c);
 			Collisions.addPoint(c.getCoordinate());
 		}
@@ -223,8 +227,7 @@ public class Kingdom extends Parent implements Serializable
 	 */
 	private Color randomColor(final Random rand)
 	{
-		int size = this.colors.size();
-		Color color = this.colors.get((rand.nextInt(20) + 1) % size);
+		Color color = this.colors.get(rand.nextInt(this.colors.size()));
 		this.colors.remove(color);
 		return color;
 	}
@@ -273,6 +276,22 @@ public class Kingdom extends Parent implements Serializable
 				rand.nextInt((int) (Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE,
 				rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
 	}
+	
+	public Actor getRandomActor(Actor actor)
+	{
+		Random rand = new Random();
+		ArrayList<Actor> list = new ArrayList<>();
+		list.addAll(this.actors);
+		list.remove(actor);
+		
+		if(list.size() > 0)
+			return list.get(rand.nextInt(list.size()));
+		else 
+		{
+			canUpdate = false;
+			return null;
+		}
+	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
@@ -286,4 +305,6 @@ public class Kingdom extends Parent implements Serializable
 	{
 		this.playfieldLayer = playfieldLayer;
 	}
+	
+	
 }

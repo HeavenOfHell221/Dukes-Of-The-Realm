@@ -130,7 +130,6 @@ public class Main extends Application
 			{
 				if (input.isExit())
 				{
-					SaveSystem.save(Main.this.kingdom);
 					Platform.exit();
 					System.exit(0);
 				}
@@ -241,7 +240,6 @@ public class Main extends Application
 		if (now - this.lastTime > Settings.GAME_FREQUENCY / 5)
 		{
 			this.lastTime = now;
-			SaveSystem.save(this.kingdom);
 			return true;
 		}
 		return false;

@@ -1,6 +1,7 @@
 package Duke;
 
 import java.io.Serializable;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,7 +27,10 @@ public class Actor implements Serializable, IUpdate
 	protected ArrayList<Castle> castles;
 	protected transient Color color;
 	protected transient Pane pane;
-	public ArrayList<Castle> castlesWaitForAdding;
+	public ArrayDeque<Castle> castlesWaitForAdding;
+	public ArrayDeque<Castle> castlesWaitForDelete;
+	public boolean isDead = false;
+	
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -45,7 +49,8 @@ public class Actor implements Serializable, IUpdate
 	public void start()
 	{
 		this.castles = new ArrayList<>();
-		this.castlesWaitForAdding = new ArrayList<>();
+		this.castlesWaitForAdding = new ArrayDeque<>();
+		this.castlesWaitForDelete = new ArrayDeque<>();
 	}
 
 	public void startTransient(final Color color, final Pane pane)
@@ -65,7 +70,7 @@ public class Actor implements Serializable, IUpdate
 	public void update(final long now, final boolean pause)
 	{
 		Iterator<Castle> it = this.castles.iterator();
-
+		//System.out.println(this.name + " -> " + this.castles.size());
 		while (it.hasNext())
 		{
 			Castle castle = it.next();
@@ -73,15 +78,33 @@ public class Actor implements Serializable, IUpdate
 			castle.updateProduction();
 			castle.updateUIShape();
 			castle.updateOst(now, pause);
-			
 		}
-
+		this.addOrRemoveCastleList();
+	}
+	
+	protected void addOrRemoveCastleList()
+	{
 		if (this.castlesWaitForAdding.size() > 0)
 		{
+			//System.out.println("ADD | " + this.name + " | size before : " + this.castles.size() + " | size list AD: " + this.castlesWaitForAdding.size());
 			this.castles.addAll(this.castlesWaitForAdding);
-			this.castlesWaitForAdding.forEach(c -> addEvent(c));
-			this.castlesWaitForAdding.clear();
+			//System.out.println("ADD | " + this.name + " | size after : " + this.castles.size());
 		}
+		
+		if(this.castlesWaitForDelete.size() > 0)
+		{
+			//System.out.println("DELETE | " + this.name + " | size before : " + this.castles.size() + " | size list DEL: " + this.castlesWaitForDelete.size());
+			this.castles.removeAll(this.castlesWaitForDelete);
+			//System.out.println("DELETE | " + this.name + " | size after : " + this.castles.size() + "\n");
+		}
+		
+		this.castlesWaitForAdding.forEach(c -> addEvent(c));
+		
+		this.castlesWaitForDelete.clear();
+		this.castlesWaitForAdding.clear();
+		
+		if(this.castles.size() <= 0)
+			this.isDead = true;
 	}
 
 	protected void updateFlorin(final Castle castle)
@@ -122,7 +145,7 @@ public class Actor implements Serializable, IUpdate
 		addEvent(castle);
 	}
 
-	private void addEvent(final Castle castle)
+	protected void addEvent(final Castle castle)
 	{
 		castle.getShape().setOnMousePressed(e -> castleHandle(e));
 	}
