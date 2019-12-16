@@ -56,4 +56,6 @@ public class MultiSoldierGoal extends Goal
 	{
 		return goals.goal(castle);
 	}
+	
+	
 }

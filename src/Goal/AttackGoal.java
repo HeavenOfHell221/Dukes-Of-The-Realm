@@ -21,17 +21,18 @@ public class AttackGoal extends Goal
 	private int nbKnights;
 	private int nbOnagers;
 	
-	public AttackGoal(final Castle castleOrigin)
+	public AttackGoal(final Castle castleOrigin, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
 		this.goals = new GenericGoal();
 		this.castleOrigin = castleOrigin;
-	}
-	
-	public void setGoal(final Castle castleDestination, final int nbPikers, final int nbKnights, final int nbOnagers)
-	{
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
+	}
+	
+	public void setGoal(final Castle castleDestination)
+	{
+		
 		this.castleDestination = castleDestination;
 		
 		int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;

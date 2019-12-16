@@ -90,7 +90,7 @@ public class DukeAI extends Actor implements Serializable
 			Actor actorTarget = getRandomActor();
 			Castle castleTarget = actorTarget.castles.get(rand.nextInt(actorTarget.castles.size()));
 			
-			((AttackGoal) goal).setGoal(castleTarget, rand.nextInt(10), rand.nextInt(10), rand.nextInt(5));
+			((AttackGoal) goal).setGoal(castleTarget);
 		}
 		map.put(castle, goal);
 	}

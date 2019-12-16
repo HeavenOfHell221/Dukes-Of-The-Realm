@@ -47,7 +47,6 @@ public class Settings
 	/* Castle number */
 	public static final int AI_NUMBER = 4;
 	public static final int BARON_NUMBER = 7;
-	public static final int NB_TOTAL_TEST_CREATE_CASTLE = 1000 * 1000;
 
 	/* Starter */ /* Can be balanced */
 	public static final int STARTER_KNIGHT = 15;
