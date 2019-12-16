@@ -32,7 +32,6 @@ public class AttackGoal extends Goal
 	
 	public void setGoal(final Castle castleDestination)
 	{
-		
 		this.castleDestination = castleDestination;
 		
 		int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;
@@ -48,10 +47,10 @@ public class AttackGoal extends Goal
 	{
 		if(goals.size() == 1)
 		{ 	
-			
 			if(this.castleOrigin.getActor() == this.castleDestination.getActor())
 			{
 				this.goals.pollFirst();
+				//System.out.println("Meme acteur -> " + this.goals.size());
 				return true;
 			}
 			

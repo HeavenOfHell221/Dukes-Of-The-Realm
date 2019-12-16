@@ -43,8 +43,6 @@ public class Ost implements IUpdate, Serializable
 	private transient long lastTime;
 
 	private boolean stopAttack = false;
-	
-	private boolean canRemoveOst = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -124,11 +122,8 @@ public class Ost implements IUpdate, Serializable
 			}
 			else
 			{
-				if(this.canRemoveOst)
-				{
-					this.origin.removeOst();
-					this.destination.removeNbOstsarriving();
-				}
+				this.origin.removeOst();
+				this.destination.removeNbOstsarriving();
 			}
 		}
 	}
@@ -403,9 +398,8 @@ public class Ost implements IUpdate, Serializable
 			}
 			else
 			{
-				
 			}
-			this.canRemoveOst = true;
+			
 		}
 	}
 

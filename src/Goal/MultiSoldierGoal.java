@@ -10,11 +10,17 @@ import SimpleGoal.SoldierGoal;
 public class MultiSoldierGoal extends Goal
 {
 	private final GenericGoal goals;
+	private final int nbPikers;
+	private final int nbKnights;
+	private final int nbOnagers;
 	
 	public MultiSoldierGoal(int nbPikers, int nbKnights, int nbOnagers)
 	{
 		this.goals = new GenericGoal();
 		Random rand = new Random();
+		this.nbPikers = nbPikers;
+		this.nbKnights = nbKnights;
+		this.nbOnagers = nbOnagers;
 		int count = nbPikers + nbKnights + nbOnagers;
 		
 		while(count > 0)
@@ -55,6 +61,13 @@ public class MultiSoldierGoal extends Goal
 	public boolean goal(Castle castle)
 	{
 		return goals.goal(castle);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "MultiSoldierGoal [nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers=" + nbOnagers
+				+ "]";
 	}
 	
 	

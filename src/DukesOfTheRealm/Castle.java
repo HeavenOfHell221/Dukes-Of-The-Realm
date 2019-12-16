@@ -307,7 +307,11 @@ public class Castle extends Sprite implements Serializable
 				this.ost.start();
 				return true;
 			}
+			else
+				System.out.println("remove echec ou this == destination");
 		}
+		else
+			System.out.println("Deja une ost");
 		return false;
 	}
 
@@ -317,6 +321,7 @@ public class Castle extends Sprite implements Serializable
 	public void removeOst()
 	{
 		this.ost = null;
+		System.out.println("ost removed");
 	}
 
 	public void switchColor(final Color color)
