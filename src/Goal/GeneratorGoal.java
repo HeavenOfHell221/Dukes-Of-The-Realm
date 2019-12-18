@@ -47,9 +47,16 @@ public class GeneratorGoal implements Serializable
 	private static Goal getNewGoalBattle(Castle castle)
 	{
 		final int lvl = castle.getLevel();
-		return new AttackGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl, 
+		switch(rand.nextInt(2))
+		{
+			case 0: return new AttackGoal(castle, castle.getNbPikers(), castle.getNbKnights(), castle.getNbOnagers());
+			case 1: return new AttackGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl, 
 				 rand.nextInt(11 + lvl) + rand.nextInt(4) * lvl, 
-				 rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
+				 rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl);
+			default: break;
+		}
+		return null;
+		
 	}
 
 	private static Goal getNewGoalBackup(Castle castle)

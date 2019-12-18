@@ -372,7 +372,7 @@ public class Ost implements IUpdate, Serializable
 		{
 			this.lastTime = now;
 		}
-		if (now - this.lastTime > Settings.GAME_FREQUENCY / 2)
+		if (now - this.lastTime > Settings.GAME_FREQUENCY_OST)
 		{
 			this.lastTime = now;
 			return true;

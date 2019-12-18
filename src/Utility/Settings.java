@@ -36,16 +36,16 @@ public class Settings
 	/****************************************************/
 
 	/* Florin */ /* Can be balanced */
-	public static final int FLORIN_PER_SECOND = 10;
+	public static final int FLORIN_PER_SECOND = 5;
 	public static final float FLORIN_FACTOR_BARON = 0.1f;
 
 	/* Levels */ /* Can be balanced */
-	public static final int LEVEL_UP_COST_FACTOR = 100;
+	public static final int LEVEL_UP_COST_FACTOR = 300;
 	public static final int LEVEL_UP_DURATION_OFFSET = 1; // en sec
-	public static final int LEVEL_UP_DURATION_FACTOR = 5; // en sec
+	public static final int LEVEL_UP_DURATION_FACTOR = 3; // en sec
 
 	/* Castle number */
-	public static final int AI_NUMBER = 4;
+	public static final int AI_NUMBER = 5;
 	public static final int BARON_NUMBER = 7;
 
 	/* Starter */ /* Can be balanced */
@@ -63,29 +63,29 @@ public class Settings
 	/****************************************************/
 
 	/* HP */ /* Can be balanced */
-	public static final int PIKER_HP = 20;
+	public static final int PIKER_HP = 40;
 	public static final int KNIGHT_HP = 50;
 	public static final int ONAGER_HP = 10;
 
 	/* Damage */ /* Can be balanced */
-	public static final int PIKER_DAMAGE = 25;
+	public static final int PIKER_DAMAGE = 15;
 	public static final int KNIGHT_DAMAGE = 50;
 	public static final int ONAGER_DAMAGE = 75;
 
 	/* Cost */ /* Can be balanced */
-	public static final int PIKER_COST = 20;
-	public static final int KNIGHT_COST = 40;
-	public static final int ONAGER_COST = 70;
+	public static final int PIKER_COST = 40;
+	public static final int KNIGHT_COST = 80;
+	public static final int ONAGER_COST = 140;
 
-	/* Speed */ /* Can be balanced */ /* Not above 80 */
-	public static final int PIKER_SPEED = 60;	//60
-	public static final int KNIGHT_SPEED = 80;	//80
+	/* Speed */ /* Can be balanced */ /* Not above 100 */
+	public static final int PIKER_SPEED = 70;	//60
+	public static final int KNIGHT_SPEED = 100;	//80
 	public static final int ONAGER_SPEED = 40;	//40
 
 	/* Production time in second */ /* Can be balanced */
-	public static final double PIKER_TIME_PRODUCTION = 3f;
-	public static final double KNIGHT_TIME_PRODUCTION = 6f;
-	public static final double ONAGER_TIME_PRODUCTION = 12f;
+	public static final double PIKER_TIME_PRODUCTION = 0.5f;
+	public static final double KNIGHT_TIME_PRODUCTION = 2f;
+	public static final double ONAGER_TIME_PRODUCTION = 4f;
 	
 	/****************************************************/
 	/********************* GRAPHICS *********************/
@@ -105,6 +105,7 @@ public class Settings
 	public static final int CASTLE_SHADOW_OFFSET = 7;
 	public static final int CASTLE_SHADOW_RADIUS = 11;
 	public static final Color CASTLE_SHADOW_COLOR = Color.BLACK;
+	public static final int GAME_FREQUENCY_OST = (int) (GAME_FREQUENCY / 3f);
 	
 	/* Door */
 	public static final double DOOR_WIDTH = CASTLE_SIZE / 2;

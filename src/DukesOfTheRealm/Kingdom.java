@@ -115,8 +115,8 @@ public class Kingdom extends Parent implements Serializable
 		{
 			Random rand = new Random();
 			this.actors.stream().filter(actor -> actor.getClass() != Baron.class).forEach(actor -> actor.startTransient(randomColor(rand), pane));
-			Color c = randomColor(rand);
-			this.actors.stream().filter(actor -> actor.getClass() == Baron.class).forEach(actor -> actor.startTransient(c, pane));
+			//Color c = randomColor(rand);
+			this.actors.stream().filter(actor -> actor.getClass() == Baron.class).forEach(actor -> actor.startTransient(Color.DARKGREY, pane));
 
 			this.actors.forEach(actor ->
 			{
@@ -187,9 +187,9 @@ public class Kingdom extends Parent implements Serializable
 			a.setColor(randomColor(rand));
 		}
 
-		Color colorBaron = null;
-		if(Settings.BARON_NUMBER > 0)
-			colorBaron = randomColor(rand);
+		Color colorBaron = Color.DARKGRAY;
+		/*if(Settings.BARON_NUMBER > 0)
+			colorBaron = randomColor(rand);*/
 
 		for (int i = 0; i < Settings.BARON_NUMBER; i++)
 		{

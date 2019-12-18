@@ -317,7 +317,6 @@ public class Castle extends Sprite implements Serializable
 	public void removeOst()
 	{
 		this.ost = null;
-		System.out.println("ost removed");
 	}
 
 	public void switchColor(final Color color)

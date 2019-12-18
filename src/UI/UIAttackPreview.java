@@ -252,13 +252,22 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		{
 			if(this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager))
 			{
-				this.nbKnight = 0;
-				this.nbOnager = 0;
-				this.nbPiker = 0;
-				setAllVisible(false);
-				Main.pause = false;
+				reset();
+			}
+			if(this.lastCastle.isOstExist())
+			{
+				reset();
 			}
 		});
+	}
+	
+	private void reset()
+	{
+		this.nbKnight = 0;
+		this.nbOnager = 0;
+		this.nbPiker = 0;
+		setAllVisible(false);
+		Main.pause = false;
 	}
 
 	private void setBackground()

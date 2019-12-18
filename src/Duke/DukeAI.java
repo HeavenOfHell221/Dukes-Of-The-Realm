@@ -64,7 +64,8 @@ public class DukeAI extends Actor implements Serializable
 				Castle castle = it.next();
 				if(map.containsKey(castle))
 				{
-					if(map.get(castle).isGoalIsCompleted(castle))
+					Goal g = map.get(castle);
+					if(g == null || g.isGoalIsCompleted(castle))
 					{
 						putNewGoal(castle);
 						//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
@@ -77,7 +78,6 @@ public class DukeAI extends Actor implements Serializable
 				}
 			}
 		}
-
 		this.addOrRemoveCastleList();
 	}
 	
@@ -85,7 +85,7 @@ public class DukeAI extends Actor implements Serializable
 	{
 		Goal goal = getNewGoal(castle);
 		
-		if(goal.getClass() == AttackGoal.class)
+		if(goal != null && goal.getClass() == AttackGoal.class)
 		{
 			Actor actorTarget = getRandomActor();
 			Castle castleTarget = actorTarget.castles.get(rand.nextInt(actorTarget.castles.size()));
