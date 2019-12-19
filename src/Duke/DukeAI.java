@@ -68,13 +68,13 @@ public class DukeAI extends Actor implements Serializable
 					if(g == null || g.isGoalIsCompleted(castle))
 					{
 						putNewGoal(castle);
-						//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
+						System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 					}
 				}
 				else
 				{
 					putNewGoal(castle);
-					//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
+					System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 				}
 			}
 		}

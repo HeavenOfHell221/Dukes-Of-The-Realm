@@ -1,5 +1,7 @@
 package Utility;
 
+import DukesOfTheRealm.Main;
+
 /**
  *
  *
@@ -91,6 +93,7 @@ public class Time
 			if (this.print)
 			{
 				System.out.println(this.counter + " fps");
+				System.out.println(Main.nbSoldier + " soldiers" + "\n");
 			}
 			FPS = this.counter;
 			this.counter = 0;

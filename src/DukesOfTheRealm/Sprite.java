@@ -97,21 +97,9 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	public final void updateUIShape()
 	{
-		final float gap = 0.25f;
 		if (this.shape != null)
 		{
-			final Point2D p = this.coordinate.delta(this.lastCoordinate);
-			if(p != null)
-			{
-				if(p.getX() < gap && p.getY() < gap)
-					return;
-				else if(p.getX() < gap && p.getY() >= gap)
-					this.shape.relocate(this.lastCoordinate.getX(), this.coordinate.getY());
-				else if(p.getX() >= gap && p.getY() < gap)
-					this.shape.relocate(this.coordinate.getX(), this.lastCoordinate.getY());
-				else
-					this.shape.relocate(this.coordinate.getX(), this.coordinate.getY());
-			}
+			this.shape.relocate(this.coordinate.getX(), this.coordinate.getY());
 		}
 	}
 

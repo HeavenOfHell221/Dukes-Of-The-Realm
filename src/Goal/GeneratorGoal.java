@@ -41,7 +41,14 @@ public class GeneratorGoal implements Serializable
 
 	private static Goal getNewGoalFinance(Castle castle)
 	{
-		return new SaveFlorinGoal(rand.nextInt(501) * castle.getLevel());
+		final int lvl = castle.getLevel();
+		switch(rand.nextInt(2))
+		{
+			case 0: return new SaveFlorinGoal(rand.nextInt(501) * castle.getLevel());
+			case 1: return new SaveSoldierGoal(castle, rand.nextInt(lvl * 5) * lvl, rand.nextInt(lvl * 5) * lvl, rand.nextInt(lvl * 5) * lvl);
+			default: break;
+		}
+		return null;
 	}
 
 	private static Goal getNewGoalBattle(Castle castle)

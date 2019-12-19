@@ -129,7 +129,9 @@ public abstract class Soldier extends Sprite implements Serializable
 	 */
 	private void Move(final Point2D dst, double factorSpeed)
 	{
-		if(this.isWaitingForAttackLocation)
+		isOutOfScreen();
+		
+		if(this.isWaitingForAttackLocation || this.isDead)
 			return;
 		
 		final int directionX = getX() < dst.getX() ? 1 : (getX() == (int)dst.getX()) || (dst.delta(this.coordinate).getX() <= 0.5d) ? 0 : -1;
@@ -159,8 +161,7 @@ public abstract class Soldier extends Sprite implements Serializable
 		// default: break;
 		// }
 		addMotion(offsetX, offsetY);
-
-		isOutOfScreen();
+		updateUIShape();
 
 		if (!this.isArrived)
 		{

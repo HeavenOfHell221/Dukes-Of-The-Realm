@@ -34,7 +34,8 @@ public class ReserveOfSoldiers implements Serializable
 	{
 		testRemoveHP();
 		
-		if(this.stopAttack) return;
+		if(this.stopAttack) 
+			return;
 
 		switch(typeForce)
 		{
@@ -88,26 +89,10 @@ public class ReserveOfSoldiers implements Serializable
 	
 	private void testRemoveHP()
 	{
-		boolean piker = false;
-		boolean knight = false;
-		boolean onager = false;
-		
-		if(this.nbKnights <= 0)
-		{
-			this.nbKnights = 0;
-			knight = true;
-		}
-		if(this.nbPikers <= 0)
-		{
-			this.nbPikers = 0;
-			piker = true;
-		}
-		if(this.nbOnagers <= 0)
-		{
-			this.nbOnagers = 0;
-			onager = true;
-		}
-		
+		boolean piker = this.nbPikers <= 0;
+		boolean knight = this.nbKnights <= 0;
+		boolean onager = this.nbOnagers <= 0;
+
 		if(piker && onager && knight)
 		{
 			this.stopAttack = true;

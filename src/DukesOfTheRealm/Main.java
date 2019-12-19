@@ -83,6 +83,8 @@ public class Main extends Application
 	 *
 	 */
 	public static boolean isNewGame = false;
+	
+	public static int nbSoldier = 0;
 
 	/*************************************************/
 	/********************* START *********************/

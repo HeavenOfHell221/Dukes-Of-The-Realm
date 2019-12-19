@@ -94,7 +94,6 @@ public class Kingdom extends Parent implements Serializable
 		this.playfieldLayer = pane;
 		UIManager.getInstance().awake(this.playfieldLayer);
 		this.colors = new ArrayList<>();
-		this.colors.add(Color.LIGHTSLATEGRAY);
 		this.colors.add(Color.AQUA);
 		this.colors.add(Color.MEDIUMORCHID);
 		this.colors.add(Color.GOLDENROD);
@@ -206,11 +205,16 @@ public class Kingdom extends Parent implements Serializable
 		{
 
 			Point2D p = getRandomCoordinates(rand);
-
-			while (isCastleToClose(list, p) == true)
+			int essai = 0;
+			int maxEssai = 1000000;
+			while (isCastleToClose(list, p) == true && essai < maxEssai)
 			{
 				p = getRandomCoordinates(rand);
+				essai++;
 			}
+			
+			if(essai >= maxEssai)
+				continue;
 
 			Castle c = new Castle();
 			list.add(c);

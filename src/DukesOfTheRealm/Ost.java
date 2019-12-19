@@ -112,11 +112,11 @@ public class Ost implements IUpdate, Serializable
 						s.RemoveShapeToLayer();
 						this.destination.freeAttackLocation(s.getAttackLocation());
 						it.remove();
+						Main.nbSoldier--;
 					}
 					else
 					{
 						s.update(now, pause);
-						s.updateUIShape();
 					}
 				}
 			}
@@ -198,7 +198,7 @@ public class Ost implements IUpdate, Serializable
 	{
 		final int nbSpawn = (this.nbSoldiersSpawned <= (this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS
 				: (this.nbSoldiers - this.nbSoldiersSpawned);
-
+		Main.nbSoldier += nbSpawn;
 		switch (this.origin.getOrientation())
 		{
 			case North:
