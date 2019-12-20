@@ -31,7 +31,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	public boolean isDead = false;
 	protected Point2D attackLocation = null;
 	protected boolean isWaitingForAttackLocation = false;
-
+	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -61,7 +61,6 @@ public abstract class Soldier extends Sprite implements Serializable
 		getShape().setFill(color);
 		getLayer().getChildren().add(getShape());
 		this.onField = true;
-		updateUIShape();
 		start();
 	}
 
@@ -142,18 +141,16 @@ public abstract class Soldier extends Sprite implements Serializable
 	 */
 	private void Move(final Point2D dst, double factorSpeed)
 	{
-		isOutOfScreen();
-		
-		if(this.isWaitingForAttackLocation || this.isDead)
+		if(this.isWaitingForAttackLocation)
 			return;
 		
+		isOutOfScreen();
+
 		final int directionX = getX() < dst.getX() ? 1 : (getX() == (int)dst.getX()) || (dst.delta(this.coordinate).getX() <= 0.5d) ? 0 : -1;
 		final int directionY = getY() < dst.getY() ? 1 : (getY() == (int)dst.getY()) || (dst.delta(this.coordinate).getY() <= 0.5d) ? 0 : -1;
 
 		double offsetX = this.stats.speed * Time.deltaTime * directionX * factorSpeed;
 		double offsetY = this.stats.speed * Time.deltaTime * directionY * factorSpeed;
-		
-		
 
 		// int alternateDirectionX;
 		// int alternateDirectionY;
@@ -174,7 +171,6 @@ public abstract class Soldier extends Sprite implements Serializable
 		// default: break;
 		// }
 		addMotion(offsetX, offsetY);
-		updateUIShape();
 
 		if (!this.isArrived)
 		{

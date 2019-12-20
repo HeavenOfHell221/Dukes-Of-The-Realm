@@ -57,6 +57,13 @@ public class Settings
 	public static final int NB_ATTACK_LOCATIONS = 12;
 	public static final int ATTACK_LOCATIONS_PER_SIDE = 3;
 	public static final int GAP_WITH_SOLDIER = 10;
+	
+	/****************************************************/
+	/************************ IA ************************/
+	/****************************************************/
+	
+	public static final int RANDOM_LEVEL_CASTLE_BARON = 10;
+	public static final int OFFSET_LEVEL_CASTLE_BARON = 10;
 
 	/****************************************************/
 	/********************* SOLDIERS *********************/
@@ -107,7 +114,7 @@ public class Settings
 	
 	/* Game */
 	public static final double MARGIN_PERCENTAGE = 0.75;
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) ((CASTLE_SIZE + CASTLE_SIZE * 2.6f) * 1.33f); /* Can be balanced */
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) ((CASTLE_SIZE + CASTLE_SIZE * 2.3f) * 1.33f); /* Can be balanced */
 	
 	/* Door */
 	public static final double DOOR_WIDTH = CASTLE_SIZE / 2;

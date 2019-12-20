@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
-import Utility.Settings;
+import static Utility.Settings.*;
 import Utility.Time;
 
 public class Baron extends Actor implements Serializable
@@ -19,7 +19,7 @@ public class Baron extends Actor implements Serializable
 	{
 		if (this.castles.contains(castle))
 		{
-			return (int) (Settings.FLORIN_PER_SECOND * castle.getLevel() * Settings.FLORIN_FACTOR_BARON) + " Florin/s";
+			return (int) (FLORIN_PER_SECOND * castle.getLevel() * FLORIN_FACTOR_BARON) + " Florin/s";
 		}
 		return " -- Florin/s";
 	}
@@ -27,7 +27,7 @@ public class Baron extends Actor implements Serializable
 	@Override
 	protected void updateFlorin(final Castle castle)
 	{
-		castle.addFlorin(Settings.FLORIN_PER_SECOND * Settings.FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime);
+		castle.addFlorin(FLORIN_PER_SECOND * FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Baron extends Actor implements Serializable
 	{
 		final Random rand = new Random();
 		castle.addFlorin(rand.nextInt(8001) + 200);
-		castle.setLevel(rand.nextInt(21) + 10);
+		castle.setLevel(rand.nextInt(RANDOM_LEVEL_CASTLE_BARON) + OFFSET_LEVEL_CASTLE_BARON);
 		castle.randomSoldier();
 		super.addFirstCastle(castle);
 	}

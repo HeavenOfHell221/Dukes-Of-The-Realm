@@ -45,17 +45,15 @@ public class DukeAI extends Actor implements Serializable
 	public void update(final long now, final boolean pause)
 	{
 		Iterator<Castle> it = this.castles.iterator();
-		//System.out.println(this.name + " -> " + this.castles.size());
 		while (it.hasNext())
 		{
 			Castle castle = it.next();
 			updateFlorin(castle);
 			castle.updateProduction();
-			castle.updateUIShape();
 			castle.updateOst(now, pause);
 		}
 		
-		if(time(now, pause))
+		/*if(time(now, pause))
 		{
 			it = this.castles.iterator();
 			
@@ -68,22 +66,21 @@ public class DukeAI extends Actor implements Serializable
 					if(g == null || g.isGoalIsCompleted(castle))
 					{
 						putNewGoal(castle);
-						//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 					}
 				}
 				else
 				{
 					putNewGoal(castle);
-					//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 				}
 			}
 		}
-		this.addOrRemoveCastleList();
+		this.addOrRemoveCastleList();*/
 	}
 	
 	private void putNewGoal(Castle castle)
 	{
 		map.put(castle, getNewGoal(castle));
+		//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 	}
 	
 	private boolean time(final long now, final boolean pause)

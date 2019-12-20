@@ -44,11 +44,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 *
 	 */
 	protected Point2D coordinate;
-	
-	/**
-	 * 
-	 */
-	protected Point2D lastCoordinate;
 
 	/**
 	 *
@@ -73,7 +68,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	{
 		this.canvas = canvas;
 		this.coordinate = new Point2D(point2D);
-		this.lastCoordinate = new Point2D(point2D);
 	}
 
 	/**
@@ -81,7 +75,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	protected Sprite()
 	{
-		this.lastCoordinate = new Point2D();
 	}
 
 	/*************************************************/
@@ -95,7 +88,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	/**
 	 *
 	 */
-	public final void updateUIShape()
+	private final void updateUIShape()
 	{
 		if (this.shape != null)
 		{
@@ -166,7 +159,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		this.shape = c;
 		this.width = 2 * r;
 		this.height = 2 * r;
-
+		updateUIShape();
 		addStroke(c, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(c, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
 	}
@@ -187,7 +180,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		this.shape = t;
 		this.width = s;
 		this.height = s;
-
+		updateUIShape();
 		addStroke(t, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(t, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
 	}
@@ -203,7 +196,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		this.shape = r;
 		this.width = s;
 		this.height = s;
-
+		updateUIShape();
 		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
 	}
@@ -336,6 +329,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	public final void setX(final int x)
 	{
 		this.coordinate.setX(x);
+		updateUIShape();
 	}
 
 	/**
@@ -345,6 +339,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	public final void setY(final int y)
 	{
 		this.coordinate.setY(y);
+		updateUIShape();
 	}
 
 	/**
@@ -354,9 +349,8 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	public final void addMotion(final double dx, final double dy)
 	{
-		this.lastCoordinate.setX(this.coordinate.getX());
-		this.lastCoordinate.setY(this.coordinate.getY());
 		this.coordinate.addMotion(dx, dy);
+		updateUIShape();
 	}
 
 	/**
@@ -366,6 +360,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	public final void setCoordinate(final Point2D coordinate)
 	{
 		this.coordinate = coordinate;
+		updateUIShape();
 	}
 
 	public void setColorShape(final Color color)

@@ -156,9 +156,9 @@ public class Main extends Application
 		this.mainScene = new Scene(this.root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 		this.mainScene.setFill(new ImagePattern(new Image(getClass().getResource("/images/bg2.jpg").toExternalForm()), 0, 0, 1, 1, true));
 		primaryStage.setScene(this.mainScene);
-		primaryStage.setResizable(true);
+		primaryStage.setResizable(false);
 		primaryStage.setMaximized(false);
-		primaryStage.setFullScreen(false);
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
 		Settings.SCENE_WIDTH = (int) primaryStage.getWidth();
 		Settings.SCENE_HEIGHT = (int) primaryStage.getHeight();

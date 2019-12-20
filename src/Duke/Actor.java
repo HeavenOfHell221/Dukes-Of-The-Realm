@@ -76,7 +76,6 @@ public class Actor implements Serializable, IUpdate
 			Castle castle = it.next();
 			updateFlorin(castle);
 			castle.updateProduction();
-			castle.updateUIShape();
 			castle.updateOst(now, pause);
 		}
 		this.addOrRemoveCastleList();
@@ -89,6 +88,8 @@ public class Actor implements Serializable, IUpdate
 			//System.out.println("ADD | " + this.name + " | size before : " + this.castles.size() + " | size list AD: " + this.castlesWaitForAdding.size());
 			this.castles.addAll(this.castlesWaitForAdding);
 			//System.out.println("ADD | " + this.name + " | size after : " + this.castles.size());
+			this.castlesWaitForAdding.forEach(c -> addEvent(c));
+			this.castlesWaitForAdding.clear();
 		}
 		
 		if(this.castlesWaitForDelete.size() > 0)
@@ -96,12 +97,8 @@ public class Actor implements Serializable, IUpdate
 			//System.out.println("DELETE | " + this.name + " | size before : " + this.castles.size() + " | size list DEL: " + this.castlesWaitForDelete.size());
 			this.castles.removeAll(this.castlesWaitForDelete);
 			//System.out.println("DELETE | " + this.name + " | size after : " + this.castles.size() + "\n");
+			this.castlesWaitForDelete.clear();
 		}
-		
-		this.castlesWaitForAdding.forEach(c -> addEvent(c));
-		
-		this.castlesWaitForDelete.clear();
-		this.castlesWaitForAdding.clear();
 		
 		if(this.castles.size() <= 0)
 			this.isDead = true;

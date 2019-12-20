@@ -26,7 +26,7 @@ public class GeneratorGoal implements Serializable
 	{
 		switch(GoalEnum.getRandomType(rand))
 		{
-			case Backup: return getNewGoalProduction(castle);
+			case Backup: return getNewGoalBackup(castle);
 			case Battle: return getNewGoalBattle(castle);
 			case Finance: return getNewGoalFinance(castle);
 			case Production: return getNewGoalProduction(castle);
@@ -79,6 +79,12 @@ public class GeneratorGoal implements Serializable
 
 	private static Goal getNewGoalBackup(Castle castle)
 	{
+		switch(rand.nextInt(2))
+		{
+			case 0: return new BackupGoal(castle, castle.getNbPikers(), castle.getNbKnights(), 0);
+			case 1: return new BackupGoal(castle, 0, castle.getNbKnights(), 0);
+			default: break;
+		}
 		return null;
 	}
 
