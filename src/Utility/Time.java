@@ -67,7 +67,7 @@ public class Time
 	{
 		this.cooldown = Settings.GAME_FREQUENCY;
 		this.lastUpdate = 0;
-		this.print = true;
+		this.print = print;
 		deltaTime = 0;
 		this.oldTime = 0;
 		this.firstFrame = true;

@@ -21,7 +21,7 @@ public class SoldierGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "SoldierGoal [type=" + type + "]";
+		return "SoldierGoal [type= 	" + type + "]";
 	}
 	
 	

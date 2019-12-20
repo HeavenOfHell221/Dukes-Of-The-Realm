@@ -50,16 +50,11 @@ public class AttackGoal extends Goal
 			if(this.castleOrigin.getActor() == this.castleDestination.getActor())
 			{
 				this.goals.pollFirst();
-				//System.out.println("Meme acteur -> " + this.goals.size());
-				return true;
 			}
 			
 			// Si nous n'avons plus assez d'unites
-			if(castleOrigin.getNbPikers() >= this.nbPikers && castleOrigin.getNbKnights() >= this.nbKnights && castleOrigin.getNbOnagers() >= this.nbOnagers)
-			{
-				return goals.goal(castleOrigin);
-			}
-			else
+			if(castleOrigin.getNbPikers() < this.nbPikers || castleOrigin.getNbKnights() < this.nbKnights 
+					|| castleOrigin.getNbOnagers() < this.nbOnagers)
 			{
 				int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;
 				int realNbKnights = castleOrigin.getNbKnights() < nbKnights ? nbKnights - castleOrigin.getNbKnights() : 0;
@@ -76,7 +71,7 @@ public class AttackGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "AttackGoal [ nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers=" + nbOnagers + "]";
+		return "AttackGoal [ nbPikers= " + nbPikers + ", nbKnights= " + nbKnights + ", nbOnagers= " + nbOnagers + "]";
 	}
 	
 }

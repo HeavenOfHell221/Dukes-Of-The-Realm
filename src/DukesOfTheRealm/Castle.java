@@ -46,7 +46,7 @@ public class Castle extends Sprite implements Serializable
 	/**
 	 *
 	 */
-	private int level; // Le niveau du chateau
+	private int level = 1; // Le niveau du chateau
 
 	/**
 	 *
@@ -191,9 +191,9 @@ public class Castle extends Sprite implements Serializable
 	public void randomSoldier()
 	{
 		final Random rand = new Random();
-		this.reserveOfSoldiers.setNbKnights(rand.nextInt(5) * this.level);
-		this.reserveOfSoldiers.setNbPikers(rand.nextInt(10) * this.level);
-		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(5) + this.level);
+		this.reserveOfSoldiers.setNbKnights(rand.nextInt(this.level*this.level) + rand.nextInt(6) * this.level);
+		this.reserveOfSoldiers.setNbPikers(rand.nextInt(this.level*this.level) + rand.nextInt(5) * this.level); 
+		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(this.level*this.level) + rand.nextInt(4) * this.level);
 	}
 
 	/**

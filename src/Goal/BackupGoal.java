@@ -46,6 +46,6 @@ public class BackupGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "BackupGoal [nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers=" + nbOnagers + "]";
+		return "BackupGoal [nbPikers= " + nbPikers + ", nbKnights= " + nbKnights + ", nbOnagers= " + nbOnagers + "]";
 	}
 }

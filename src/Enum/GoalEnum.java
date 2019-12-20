@@ -8,14 +8,19 @@ public enum GoalEnum
 	
 	public static GoalEnum getRandomType(Random rand)
 	{
-		switch(rand.nextInt(5))
+		switch(rand.nextInt(10))
 		{
 			case 0: return Production;
 			case 1: return Battle;
 			case 2: return Backup;
 			case 3: return Finance;
 			case 4: return Building;
+			case 5: return Production;
+			case 6: return Backup;
+			case 7: return Finance;
+			case 8: return Production;
+			case 9: return Building;
+			default: return Production;
 		}
-		return null;
 	}
 }

@@ -11,6 +11,7 @@ import Goal.AttackGoal;
 
 import static Goal.GeneratorGoal.*;
 import SimpleGoal.Goal;
+import UI.UIManager;
 import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -53,7 +54,7 @@ public class DukeAI extends Actor implements Serializable
 			castle.updateOst(now, pause);
 		}
 		
-		/*if(time(now, pause))
+		if(time(now, pause))
 		{
 			it = this.castles.iterator();
 			
@@ -74,7 +75,7 @@ public class DukeAI extends Actor implements Serializable
 				}
 			}
 		}
-		this.addOrRemoveCastleList();*/
+		this.addOrRemoveCastleList();
 	}
 	
 	private void putNewGoal(Castle castle)
@@ -82,6 +83,14 @@ public class DukeAI extends Actor implements Serializable
 		map.put(castle, getNewGoal(castle));
 		//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 	}
+	
+	@Override
+	protected void switchCastle(final Castle castle)
+	{
+		super.switchCastle(castle);
+		System.out.println(this.name + " -> " + map.get(castle) + "\n");
+	}
+
 	
 	private boolean time(final long now, final boolean pause)
 	{

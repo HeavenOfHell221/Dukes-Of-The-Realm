@@ -66,7 +66,7 @@ public class MultiSoldierGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "MultiSoldierGoal [nbPikers=" + nbPikers + ", nbKnights=" + nbKnights + ", nbOnagers=" + nbOnagers
+		return "MultiSoldierGoal [nbPikers= " + nbPikers + ", nbKnights= " + nbKnights + ", nbOnagers= " + nbOnagers
 				+ "]";
 	}
 	

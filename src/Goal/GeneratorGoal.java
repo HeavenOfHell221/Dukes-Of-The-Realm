@@ -63,12 +63,16 @@ public class GeneratorGoal implements Serializable
 		switch(rand.nextInt(2))
 		{
 			case 0: 
-				g = new AttackGoal(castle, castle.getNbPikers(), castle.getNbKnights(), castle.getNbOnagers());
+				g = new AttackGoal(castle, 
+						0, 
+						rand.nextInt(15 + lvl) + rand.nextInt(6) * lvl, 
+						0);
 				  break;
 			case 1: 
-				g = new AttackGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl, 
-				 rand.nextInt(11 + lvl) + rand.nextInt(4) * lvl, 
-				 rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl);
+				g = new AttackGoal(castle, 
+						0, 
+						rand.nextInt(11 + lvl) + rand.nextInt(4) * lvl, 
+						rand.nextInt(8 + lvl) + rand.nextInt(3) * lvl);
 				break;
 			default: break;
 		}
