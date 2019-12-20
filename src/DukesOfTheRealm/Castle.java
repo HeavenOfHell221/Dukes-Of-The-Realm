@@ -297,13 +297,13 @@ public class Castle extends Sprite implements Serializable
 	 * @param  nbOnagers
 	 * @return
 	 */
-	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
+	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, boolean isBackup)
 	{
 		if (this.ost == null)
 		{
 			if(removeSoldiers(nbPikers, nbKnights, nbOnagers) && this != destination)
 			{
-				this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor);
+				this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor, isBackup);
 				this.ost.start();
 				return true;
 			}
@@ -669,7 +669,13 @@ public class Castle extends Sprite implements Serializable
 		return this.reserveOfSoldiers.isStopAttack();
 	}
 
-	
+	/**
+	 * @return the reserveOfSoldiers
+	 */
+	public final ReserveOfSoldiers getReserveOfSoldiers()
+	{
+		return reserveOfSoldiers;
+	}
 
 	@Override
 	public String toString()

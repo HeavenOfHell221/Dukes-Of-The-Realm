@@ -157,7 +157,7 @@ public class Actor implements Serializable, IUpdate
 
 	protected void switchCastle(final Castle castle)
 	{
-		UIManager.getInstance().switchCastle(castle, this);
+		UIManager.getInstance().switchCastle(castle);
 	}
 
 	/*************************************************/

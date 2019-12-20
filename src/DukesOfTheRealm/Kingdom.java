@@ -127,7 +127,7 @@ public class Kingdom extends Parent implements Serializable
 				actor.addEventAllCastles();
 			});
 
-			UIManager.getInstance().switchCastle(this.player.getCastles().get(0), this.player);
+			UIManager.getInstance().switchCastle(this.player.getCastles().get(0));
 
 			this.canUpdate = true;
 		}
@@ -205,16 +205,11 @@ public class Kingdom extends Parent implements Serializable
 		{
 
 			Point2D p = getRandomCoordinates(rand);
-			int essai = 0;
-			int maxEssai = 1000000;
-			while (isCastleToClose(list, p) == true && essai < maxEssai)
+
+			while (isCastleToClose(list, p) == true)
 			{
 				p = getRandomCoordinates(rand);
-				essai++;
 			}
-			
-			if(essai >= maxEssai)
-				continue;
 
 			Castle c = new Castle();
 			list.add(c);

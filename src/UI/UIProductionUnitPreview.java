@@ -76,6 +76,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		setAllButtons();
 		setBackground();
 		setBar();
+		setAllVisible(false);
 	}
 
 	/*************************************************/
@@ -259,7 +260,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
 	}
 
-	public void switchCastle(final Castle castle, final Actor actor, final boolean productionVisible)
+	public void switchCastle(final Castle castle, final boolean productionVisible)
 	{
 		this.currentCastle = castle;
 		setAllVisible(productionVisible);

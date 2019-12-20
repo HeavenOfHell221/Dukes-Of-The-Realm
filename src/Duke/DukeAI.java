@@ -68,13 +68,13 @@ public class DukeAI extends Actor implements Serializable
 					if(g == null || g.isGoalIsCompleted(castle))
 					{
 						putNewGoal(castle);
-						System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
+						//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 					}
 				}
 				else
 				{
 					putNewGoal(castle);
-					System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
+					//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
 				}
 			}
 		}
@@ -83,16 +83,7 @@ public class DukeAI extends Actor implements Serializable
 	
 	private void putNewGoal(Castle castle)
 	{
-		Goal goal = getNewGoal(castle);
-		
-		if(goal != null && goal.getClass() == AttackGoal.class)
-		{
-			Actor actorTarget = getRandomActor();
-			Castle castleTarget = actorTarget.castles.get(rand.nextInt(actorTarget.castles.size()));
-			
-			((AttackGoal) goal).setGoal(castleTarget);
-		}
-		map.put(castle, goal);
+		map.put(castle, getNewGoal(castle));
 	}
 	
 	private boolean time(final long now, final boolean pause)
@@ -110,12 +101,11 @@ public class DukeAI extends Actor implements Serializable
 	}
 
 	/**
-	 * @return
-	 * @see DukesOfTheRealm.Kingdom#getRandomActor()
+	 * @return the kingdom
 	 */
-	public Actor getRandomActor()
+	public final Kingdom getKingdom()
 	{
-		return kingdom.getRandomActor(this);
+		return kingdom;
 	}
 	
 	

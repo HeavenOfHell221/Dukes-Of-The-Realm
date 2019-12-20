@@ -32,11 +32,10 @@ public class UIManager extends Parent implements IUI, Serializable
 
 	private Castle currentCastle;
 	private Castle lastCastle;
-	private Actor currentActor;
-	private Actor lastActor;
 
 	private boolean productionVisible = false;
 	private boolean attackVisible = false;
+	private boolean castleSwitch = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -78,8 +77,7 @@ public class UIManager extends Parent implements IUI, Serializable
 
 	public void update(final long now, final boolean pause)
 	{
-		if(this.currentCastle != null && this.currentCastle.getActor() != null
-				&& this.lastCastle != null && this.lastCastle.getActor() != null)
+		if(this.currentCastle != null && this.currentCastle.getActor() != null)
 		{
 			this.productionUnitPreview.update(now, pause);
 			this.attackPreview.update(now, pause);
@@ -137,52 +135,45 @@ public class UIManager extends Parent implements IUI, Serializable
 		relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
 	}
 
-	public void switchCastle(final Castle castle, final Actor actor)
+	public void switchCastle(final Castle castle)
 	{
-		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
-		this.currentActor = actor;
+		
+		this.attackVisible = false;
+		this.productionVisible = false;
+		this.castleSwitch = false;
 
-		if (this.lastActor == null)
+		if(this.lastCastle == null)
 		{
-			this.attackVisible = false;
 			this.productionVisible = true;
 		}
-		else if (!this.currentActor.isPlayer() && this.lastActor.isPlayer())
+		else if (!this.currentCastle.getActor().isPlayer() && this.lastCastle.getActor().isPlayer())
 		{
 			this.attackVisible = true;
-			this.productionVisible = false;
 		}
-		else if (this.currentActor.isPlayer() && this.lastActor.isPlayer())
+		else if (this.currentCastle.getActor().isPlayer() && this.lastCastle.getActor().isPlayer())
 		{
 			if (this.currentCastle == this.lastCastle)
 			{
-				this.attackVisible = false;
 				this.productionVisible = true;
 			}
 			else
 			{
 				this.attackVisible = true;
-				this.productionVisible = false;
 			}
 		}
-		else if (!this.currentActor.isPlayer() && !this.lastActor.isPlayer())
+		else if (this.currentCastle.getActor().isPlayer() && !this.lastCastle.getActor().isPlayer())
 		{
-			this.attackVisible = false;
-			this.productionVisible = false;
-		}
-		else if (this.currentActor.isPlayer() && !this.lastActor.isPlayer())
-		{
-			this.attackVisible = false;
 			this.productionVisible = true;
 		}
 
 		Main.pause = this.attackVisible;
+		this.castleSwitch = !this.attackVisible;
 
-		this.attackPreview.switchCastle(castle, actor, this.attackVisible);
-		this.productionUnitPreview.switchCastle(castle, actor, this.productionVisible);
-		this.castlePreview.switchCastle(castle, actor, this.productionVisible, this.attackVisible);
+		this.attackPreview.switchCastle(castle, this.attackVisible);
+		this.productionUnitPreview.switchCastle(castle, this.productionVisible);
+		this.castlePreview.switchCastle(castle, this.castleSwitch, this.productionVisible, this.attackVisible);
 	}
 
 	public void setPlayfieldLayer(final Pane playfieldLayer)

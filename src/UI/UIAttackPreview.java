@@ -50,8 +50,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 	private Castle currentCastle;
 	private Castle lastCastle;
-	private Actor currentActor;
-	private Actor lastActor;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -75,7 +73,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		this.nbKnightText = new Text();
 		this.nbOnagerText = new Text();
 
-		this.lastActor = null;
 		this.lastCastle = null;
 	}
 
@@ -91,6 +88,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		setAllButtons();
 		setAllTexts();
 		setBackground();
+		setAllVisible(false);
 	}
 
 	/*************************************************/
@@ -250,14 +248,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 		this.buttonAttack.setOnMousePressed(e ->
 		{
-			if(this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager))
-			{
-				reset();
-			}
-			if(this.lastCastle.isOstExist())
-			{
-				reset();
-			}
+			this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager, false);
+			reset();
 		});
 	}
 	
@@ -358,12 +350,10 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		resetOst();
 	}
 
-	public void switchCastle(final Castle castle, final Actor actor, final boolean attackVisible)
+	public void switchCastle(final Castle castle, final boolean attackVisible)
 	{
-		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
-		this.currentActor = actor;
 
 		setAllVisible(attackVisible);
 	}

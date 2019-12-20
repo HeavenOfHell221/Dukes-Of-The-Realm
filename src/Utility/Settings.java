@@ -45,12 +45,12 @@ public class Settings
 	public static final int LEVEL_UP_DURATION_FACTOR = 3; // en sec
 
 	/* Castle number */
-	public static final int AI_NUMBER = 7;
-	public static final int BARON_NUMBER = 12;
+	public static final int AI_NUMBER = 5;
+	public static final int BARON_NUMBER = 6;
 
 	/* Starter */ /* Can be balanced */
-	public static final int STARTER_KNIGHT = 20; // 20
-	public static final int STARTER_PIKER = 50; // 50
+	public static final int STARTER_KNIGHT = 15; // 15
+	public static final int STARTER_PIKER = 30; // 30
 	public static final int STARTER_ONAGER = 0; // 0
 
 	/* Other */
@@ -78,9 +78,9 @@ public class Settings
 	public static final int ONAGER_COST = 140;
 
 	/* Speed */ /* Can be balanced */ /* Not above 100 */
-	public static final int PIKER_SPEED = 70;	//70
-	public static final int KNIGHT_SPEED = 100;	//100
-	public static final int ONAGER_SPEED = 40;	//40
+	public static final int PIKER_SPEED = 45;	//45
+	public static final int KNIGHT_SPEED = 80;	//80
+	public static final int ONAGER_SPEED = 25;	//25
 
 	/* Production time in second */ /* Can be balanced */
 	public static final double PIKER_TIME_PRODUCTION = 0.5f; // 0.5
@@ -103,11 +103,11 @@ public class Settings
 	public static final int CASTLE_SHADOW_OFFSET = 7;
 	public static final int CASTLE_SHADOW_RADIUS = 11;
 	public static final Color CASTLE_SHADOW_COLOR = Color.BLACK;
-	public static final int GAME_FREQUENCY_OST = (int) (GAME_FREQUENCY / 3f);
+	public static final int GAME_FREQUENCY_OST = (int) (GAME_FREQUENCY / 1.5f);
 	
 	/* Game */
 	public static final double MARGIN_PERCENTAGE = 0.75;
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) ((CASTLE_SIZE + CASTLE_SIZE * 1.5f) * 1.33f); /* Can be balanced */
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) ((CASTLE_SIZE + CASTLE_SIZE * 2.6f) * 1.33f); /* Can be balanced */
 	
 	/* Door */
 	public static final double DOOR_WIDTH = CASTLE_SIZE / 2;

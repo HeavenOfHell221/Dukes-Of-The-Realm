@@ -41,6 +41,8 @@ public class Ost implements IUpdate, Serializable
 
 	private transient Color color;
 	private transient long lastTime;
+	
+	private boolean isBackup;
 
 	private boolean stopAttack = false;
 
@@ -49,7 +51,7 @@ public class Ost implements IUpdate, Serializable
 	/*************************************************/
 
 	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Color color)
+			final Color color, final boolean isBackup)
 	{
 		this.origin = origin;
 		this.destination = destination;
@@ -59,7 +61,7 @@ public class Ost implements IUpdate, Serializable
 		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
-
+		this.isBackup = isBackup;
 	}
 
 	/*************************************************/
@@ -92,6 +94,8 @@ public class Ost implements IUpdate, Serializable
 	@Override
 	public void update(final long now, final boolean pause)
 	{
+		this.isBackup = origin.getActor() == destination.getActor();
+		
 		if (!this.fullyDeployed && Time(now, pause))
 		{
 			DeployOneSoldiersWave();
@@ -382,63 +386,92 @@ public class Ost implements IUpdate, Serializable
 
 	public void win()
 	{
-		if (!this.stopAttack)
+		if (!this.stopAttack && !this.origin.getActor().isDead)
 		{
 			this.stopAttack = true;
-			if(this.origin.getActor() != this.destination.getActor() && !this.origin.getActor().isDead)
+			if(!this.isBackup)
 			{
 				this.origin.getActor().castlesWaitForAdding.add(this.destination);
-				
 				this.destination.getActor().castlesWaitForDelete.add(this.destination);
+				
 				this.destination.setActor(this.origin.getActor());
 				
 				this.destination.switchColor(this.origin.getActor().getColor());
 				this.destination.resetQueue(false);
 				this.destination.reactivateAttack();
 			}
-			else
-			{
-			}
-			
 		}
 	}
+
+	
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-	public Castle getOrigin()
+	/**
+	 * @return the origin
+	 */
+	public final Castle getOrigin()
 	{
-		return this.origin;
+		return origin;
 	}
 
-	public Castle getDestination()
+	/**
+	 * @return the destination
+	 */
+	public final Castle getDestination()
 	{
-		return this.destination;
+		return destination;
 	}
 
-	public Point2D getSeparationPoint()
+	/**
+	 * @return the separationPoint
+	 */
+	public final Point2D getSeparationPoint()
 	{
-		return this.separationPoint;
+		return separationPoint;
 	}
 
-	public Point2D getWaitingPoint()
+	/**
+	 * @return the waitingPoint
+	 */
+	public final Point2D getWaitingPoint()
 	{
-		return this.waitingPoint;
+		return waitingPoint;
 	}
 
-	public double getSpeed()
+	/**
+	 * @return the fullyDeployed
+	 */
+	public final boolean isFullyDeployed()
 	{
-		return this.speed;
+		return fullyDeployed;
 	}
 
-	public ArrayList<Soldier> getSoldiers()
+	/**
+	 * @return the isBackup
+	 */
+	public final boolean isBackup()
 	{
-		return this.soldiers;
+		return isBackup;
 	}
 
-	public boolean isStopAttack()
+	/**
+	 * @return the stopAttack
+	 */
+	public final boolean isStopAttack()
 	{
-		return this.stopAttack;
+		return stopAttack;
 	}
+
+	/**
+	 * @return the soldiers
+	 */
+	public final ArrayList<Soldier> getSoldiers()
+	{
+		return soldiers;
+	}
+	
+	
 }

@@ -21,7 +21,7 @@ public class SendOstGoal extends Goal
 	@Override
 	public boolean goal(Castle castle)
 	{
-		return castle.createOst(destination, nbPikers, nbKnights, nbOnagers);
+		return castle.createOst(destination, nbPikers, nbKnights, nbOnagers, false);
 	}
 	
 	public void setDestination(Castle castle)

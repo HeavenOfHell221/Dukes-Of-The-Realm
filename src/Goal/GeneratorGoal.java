@@ -5,6 +5,8 @@ import static Goal.GeneratorGoal.rand;
 import java.io.Serializable;
 import java.util.Random;
 
+import Duke.Actor;
+import Duke.DukeAI;
 import DukesOfTheRealm.Castle;
 import Enum.GoalEnum;
 import Enum.SoldierEnum;
@@ -54,16 +56,25 @@ public class GeneratorGoal implements Serializable
 	private static Goal getNewGoalBattle(Castle castle)
 	{
 		final int lvl = castle.getLevel();
+		DukeAI actor = (DukeAI) castle.getActor();
+		Actor actorTarget = actor.getKingdom().getRandomActor(actor);
+		Castle castleTarget = actorTarget.getCastles().get(rand.nextInt(actorTarget.getCastles().size()));
+		AttackGoal g = null;
 		switch(rand.nextInt(2))
 		{
-			case 0: return new AttackGoal(castle, castle.getNbPikers(), castle.getNbKnights(), castle.getNbOnagers());
-			case 1: return new AttackGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl, 
+			case 0: 
+				g = new AttackGoal(castle, castle.getNbPikers(), castle.getNbKnights(), castle.getNbOnagers());
+				  break;
+			case 1: 
+				g = new AttackGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl, 
 				 rand.nextInt(11 + lvl) + rand.nextInt(4) * lvl, 
 				 rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl);
+				break;
 			default: break;
 		}
-		return null;
-		
+		if(g != null)
+			g.setGoal(castleTarget);
+		return g;
 	}
 
 	private static Goal getNewGoalBackup(Castle castle)
@@ -94,54 +105,4 @@ public class GeneratorGoal implements Serializable
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*public static Goal getNewGoal(Castle castle)
-	{
-		final int lvl = castle.getLevel();
-		switch(rand.nextInt(numberOfGoal))
-		{
-			// Piker
-			case 0: return new MultiSoldierGoal(rand.nextInt(11 + lvl) + rand.nextInt(3) * lvl, 0, 0);
-			// Knight
-			case 1: return new MultiSoldierGoal(0, rand.nextInt(11 + lvl) + rand.nextInt(3) * lvl, 0);
-			// Onager
-			case 2: return new MultiSoldierGoal(0, 0, rand.nextInt(11 + lvl) + rand.nextInt(3) * lvl);
-			// Piker + Knight
-			case 3: return new MultiSoldierGoal(rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, 0);
-			// Piker + Onager
-			case 4: return new MultiSoldierGoal(rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, 0, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
-			// Knight + Onager
-			case 5: return new MultiSoldierGoal(0, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
-			// Piker + Knight + Onager
-			case 6: return new MultiSoldierGoal(rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
-			default: break;
-		}
-		return null;
-	}*/
 }

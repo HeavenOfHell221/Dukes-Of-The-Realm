@@ -1,6 +1,7 @@
 package Soldiers;
 
 import DukesOfTheRealm.Ost;
+import DukesOfTheRealm.ReserveOfSoldiers;
 import Enum.SoldierEnum;
 import Utility.Point2D;
 import Utility.Settings;
@@ -39,5 +40,11 @@ public class Onager extends Soldier
 	public int getProductionCost()
 	{
 		return Settings.ONAGER_COST;
+	}
+
+	@Override
+	protected void addInReserve(ReserveOfSoldiers reserve)
+	{
+		reserve.addOnager();
 	}
 }

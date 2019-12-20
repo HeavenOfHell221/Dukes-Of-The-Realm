@@ -77,7 +77,10 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	
 	public void update(final long now, final boolean pause)
-	{				
+	{	
+		if(isDead)
+			return;
+		
 		if (!this.isArrived)
 		{
 			Move(getSeparationPoint(), 1d);
@@ -102,7 +105,15 @@ public abstract class Soldier extends Sprite implements Serializable
 
 		if (this.isInPosition && !this.isWaitingForAttackLocation)
 		{
-			Attack();
+			if(!this.itsOst.isBackup() || this.isStopAttack())
+			{
+				attack();
+			}
+			else
+			{
+				addInReserve(getDestination().getReserveOfSoldiers());
+				isDead = true;
+			}
 		}
 	}
 
@@ -110,6 +121,8 @@ public abstract class Soldier extends Sprite implements Serializable
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	protected abstract void addInReserve(ReserveOfSoldiers reserve);
+	
 	private final void SetAttackLocation()
 	{
 		if (getDestination().isAvailableAttackLocation())
@@ -171,7 +184,6 @@ public abstract class Soldier extends Sprite implements Serializable
 		{
 			isInPosition();
 		}
-
 	}
 
 	private void isOutOfScreen()
@@ -203,31 +215,26 @@ public abstract class Soldier extends Sprite implements Serializable
 		}
 	}
 
-	private void Attack()
+	private void attack()
 	{
 		if(!isStopAttack())
 		{
-			applyDamage();
+			// Il va vouloir faire 1 point de damage
+			getDestination().randomRemoveHP();
+			
+			// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
+			if (!getDestination().isStopAttack())
+			{
+				this.isDead = (--this.stats.damage <= 0) ? true : false;
+			}
+			else
+			{
+				this.itsOst.win();
+				this.isDead = true;
+			}
 		}
 		else
 		{
-			this.isDead = true;
-		}
-	}
-
-	private void applyDamage()
-	{
-		// Il va vouloir faire 1 point de damage
-		getDestination().randomRemoveHP();
-		
-		// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
-		if (!getDestination().isStopAttack())
-		{
-			this.isDead = (--this.stats.damage <= 0) ? true : false;
-		}
-		else
-		{
-			this.itsOst.win();
 			this.isDead = true;
 		}
 	}
