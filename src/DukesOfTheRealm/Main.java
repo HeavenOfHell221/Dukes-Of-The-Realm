@@ -2,6 +2,7 @@ package DukesOfTheRealm;
 
 import SaveSystem.SaveSystem;
 import UI.UIManager;
+import UI.UIAttackPreview;
 import Utility.Input;
 import Utility.Settings;
 import Utility.Time;
@@ -17,6 +18,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Main, initialise l'application.
+ */
 public class Main extends Application
 {
 
@@ -24,74 +28,91 @@ public class Main extends Application
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	public static int nbSoldier;
+	
 	/**
-	 *
+	 * Pane principal pour afficher les éléments graphiques.
+	 * @see Main#Awake(Stage)
 	 */
 	private Pane playfieldLayer;
 
 	/**
-	 *
+	 * Scene principale.
+	 * @see Main#Awake(Stage)
 	 */
 	private Scene mainScene;
 
 	/**
-	 *
+	 * Boucle de jeu du Lobby.
+	 * @see Main#Awake(Stage)
+	 * @see Main#start(Stage)
 	 */
 	private AnimationTimer lobbyGameLoop;
 
-	/*
-	 *
+	/**
+	 * Boucle de jeu principale.
+	 * @see Main#Awake(Stage)
+	 * @see Main#start(Stage)
 	 */
 	private AnimationTimer mainGameLoop;
 
 	/**
-	 *
+	 * Group root de JavaFX.
+	 * @see Main#start(Stage)
 	 */
 	private Group root;
 
 	/**
-	 *
+	 * Gère les inputs (Espace et Space) du joueur.
+	 * @see Input
 	 */
 	private Input input;
 
 	/**
-	 *
+	 * Utilitaire pour calculer les IPS (Image Par Seconde).
+	 * @see Time
 	 */
 	private Time time;
 
 	/**
-	 *
+	 * Le royaume dans lequel le jeu ce déroulera.
+	 * @see Kingdom
 	 */
 	private Kingdom kingdom;
 
 	/**
-	 *
+	 * Temps à laquelle l'image précédente à commencé.
+	 * @see Main#Time(long)
 	 */
 	private long lastTime = 0;
 
 	/**
-	 *
+	 * Active ou non la pause du jeu.
+	 * @see Main#start(Stage)
 	 */
 	public static boolean pause = false;
 
 	/**
-	 *
+	 * Force la pause du jeu lors d'un lancement d'une ost.
+	 * @see UIManager#switchCastle(Castle)
+	 * @see UIAttackPreview#reset()
 	 */
 	public boolean pauseForce = false;
 
 	/**
-	 *
+	 * Est ce que c'est un nouveau jeu ou une sauvegarde qu'on récupère.
+	 * @see Main#newGame()
+	 * @see Kingdom#startTransient(Pane)
 	 */
 	public static boolean isNewGame = false;
 	
-	public static int nbSoldier = 0;
-
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
 
 	/**
-	 *
+	 * Fonction start de l'application.
+	 * @param primaryStage Le stage par défaut construit par JavaFX.
 	 */
 	@Override
 	public void start(final Stage primaryStage)
@@ -147,8 +168,14 @@ public class Main extends Application
 	}
 
 	/**
-	 *
-	 * @param primaryStage
+	 * Création des premiers éléments du jeu (group, mainScene, playfieldLayer, etc).
+	 * <p>Les boutons du Lobby sont également créés ici.</p>
+	 * @param primaryStage Le stage par défaut construit par JavaFX.
+	 * @see Main#root
+	 * @see Main#mainScene
+	 * @see Main#playfieldLayer
+	 * @see Main#input
+	 * @see Main#time
 	 */
 	private void Awake(final Stage primaryStage)
 	{
@@ -215,9 +242,11 @@ public class Main extends Application
 	/*************************************************/
 
 	/**
-	 *
-	 * @param now
-	 * @param pause
+	 * Actualise à chaque image le royaume, l'utilitaire time ainsi que le UI.
+	 * <p>Va être appelé dans le handle de la boucle mainGameLoop.</p>
+	 * @param now Le temps depuis la création du programme.
+	 * @param pause Boolean donnant l'information de si la pause est activé.
+	 * @see Main#start(Stage)
 	 */
 	public void update(final long now, final boolean pause)
 	{
@@ -226,17 +255,17 @@ public class Main extends Application
 		UIManager.getInstance().update(now, pause);
 	}
 
-	/**
-	 *
-	 */
+
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
 	/**
-	 *
-	 * @param  now
-	 * @return
+	 * Calcul le delta entre le temps now et le lastTime.
+	 * @param now Temps à laquelle l'image à commencé.
+	 * @return Retourne true si le delta entre now et lastTime est supérieur à 0.2 secondes.
+	 * @see Main#lastTime
+	 * @see Main#start(Stage)
 	 */
 	private boolean Time(final long now)
 	{

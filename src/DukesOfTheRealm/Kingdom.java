@@ -18,7 +18,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Classe representant le royaume. C'est la classe centrale du projet.
+ * Classe representant le royaume. 
+ * C'est la classe centrale du projet.
  */
 public class Kingdom extends Parent implements Serializable
 {
@@ -28,14 +29,14 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 * Liste des acteurs (joueur et IA) du royaume.
-	 *
+	 * Liste des acteurs (joueur, IA et baron) du royaume.
+	 * @see Kingdom#update(final long now, final boolean pause)
+	 * @See Actor
 	 */
 	private ArrayList<Actor> actors;
 
 	/**
 	 * Liste des couleurs atribuable a chaque acteur.
-	 *
 	 */
 	private transient ArrayList<Color> colors;
 
@@ -62,8 +63,7 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 * Constructeur Kingdom.
-	 *
+	 * Constructeur par defaut de Kingdom.
 	 */
 	public Kingdom()
 	{
@@ -74,8 +74,9 @@ public class Kingdom extends Parent implements Serializable
 	/********************* START *********************/
 	/*************************************************/
 	/**
-	 *
-	 * @param pane
+	 * Initialise le kingdom.
+	 * @param Le pane principal.
+	 * @see Main#newGame()
 	 */
 	public void start(final Pane pane)
 	{
@@ -86,8 +87,10 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 *
-	 * @param pane
+	 * Initialise les composents transient du jeu.
+	 * @param Le pane principal.
+	 * @see Main#loadGame()
+	 * @see Kingdom#start(Pane)
 	 */
 	public void startTransient(final Pane pane)
 	{
