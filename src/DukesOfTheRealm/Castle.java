@@ -573,9 +573,9 @@ public class Castle extends Sprite implements Serializable
 	 *
 	 * @see DukesOfTheRealm.Caserne#removeLastProduction()
 	 */
-	public void removeLastProduction()
+	public void removeLastProduction(boolean refoundFlorin)
 	{
-		this.caserne.removeLastProduction();
+		this.caserne.removeLastProduction(refoundFlorin);
 	}
 
 	/**
@@ -698,4 +698,6 @@ public class Castle extends Sprite implements Serializable
 	{
 		this.actor = actor;
 	}
+	
+	
 }

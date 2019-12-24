@@ -10,7 +10,7 @@ import Interface.IUpdate;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
-import Utility.Settings;
+import static Utility.Settings.*;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -26,6 +26,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Text;
 
 public final class UIProductionUnitPreview extends Parent implements IUpdate, Serializable, IUI
 {
@@ -38,6 +39,9 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	private final Button buttonCreateKnight;
 	private final Button buttonCreateOnager;
 	private final Button buttonUpgradeCastle;
+	
+	private final Button removeLastProduction;
+	private final Button removeAllProduction;
 
 	private final Rectangle background;
 
@@ -56,8 +60,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.buttonCreateKnight = new Button();
 		this.buttonCreateOnager = new Button();
 		this.buttonUpgradeCastle = new Button();
+		this.removeAllProduction = new Button();
+		this.removeLastProduction = new Button();
 
-		this.background = new Rectangle(280, 300);
+		this.background = new Rectangle(280, 450); // 280 / 300
 
 		this.backgroundTime = new Rectangle(240, 40);
 		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
@@ -109,6 +115,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		setVisible(this.buttonCreateOnager, visible);
 		setVisible(this.buttonCreatePiker, visible);
 		setVisible(this.buttonUpgradeCastle, visible);
+		setVisible(this.removeAllProduction, visible);
+		setVisible(this.removeLastProduction, visible);
 	}
 
 	public void setFill(final double fractionFill)
@@ -148,8 +156,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 	private void setAllButtons()
 	{
-		this.buttonCreateKnight
-				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/mounted-knight2.png'); "
+		this.buttonCreateKnight.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/mounted-knight2.png'); "
 						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
 		this.buttonCreatePiker.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/spartan2.png'); "
@@ -158,31 +165,47 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.buttonCreateOnager.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/catapult2.png'); "
 				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
-		this.buttonUpgradeCastle
-				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/egyptian-temple.png'); "
+		this.buttonUpgradeCastle.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/egyptian-temple-b.png'); "
 						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
+		this.removeAllProduction.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/cancel.png'); "
+						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
+		
+		this.removeLastProduction.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/anticlockwise-rotation.png'); "
+				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
+				
 		this.buttonCreateOnager.setOnMousePressed(event -> addProduction(this.buttonCreateOnager, new Onager()));
 		this.buttonCreatePiker.setOnMousePressed(event -> addProduction(this.buttonCreatePiker, new Piker()));
 		this.buttonCreateKnight.setOnMousePressed(event -> addProduction(this.buttonCreateKnight, new Knight()));
-		this.buttonUpgradeCastle
-				.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
+		this.buttonUpgradeCastle.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
+		
+		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
+		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.removeLastProduction(true));
+		
+		/*this.buttonCreatePiker.setOnMouseEntered(event ->
+		{
+			Text t = new Text();
+			t.setText(PIKER_COST + "");
+			t.relocate(t.getX(), t.getY());
+		});*/
 
 		addEventMouse(this.buttonCreateKnight);
 		addEventMouse(this.buttonCreateOnager);
 		addEventMouse(this.buttonCreatePiker);
 		addEventMouse(this.buttonUpgradeCastle);
+		addEventMouse(this.removeAllProduction);
+		addEventMouse(this.removeLastProduction);
 	}
 
 	private void addProduction(final Button b, final IProductionUnit p)
 	{
 		if (this.currentCastle.addProduction(p))
 		{
-			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 15, 0.33, 0, 0));
+			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 30, 0.33, 0, 0));
 		}
 		else
 		{
-			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 15, 0.33, 0, 0));
+			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 30, 0.33, 0, 0));
 		}
 	}
 
@@ -207,10 +230,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		b.setCursor(Cursor.HAND);
 		b.addEventHandler(MouseEvent.MOUSE_ENTERED, event ->
 		{
-			final Bloom bloom = new Bloom();
-			bloom.setThreshold(0.85);
-			bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 15, 0.25, 0, 0));
-			b.setEffect(bloom);
+			setButtonShadow(b);
 		});
 
 		b.addEventHandler(MouseEvent.MOUSE_EXITED, event ->
@@ -220,12 +240,16 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 		b.setOnMouseClicked(event ->
 		{
-			b.setEffect(null);
-			final Bloom bloom = new Bloom();
-			bloom.setThreshold(0.85);
-			bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 15, 0.25, 0, 0));
-			b.setEffect(bloom);
+			setButtonShadow(b);
 		});
+	}
+	
+	private void setButtonShadow(Button b)
+	{
+		final Bloom bloom = new Bloom();
+		bloom.setThreshold(1);
+		bloom.setInput(new DropShadow(BlurType.GAUSSIAN, Color.BISQUE, 20, 0.15, 0, 0));
+		b.setEffect(bloom);
 	}
 
 	@Override
@@ -238,6 +262,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		addNode(this.buttonCreatePiker);
 		addNode(this.buttonUpgradeCastle);
 		addNode(this.fillTime);
+		addNode(this.removeAllProduction);
+		addNode(this.removeLastProduction);
 	}
 
 	@Override
@@ -246,18 +272,21 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		final int i = 90;
 		final int offset = 540;
 
-		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.076f;
+		final float margin = (float) (MARGIN_PERCENTAGE) + 0.076f;
 
-		relocate(this.buttonCreatePiker, Settings.SCENE_WIDTH * margin + i * 0, offset);
-		relocate(this.buttonCreateKnight, Settings.SCENE_WIDTH * margin + i * 1, offset);
-		relocate(this.buttonCreateOnager, Settings.SCENE_WIDTH * margin + i * 2, offset);
+		relocate(this.buttonCreatePiker, SCENE_WIDTH * margin + i * 0, offset);
+		relocate(this.buttonCreateKnight, SCENE_WIDTH * margin + i * 1, offset);
+		relocate(this.buttonCreateOnager, SCENE_WIDTH * margin + i * 2, offset);
+		
+		relocate(this.removeAllProduction, SCENE_WIDTH * margin + i * 2 - i * 0.5f, offset + i * 3);
+		relocate(this.removeLastProduction, SCENE_WIDTH * margin + i * 1 - i * 0.5f, offset + i * 3);
 
-		relocate(this.buttonUpgradeCastle, Settings.SCENE_WIDTH * margin + i * 1, offset + 90);
+		relocate(this.buttonUpgradeCastle, SCENE_WIDTH * margin + i * 1, offset + i * 1);
 
-		relocate(this.fillTime, Settings.SCENE_WIDTH * margin + 1, offset + 190);
-		relocate(this.backgroundTime, Settings.SCENE_WIDTH * margin + 1, offset + 190);
+		relocate(this.fillTime, SCENE_WIDTH * margin + 1, offset + i * 4);
+		relocate(this.backgroundTime, SCENE_WIDTH * margin + 1, offset + i * 4);
 
-		relocate(this.background, Settings.SCENE_WIDTH * margin - 17, offset - 22);
+		relocate(this.background, SCENE_WIDTH * margin - 17, offset - 22);
 	}
 
 	public void switchCastle(final Castle castle, final boolean productionVisible)

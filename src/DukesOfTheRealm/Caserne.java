@@ -59,15 +59,22 @@ public class Caserne implements Serializable
 				}
 			}
 		}
+		else
+		{
+			this.ratio = 0;
+		}
 	}
 
 	/**
 	 *
 	 */
-	public void removeLastProduction()
+	public void removeLastProduction(boolean refoundFlorin)
 	{
 		IProductionUnit i = this.productionUnit.pollLast();
-		this.castle.addFlorin(i.getProductionCost());
+		if(refoundFlorin && i != null)
+		{
+			this.castle.addFlorin(i.getProductionCost());
+		}
 	}
 
 	/**
@@ -85,8 +92,7 @@ public class Caserne implements Serializable
 		}
 		else
 		{
-			this.productionUnit.clear();
-			this.productionTime = 0;
+			this.productionUnit.clear();	
 		}
 	}
 
