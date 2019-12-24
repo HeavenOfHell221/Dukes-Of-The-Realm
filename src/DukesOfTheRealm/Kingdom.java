@@ -16,6 +16,9 @@ import Utility.Settings;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 /**
  * Classe representant le royaume. 
@@ -161,7 +164,18 @@ public class Kingdom extends Parent implements Serializable
 				else
 				{
 					if(actor.isPlayer())
+					{
+						Text t = new Text();
+						this.playfieldLayer.getChildren().add(t);
+						t.setText("Game Over");
+						t.setFont(new Font(130));
+						t.setWrappingWidth(800);
+						t.setTextAlignment(TextAlignment.LEFT);
+						t.setFill(Color.BLACK);
+						t.relocate(Settings.SCENE_WIDTH/3, Settings.SCENE_HEIGHT/3);
 						this.canUpdate = false;
+					}
+						
 					it.remove();
 				}
 			}
