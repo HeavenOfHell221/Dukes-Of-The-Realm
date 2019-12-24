@@ -177,6 +177,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.buttonCreateOnager.setOnMousePressed(event -> addProduction(this.buttonCreateOnager, new Onager()));
 		this.buttonCreatePiker.setOnMousePressed(event -> addProduction(this.buttonCreatePiker, new Piker()));
 		this.buttonCreateKnight.setOnMousePressed(event -> addProduction(this.buttonCreateKnight, new Knight()));
+		
 		this.buttonUpgradeCastle.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
 		
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));

@@ -21,7 +21,7 @@ public class SaveSoldierGoal extends Goal
 		int realNbKnights = castle.getNbKnights() < nbKnights ? nbKnights - castle.getNbKnights() : 0;
 		int realNbOnagers = castle.getNbOnagers() < nbOnagers ? nbOnagers - castle.getNbOnagers() : 0;
 		
-		this.goals.addLast(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
+		this.goals.addLast(new MultiSoldierGoal(castle, realNbPikers, realNbKnights, realNbOnagers));
 	}
 
 	@Override

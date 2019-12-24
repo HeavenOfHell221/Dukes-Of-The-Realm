@@ -8,6 +8,7 @@ import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
 import Utility.Settings;
+import DukesOfTheRealm.Castle;
 
 /**
  *
@@ -32,15 +33,18 @@ public enum SoldierEnum implements Serializable
 		}
 	}
 
-	public IProductionUnit getProduction()
+	public IProductionUnit getProduction(Castle currentCastle)
 	{
 		switch (this)
 		{
 			case Piker:
+				currentCastle.setNbPikersInProduction(currentCastle.getNbPikersInProduction() + 1);
 				return new Piker();
 			case Knight:
+				currentCastle.setNbKnightsInProduction(currentCastle.getNbKnightsInProduction() + 1);
 				return new Knight();
 			case Onager:
+				currentCastle.setNbOnagersInProduction(currentCastle.getNbOnagersInProduction() + 1);
 				return new Onager();
 			default:
 				return null;

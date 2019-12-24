@@ -179,6 +179,19 @@ public class Kingdom extends Parent implements Serializable
 					it.remove();
 				}
 			}
+			
+			if(this.actors.size() == 1 && this.actors.get(0).isPlayer())
+			{
+				Text t = new Text();
+				this.playfieldLayer.getChildren().add(t);
+				t.setText("Win !");
+				t.setFont(new Font(130));
+				t.setWrappingWidth(800);
+				t.setTextAlignment(TextAlignment.LEFT);
+				t.setFill(Color.BLACK);
+				t.relocate(Settings.SCENE_WIDTH/2.5f, Settings.SCENE_HEIGHT/3);
+				this.canUpdate = false;
+			}
 		}
 	}
 

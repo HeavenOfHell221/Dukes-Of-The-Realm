@@ -28,9 +28,12 @@ public class GenericGoal implements Serializable
 	 */
 	public boolean goal(final Castle castle)
 	{
-		while (!this.goals.isEmpty() && this.goals.getFirst().isGoalIsCompleted(castle))
+		final int goalCompletedMax = castle.getLevel() * 5;
+		int goalCompleted = 0;
+		while (!this.goals.isEmpty() && this.goals.getFirst().isGoalIsCompleted(castle) && goalCompleted < goalCompletedMax)
 		{
 			this.goals.pollFirst();
+			goalCompleted++;
 		}
 
 		return this.goals.size() == 0;

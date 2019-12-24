@@ -14,13 +14,31 @@ public class MultiSoldierGoal extends Goal
 	private final int nbKnights;
 	private final int nbOnagers;
 	
-	public MultiSoldierGoal(int nbPikers, int nbKnights, int nbOnagers)
+	public MultiSoldierGoal(Castle castle, int nbPikers, int nbKnights, int nbOnagers)
 	{
 		this.goals = new GenericGoal();
 		Random rand = new Random();
+		
+		
+		if(castle.getNbPikersInProduction() + nbPikers > 150)
+		{
+			nbPikers -= ((castle.getNbPikersInProduction() + nbPikers) - 150);
+		}
+		
+		if(castle.getNbKnightsInProduction() + nbKnights > 100)
+		{
+			nbKnights -= ((castle.getNbKnightsInProduction() + nbKnights) - 100);
+		}
+		
+		if(castle.getNbOnagersInProduction() + nbOnagers > 60)
+		{
+			nbOnagers -= ((castle.getNbOnagersInProduction() + nbOnagers) - 60);
+		}
+		
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
+		
 		int count = nbPikers + nbKnights + nbOnagers;
 		
 		while(count > 0)

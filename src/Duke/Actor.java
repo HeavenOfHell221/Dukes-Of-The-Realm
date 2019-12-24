@@ -1,5 +1,8 @@
 package Duke;
 
+import static Utility.Settings.FLORIN_FACTOR_BARON;
+import static Utility.Settings.FLORIN_PER_SECOND;
+
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -131,7 +134,8 @@ public class Actor implements Serializable, IUpdate
 	{
 		if (this.castles.contains(castle))
 		{
-			return Settings.FLORIN_PER_SECOND * castle.getLevel() + " Florin/s";
+			String tmp = String.format("%.1f", (float)(FLORIN_PER_SECOND * castle.getLevel()));
+			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";
 	}

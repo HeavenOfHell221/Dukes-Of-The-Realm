@@ -680,7 +680,8 @@ public class Castle extends Sprite implements Serializable
 	@Override
 	public String toString()
 	{
-		return "Castle [actor=" + actor + "]";
+		return "Castle [getNbPikersInProduction()=" + getNbPikersInProduction() + ", getNbOnagersInProduction()="
+				+ getNbOnagersInProduction() + ", getNbKnightsInProduction()=" + getNbKnightsInProduction() + "]";
 	}
 
 	/**
@@ -698,6 +699,58 @@ public class Castle extends Sprite implements Serializable
 	{
 		this.actor = actor;
 	}
-	
-	
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Caserne#getNbPikersInProduction()
+	 */
+	public final int getNbPikersInProduction()
+	{
+		return caserne.getNbPikersInProduction();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Caserne#getNbOnagersInProduction()
+	 */
+	public final int getNbOnagersInProduction()
+	{
+		return caserne.getNbOnagersInProduction();
+	}
+
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Caserne#getNbKnightsInProduction()
+	 */
+	public final int getNbKnightsInProduction()
+	{
+		return caserne.getNbKnightsInProduction();
+	}
+
+	/**
+	 * @param nbPikersInProduction
+	 * @see DukesOfTheRealm.Caserne#setNbPikersInProduction(int)
+	 */
+	public final void setNbPikersInProduction(int nbPikersInProduction)
+	{
+		caserne.setNbPikersInProduction(nbPikersInProduction);
+	}
+
+	/**
+	 * @param nbOnagersInProduction
+	 * @see DukesOfTheRealm.Caserne#setNbOnagersInProduction(int)
+	 */
+	public final void setNbOnagersInProduction(int nbOnagersInProduction)
+	{
+		caserne.setNbOnagersInProduction(nbOnagersInProduction);
+	}
+
+	/**
+	 * @param nbKnightsInProduction
+	 * @see DukesOfTheRealm.Caserne#setNbKnightsInProduction(int)
+	 */
+	public final void setNbKnightsInProduction(int nbKnightsInProduction)
+	{
+		caserne.setNbKnightsInProduction(nbKnightsInProduction);
+	}
 }

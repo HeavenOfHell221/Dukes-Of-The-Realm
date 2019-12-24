@@ -61,6 +61,7 @@ public class DukeAI extends Actor implements Serializable
 			while(it.hasNext())
 			{
 				Castle castle = it.next();
+				//System.out.println(castle);
 				if(map.containsKey(castle))
 				{
 					Goal g = map.get(castle);
@@ -88,7 +89,7 @@ public class DukeAI extends Actor implements Serializable
 	protected void switchCastle(final Castle castle)
 	{
 		super.switchCastle(castle);
-		System.out.println(this.name + " -> " + map.get(castle) + "\n");
+		//System.out.println(this.name + " -> " + map.get(castle) + "\n");
 	}
 
 	

@@ -19,7 +19,8 @@ public class Baron extends Actor implements Serializable
 	{
 		if (this.castles.contains(castle))
 		{
-			return (int) (FLORIN_PER_SECOND * castle.getLevel() * FLORIN_FACTOR_BARON) + " Florin/s";
+			String tmp = String.format("%.1f", (float)(FLORIN_PER_SECOND * castle.getLevel() * FLORIN_FACTOR_BARON));
+			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";
 	}

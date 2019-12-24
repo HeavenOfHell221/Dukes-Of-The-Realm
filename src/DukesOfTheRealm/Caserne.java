@@ -16,12 +16,19 @@ public class Caserne implements Serializable
 	private double productionTime;
 	private final Castle castle;
 	private double ratio;
+	
+	private int nbPikersInProduction;
+	private int nbOnagersInProduction;
+	private int nbKnightsInProduction;
 
 	public Caserne(final Castle castle)
 	{
 		this.productionTime = 0;
 		this.productionUnit = new ArrayDeque<>();
 		this.castle = castle;
+		this.nbPikersInProduction = 0;
+		this.nbKnightsInProduction = 0;
+		this.nbOnagersInProduction = 0;
 	}
 
 	public void updateProduction()
@@ -43,14 +50,17 @@ public class Caserne implements Serializable
 				else if (p.getClass() == Piker.class)
 				{
 					this.castle.addPiker();
+					this.nbPikersInProduction--;
 				}
 				else if (p.getClass() == Onager.class)
 				{
 					this.castle.addOnager();
+					this.nbOnagersInProduction--;
 				}
 				else if (p.getClass() == Knight.class)
 				{
 					this.castle.addKnight();
+					this.nbKnightsInProduction--;   
 				}
 
 				if (this.productionUnit.size() > 0)
@@ -141,4 +151,54 @@ public class Caserne implements Serializable
 	{
 		return this.ratio;
 	}
+
+	/**
+	 * @return the nbPikersInProduction
+	 */
+	public final int getNbPikersInProduction()
+	{
+		return nbPikersInProduction;
+	}
+
+	/**
+	 * @return the nbOnagersInProduction
+	 */
+	public final int getNbOnagersInProduction()
+	{
+		return nbOnagersInProduction;
+	}
+
+	/**
+	 * @return the nbKnightsInProduction
+	 */
+	public final int getNbKnightsInProduction()
+	{
+		return nbKnightsInProduction;
+	}
+
+	/**
+	 * @param nbPikersInProduction the nbPikersInProduction to set
+	 */
+	public final void setNbPikersInProduction(int nbPikersInProduction)
+	{
+		this.nbPikersInProduction = nbPikersInProduction;
+	}
+
+	/**
+	 * @param nbOnagersInProduction the nbOnagersInProduction to set
+	 */
+	public final void setNbOnagersInProduction(int nbOnagersInProduction)
+	{
+		this.nbOnagersInProduction = nbOnagersInProduction;
+	}
+
+	/**
+	 * @param nbKnightsInProduction the nbKnightsInProduction to set
+	 */
+	public final void setNbKnightsInProduction(int nbKnightsInProduction)
+	{
+		this.nbKnightsInProduction = nbKnightsInProduction;
+	}
+	
+	
 }

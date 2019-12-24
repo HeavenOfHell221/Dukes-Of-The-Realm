@@ -34,11 +34,15 @@ public class AttackGoal extends Goal
 	{
 		this.castleDestination = castleDestination;
 		
-		int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;
-		int realNbKnights = castleOrigin.getNbKnights() < nbKnights ? nbKnights - castleOrigin.getNbKnights() : 0;
-		int realNbOnagers = castleOrigin.getNbOnagers() < nbOnagers ? nbOnagers - castleOrigin.getNbOnagers() : 0;
+		int nbPikers_ = castleOrigin.getNbPikers() + castleOrigin.getNbPikersInProduction();
+		int nbOnagers_ = castleOrigin.getNbOnagers() + castleOrigin.getNbOnagersInProduction();
+		int nbKnights_ = castleOrigin.getNbKnights() + castleOrigin.getNbKnightsInProduction();
 		
-		this.goals.addLast(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
+		int realNbPikers = nbPikers_ < nbPikers ? (nbPikers - nbPikers_) : 0;
+		int realNbKnights = nbKnights_ < nbKnights ? (nbKnights - nbKnights_) : 0;
+		int realNbOnagers = nbOnagers_ < nbOnagers ? (nbOnagers - nbOnagers_) : 0;
+		
+		this.goals.addLast(new MultiSoldierGoal(castleOrigin, realNbPikers, realNbKnights, realNbOnagers));
 		this.goals.addLast(new SendOstGoal(castleDestination, nbPikers, nbKnights, nbOnagers));
 	}
 
@@ -56,11 +60,15 @@ public class AttackGoal extends Goal
 			if(castleOrigin.getNbPikers() < this.nbPikers || castleOrigin.getNbKnights() < this.nbKnights 
 					|| castleOrigin.getNbOnagers() < this.nbOnagers)
 			{
-				int realNbPikers = castleOrigin.getNbPikers() < nbPikers ? nbPikers - castleOrigin.getNbPikers() : 0;
-				int realNbKnights = castleOrigin.getNbKnights() < nbKnights ? nbKnights - castleOrigin.getNbKnights() : 0;
-				int realNbOnagers = castleOrigin.getNbOnagers() < nbOnagers ? nbOnagers - castleOrigin.getNbOnagers() : 0;
+				int nbPikers_ = castleOrigin.getNbPikers() + castleOrigin.getNbPikersInProduction();
+				int nbOnagers_ = castleOrigin.getNbOnagers() + castleOrigin.getNbOnagersInProduction();
+				int nbKnights_ = castleOrigin.getNbKnights() + castleOrigin.getNbKnightsInProduction();
 				
-				this.goals.addFirst(new MultiSoldierGoal(realNbPikers, realNbKnights, realNbOnagers));
+				int realNbPikers = nbPikers_ < nbPikers ? (nbPikers - nbPikers_) : 0;
+				int realNbKnights = nbKnights_ < nbKnights ? (nbKnights - nbKnights_) : 0;
+				int realNbOnagers = nbOnagers_ < nbOnagers ? (nbOnagers - nbOnagers_) : 0;
+				
+				this.goals.addFirst(new MultiSoldierGoal(castleOrigin, realNbPikers, realNbKnights, realNbOnagers));
 				return false;
 			}
 		}
