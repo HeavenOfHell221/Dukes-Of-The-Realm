@@ -26,7 +26,9 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public final class UIProductionUnitPreview extends Parent implements IUpdate, Serializable, IUI
 {
@@ -49,6 +51,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	private final Rectangle fillTime;
 
 	private Castle currentCastle;
+	
+	private Text pikerCost;
+	private Text onagerCost;
+	private Text knightCost;
+	
+	private Text castleCost;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -103,6 +111,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	public void addNode(final Node node)
 	{
 		getChildren().add(node);
+	}
+	
+	public void removeNode(final Node node)
+	{
+		getChildren().remove(node);
 	}
 
 	@Override
@@ -183,12 +196,78 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
 		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.removeLastProduction(true));
 		
-		/*this.buttonCreatePiker.setOnMouseEntered(event ->
+		this.buttonCreatePiker.setOnMouseEntered(event ->
 		{
 			Text t = new Text();
+			this.pikerCost = t;
 			t.setText(PIKER_COST + "");
-			t.relocate(t.getX(), t.getY());
-		});*/
+			t.setFont(new Font(30));
+			t.setFill(Color.ORANGERED);
+			t.setStyle("-fx-font-weight: bold");
+			t.setWrappingWidth(50);
+			t.setStroke(Color.BLACK);
+			t.setStrokeWidth(2);
+			t.setTextAlignment(TextAlignment.CENTER);
+			t.relocate(this.buttonCreatePiker.getLayoutX(), this.buttonCreatePiker.getLayoutY());
+			t.setMouseTransparent(true);
+			addNode(t);
+		});
+		
+		this.buttonCreateKnight.setOnMouseEntered(event ->
+		{
+			Text t = new Text();
+			this.knightCost = t;
+			t.setText(KNIGHT_COST + "");
+			t.setFont(new Font(30));
+			t.setFill(Color.ORANGERED);
+			t.setStyle("-fx-font-weight: bold");
+			t.setWrappingWidth(50);
+			t.setStroke(Color.BLACK);
+			t.setStrokeWidth(2);
+			t.setTextAlignment(TextAlignment.CENTER);
+			t.relocate(this.buttonCreateKnight.getLayoutX(), this.buttonCreateKnight.getLayoutY());
+			t.setMouseTransparent(true);
+			addNode(t);
+		});
+		
+		this.buttonCreateOnager.setOnMouseEntered(event ->
+		{
+			Text t = new Text();
+			this.onagerCost = t;
+			t.setText(ONAGER_COST + "");
+			t.setFont(new Font(30));
+			t.setFill(Color.ORANGERED);
+			t.setStyle("-fx-font-weight: bold");
+			t.setWrappingWidth(70);
+			t.setStroke(Color.BLACK);
+			t.setStrokeWidth(2);
+			t.setTextAlignment(TextAlignment.CENTER);
+			t.relocate(this.buttonCreateOnager.getLayoutX(), this.buttonCreateOnager.getLayoutY());
+			t.setMouseTransparent(true);
+			addNode(t);
+		});
+		
+		this.buttonUpgradeCastle.setOnMouseEntered(event ->
+		{
+			Text t = new Text();
+			this.castleCost = t;
+			t.setText(LEVEL_UP_COST_FACTOR * this.currentCastle.getLevel() + "");
+			t.setFont(new Font(30));
+			t.setFill(Color.ORANGERED);
+			t.setStyle("-fx-font-weight: bold");
+			t.setWrappingWidth(70);
+			t.setStroke(Color.BLACK);
+			t.setStrokeWidth(2);
+			t.setTextAlignment(TextAlignment.CENTER);
+			t.relocate(this.buttonUpgradeCastle.getLayoutX(), this.buttonUpgradeCastle.getLayoutY());
+			t.setMouseTransparent(true);
+			addNode(t);
+		});
+		
+		this.buttonCreateKnight.setOnMouseExited(event ->removeNode(this.knightCost));
+		this.buttonCreatePiker.setOnMouseExited(event -> removeNode(this.pikerCost));
+		this.buttonCreateOnager.setOnMouseExited(event -> removeNode(this.onagerCost));
+		this.buttonUpgradeCastle.setOnMouseExited(event -> removeNode(this.castleCost));
 
 		addEventMouse(this.buttonCreateKnight);
 		addEventMouse(this.buttonCreateOnager);
