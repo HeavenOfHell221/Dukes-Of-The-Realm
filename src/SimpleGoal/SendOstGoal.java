@@ -1,6 +1,5 @@
 package SimpleGoal;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 
 public class SendOstGoal extends Goal
@@ -9,8 +8,8 @@ public class SendOstGoal extends Goal
 	private final int nbPikers;
 	private final int nbKnights;
 	private final int nbOnagers;
-	
-	public SendOstGoal(Castle destination, int nbPikers, int nbKnights, int nbOnagers)
+
+	public SendOstGoal(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
 		this.destination = destination;
 		this.nbPikers = nbPikers;
@@ -19,12 +18,12 @@ public class SendOstGoal extends Goal
 	}
 
 	@Override
-	public boolean goal(Castle castle)
+	public boolean goal(final Castle castle)
 	{
-		return castle.createOst(destination, nbPikers, nbKnights, nbOnagers, false);
+		return castle.createOst(this.destination, this.nbPikers, this.nbKnights, this.nbOnagers, false);
 	}
-	
-	public void setDestination(Castle castle)
+
+	public void setDestination(final Castle castle)
 	{
 		this.destination = castle;
 	}

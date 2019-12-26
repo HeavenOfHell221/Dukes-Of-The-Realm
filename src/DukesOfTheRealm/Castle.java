@@ -82,9 +82,9 @@ public class Castle extends Sprite implements Serializable
 	 *
 	 */
 	private Stack<Point2D> attackLocations;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private Actor actor;
 
@@ -174,7 +174,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void updateOst(final long now, final boolean pause)
 	{
-		//System.out.println(this);
+		// System.out.println(this);
 		if (this.ost != null)
 		{
 			this.ost.update(now, pause);
@@ -191,9 +191,9 @@ public class Castle extends Sprite implements Serializable
 	public void randomSoldier()
 	{
 		final Random rand = new Random();
-		this.reserveOfSoldiers.setNbKnights(rand.nextInt(this.level*this.level) + rand.nextInt(6) * this.level);
-		this.reserveOfSoldiers.setNbPikers(rand.nextInt(this.level*this.level) + rand.nextInt(5) * this.level); 
-		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(this.level*this.level) + rand.nextInt(4) * this.level);
+		this.reserveOfSoldiers.setNbKnights(rand.nextInt(this.level * this.level) + rand.nextInt(6) * this.level);
+		this.reserveOfSoldiers.setNbPikers(rand.nextInt(this.level * this.level) + rand.nextInt(5) * this.level);
+		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(this.level * this.level) + rand.nextInt(4) * this.level);
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public boolean enoughOfFlorin(final double amount)
 	{
-		return (amount <= this.totalFlorin);
+		return amount <= this.totalFlorin;
 	}
 
 	/**
@@ -297,11 +297,11 @@ public class Castle extends Sprite implements Serializable
 	 * @param  nbOnagers
 	 * @return
 	 */
-	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, boolean isBackup)
+	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, final boolean isBackup)
 	{
 		if (this.ost == null)
 		{
-			if(removeSoldiers(nbPikers, nbKnights, nbOnagers) && this != destination)
+			if (removeSoldiers(nbPikers, nbKnights, nbOnagers) && this != destination)
 			{
 				this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor, isBackup);
 				this.ost.start();
@@ -335,24 +335,28 @@ public class Castle extends Sprite implements Serializable
 		final double offset = (Settings.THIRD_OF_CASTLE - Settings.SOLDIER_SIZE) / 2;
 		for (int i = 0; i < Settings.NB_ATTACK_LOCATIONS; i++)
 		{
-			final int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE; 	// 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
-			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE) 		// 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
+			final int j = i % Settings.ATTACK_LOCATIONS_PER_SIDE; // 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2
+			switch (i / Settings.ATTACK_LOCATIONS_PER_SIDE) // 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
 			{
 				// North
 				case 0:
-					this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j) + offset, y - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE));
+					this.attackLocations.push(
+							new Point2D(x + Settings.THIRD_OF_CASTLE * j + offset, y - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE));
 					break;
 				// East
 				case 1:
-					this.attackLocations.push(new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y + (Settings.THIRD_OF_CASTLE * j) + offset));
+					this.attackLocations.push(
+							new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y + Settings.THIRD_OF_CASTLE * j + offset));
 					break;
 				// South
 				case 2:
-					this.attackLocations.push(new Point2D(x + (Settings.THIRD_OF_CASTLE * j) + offset, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER));
+					this.attackLocations.push(
+							new Point2D(x + Settings.THIRD_OF_CASTLE * j + offset, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER));
 					break;
 				// West
 				case 3:
-					this.attackLocations.push(new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE, y + (Settings.THIRD_OF_CASTLE * j) + offset));
+					this.attackLocations.push(
+							new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE, y + Settings.THIRD_OF_CASTLE * j + offset));
 					break;
 			}
 		}
@@ -573,7 +577,7 @@ public class Castle extends Sprite implements Serializable
 	 *
 	 * @see DukesOfTheRealm.Caserne#removeLastProduction()
 	 */
-	public void removeLastProduction(boolean refoundFlorin)
+	public void removeLastProduction(final boolean refoundFlorin)
 	{
 		this.caserne.removeLastProduction(refoundFlorin);
 	}
@@ -640,11 +644,11 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @param nbPikers
-	 * @param nbKnights
-	 * @param nbOnagers
+	 * @param  nbPikers
+	 * @param  nbKnights
+	 * @param  nbOnagers
 	 * @return
-	 * @see             DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
+	 * @see              DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
 	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
@@ -674,7 +678,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final ReserveOfSoldiers getReserveOfSoldiers()
 	{
-		return reserveOfSoldiers;
+		return this.reserveOfSoldiers;
 	}
 
 	@Override
@@ -689,68 +693,68 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final Actor getActor()
 	{
-		return actor;
+		return this.actor;
 	}
 
 	/**
 	 * @param actor the actor to set
 	 */
-	public final void setActor(Actor actor)
+	public final void setActor(final Actor actor)
 	{
 		this.actor = actor;
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.Caserne#getNbPikersInProduction()
+	 * @see    DukesOfTheRealm.Caserne#getNbPikersInProduction()
 	 */
 	public final int getNbPikersInProduction()
 	{
-		return caserne.getNbPikersInProduction();
+		return this.caserne.getNbPikersInProduction();
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.Caserne#getNbOnagersInProduction()
+	 * @see    DukesOfTheRealm.Caserne#getNbOnagersInProduction()
 	 */
 	public final int getNbOnagersInProduction()
 	{
-		return caserne.getNbOnagersInProduction();
+		return this.caserne.getNbOnagersInProduction();
 	}
 
 	/**
 	 * @return
-	 * @see DukesOfTheRealm.Caserne#getNbKnightsInProduction()
+	 * @see    DukesOfTheRealm.Caserne#getNbKnightsInProduction()
 	 */
 	public final int getNbKnightsInProduction()
 	{
-		return caserne.getNbKnightsInProduction();
+		return this.caserne.getNbKnightsInProduction();
 	}
 
 	/**
 	 * @param nbPikersInProduction
-	 * @see DukesOfTheRealm.Caserne#setNbPikersInProduction(int)
+	 * @see                        DukesOfTheRealm.Caserne#setNbPikersInProduction(int)
 	 */
-	public final void setNbPikersInProduction(int nbPikersInProduction)
+	public final void setNbPikersInProduction(final int nbPikersInProduction)
 	{
-		caserne.setNbPikersInProduction(nbPikersInProduction);
+		this.caserne.setNbPikersInProduction(nbPikersInProduction);
 	}
 
 	/**
 	 * @param nbOnagersInProduction
-	 * @see DukesOfTheRealm.Caserne#setNbOnagersInProduction(int)
+	 * @see                         DukesOfTheRealm.Caserne#setNbOnagersInProduction(int)
 	 */
-	public final void setNbOnagersInProduction(int nbOnagersInProduction)
+	public final void setNbOnagersInProduction(final int nbOnagersInProduction)
 	{
-		caserne.setNbOnagersInProduction(nbOnagersInProduction);
+		this.caserne.setNbOnagersInProduction(nbOnagersInProduction);
 	}
 
 	/**
 	 * @param nbKnightsInProduction
-	 * @see DukesOfTheRealm.Caserne#setNbKnightsInProduction(int)
+	 * @see                         DukesOfTheRealm.Caserne#setNbKnightsInProduction(int)
 	 */
-	public final void setNbKnightsInProduction(int nbKnightsInProduction)
+	public final void setNbKnightsInProduction(final int nbKnightsInProduction)
 	{
-		caserne.setNbKnightsInProduction(nbKnightsInProduction);
+		this.caserne.setNbKnightsInProduction(nbKnightsInProduction);
 	}
 }

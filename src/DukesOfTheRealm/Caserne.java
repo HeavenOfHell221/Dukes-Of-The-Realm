@@ -16,7 +16,7 @@ public class Caserne implements Serializable
 	private double productionTime;
 	private final Castle castle;
 	private double ratio;
-	
+
 	private int nbPikersInProduction;
 	private int nbOnagersInProduction;
 	private int nbKnightsInProduction;
@@ -35,9 +35,9 @@ public class Caserne implements Serializable
 	{
 		if (this.productionUnit.size() > 0)
 		{
-			this.productionTime -= (1 * Time.deltaTime);
+			this.productionTime -= 1 * Time.deltaTime;
 
-			this.ratio = 1 - (this.productionTime / this.productionUnit.getFirst().getProductionTime());
+			this.ratio = 1 - this.productionTime / this.productionUnit.getFirst().getProductionTime();
 
 			if (this.productionTime <= 0)
 			{
@@ -60,7 +60,7 @@ public class Caserne implements Serializable
 				else if (p.getClass() == Knight.class)
 				{
 					this.castle.addKnight();
-					this.nbKnightsInProduction--;   
+					this.nbKnightsInProduction--;
 				}
 
 				if (this.productionUnit.size() > 0)
@@ -78,10 +78,10 @@ public class Caserne implements Serializable
 	/**
 	 *
 	 */
-	public void removeLastProduction(boolean refoundFlorin)
+	public void removeLastProduction(final boolean refoundFlorin)
 	{
 		IProductionUnit i = this.productionUnit.pollLast();
-		if(refoundFlorin && i != null)
+		if (refoundFlorin && i != null)
 		{
 			this.castle.addFlorin(i.getProductionCost());
 		}
@@ -102,7 +102,7 @@ public class Caserne implements Serializable
 		}
 		else
 		{
-			this.productionUnit.clear();	
+			this.productionUnit.clear();
 		}
 	}
 
@@ -157,7 +157,7 @@ public class Caserne implements Serializable
 	 */
 	public final int getNbPikersInProduction()
 	{
-		return nbPikersInProduction;
+		return this.nbPikersInProduction;
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class Caserne implements Serializable
 	 */
 	public final int getNbOnagersInProduction()
 	{
-		return nbOnagersInProduction;
+		return this.nbOnagersInProduction;
 	}
 
 	/**
@@ -173,13 +173,13 @@ public class Caserne implements Serializable
 	 */
 	public final int getNbKnightsInProduction()
 	{
-		return nbKnightsInProduction;
+		return this.nbKnightsInProduction;
 	}
 
 	/**
 	 * @param nbPikersInProduction the nbPikersInProduction to set
 	 */
-	public final void setNbPikersInProduction(int nbPikersInProduction)
+	public final void setNbPikersInProduction(final int nbPikersInProduction)
 	{
 		this.nbPikersInProduction = nbPikersInProduction;
 	}
@@ -187,7 +187,7 @@ public class Caserne implements Serializable
 	/**
 	 * @param nbOnagersInProduction the nbOnagersInProduction to set
 	 */
-	public final void setNbOnagersInProduction(int nbOnagersInProduction)
+	public final void setNbOnagersInProduction(final int nbOnagersInProduction)
 	{
 		this.nbOnagersInProduction = nbOnagersInProduction;
 	}
@@ -195,10 +195,9 @@ public class Caserne implements Serializable
 	/**
 	 * @param nbKnightsInProduction the nbKnightsInProduction to set
 	 */
-	public final void setNbKnightsInProduction(int nbKnightsInProduction)
+	public final void setNbKnightsInProduction(final int nbKnightsInProduction)
 	{
 		this.nbKnightsInProduction = nbKnightsInProduction;
 	}
-	
-	
+
 }

@@ -87,7 +87,7 @@ public class Time
 	public void update(final long now, final boolean pause)
 	{
 		frameStart(now);
-		if ((now - this.lastUpdate) >= this.cooldown)
+		if (now - this.lastUpdate >= this.cooldown)
 		{
 			this.lastUpdate = now;
 			if (this.print)
@@ -113,7 +113,7 @@ public class Time
 			this.oldTime = now;
 			return;
 		}
-		deltaTime = (now - this.oldTime);
+		deltaTime = now - this.oldTime;
 		deltaTime /= Settings.GAME_FREQUENCY;
 		this.oldTime = now;
 	}

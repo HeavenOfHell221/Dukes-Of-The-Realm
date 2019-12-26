@@ -4,8 +4,8 @@ import DukesOfTheRealm.Castle;
 
 public class CastleGoal extends Goal
 {
-	private int level;  
-	
+	private int level;
+
 	public CastleGoal()
 	{
 
@@ -24,5 +24,4 @@ public class CastleGoal extends Goal
 		return "CastleGoal [level++]";
 	}
 
-	
 }

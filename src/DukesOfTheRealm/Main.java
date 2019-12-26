@@ -1,8 +1,8 @@
 package DukesOfTheRealm;
 
 import SaveSystem.SaveSystem;
-import UI.UIManager;
 import UI.UIAttackPreview;
+import UI.UIManager;
 import Utility.Input;
 import Utility.Settings;
 import Utility.Time;
@@ -28,22 +28,28 @@ public class Main extends Application
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * Nombre d'unité affiché sur la grille de jeu. Utilisé pour effectuer des tests de performance.
+	 */
 	public static int nbSoldier;
-	
+
 	/**
 	 * Pane principal pour afficher les éléments graphiques.
+	 * 
 	 * @see Main#Awake(Stage)
 	 */
 	private Pane playfieldLayer;
 
 	/**
 	 * Scene principale.
+	 * 
 	 * @see Main#Awake(Stage)
 	 */
 	private Scene mainScene;
 
 	/**
 	 * Boucle de jeu du Lobby.
+	 * 
 	 * @see Main#Awake(Stage)
 	 * @see Main#start(Stage)
 	 */
@@ -51,6 +57,7 @@ public class Main extends Application
 
 	/**
 	 * Boucle de jeu principale.
+	 * 
 	 * @see Main#Awake(Stage)
 	 * @see Main#start(Stage)
 	 */
@@ -58,42 +65,49 @@ public class Main extends Application
 
 	/**
 	 * Group root de JavaFX.
+	 * 
 	 * @see Main#start(Stage)
 	 */
 	private Group root;
 
 	/**
 	 * Gère les inputs (Espace et Space) du joueur.
+	 * 
 	 * @see Input
 	 */
 	private Input input;
 
 	/**
 	 * Utilitaire pour calculer les IPS (Image Par Seconde).
+	 * 
 	 * @see Time
 	 */
 	private Time time;
 
 	/**
 	 * Le royaume dans lequel le jeu ce déroulera.
+	 * 
 	 * @see Kingdom
 	 */
 	private Kingdom kingdom;
 
 	/**
 	 * Temps à laquelle l'image précédente à commencé.
+	 * 
 	 * @see Main#Time(long)
 	 */
 	private long lastTime = 0;
 
 	/**
 	 * Active ou non la pause du jeu.
+	 * 
 	 * @see Main#start(Stage)
 	 */
 	public static boolean pause = false;
 
 	/**
 	 * Force la pause du jeu lors d'un lancement d'une ost.
+	 * 
 	 * @see UIManager#switchCastle(Castle)
 	 * @see UIAttackPreview#reset()
 	 */
@@ -101,17 +115,19 @@ public class Main extends Application
 
 	/**
 	 * Est ce que c'est un nouveau jeu ou une sauvegarde qu'on récupère.
+	 * 
 	 * @see Main#newGame()
 	 * @see Kingdom#startTransient(Pane)
 	 */
 	public static boolean isNewGame = false;
-	
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
 
 	/**
 	 * Fonction start de l'application.
+	 * 
 	 * @param primaryStage Le stage par défaut construit par JavaFX.
 	 */
 	@Override
@@ -153,7 +169,7 @@ public class Main extends Application
 			{
 				if (input.isExit())
 				{
-					SaveSystem.save(kingdom);
+					SaveSystem.save(Main.this.kingdom);
 					Platform.exit();
 					System.exit(0);
 				}
@@ -169,13 +185,16 @@ public class Main extends Application
 
 	/**
 	 * Création des premiers éléments du jeu (group, mainScene, playfieldLayer, etc).
-	 * <p>Les boutons du Lobby sont également créés ici.</p>
+	 * <p>
+	 * Les boutons du Lobby sont également créés ici.
+	 * </p>
+	 * 
 	 * @param primaryStage Le stage par défaut construit par JavaFX.
-	 * @see Main#root
-	 * @see Main#mainScene
-	 * @see Main#playfieldLayer
-	 * @see Main#input
-	 * @see Main#time
+	 * @see                Main#root
+	 * @see                Main#mainScene
+	 * @see                Main#playfieldLayer
+	 * @see                Main#input
+	 * @see                Main#time
 	 */
 	private void Awake(final Stage primaryStage)
 	{
@@ -243,10 +262,13 @@ public class Main extends Application
 
 	/**
 	 * Actualise à chaque image le royaume, l'utilitaire time ainsi que le UI.
-	 * <p>Va être appelé dans le handle de la boucle mainGameLoop.</p>
-	 * @param now Le temps depuis la création du programme.
+	 * <p>
+	 * Va être appelé dans le handle de la boucle mainGameLoop.
+	 * </p>
+	 * 
+	 * @param now   Le temps depuis la création du programme.
 	 * @param pause Boolean donnant l'information de si la pause est activé.
-	 * @see Main#start(Stage)
+	 * @see         Main#start(Stage)
 	 */
 	public void update(final long now, final boolean pause)
 	{
@@ -255,17 +277,17 @@ public class Main extends Application
 		UIManager.getInstance().update(now, pause);
 	}
 
-
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
 	/**
 	 * Calcul le delta entre le temps now et le lastTime.
-	 * @param now Temps à laquelle l'image à commencé.
-	 * @return Retourne true si le delta entre now et lastTime est supérieur à 0.2 secondes.
-	 * @see Main#lastTime
-	 * @see Main#start(Stage)
+	 * 
+	 * @param  now Temps à laquelle l'image à commencé.
+	 * @return     Retourne true si le delta entre now et lastTime est supérieur à 0.2 secondes.
+	 * @see        Main#lastTime
+	 * @see        Main#start(Stage)
 	 */
 	private boolean Time(final long now)
 	{
@@ -278,7 +300,12 @@ public class Main extends Application
 	}
 
 	/**
-	 *
+	 * Initialise un nouveau jeu en créant un royaume.
+	 * 
+	 * @see Main#Awake(Stage)
+	 * @see Kingdom
+	 * @see Kingdom#start(Pane)
+	 * @see Main#isNewGame
 	 */
 	private void newGame()
 	{
@@ -291,7 +318,14 @@ public class Main extends Application
 	}
 
 	/**
-	 *
+	 * Charge une sauvegarde précédemment créée.
+	 * <p>
+	 * Utilise la fonction startTrantient(Pane) pour recréer les éléments de JavaFX non sauvegardé.
+	 * </p>
+	 * 
+	 * @see Main#Awake(Stage)
+	 * @see SaveSystem#load()
+	 * @see Kingdom#startTransient(Pane)
 	 */
 	private void loadGame()
 	{
@@ -310,8 +344,9 @@ public class Main extends Application
 	}
 
 	/**
-	 *
-	 * @param args
+	 * Entrée du programme (main).
+	 * 
+	 * @param args Les arguments du programme.
 	 */
 	public static void main(final String[] args)
 	{

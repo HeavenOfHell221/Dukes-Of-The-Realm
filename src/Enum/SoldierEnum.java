@@ -3,12 +3,12 @@ package Enum;
 import java.io.Serializable;
 import java.util.Random;
 
+import DukesOfTheRealm.Castle;
 import Interface.IProductionUnit;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
 import Utility.Settings;
-import DukesOfTheRealm.Castle;
 
 /**
  *
@@ -33,7 +33,7 @@ public enum SoldierEnum implements Serializable
 		}
 	}
 
-	public IProductionUnit getProduction(Castle currentCastle)
+	public IProductionUnit getProduction(final Castle currentCastle)
 	{
 		switch (this)
 		{
@@ -50,14 +50,17 @@ public enum SoldierEnum implements Serializable
 				return null;
 		}
 	}
-	
-	public static SoldierEnum getRandomType(Random rand)
+
+	public static SoldierEnum getRandomType(final Random rand)
 	{
-		switch(rand.nextInt(3))
+		switch (rand.nextInt(3))
 		{
-			case 0: return Piker;
-			case 1: return Knight;
-			case 2: return Onager;
+			case 0:
+				return Piker;
+			case 1:
+				return Knight;
+			case 2:
+				return Onager;
 		}
 		return null;
 	}

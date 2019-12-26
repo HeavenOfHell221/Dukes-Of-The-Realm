@@ -2,7 +2,6 @@ package UI;
 
 import java.io.Serializable;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
 import Utility.Settings;
@@ -40,9 +39,8 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 
 	private Castle currentCastle;
 	private Castle lastCastle;
-	
+
 	private boolean attackVisible = false;
-	private boolean productionVisible = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -63,7 +61,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		this.florinIncome = new Text();
 		this.background = new Rectangle(240, 440);
 
-		//this.lastActor = null;
+		// this.lastActor = null;
 		this.lastCastle = null;
 	}
 
@@ -92,8 +90,8 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	}
 
 	private void updateTexts()
-	{	
-		if(this.attackVisible)
+	{
+		if (this.attackVisible)
 		{
 			this.florinIncome.setText(this.lastCastle.getActor().florinIncome(this.lastCastle));
 			this.owner.setText(this.lastCastle.getActor().getName(this.lastCastle));
@@ -149,7 +147,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	@Override
 	public void relocateAllNodes()
 	{
-		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.1f;
+		final float margin = (float) Settings.MARGIN_PERCENTAGE + 0.1f;
 		int offset = 50;
 		final int i = 69;
 
@@ -216,9 +214,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	{
 		this.lastCastle = this.currentCastle;
 		this.attackVisible = attackVisible;
-		this.productionVisible = productionVisible;
-		
-		if(castleSwitch)
+		if (castleSwitch)
 		{
 			this.currentCastle = castle;
 		}

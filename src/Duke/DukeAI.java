@@ -1,20 +1,15 @@
 package Duke;
 
+import static Goal.GeneratorGoal.getNewGoal;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Kingdom;
-import DukesOfTheRealm.Main;
-import Goal.AttackGoal;
-
-import static Goal.GeneratorGoal.*;
 import SimpleGoal.Goal;
-import UI.UIManager;
 import Utility.Settings;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public class DukeAI extends Actor implements Serializable
 {
@@ -27,11 +22,11 @@ public class DukeAI extends Actor implements Serializable
 		super();
 		this.map = new HashMap<>();
 	}
-	
+
 	public void start(final Kingdom kingdom)
 	{
 		super.start();
-		
+
 		this.kingdom = kingdom;
 	}
 
@@ -53,19 +48,19 @@ public class DukeAI extends Actor implements Serializable
 			castle.updateProduction();
 			castle.updateOst(now, pause);
 		}
-		
-		if(time(now, pause))
+
+		if (time(now, pause))
 		{
 			it = this.castles.iterator();
-			
-			while(it.hasNext())
+
+			while (it.hasNext())
 			{
 				Castle castle = it.next();
-				//System.out.println(castle);
-				if(map.containsKey(castle))
+				// System.out.println(castle);
+				if (this.map.containsKey(castle))
 				{
-					Goal g = map.get(castle);
-					if(g == null || g.isGoalIsCompleted(castle))
+					Goal g = this.map.get(castle);
+					if (g == null || g.isGoalIsCompleted(castle))
 					{
 						putNewGoal(castle);
 					}
@@ -76,23 +71,23 @@ public class DukeAI extends Actor implements Serializable
 				}
 			}
 		}
-		this.addOrRemoveCastleList();
+		addOrRemoveCastleList();
 	}
-	
-	private void putNewGoal(Castle castle)
+
+	private void putNewGoal(final Castle castle)
 	{
-		map.put(castle, getNewGoal(castle));
-		//System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" + castle.getLevel() +"} " + map.get(castle));
+		this.map.put(castle, getNewGoal(castle));
+		// System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" +
+		// castle.getLevel() +"} " + map.get(castle));
 	}
-	
+
 	@Override
 	protected void switchCastle(final Castle castle)
 	{
 		super.switchCastle(castle);
-		//System.out.println(this.name + " -> " + map.get(castle) + "\n");
+		// System.out.println(this.name + " -> " + map.get(castle) + "\n");
 	}
 
-	
 	private boolean time(final long now, final boolean pause)
 	{
 		if (pause)
@@ -112,8 +107,7 @@ public class DukeAI extends Actor implements Serializable
 	 */
 	public final Kingdom getKingdom()
 	{
-		return kingdom;
+		return this.kingdom;
 	}
-	
-	
+
 }

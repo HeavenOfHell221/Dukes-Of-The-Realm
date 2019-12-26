@@ -20,6 +20,6 @@ public class SaveFlorinGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "SaveFlorinGoal [saveAmount= " + saveAmount + "]";
+		return "SaveFlorinGoal [saveAmount= " + this.saveAmount + "]";
 	}
 }

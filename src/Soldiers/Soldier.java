@@ -2,7 +2,6 @@ package Soldiers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
@@ -31,7 +30,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	public boolean isDead = false;
 	protected Point2D attackLocation = null;
 	protected boolean isWaitingForAttackLocation = false;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -73,13 +72,13 @@ public abstract class Soldier extends Sprite implements Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-
-	
 	public void update(final long now, final boolean pause)
-	{	
-		if(isDead)
+	{
+		if (this.isDead)
+		{
 			return;
-		
+		}
+
 		if (!this.isArrived)
 		{
 			Move(getSeparationPoint(), 1d);
@@ -104,14 +103,14 @@ public abstract class Soldier extends Sprite implements Serializable
 
 		if (this.isInPosition && !this.isWaitingForAttackLocation)
 		{
-			if(!this.itsOst.isBackup() || this.isStopAttack())
+			if (!this.itsOst.isBackup() || isStopAttack())
 			{
 				attack();
 			}
 			else
 			{
 				addInReserve(getDestination().getReserveOfSoldiers());
-				isDead = true;
+				this.isDead = true;
 			}
 		}
 	}
@@ -121,7 +120,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	/*************************************************/
 
 	protected abstract void addInReserve(ReserveOfSoldiers reserve);
-	
+
 	private final void SetAttackLocation()
 	{
 		if (getDestination().isAvailableAttackLocation())
@@ -139,15 +138,17 @@ public abstract class Soldier extends Sprite implements Serializable
 	 *
 	 * @param dst
 	 */
-	private void Move(final Point2D dst, double factorSpeed)
+	private void Move(final Point2D dst, final double factorSpeed)
 	{
-		if(this.isWaitingForAttackLocation)
+		if (this.isWaitingForAttackLocation)
+		{
 			return;
-		
+		}
+
 		isOutOfScreen();
 
-		final int directionX = getX() < dst.getX() ? 1 : (getX() == (int)dst.getX()) || (dst.delta(this.coordinate).getX() <= 0.5d) ? 0 : -1;
-		final int directionY = getY() < dst.getY() ? 1 : (getY() == (int)dst.getY()) || (dst.delta(this.coordinate).getY() <= 0.5d) ? 0 : -1;
+		final int directionX = getX() < dst.getX() ? 1 : getX() == (int) dst.getX() || dst.delta(this.coordinate).getX() <= 0.5d ? 0 : -1;
+		final int directionY = getY() < dst.getY() ? 1 : getY() == (int) dst.getY() || dst.delta(this.coordinate).getY() <= 0.5d ? 0 : -1;
 
 		double offsetX = this.stats.speed * Time.deltaTime * directionX * factorSpeed;
 		double offsetY = this.stats.speed * Time.deltaTime * directionY * factorSpeed;
@@ -159,7 +160,7 @@ public abstract class Soldier extends Sprite implements Serializable
 		// case Settings.X_COLLISION:
 		// offsetX = 0;
 		// System.out.println("off x bloque");
-		// alternateDirectionY = getY() < dst.getY() ? 1 : -1;	//blocage infini, � changer
+		// alternateDirectionY = getY() < dst.getY() ? 1 : -1; //blocage infini, � changer
 		// offsetY = this.stats.speed * Time.deltaTime * alternateDirectionY;
 		// break;
 		// case Settings.Y_COLLISION:
@@ -213,15 +214,15 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private void attack()
 	{
-		if(!isStopAttack())
+		if (!isStopAttack())
 		{
 			// Il va vouloir faire 1 point de damage
 			getDestination().randomRemoveHP();
-			
+
 			// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
 			if (!getDestination().isStopAttack())
 			{
-				this.isDead = (--this.stats.damage <= 0) ? true : false;
+				this.isDead = --this.stats.damage <= 0 ? true : false;
 			}
 			else
 			{
@@ -239,8 +240,6 @@ public abstract class Soldier extends Sprite implements Serializable
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-
-	
 	@Override
 	public abstract double getProductionTime();
 
@@ -325,6 +324,6 @@ public abstract class Soldier extends Sprite implements Serializable
 	@Override
 	public String toString()
 	{
-		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" /*+ this.canMove*/ + "]";
+		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" /* + this.canMove */ + "]";
 	}
 }

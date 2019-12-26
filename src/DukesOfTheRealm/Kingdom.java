@@ -12,7 +12,7 @@ import Duke.Player;
 import UI.UIManager;
 import Utility.Collisions;
 import Utility.Point2D;
-import Utility.Settings;
+import static Utility.Settings.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -39,17 +39,19 @@ public class Kingdom extends Parent implements Serializable
 	private ArrayList<Actor> actors;
 
 	/**
-	 * Liste des couleurs atribuable a chaque acteur.
+	 * Liste des couleurs atribuable à chaque acteur.
 	 */
 	private transient ArrayList<Color> colors;
 
 	/**
-	 * Reference a l'acteur "player" qui est l'utilisateur.
+	 * Référence au joueur.
+	 * @see Player
 	 */
 	private Player player;
 
 	/**
-	 * Canvas utilise pour afficher les images du jeu.
+	 * Pane principale du jeu.
+	 * @see Main#playfieldLayer
 	 */
 	private transient Pane playfieldLayer;
 
@@ -172,7 +174,7 @@ public class Kingdom extends Parent implements Serializable
 						t.setWrappingWidth(800);
 						t.setTextAlignment(TextAlignment.LEFT);
 						t.setFill(Color.BLACK);
-						t.relocate(Settings.SCENE_WIDTH/3, Settings.SCENE_HEIGHT/3);
+						t.relocate(SCENE_WIDTH/3, SCENE_HEIGHT/3);
 						this.canUpdate = false;
 					}
 						
@@ -189,7 +191,7 @@ public class Kingdom extends Parent implements Serializable
 				t.setWrappingWidth(800);
 				t.setTextAlignment(TextAlignment.LEFT);
 				t.setFill(Color.BLACK);
-				t.relocate(Settings.SCENE_WIDTH/2.5f, Settings.SCENE_HEIGHT/3);
+				t.relocate(SCENE_WIDTH/2.5f, SCENE_HEIGHT/3);
 				this.canUpdate = false;
 			}
 		}
@@ -202,12 +204,11 @@ public class Kingdom extends Parent implements Serializable
 	/**
 	 *
 	 */
-	@SuppressWarnings("unused")
 	public void createWorld()
 	{
 		Random rand = new Random();
 
-		for (int i = 0; i < Settings.AI_NUMBER; i++)
+		for (int i = 0; i < AI_NUMBER; i++)
 		{
 			Actor a = new DukeAI();
 			((DukeAI) a).start(this);
@@ -220,7 +221,7 @@ public class Kingdom extends Parent implements Serializable
 		/*if(Settings.BARON_NUMBER > 0)
 			colorBaron = randomColor(rand);*/
 
-		for (int i = 0; i < Settings.BARON_NUMBER; i++)
+		for (int i = 0; i < BARON_NUMBER; i++)
 		{
 			Actor a = new Baron();
 			a.start();
@@ -231,7 +232,7 @@ public class Kingdom extends Parent implements Serializable
 		
 		ArrayList<Castle> list = new ArrayList<>();
 
-		for (int i = 0; i < (Settings.AI_NUMBER + Settings.BARON_NUMBER + 1); i++)
+		for (int i = 0; i < (AI_NUMBER + BARON_NUMBER + 1); i++)
 		{
 
 			Point2D p = getRandomCoordinates(rand);
@@ -275,7 +276,7 @@ public class Kingdom extends Parent implements Serializable
 		{
 			final Castle currentCastle = it.next();
 			final double d = distanceBetween(currentCastle, coordinate);
-			if (d < Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE)
+			if (d < MIN_DISTANCE_BETWEEN_TWO_CASTLE)
 			{
 				return true;
 			}
@@ -303,8 +304,8 @@ public class Kingdom extends Parent implements Serializable
 	public Point2D getRandomCoordinates(final Random rand)
 	{
 		return new Point2D(
-				rand.nextInt((int) (Settings.SCENE_WIDTH * Settings.MARGIN_PERCENTAGE - 2 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE,
-				rand.nextInt(Settings.SCENE_HEIGHT - (4 * Settings.CASTLE_SIZE)) + Settings.CASTLE_SIZE);
+				rand.nextInt((int) (SCENE_WIDTH * MARGIN_PERCENTAGE - 2 * CASTLE_SIZE)) + CASTLE_SIZE,
+				rand.nextInt(SCENE_HEIGHT - (4 * CASTLE_SIZE)) + CASTLE_SIZE);
 	}
 	
 	public Actor getRandomActor(Actor actor)

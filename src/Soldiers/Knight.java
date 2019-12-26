@@ -43,7 +43,7 @@ public class Knight extends Soldier
 	}
 
 	@Override
-	protected void addInReserve(ReserveOfSoldiers reserve)
+	protected void addInReserve(final ReserveOfSoldiers reserve)
 	{
 		reserve.addKnight();
 	}

@@ -9,22 +9,19 @@ import SimpleGoal.Goal;
 public class BackupGoal extends Goal
 {
 	private final GenericGoal goals;
-	private final Castle origin;
 	private Castle destination;
 	private int nbPikers = -1;
 	private int nbKnights = -1;
 	private int nbOnagers = -1;
-	
-	public BackupGoal(Castle origin, int nbPikers, int nbKnights, int nbOnagers)
+
+	public BackupGoal(final Castle origin, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
-		goals = new GenericGoal();
-		this.origin = origin;
-		
+		this.goals = new GenericGoal();
 		Random rand = new Random();
 		ArrayList<Castle> list = new ArrayList<>();
 		list.addAll(origin.getActor().getCastles());
 		list.remove(origin);
-		if(!list.isEmpty())
+		if (!list.isEmpty())
 		{
 			this.nbPikers = nbPikers;
 			this.nbOnagers = nbOnagers;
@@ -32,20 +29,20 @@ public class BackupGoal extends Goal
 			this.destination = list.get(rand.nextInt(list.size()));
 			AttackGoal g = new AttackGoal(origin, nbPikers, nbKnights, nbOnagers);
 			g.setGoal(this.destination);
-			goals.addLast(g);
-			goals.addLast(new SaveSoldierGoal(origin, nbPikers, nbKnights, 0));
+			this.goals.addLast(g);
+			this.goals.addLast(new SaveSoldierGoal(origin, nbPikers, nbKnights, 0));
 		}
 	}
-	
+
 	@Override
-	public boolean goal(Castle castle)
+	public boolean goal(final Castle castle)
 	{
-		return goals.goal(castle);
+		return this.goals.goal(castle);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "BackupGoal [nbPikers= " + nbPikers + ", nbKnights= " + nbKnights + ", nbOnagers= " + nbOnagers + "]";
+		return "BackupGoal [nbPikers= " + this.nbPikers + ", nbKnights= " + this.nbKnights + ", nbOnagers= " + this.nbOnagers + "]";
 	}
 }

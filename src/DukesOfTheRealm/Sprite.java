@@ -1,13 +1,32 @@
 package DukesOfTheRealm;
 
+import static Utility.Settings.CASTLE_SHADOW_COLOR;
+import static Utility.Settings.CASTLE_SHADOW_OFFSET;
+import static Utility.Settings.CASTLE_SHADOW_RADIUS;
+import static Utility.Settings.CASTLE_SHADOW_SIZE;
+import static Utility.Settings.CASTLE_SIZE;
+import static Utility.Settings.CASTLE_STROKE_COLOR;
+import static Utility.Settings.CASTLE_STROKE_THICKNESS;
+import static Utility.Settings.CASTLE_STROKE_TYPE;
+import static Utility.Settings.DOOR_HEIGHT;
+import static Utility.Settings.DOOR_POSITION;
+import static Utility.Settings.DOOR_WIDTH;
+import static Utility.Settings.KNIGHT_REPRESENTATION_SIZE;
+import static Utility.Settings.ONAGER_REPRESENTATION_SIZE;
+import static Utility.Settings.PIKER_REPRESENTATION_RADIUS;
+import static Utility.Settings.SOLDIER_SHADOW_COLOR;
+import static Utility.Settings.SOLDIER_SHADOW_OFFSET;
+import static Utility.Settings.SOLDIER_SHADOW_RADIUS;
+import static Utility.Settings.SOLDIER_SHADOW_SIZE;
+import static Utility.Settings.SOLDIER_STROKE_COLOR;
+import static Utility.Settings.SOLDIER_STROKE_THICKNESS;
+import static Utility.Settings.SOLDIER_STROKE_TYPE;
+
 import java.io.Serializable;
 
 import DukesOfTheRealm.Castle.Orientation;
 import Interface.IProductionUnit;
 import Utility.Point2D;
-import Utility.Settings;
-
-import static Utility.Settings.*;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
@@ -113,8 +132,9 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 		this.width = CASTLE_SIZE;
 		this.height = CASTLE_SIZE;
-		
-		addShadow(r, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_RADIUS, CASTLE_SHADOW_COLOR);
+
+		addShadow(r, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_RADIUS,
+				CASTLE_SHADOW_COLOR);
 		addStroke(r, CASTLE_STROKE_THICKNESS, CASTLE_STROKE_TYPE, CASTLE_STROKE_COLOR);
 	}
 
@@ -122,7 +142,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 *
 	 * @param pane
 	 */
-	protected Rectangle addDoorRepresentation(final Pane pane, Orientation orientation)
+	protected Rectangle addDoorRepresentation(final Pane pane, final Orientation orientation)
 	{
 		Rectangle door;
 		switch (orientation)
@@ -161,9 +181,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		this.height = 2 * r;
 		updateUIShape();
 		addStroke(c, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
-		addShadow(c, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
+		addShadow(c, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
 	}
-	
+
 	/**
 	 *
 	 */
@@ -171,18 +192,16 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	{
 		final double s = KNIGHT_REPRESENTATION_SIZE;
 		Polygon t = new Polygon();
-		t.getPoints().addAll(
-				(double) (getX() + s/2), (double) getY(),
-				(double) getX(), (double) (getY() + s),
-				(double) (getX() + s), (double) (getY() + s) );
-		
+		t.getPoints().addAll(getX() + s / 2, (double) getY(), (double) getX(), getY() + s, getX() + s, getY() + s);
+
 		t.setMouseTransparent(true);
 		this.shape = t;
 		this.width = s;
 		this.height = s;
 		updateUIShape();
 		addStroke(t, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
-		addShadow(t, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
+		addShadow(t, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
 	}
 
 	/**
@@ -198,11 +217,12 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		this.height = s;
 		updateUIShape();
 		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
-		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS, SOLDIER_SHADOW_COLOR);
+		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param shape
 	 * @param width
 	 * @param height
@@ -211,7 +231,9 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 * @param radius
 	 * @param color
 	 */
-	private final void addShadow(Shape shape, int width, int height, int offsetX, int offsetY, int radius, Color color) {
+	private final void addShadow(final Shape shape, final int width, final int height, final int offsetX, final int offsetY,
+			final int radius, final Color color)
+	{
 		final DropShadow e = new DropShadow();
 		e.setWidth(width);
 		e.setHeight(height);
@@ -221,15 +243,16 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		e.setColor(color);
 		shape.setEffect(e);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param shape
 	 * @param thickness
 	 * @param strokeType
 	 * @param color
 	 */
-	private final void addStroke(Shape shape, double thickness, StrokeType strokeType, Color color) {
+	private final void addStroke(final Shape shape, final double thickness, final StrokeType strokeType, final Color color)
+	{
 		shape.setStrokeWidth(thickness);
 		shape.setStrokeType(strokeType);
 		shape.setStroke(color);
@@ -292,7 +315,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	public final Point2D getCastleCenter()
 	{
-		return new Point2D(getX() + (((CASTLE_SIZE - 1) / 2) + 1), getY() + (((CASTLE_SIZE - 1) / 2) + 1));
+		return new Point2D(getX() + (CASTLE_SIZE - 1) / 2 + 1, getY() + (CASTLE_SIZE - 1) / 2 + 1);
 	}
 
 	/**

@@ -2,7 +2,6 @@ package UI;
 
 import java.io.Serializable;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
@@ -77,7 +76,7 @@ public class UIManager extends Parent implements IUI, Serializable
 
 	public void update(final long now, final boolean pause)
 	{
-		if(this.currentCastle != null && this.currentCastle.getActor() != null)
+		if (this.currentCastle != null && this.currentCastle.getActor() != null)
 		{
 			this.productionUnitPreview.update(now, pause);
 			this.attackPreview.update(now, pause);
@@ -139,12 +138,12 @@ public class UIManager extends Parent implements IUI, Serializable
 	{
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
-		
+
 		this.attackVisible = false;
 		this.productionVisible = false;
 		this.castleSwitch = false;
 
-		if(this.lastCastle == null)
+		if (this.lastCastle == null)
 		{
 			this.productionVisible = true;
 		}

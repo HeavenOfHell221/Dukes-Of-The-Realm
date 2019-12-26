@@ -13,80 +13,78 @@ public class MultiSoldierGoal extends Goal
 	private final int nbPikers;
 	private final int nbKnights;
 	private final int nbOnagers;
-	
-	public MultiSoldierGoal(Castle castle, int nbPikers, int nbKnights, int nbOnagers)
+
+	public MultiSoldierGoal(final Castle castle, int nbPikers, int nbKnights, int nbOnagers)
 	{
 		this.goals = new GenericGoal();
 		Random rand = new Random();
-		
-		
-		if(castle.getNbPikersInProduction() + nbPikers > 150)
+
+		if (castle.getNbPikersInProduction() + nbPikers > 150)
 		{
-			nbPikers -= ((castle.getNbPikersInProduction() + nbPikers) - 150);
+			nbPikers -= castle.getNbPikersInProduction() + nbPikers - 150;
 		}
-		
-		if(castle.getNbKnightsInProduction() + nbKnights > 100)
+
+		if (castle.getNbKnightsInProduction() + nbKnights > 100)
 		{
-			nbKnights -= ((castle.getNbKnightsInProduction() + nbKnights) - 100);
+			nbKnights -= castle.getNbKnightsInProduction() + nbKnights - 100;
 		}
-		
-		if(castle.getNbOnagersInProduction() + nbOnagers > 60)
+
+		if (castle.getNbOnagersInProduction() + nbOnagers > 60)
 		{
-			nbOnagers -= ((castle.getNbOnagersInProduction() + nbOnagers) - 60);
+			nbOnagers -= castle.getNbOnagersInProduction() + nbOnagers - 60;
 		}
-		
+
 		this.nbPikers = nbPikers;
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
-		
+
 		int count = nbPikers + nbKnights + nbOnagers;
-		
-		while(count > 0)
+
+		while (count > 0)
 		{
-			switch(rand.nextInt(3))
+			switch (rand.nextInt(3))
 			{
-				case 0: 
-					if(nbPikers > 0) 
+				case 0:
+					if (nbPikers > 0)
 					{
-						goals.addLast(new SoldierGoal(SoldierEnum.Piker)); 
+						this.goals.addLast(new SoldierGoal(SoldierEnum.Piker));
 						nbPikers--;
-					} 
+					}
 					break;
-					
-				case 1: 
-					if(nbKnights > 0) 
+
+				case 1:
+					if (nbKnights > 0)
 					{
-						goals.addLast(new SoldierGoal(SoldierEnum.Knight)); 
+						this.goals.addLast(new SoldierGoal(SoldierEnum.Knight));
 						nbKnights--;
-					} 
+					}
 					break;
-					
-				case 2: 
-					if(nbOnagers > 0) 
+
+				case 2:
+					if (nbOnagers > 0)
 					{
-						goals.addLast(new SoldierGoal(SoldierEnum.Onager)); 
+						this.goals.addLast(new SoldierGoal(SoldierEnum.Onager));
 						nbOnagers--;
-					} 
+					}
 					break;
-					
-				default: break;
+
+				default:
+					break;
 			}
 			count = nbPikers + nbKnights + nbOnagers;
-		}	
+		}
 	}
 
 	@Override
-	public boolean goal(Castle castle)
+	public boolean goal(final Castle castle)
 	{
-		return goals.goal(castle);
+		return this.goals.goal(castle);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "MultiSoldierGoal [nbPikers= " + nbPikers + ", nbKnights= " + nbKnights + ", nbOnagers= " + nbOnagers
-				+ "]";
+		return "MultiSoldierGoal [nbPikers= " + this.nbPikers + ", nbKnights= " + this.nbKnights + ", nbOnagers= " + this.nbOnagers + "]";
 	}
-	
-	
+
 }

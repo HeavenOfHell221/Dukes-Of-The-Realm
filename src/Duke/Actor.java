@@ -1,6 +1,5 @@
 package Duke;
 
-import static Utility.Settings.FLORIN_FACTOR_BARON;
 import static Utility.Settings.FLORIN_PER_SECOND;
 
 import java.io.Serializable;
@@ -33,7 +32,6 @@ public class Actor implements Serializable, IUpdate
 	public ArrayDeque<Castle> castlesWaitForAdding;
 	public ArrayDeque<Castle> castlesWaitForDelete;
 	public boolean isDead = false;
-	
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -73,7 +71,7 @@ public class Actor implements Serializable, IUpdate
 	public void update(final long now, final boolean pause)
 	{
 		Iterator<Castle> it = this.castles.iterator();
-		//System.out.println(this.name + " -> " + this.castles.size());
+		// System.out.println(this.name + " -> " + this.castles.size());
 		while (it.hasNext())
 		{
 			Castle castle = it.next();
@@ -81,30 +79,34 @@ public class Actor implements Serializable, IUpdate
 			castle.updateProduction();
 			castle.updateOst(now, pause);
 		}
-		this.addOrRemoveCastleList();
+		addOrRemoveCastleList();
 	}
-	
+
 	protected void addOrRemoveCastleList()
 	{
 		if (this.castlesWaitForAdding.size() > 0)
 		{
-			//System.out.println("ADD | " + this.name + " | size before : " + this.castles.size() + " | size list AD: " + this.castlesWaitForAdding.size());
+			// System.out.println("ADD | " + this.name + " | size before : " + this.castles.size() + " | size
+			// list AD: " + this.castlesWaitForAdding.size());
 			this.castles.addAll(this.castlesWaitForAdding);
-			//System.out.println("ADD | " + this.name + " | size after : " + this.castles.size());
+			// System.out.println("ADD | " + this.name + " | size after : " + this.castles.size());
 			this.castlesWaitForAdding.forEach(c -> addEvent(c));
 			this.castlesWaitForAdding.clear();
 		}
-		
-		if(this.castlesWaitForDelete.size() > 0)
+
+		if (this.castlesWaitForDelete.size() > 0)
 		{
-			//System.out.println("DELETE | " + this.name + " | size before : " + this.castles.size() + " | size list DEL: " + this.castlesWaitForDelete.size());
+			// System.out.println("DELETE | " + this.name + " | size before : " + this.castles.size() + " | size
+			// list DEL: " + this.castlesWaitForDelete.size());
 			this.castles.removeAll(this.castlesWaitForDelete);
-			//System.out.println("DELETE | " + this.name + " | size after : " + this.castles.size() + "\n");
+			// System.out.println("DELETE | " + this.name + " | size after : " + this.castles.size() + "\n");
 			this.castlesWaitForDelete.clear();
 		}
-		
-		if(this.castles.size() <= 0)
+
+		if (this.castles.size() <= 0)
+		{
 			this.isDead = true;
+		}
 	}
 
 	protected void updateFlorin(final Castle castle)
@@ -134,7 +136,7 @@ public class Actor implements Serializable, IUpdate
 	{
 		if (this.castles.contains(castle))
 		{
-			String tmp = String.format("%.1f", (float)(FLORIN_PER_SECOND * castle.getLevel()));
+			String tmp = String.format("%.1f", (float) (FLORIN_PER_SECOND * castle.getLevel()));
 			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";

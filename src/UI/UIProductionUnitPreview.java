@@ -1,8 +1,14 @@
 package UI;
 
+import static Utility.Settings.KNIGHT_COST;
+import static Utility.Settings.LEVEL_UP_COST_FACTOR;
+import static Utility.Settings.MARGIN_PERCENTAGE;
+import static Utility.Settings.ONAGER_COST;
+import static Utility.Settings.PIKER_COST;
+import static Utility.Settings.SCENE_WIDTH;
+
 import java.io.Serializable;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import Interface.IProductionUnit;
 import Interface.IUI;
@@ -10,7 +16,6 @@ import Interface.IUpdate;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
-import static Utility.Settings.*;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -41,7 +46,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	private final Button buttonCreateKnight;
 	private final Button buttonCreateOnager;
 	private final Button buttonUpgradeCastle;
-	
+
 	private final Button removeLastProduction;
 	private final Button removeAllProduction;
 
@@ -51,11 +56,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	private final Rectangle fillTime;
 
 	private Castle currentCastle;
-	
+
 	private Text pikerCost;
 	private Text onagerCost;
 	private Text knightCost;
-	
+
 	private Text castleCost;
 
 	/*************************************************/
@@ -112,7 +117,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 	{
 		getChildren().add(node);
 	}
-	
+
 	public void removeNode(final Node node)
 	{
 		getChildren().remove(node);
@@ -169,7 +174,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 
 	private void setAllButtons()
 	{
-		this.buttonCreateKnight.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/mounted-knight2.png'); "
+		this.buttonCreateKnight
+				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/mounted-knight2.png'); "
 						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
 		this.buttonCreatePiker.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/spartan2.png'); "
@@ -178,24 +184,27 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.buttonCreateOnager.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/catapult2.png'); "
 				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
-		this.buttonUpgradeCastle.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/egyptian-temple-b.png'); "
+		this.buttonUpgradeCastle
+				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/egyptian-temple-b.png'); "
 						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
 		this.removeAllProduction.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/cancel.png'); "
-						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-		
-		this.removeLastProduction.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/anticlockwise-rotation.png'); "
 				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-				
+
+		this.removeLastProduction
+				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/anticlockwise-rotation.png'); "
+						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
+
 		this.buttonCreateOnager.setOnMousePressed(event -> addProduction(this.buttonCreateOnager, new Onager()));
 		this.buttonCreatePiker.setOnMousePressed(event -> addProduction(this.buttonCreatePiker, new Piker()));
 		this.buttonCreateKnight.setOnMousePressed(event -> addProduction(this.buttonCreateKnight, new Knight()));
-		
-		this.buttonUpgradeCastle.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
-		
+
+		this.buttonUpgradeCastle
+				.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
+
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
 		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.removeLastProduction(true));
-		
+
 		this.buttonCreatePiker.setOnMouseEntered(event ->
 		{
 			Text t = new Text();
@@ -212,7 +221,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 			t.setMouseTransparent(true);
 			addNode(t);
 		});
-		
+
 		this.buttonCreateKnight.setOnMouseEntered(event ->
 		{
 			Text t = new Text();
@@ -229,7 +238,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 			t.setMouseTransparent(true);
 			addNode(t);
 		});
-		
+
 		this.buttonCreateOnager.setOnMouseEntered(event ->
 		{
 			Text t = new Text();
@@ -246,7 +255,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 			t.setMouseTransparent(true);
 			addNode(t);
 		});
-		
+
 		this.buttonUpgradeCastle.setOnMouseEntered(event ->
 		{
 			Text t = new Text();
@@ -263,8 +272,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 			t.setMouseTransparent(true);
 			addNode(t);
 		});
-		
-		this.buttonCreateKnight.setOnMouseExited(event ->removeNode(this.knightCost));
+
+		this.buttonCreateKnight.setOnMouseExited(event -> removeNode(this.knightCost));
 		this.buttonCreatePiker.setOnMouseExited(event -> removeNode(this.pikerCost));
 		this.buttonCreateOnager.setOnMouseExited(event -> removeNode(this.onagerCost));
 		this.buttonUpgradeCastle.setOnMouseExited(event -> removeNode(this.castleCost));
@@ -323,8 +332,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 			setButtonShadow(b);
 		});
 	}
-	
-	private void setButtonShadow(Button b)
+
+	private void setButtonShadow(final Button b)
 	{
 		final Bloom bloom = new Bloom();
 		bloom.setThreshold(1);
@@ -352,12 +361,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		final int i = 90;
 		final int offset = 540;
 
-		final float margin = (float) (MARGIN_PERCENTAGE) + 0.076f;
+		final float margin = (float) MARGIN_PERCENTAGE + 0.076f;
 
 		relocate(this.buttonCreatePiker, SCENE_WIDTH * margin + i * 0, offset);
 		relocate(this.buttonCreateKnight, SCENE_WIDTH * margin + i * 1, offset);
 		relocate(this.buttonCreateOnager, SCENE_WIDTH * margin + i * 2, offset);
-		
+
 		relocate(this.removeAllProduction, SCENE_WIDTH * margin + i * 2 - i * 0.5f, offset + i * 3);
 		relocate(this.removeLastProduction, SCENE_WIDTH * margin + i * 1 - i * 0.5f, offset + i * 3);
 

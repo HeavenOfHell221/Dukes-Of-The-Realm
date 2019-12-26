@@ -2,7 +2,6 @@ package UI;
 
 import java.io.Serializable;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
@@ -252,7 +251,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 			reset();
 		});
 	}
-	
+
 	private void reset()
 	{
 		this.nbKnight = 0;
@@ -307,7 +306,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		final int i = 69;
 		final int offset = 540;
 
-		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.052f;
+		final float margin = (float) Settings.MARGIN_PERCENTAGE + 0.052f;
 
 		relocate(this.imagePiker, Settings.SCENE_WIDTH * margin + 20, 20 + offset + i * 0);
 		relocate(this.imageKnight, Settings.SCENE_WIDTH * margin + 20, 20 + offset + i * 1);

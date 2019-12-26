@@ -50,14 +50,14 @@ public class Collisions
 
 	private static boolean XCollision(final Point2D castleCoordinates, final double coordinate)
 	{
-		return (coordinate + SOLDIER_SIZE > (castleCoordinates.getX() - GAP_WITH_SOLDIER)
-				&& coordinate < (castleCoordinates.getX() + CASTLE_SIZE + GAP_WITH_SOLDIER));
+		return coordinate + SOLDIER_SIZE > castleCoordinates.getX() - GAP_WITH_SOLDIER
+				&& coordinate < castleCoordinates.getX() + CASTLE_SIZE + GAP_WITH_SOLDIER;
 	}
 
 	private static boolean YCollision(final Point2D castleCoordinates, final double coordinate)
 	{
-		return (coordinate + SOLDIER_SIZE > (castleCoordinates.getY() - GAP_WITH_SOLDIER)
-				&& coordinate < (castleCoordinates.getY() + CASTLE_SIZE + GAP_WITH_SOLDIER));
+		return coordinate + SOLDIER_SIZE > castleCoordinates.getY() - GAP_WITH_SOLDIER
+				&& coordinate < castleCoordinates.getY() + CASTLE_SIZE + GAP_WITH_SOLDIER;
 	}
 
 	/**

@@ -1,10 +1,14 @@
 package Duke;
 
+import static Utility.Settings.FLORIN_FACTOR_BARON;
+import static Utility.Settings.FLORIN_PER_SECOND;
+import static Utility.Settings.OFFSET_LEVEL_CASTLE_BARON;
+import static Utility.Settings.RANDOM_LEVEL_CASTLE_BARON;
+
 import java.io.Serializable;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
-import static Utility.Settings.*;
 import Utility.Time;
 
 public class Baron extends Actor implements Serializable
@@ -19,7 +23,7 @@ public class Baron extends Actor implements Serializable
 	{
 		if (this.castles.contains(castle))
 		{
-			String tmp = String.format("%.1f", (float)(FLORIN_PER_SECOND * castle.getLevel() * FLORIN_FACTOR_BARON));
+			String tmp = String.format("%.1f", FLORIN_PER_SECOND * castle.getLevel() * FLORIN_FACTOR_BARON);
 			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";
