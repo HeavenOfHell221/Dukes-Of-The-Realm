@@ -1,10 +1,18 @@
 package DukesOfTheRealm;
 
+import static Utility.Settings.AI_NUMBER;
+import static Utility.Settings.BARON_NUMBER;
+import static Utility.Settings.CASTLE_SIZE;
+import static Utility.Settings.MARGIN_PERCENTAGE;
+import static Utility.Settings.MIN_DISTANCE_BETWEEN_TWO_CASTLE;
+import static Utility.Settings.SCENE_HEIGHT;
+import static Utility.Settings.SCENE_WIDTH;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
+import Utility.Settings;
 import Duke.Actor;
 import Duke.Baron;
 import Duke.DukeAI;
@@ -12,7 +20,6 @@ import Duke.Player;
 import UI.UIManager;
 import Utility.Collisions;
 import Utility.Point2D;
-import static Utility.Settings.*;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,8 +28,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
- * Classe representant le royaume. 
- * C'est la classe centrale du projet.
+ * Représente le royaume. Contient tout les acteurs du royaume.
  */
 public class Kingdom extends Parent implements Serializable
 {
@@ -33,7 +39,8 @@ public class Kingdom extends Parent implements Serializable
 
 	/**
 	 * Liste des acteurs (joueur, IA et baron) du royaume.
-	 * @see Kingdom#update(final long now, final boolean pause)
+	 * 
+	 * @see Kingdom#update(long now, boolean pause)
 	 * @See Actor
 	 */
 	private ArrayList<Actor> actors;
@@ -45,19 +52,22 @@ public class Kingdom extends Parent implements Serializable
 
 	/**
 	 * Référence au joueur.
+	 * 
 	 * @see Player
 	 */
 	private Player player;
 
 	/**
 	 * Pane principale du jeu.
+	 * 
 	 * @see Main#playfieldLayer
 	 */
 	private transient Pane playfieldLayer;
 
 	/**
-	 * Condition pour que le royaume utilise Update.
-	 *
+	 * Condition pour que le royaume se mette à jour.
+	 * 
+	 * @see Kingdom#update(long, boolean)
 	 */
 	private transient boolean canUpdate = false;
 
@@ -68,7 +78,7 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 * Constructeur par defaut de Kingdom.
+	 * Constructeur par défaut Kingdom.
 	 */
 	public Kingdom()
 	{
@@ -80,8 +90,9 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 	/**
 	 * Initialise le kingdom.
+	 * 
 	 * @param Le pane principal.
-	 * @see Main#newGame()
+	 * @see      Main#newGame()
 	 */
 	public void start(final Pane pane)
 	{
@@ -93,9 +104,10 @@ public class Kingdom extends Parent implements Serializable
 
 	/**
 	 * Initialise les composents transient du jeu.
+	 * 
 	 * @param Le pane principal.
-	 * @see Main#loadGame()
-	 * @see Kingdom#start(Pane)
+	 * @see      Main#loadGame()
+	 * @see      Kingdom#start(Pane)
 	 */
 	public void startTransient(final Pane pane)
 	{
@@ -121,10 +133,20 @@ public class Kingdom extends Parent implements Serializable
 		else
 		{
 			Random rand = new Random();
-			this.actors.stream().filter(actor -> actor.getClass() != Baron.class).forEach(actor -> actor.startTransient(randomColor(rand), pane));
-			//Color c = randomColor(rand);
-			this.actors.stream().filter(actor -> actor.getClass() == Baron.class).forEach(actor -> actor.startTransient(Color.DARKGREY, pane));
+			
+			// Donne une couleur aléatoire au Duke et lance le startTransient
+			this.actors.stream().filter(actor -> actor.getClass() == DukeAI.class)
+					.forEach(actor -> actor.startTransient(randomColor(rand), pane));
 
+			// Donne la même couleur à tout les Baron et lance le startTransient
+			this.actors.stream().filter(actor -> actor.getClass() == Baron.class)
+					.forEach(actor -> actor.startTransient(Color.DARKGREY, pane));
+			
+			// Donne la couleur LIMEGREEN au joueur et lance le startTransient
+			this.actors.stream().filter(actor -> actor.isPlayer()).limit(1)
+					.forEach(actor -> actor.startTransient(Color.LIMEGREEN, pane));
+
+			// Start la fonction startTransient de tout les châteaux
 			this.actors.forEach(actor ->
 			{
 				actor.getCastles().forEach(castle ->
@@ -139,6 +161,7 @@ public class Kingdom extends Parent implements Serializable
 
 			this.canUpdate = true;
 		}
+		
 	}
 
 	/*************************************************/
@@ -146,9 +169,16 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 *
-	 * @param now
-	 * @param pause
+	 * Fonction appelé à chaque image.
+	 * <p>
+	 * Elle permet de mettre à jour tout le jeu. On met à jour les acteurs qui eux même mettent à jour
+	 * leurs chateaux, qui eux même mettent à jour leur ost, <br>
+	 * qui eux même mettent à jour leur unités sur le terrain...
+	 * </p>
+	 * 
+	 * @param now   Le temps actuel.
+	 * @param pause Est à true si la pause est activé, false sinon.
+	 * @see         Main#update(long, boolean)
 	 */
 	public void update(final long now, final boolean pause)
 	{
@@ -165,7 +195,7 @@ public class Kingdom extends Parent implements Serializable
 				}
 				else
 				{
-					if(actor.isPlayer())
+					if (actor.isPlayer())
 					{
 						Text t = new Text();
 						this.playfieldLayer.getChildren().add(t);
@@ -174,15 +204,16 @@ public class Kingdom extends Parent implements Serializable
 						t.setWrappingWidth(800);
 						t.setTextAlignment(TextAlignment.LEFT);
 						t.setFill(Color.BLACK);
-						t.relocate(SCENE_WIDTH/3, SCENE_HEIGHT/3);
+						t.relocate(SCENE_WIDTH / 3, SCENE_HEIGHT / 3);
 						this.canUpdate = false;
 					}
-						
+
+					// Dans tout les cas on retire l'acteur de la liste
 					it.remove();
 				}
 			}
-			
-			if(this.actors.size() == 1 && this.actors.get(0).isPlayer())
+
+			if (this.actors.size() == 1 && this.actors.get(0).isPlayer())
 			{
 				Text t = new Text();
 				this.playfieldLayer.getChildren().add(t);
@@ -191,7 +222,7 @@ public class Kingdom extends Parent implements Serializable
 				t.setWrappingWidth(800);
 				t.setTextAlignment(TextAlignment.LEFT);
 				t.setFill(Color.BLACK);
-				t.relocate(SCENE_WIDTH/2.5f, SCENE_HEIGHT/3);
+				t.relocate(SCENE_WIDTH / 2.5f, SCENE_HEIGHT / 3);
 				this.canUpdate = false;
 			}
 		}
@@ -202,12 +233,26 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 *
+	 * Fonction créant les acteurs et les châteaux lors d'un nouveau jeu.
+	 * <p>
+	 * Elle va créer les IA et les Baron puis le nombre de château suffisant pour que chaque acteur ait
+	 * un château au début (joueur compris). <br>
+	 * A la création d'un château, elle teste la distance avec les autres pour respecter la distance
+	 * minimale entre 2 châteaux. <br>
+	 * Elle affecte également une couleur à chaque IA et une couleur commue à tout les Baron.
+	 * </p>
+	 * 
+	 * @see Kingdom#start(Pane)
+	 * @see Kingdom#randomColor(Random)
+	 * @see Settings#AI_NUMBER
+	 * @see Settings#BARON_NUMBER
+	 * @see Settings#MIN_DISTANCE_BETWEEN_TWO_CASTLE
 	 */
 	public void createWorld()
 	{
 		Random rand = new Random();
 
+		// Création des IA
 		for (int i = 0; i < AI_NUMBER; i++)
 		{
 			Actor a = new DukeAI();
@@ -218,9 +263,8 @@ public class Kingdom extends Parent implements Serializable
 		}
 
 		Color colorBaron = Color.DARKGRAY;
-		/*if(Settings.BARON_NUMBER > 0)
-			colorBaron = randomColor(rand);*/
 
+		// Création des Baron
 		for (int i = 0; i < BARON_NUMBER; i++)
 		{
 			Actor a = new Baron();
@@ -229,32 +273,41 @@ public class Kingdom extends Parent implements Serializable
 			this.actors.add(a);
 			a.setColor(colorBaron);
 		}
-		
-		ArrayList<Castle> list = new ArrayList<>();
 
-		for (int i = 0; i < (AI_NUMBER + BARON_NUMBER + 1); i++)
+		final ArrayList<Castle> listCastle = new ArrayList<>();
+		final int iterationMax = 10000;
+
+		// Création des châteaux
+		for (int i = 0; i < AI_NUMBER + BARON_NUMBER + 1; i++)
 		{
-
-			Point2D p = getRandomCoordinates(rand);
-
-			while (isCastleToClose(list, p) == true)
+			Point2D p = getRandomCoordinates(rand);		
+			int k = 0;
+			
+			while (isCastleToClose(listCastle, p) == true && k < iterationMax)
 			{
 				p = getRandomCoordinates(rand);
+				k++;
 			}
 
-			Castle c = new Castle();
-			list.add(c);
-			c.setColor(this.actors.get(i).getColor());
-			c.start(1, this.playfieldLayer, p, this.actors.get(i));
-			this.actors.get(i).addFirstCastle(c);
-			Collisions.addPoint(c.getCoordinate());
+			if(k < iterationMax)
+			{
+				Castle castle = new Castle();
+				listCastle.add(castle);
+				castle.setColor(this.actors.get(i).getColor());
+				castle.start(1, this.playfieldLayer, p, this.actors.get(i));
+				this.actors.get(i).addFirstCastle(castle);
+				Collisions.addPoint(castle.getCoordinate());
+			}
 		}
 	}
 
 	/**
-	 *
-	 * @param  rand
-	 * @return
+	 * Récupère une couleur au hasard et la renvoie.
+	 * 
+	 * @param  rand Un objet de type Random.
+	 * @return      Une couleur de la list colors.
+	 * @see         Kingdom#createWorld()
+	 * @see         Kingdom#colors
 	 */
 	private Color randomColor(final Random rand)
 	{
@@ -264,19 +317,20 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 *
-	 * @param  castles
-	 * @param  coordinate
-	 * @return
+	 * Teste s'il existe un château trop proche des coordonnées donnés en paramètre.
+	 * @param  castles Liste des châteaux déjà crées.
+	 * @param  coordinate Les coordonnées du potentiel futur château.
+	 * @return Retourne true si la distance est respecté, false sinon.
+	 * @see Kingdom#createWorld()
+	 * @see Kingdom#distanceBetween(Point2D, Point2D)
+	 * @see Settings#MIN_DISTANCE_BETWEEN_TWO_CASTLE
 	 */
 	private boolean isCastleToClose(final ArrayList<Castle> castles, final Point2D coordinate)
 	{
 		final Iterator<Castle> it = castles.iterator();
 		while (it.hasNext())
 		{
-			final Castle currentCastle = it.next();
-			final double d = distanceBetween(currentCastle, coordinate);
-			if (d < MIN_DISTANCE_BETWEEN_TWO_CASTLE)
+			if (distanceBetween(it.next().getCoordinate(), coordinate) < MIN_DISTANCE_BETWEEN_TWO_CASTLE)
 			{
 				return true;
 			}
@@ -285,43 +339,53 @@ public class Kingdom extends Parent implements Serializable
 	}
 
 	/**
-	 *
-	 * @param  castle
-	 * @param  coord
-	 * @return
+	 * Calcul le distance entre deux points (les coordonnées d'un château et les coordonnées du château qu'on voudrait créer). 
+	 * @param  castleCoord Les coordonnées du château courant.
+	 * @param  coord Les coordonnées du châtau qu'on voudrait créer.
+	 * @return Retourne la distance entre les deux points.
+	 * @see Kingdom#isCastleToClose(ArrayList, Point2D)
 	 */
-	private double distanceBetween(final Castle castle, final Point2D coord)
+	private double distanceBetween(final Point2D castleCoord, final Point2D coord)
 	{
-		return Math.sqrt((coord.getY() - castle.getY()) * (coord.getY() - castle.getY())
-				+ (coord.getX() - castle.getX()) * (coord.getX() - castle.getX()));
+		final double deltaY = coord.getY() - castleCoord.getY();
+		final double deltaX = coord.getX() - castleCoord.getX();
+		return Math.sqrt(deltaY * deltaY + deltaX * deltaX);
 	}
 
 	/**
-	 *
-	 * @param  rand
-	 * @return
+	 * Renvoie des coordonnées aléatoires pour positionner un château.
+	 * @param  rand Un objet de type Random pour l'aléatoire.
+	 * @return Retourne des coordonnées.
+	 * @see Kingdom#createWorld()
 	 */
 	public Point2D getRandomCoordinates(final Random rand)
 	{
-		return new Point2D(
-				rand.nextInt((int) (SCENE_WIDTH * MARGIN_PERCENTAGE - 2 * CASTLE_SIZE)) + CASTLE_SIZE,
-				rand.nextInt(SCENE_HEIGHT - (4 * CASTLE_SIZE)) + CASTLE_SIZE);
+		final int x = rand.nextInt((int)((SCENE_WIDTH / CASTLE_SIZE) * MARGIN_PERCENTAGE) - 1) * CASTLE_SIZE;
+		final int y = rand.nextInt((SCENE_HEIGHT / CASTLE_SIZE) - 2) * CASTLE_SIZE;
+		return new Point2D(x + CASTLE_SIZE, y + CASTLE_SIZE);
 	}
-	
-	public Actor getRandomActor(Actor actor)
+
+	/**
+	 * Renvoie un acteur aléatoire du royaume en ne prenant pas en compte l'acteur qui utilise cette fonction.
+	 * @param actor L'acteur qui serra retiré de la liste
+	 * @return Retourne un acteur du royaume ou null si la liste ne contient que l'acteur appelelant cette fonction.
+	 * @see Goal.GeneratorGoal#getNewGoalBattle(Castle)
+	 */
+	public Actor getRandomActor(final Actor actor)
 	{
-		Random rand = new Random();
-		ArrayList<Actor> list = new ArrayList<>();
+		final Random rand = new Random();
+		final ArrayList<Actor> list = new ArrayList<>();
+		
 		list.addAll(this.actors);
 		list.remove(actor);
-		
-		if(list.size() > 0)
-			return list.get(rand.nextInt(list.size()));
-		else 
+
+		if (list.size() > 0)
 		{
-			canUpdate = false;
-			return null;
+			return list.get(rand.nextInt(list.size()));
 		}
+		
+		this.canUpdate = false;
+		return null;
 	}
 
 	/*************************************************/
@@ -329,13 +393,10 @@ public class Kingdom extends Parent implements Serializable
 	/*************************************************/
 
 	/**
-	 *
-	 * @param playfieldLayer
+	 * @param playfieldLayer the playfieldLayer to set
 	 */
-	public void setPlayfieldLayer(final Pane playfieldLayer)
+	public final void setPlayfieldLayer(Pane playfieldLayer)
 	{
 		this.playfieldLayer = playfieldLayer;
 	}
-	
-	
 }

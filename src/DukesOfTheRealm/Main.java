@@ -162,7 +162,7 @@ public class Main extends Application
 			public void handle(final long now)
 			{
 				processInput(Main.this.input, now);
-				update(now, Main.this.pause || Main.this.pauseForce);
+				update(now, Main.pause || Main.this.pauseForce);
 			}
 
 			private void processInput(final Input input, final long now)

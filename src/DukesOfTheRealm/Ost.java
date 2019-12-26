@@ -70,7 +70,6 @@ public class Ost implements IUpdate, Serializable
 	@Override
 	public void start()
 	{
-		this.destination.addNbOstsarriving();
 		this.speed = SetOstSpeed();
 		this.separationPoint = SetSeparationPoint();
 		this.waitingPoint = SetWaitingPoint();
@@ -126,7 +125,6 @@ public class Ost implements IUpdate, Serializable
 			else
 			{
 				this.origin.removeOst();
-				this.destination.removeNbOstsarriving();
 			}
 		}
 	}
