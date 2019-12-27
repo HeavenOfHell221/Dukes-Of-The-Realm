@@ -8,13 +8,14 @@ import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
+import Interface.IUpdate;
 import Utility.Point2D;
 import Utility.Settings;
 import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public abstract class Soldier extends Sprite implements Serializable
+public abstract class Soldier extends Sprite implements Serializable, IUpdate
 {
 
 	/*************************************************/
@@ -35,12 +36,22 @@ public abstract class Soldier extends Sprite implements Serializable
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 * 
+	 * @param layer
+	 * @param coord
+	 * @param itsOst
+	 */
 	public Soldier(final Pane layer, final Point2D coord, final Ost itsOst)
 	{
-		super(layer, coord);
+		this.canvas = layer;
+		this.coordinate = coord;
 		this.itsOst = itsOst;
 	}
 
+	/**
+	 * 
+	 */
 	protected Soldier()
 	{
 
@@ -72,6 +83,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+	@Override
 	public void update(final long now, final boolean pause)
 	{
 		if (this.isDead)
@@ -119,8 +131,15 @@ public abstract class Soldier extends Sprite implements Serializable
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/**
+	 * 
+	 * @param reserve
+	 */
 	protected abstract void addInReserve(ReserveOfSoldiers reserve);
 
+	/**
+	 * 
+	 */
 	private final void SetAttackLocation()
 	{
 		if (getDestination().isAvailableAttackLocation())
@@ -135,8 +154,9 @@ public abstract class Soldier extends Sprite implements Serializable
 	}
 
 	/**
-	 *
+	 * 
 	 * @param dst
+	 * @param factorSpeed
 	 */
 	private void Move(final Point2D dst, final double factorSpeed)
 	{
@@ -183,6 +203,9 @@ public abstract class Soldier extends Sprite implements Serializable
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void isOutOfScreen()
 	{
 		if (getX() > Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.04) || getY() > Settings.SCENE_HEIGHT || getX() <= 0
@@ -212,6 +235,9 @@ public abstract class Soldier extends Sprite implements Serializable
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void attack()
 	{
 		if (!isStopAttack())
@@ -237,12 +263,9 @@ public abstract class Soldier extends Sprite implements Serializable
 	}
 
 	/*************************************************/
-	/*************** GETTERS / SETTERS ***************/
+	/*************** DELEGATES METHODS ***************/
 	/*************************************************/
-
-	@Override
-	public abstract double getProductionTime();
-
+	
 	/**
 	 * @return
 	 * @see    DukesOfTheRealm.Ost#getSeparationPoint()
@@ -296,13 +319,26 @@ public abstract class Soldier extends Sprite implements Serializable
 	{
 		return this.itsOst.getDestination();
 	}
+	
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
 
+	@Override
+	public abstract double getProductionTime();
+	
+	/**
+	 * 
+	 */
 	@Override
 	public abstract int getProductionCost();
 
-	public SoldierEnum GetType()
+	/**
+	 * @return the type
+	 */
+	public final SoldierEnum getType()
 	{
-		return this.type;
+		return type;
 	}
 
 	/**
@@ -319,11 +355,5 @@ public abstract class Soldier extends Sprite implements Serializable
 	public final Point2D getAttackLocation()
 	{
 		return this.attackLocation;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Soldier [type=" + this.type + ", onField=" + this.onField + ", canMove=" /* + this.canMove */ + "]";
 	}
 }

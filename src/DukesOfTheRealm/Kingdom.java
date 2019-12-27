@@ -17,6 +17,7 @@ import Duke.Actor;
 import Duke.Baron;
 import Duke.DukeAI;
 import Duke.Player;
+import Interface.IUpdate;
 import UI.UIManager;
 import Utility.Collisions;
 import Utility.Point2D;
@@ -30,7 +31,7 @@ import javafx.scene.text.TextAlignment;
 /**
  * Représente le royaume. Contient tout les acteurs du royaume.
  */
-public class Kingdom extends Parent implements Serializable
+public class Kingdom extends Parent implements Serializable, IUpdate
 {
 
 	/*************************************************/
@@ -157,8 +158,11 @@ public class Kingdom extends Parent implements Serializable
 				actor.addEventAllCastles();
 			});
 
-			UIManager.getInstance().switchCastle(this.player.getCastles().get(0));
-
+			if(this.player.getCastles().size() > 0) 
+			{
+				UIManager.getInstance().switchCastle(this.player.getCastles().get(0));
+			}
+			
 			this.canUpdate = true;
 		}
 		
@@ -176,10 +180,10 @@ public class Kingdom extends Parent implements Serializable
 	 * qui eux même mettent à jour leur unités sur le terrain...
 	 * </p>
 	 * 
-	 * @param now   Le temps actuel.
-	 * @param pause Est à true si la pause est activé, false sinon.
 	 * @see         Main#update(long, boolean)
+	 * @see Interface.IUpdate
 	 */
+	@Override
 	public void update(final long now, final boolean pause)
 	{
 		if (this.canUpdate && !pause)
@@ -305,7 +309,7 @@ public class Kingdom extends Parent implements Serializable
 	 * Récupère une couleur au hasard et la renvoie.
 	 * 
 	 * @param  rand Un objet de type Random.
-	 * @return      Une couleur de la list colors.
+	 * @return      Une couleur de la liste colors.
 	 * @see         Kingdom#createWorld()
 	 * @see         Kingdom#colors
 	 */

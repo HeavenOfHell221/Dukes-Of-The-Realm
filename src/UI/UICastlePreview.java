@@ -94,13 +94,13 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		if (this.attackVisible)
 		{
 			this.florinIncome.setText(this.lastCastle.getActor().florinIncome(this.lastCastle));
-			this.owner.setText(this.lastCastle.getActor().getName(this.lastCastle));
+			this.owner.setText(this.lastCastle.getActor().getName());
 			this.level.setText("Level: " + this.lastCastle.getLevel());
 		}
 		else
 		{
 			this.florinIncome.setText(this.currentCastle.getActor().florinIncome(this.currentCastle));
-			this.owner.setText(this.currentCastle.getActor().getName(this.currentCastle));
+			this.owner.setText(this.currentCastle.getActor().getName());
 			this.level.setText("Level: " + this.currentCastle.getLevel());
 		}
 

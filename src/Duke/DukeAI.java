@@ -11,55 +11,85 @@ import DukesOfTheRealm.Kingdom;
 import SimpleGoal.Goal;
 import Utility.Settings;
 
+/**
+ * Classe dérivée d'Actor, représente les IA qui jouent contre le joueur.
+ * @see Actor
+ */
 public class DukeAI extends Actor implements Serializable
 {
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+	
+	/**
+	 * Dernière fois que ce Duke à vérifié ses objectifs.
+	 * @see DukeAI#time(long, boolean)
+	 * @see DukeAI#update(long, boolean)
+	 */
 	private long lastTime;
-	private final HashMap<Castle, Goal> map;
+	
+	/**
+	 * Map des objectifs pour chaque château de ce Duke.
+	 * <p>
+	 * Clé: Un château, Valeur: Son objectif associé. 
+	 * </p>
+	 * @see DukeAI#update(long, boolean)
+	 * @see DukeAI#putNewGoal(Castle)
+	 */
+	private final HashMap<Castle, Goal> goalMap;
+	
+	/**
+	 * Référence au royaume auquel appartient ce DukeIA.
+	 * @see DukesOfTheRealm.Kingdom
+	 * @see Goal.GeneratorGoal#getNewGoalBattle(Castle)
+	 */
 	private Kingdom kingdom;
 
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
+	
+	/**
+	 * Constructeur par défaut de DukeIA.
+	 */
 	public DukeAI()
 	{
 		super();
-		this.map = new HashMap<>();
+		this.goalMap = new HashMap<>();
 	}
-
+	
+	/*************************************************/
+	/********************* START *********************/
+	/*************************************************/
+	
+	/**
+	 * 
+	 * @param kingdom
+	 */
 	public void start(final Kingdom kingdom)
 	{
-		super.start();
-
 		this.kingdom = kingdom;
 	}
 
-	@Override
-	public void addFirstCastle(final Castle castle)
-	{
-		super.addFirstCastle(castle);
-		castle.startSoldier();
-	}
-
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+	
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		Iterator<Castle> it = this.castles.iterator();
-		while (it.hasNext())
-		{
-			Castle castle = it.next();
-			updateFlorin(castle);
-			castle.updateProduction();
-			castle.updateOst(now, pause);
-		}
+		super.update(now, pause);
 
 		if (time(now, pause))
 		{
-			it = this.castles.iterator();
+			Iterator<Castle> it = this.castles.iterator();
 
 			while (it.hasNext())
 			{
 				Castle castle = it.next();
-				// System.out.println(castle);
-				if (this.map.containsKey(castle))
+				if (this.goalMap.containsKey(castle))
 				{
-					Goal g = this.map.get(castle);
+					Goal g = this.goalMap.get(castle);
 					if (g == null || g.isGoalIsCompleted(castle))
 					{
 						putNewGoal(castle);
@@ -71,23 +101,35 @@ public class DukeAI extends Actor implements Serializable
 				}
 			}
 		}
-		addOrRemoveCastleList();
+	}
+	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+	
+	@Override
+	public void addFirstCastle(final Castle castle)
+	{
+		super.addFirstCastle(castle);
+		castle.startSoldier();
 	}
 
+	/**
+	 * Génère un nouvel objectif pour le château en paramètre et le place dans la map.
+	 * @param castle Le château courant.
+	 * @see Goal.GeneratorGoal
+	 */
 	private void putNewGoal(final Castle castle)
 	{
-		this.map.put(castle, getNewGoal(castle));
-		// System.out.println(this.name + " -> castle {" + (int)castle.getTotalFlorin() + "} {" +
-		// castle.getLevel() +"} " + map.get(castle));
+		this.goalMap.put(castle, getNewGoal(castle));
 	}
 
-	@Override
-	protected void switchCastle(final Castle castle)
-	{
-		super.switchCastle(castle);
-		// System.out.println(this.name + " -> " + map.get(castle) + "\n");
-	}
-
+	/**
+	 * Bloque une action durant un certain temps pour qu'elle s'effectue à un intervalle régulier (inférieur à 1 fois par image).
+	 * @param now Le temps écoulé depuis la création du programme.
+	 * @param pause Boolean spécifiant si la pause est activé ou non.
+	 * @return Retourne true si l'action est possible, false sinon.
+	 */
 	private boolean time(final long now, final boolean pause)
 	{
 		if (pause)
@@ -102,6 +144,10 @@ public class DukeAI extends Actor implements Serializable
 		return false;
 	}
 
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+	
 	/**
 	 * @return the kingdom
 	 */

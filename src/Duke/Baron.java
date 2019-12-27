@@ -11,12 +11,37 @@ import java.util.Random;
 import DukesOfTheRealm.Castle;
 import Utility.Time;
 
+/**
+ * Classe dérivée d'Actor, représente les acteurs neutre qui n'ont pas d'IA.
+ * @see Actor
+ */
 public class Baron extends Actor implements Serializable
 {
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
+	
+	/**
+	 * Constructeur par défaut de Baron.
+	 */
 	public Baron()
 	{
-
+		super();
 	}
+	
+	/*************************************************/
+	/******************** UPDATE *********************/
+	/*************************************************/
+	
+	@Override
+	protected void updateFlorin(final Castle castle)
+	{
+		castle.addFlorin(FLORIN_PER_SECOND * FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime);
+	}
+	
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
 
 	@Override
 	public String florinIncome(final Castle castle)
@@ -29,18 +54,14 @@ public class Baron extends Actor implements Serializable
 		return " -- Florin/s";
 	}
 
-	@Override
-	protected void updateFlorin(final Castle castle)
-	{
-		castle.addFlorin(FLORIN_PER_SECOND * FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime);
-	}
 
 	@Override
 	public void addFirstCastle(final Castle castle)
 	{
 		final Random rand = new Random();
-		castle.addFlorin(rand.nextInt(8001) + 200);
+		
 		castle.setLevel(rand.nextInt(RANDOM_LEVEL_CASTLE_BARON) + OFFSET_LEVEL_CASTLE_BARON);
+		castle.addFlorin(rand.nextInt(castle.getLevel() * 200) + castle.getLevel() * 50);
 		castle.randomSoldier();
 		super.addFirstCastle(castle);
 	}

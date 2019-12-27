@@ -10,14 +10,13 @@ import java.io.ObjectOutputStream;
 import DukesOfTheRealm.Kingdom;
 
 /**
- *
- *
+ * Implémente l'écriture et la lecture du royaume via un FileOutputStream.
  */
 public class SaveSystem
 {
 	/**
-	 *
-	 * @param kingdom
+	 * Sauvegarde le royaume dans un fichier prédéfini "DukesOfTheRealm.bin".
+	 * @param kingdom Le royaume à sauvegarder.
 	 */
 	public static void save(final Kingdom kingdom)
 	{
@@ -40,8 +39,8 @@ public class SaveSystem
 	}
 
 	/**
-	 *
-	 * @return
+	 * Charge une partie précédement sauvegarder.
+	 * @return Le royaume chargé, ou null en cas d'erreur.
 	 */
 	public static Kingdom load()
 	{

@@ -2,34 +2,37 @@ package Enum;
 
 import java.util.Random;
 
+/**
+ * Enumération des différentes catégories d'objectifs pour les IA.
+ */
 public enum GoalEnum
 {
 	Production, Battle, Backup, Finance, Building;
 
-	public static GoalEnum getRandomType(final Random rand)
+	/**
+	 * Permet d'avoir un générateur de catégorie d'objectif aléatoire.
+	 * @return Une catégorie d'objectif.
+	 */
+	public static GoalEnum getRandomType()
 	{
+		Random rand = new Random();
 		switch (rand.nextInt(10))
 		{
 			case 0:
-				return Production;
 			case 1:
-				return Battle;
 			case 2:
-				return Backup;
+				return Production; // 30%
 			case 3:
-				return Finance;
 			case 4:
-				return Building;
+				return Finance; // 20%
 			case 5:
-				return Production;
+				return Battle; // 10%
 			case 6:
-				return Backup;
 			case 7:
-				return Finance;
+				return Backup; // 20%
 			case 8:
-				return Production;
 			case 9:
-				return Building;
+				return Building; // 20%
 			default:
 				return Production;
 		}

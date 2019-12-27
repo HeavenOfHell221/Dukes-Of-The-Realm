@@ -1,14 +1,12 @@
 package Utility;
 
 import DukesOfTheRealm.Main;
+import Interface.IUpdate;
 
 /**
  *
- *
- * @author Utilisateur
- *
  */
-public class Time
+public class Time implements IUpdate
 {
 
 	/*************************************************/
@@ -82,11 +80,12 @@ public class Time
 	/*************************************************/
 
 	/**
-	 *
+	 * 
 	 */
+	@Override
 	public void update(final long now, final boolean pause)
 	{
-		frameStart(now);
+		newFrame(now);
 		if (now - this.lastUpdate >= this.cooldown)
 		{
 			this.lastUpdate = now;
@@ -105,7 +104,7 @@ public class Time
 	 *
 	 * @param now
 	 */
-	public void frameStart(final long now)
+	public void newFrame(final long now)
 	{
 		if (this.firstFrame)
 		{

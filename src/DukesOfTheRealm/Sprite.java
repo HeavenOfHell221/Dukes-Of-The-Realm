@@ -80,20 +80,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 *
-	 * @param canvas
-	 * @param point2D
-	 */
-	public Sprite(final Pane canvas, final Point2D point2D)
-	{
-		this.canvas = canvas;
-		this.coordinate = new Point2D(point2D);
-	}
-
-	/**
-	 *
 	 */
 	protected Sprite()
 	{
+		
 	}
 
 	/*************************************************/
@@ -205,7 +195,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 *
+	 * 
 	 */
 	protected final void AddOnagerRepresentation()
 	{
@@ -222,7 +212,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 *
+	 * 
 	 * @param shape
 	 * @param width
 	 * @param height
@@ -313,56 +303,9 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 *
 	 * @return
 	 */
-	public final Point2D getCastleCenter()
-	{
-		return new Point2D(getX() + (CASTLE_SIZE - 1) / 2 + 1, getY() + (CASTLE_SIZE - 1) / 2 + 1);
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public final double getWidth()
-	{
-		return this.width;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public final double getHeight()
-	{
-		return this.height;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
 	public final Pane getLayer()
 	{
 		return this.canvas;
-	}
-
-	/**
-	 *
-	 * @param x
-	 */
-	public final void setX(final int x)
-	{
-		this.coordinate.setX(x);
-		updateUIShape();
-	}
-
-	/**
-	 *
-	 * @param y
-	 */
-	public final void setY(final int y)
-	{
-		this.coordinate.setY(y);
-		updateUIShape();
 	}
 
 	/**

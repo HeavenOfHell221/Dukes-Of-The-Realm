@@ -68,7 +68,6 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * L'orientation de la porte pour ce château.
-	 * @see Castle#addDoorRepresentation(Pane, Orientation)
 	 * @see Orientation
 	 */
 	private Orientation orientation;
@@ -93,7 +92,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * L'acteur à qui appartient ce château.
-	 * @see actor
+	 * @see Actor
 	 */
 	private Actor actor;
 
@@ -210,9 +209,9 @@ public class Castle extends Sprite implements Serializable
 	/**
 	 * Donne un nombre fini d'unités pour le joueur et les IA.
 	 * @see ReserveOfSoldiers
-	 * @see Settings#STARTER_KNIGHT
-	 * @see Settings#STARTER_ONAGER
-	 * @see Settings#STARTER_PIKER
+	 * @see Utility.Settings#STARTER_KNIGHT
+	 * @see Utility.Settings#STARTER_ONAGER
+	 * @see Utility.Settings#STARTER_PIKER
 	 */
 	public void startSoldier()
 	{
@@ -252,8 +251,10 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 *
-	 * @param pane
+	 * Initialise et affiche la représentation graphique du château aisni que de la porte.
+	 * @param pane Le pane principale.
+	 * @see Sprite#addCastleRepresentation(Pane)
+	 * @see DukesOfTheRealm.Sprite#addDoorRepresentation(Pane, Orientation)
 	 */
 	public void addRepresentation(final Pane pane)
 	{
@@ -338,12 +339,15 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * Fait que ce château ne contient plus d'ost.
+	 * Force ce château à ne plus avoir d'ost.
 	 * @see Ost#update(long, boolean)
 	 */
 	public void removeOst()
 	{
-		this.ost = null;
+		if(this.ost != null && this.ost.getSoldiers().size() == 0) 
+		{
+			this.ost = null;
+		}
 	}
 
 	/**
@@ -574,7 +578,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void randomRemoveHP()
 	{
-		this.reserveOfSoldiers.randomRemoveHP(SoldierEnum.getRandomType(new Random()));
+		this.reserveOfSoldiers.randomRemoveHP(SoldierEnum.getRandomType());
 	}
 
 	/**

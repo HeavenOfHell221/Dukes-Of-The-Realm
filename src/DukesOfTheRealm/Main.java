@@ -1,5 +1,6 @@
 package DukesOfTheRealm;
 
+import Interface.IUpdate;
 import SaveSystem.SaveSystem;
 import UI.UIAttackPreview;
 import UI.UIManager;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 /**
  * Main, initialise l'application.
  */
-public class Main extends Application
+public class Main extends Application implements IUpdate
 {
 
 	/*************************************************/
@@ -266,10 +267,10 @@ public class Main extends Application
 	 * Va être appelé dans le handle de la boucle mainGameLoop.
 	 * </p>
 	 * 
-	 * @param now   Le temps depuis la création du programme.
-	 * @param pause Boolean donnant l'information de si la pause est activé.
 	 * @see         Main#start(Stage)
+	 * @see Interface.IUpdate
 	 */
+	@Override
 	public void update(final long now, final boolean pause)
 	{
 		this.time.update(now, pause);

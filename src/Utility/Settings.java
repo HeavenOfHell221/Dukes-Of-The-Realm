@@ -62,8 +62,8 @@ public class Settings
 	/************************ IA ************************/
 	/****************************************************/
 	
-	public static final int RANDOM_LEVEL_CASTLE_BARON = 10;
-	public static final int OFFSET_LEVEL_CASTLE_BARON = 1;
+	public static final int RANDOM_LEVEL_CASTLE_BARON = 15;
+	public static final int OFFSET_LEVEL_CASTLE_BARON = 5;
 
 	/****************************************************/
 	/********************* SOLDIERS *********************/

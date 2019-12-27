@@ -355,8 +355,8 @@ public class Ost implements IUpdate, Serializable
 	private AtomicReference<SoldierEnum> getNextAvailableSoldier()
 	{
 		final AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
-		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Piker).count();
-		final long nbCreatedOnagers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Onager).count();
+		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Piker).count();
+		final long nbCreatedOnagers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Onager).count();
 
 		if (nbCreatedOnagers < this.nbOnagers)
 		{
