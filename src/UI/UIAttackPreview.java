@@ -2,7 +2,6 @@ package UI;
 
 import java.io.Serializable;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
@@ -50,8 +49,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 	private Castle currentCastle;
 	private Castle lastCastle;
-	private Actor currentActor;
-	private Actor lastActor;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -75,7 +72,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		this.nbKnightText = new Text();
 		this.nbOnagerText = new Text();
 
-		this.lastActor = null;
 		this.lastCastle = null;
 	}
 
@@ -91,6 +87,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		setAllButtons();
 		setAllTexts();
 		setBackground();
+		setAllVisible(false);
 	}
 
 	/*************************************************/
@@ -250,19 +247,18 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 
 		this.buttonAttack.setOnMousePressed(e ->
 		{
-			if (this.lastCastle.isOstExist())
-			{
-				this.lastCastle.removeSoldiers(this.nbPiker, this.nbKnight, this.nbOnager);
-
-				this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager, this.lastActor,
-						this.currentActor);
-				this.nbKnight = 0;
-				this.nbOnager = 0;
-				this.nbPiker = 0;
-				setAllVisible(false);
-				Main.pause = false;
-			}
+			this.lastCastle.createOst(this.currentCastle, this.nbPiker, this.nbKnight, this.nbOnager, false);
+			reset();
 		});
+	}
+
+	private void reset()
+	{
+		this.nbKnight = 0;
+		this.nbOnager = 0;
+		this.nbPiker = 0;
+		setAllVisible(false);
+		Main.pause = false;
 	}
 
 	private void setBackground()
@@ -310,7 +306,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		final int i = 69;
 		final int offset = 540;
 
-		final float margin = (float) (Settings.MARGIN_PERCENTAGE) + 0.052f;
+		final float margin = (float) Settings.MARGIN_PERCENTAGE + 0.052f;
 
 		relocate(this.imagePiker, Settings.SCENE_WIDTH * margin + 20, 20 + offset + i * 0);
 		relocate(this.imageKnight, Settings.SCENE_WIDTH * margin + 20, 20 + offset + i * 1);
@@ -353,12 +349,10 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		resetOst();
 	}
 
-	public void switchCastle(final Castle castle, final Actor actor, final boolean attackVisible)
+	public void switchCastle(final Castle castle, final boolean attackVisible)
 	{
-		this.lastActor = this.currentActor;
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
-		this.currentActor = actor;
 
 		setAllVisible(attackVisible);
 	}

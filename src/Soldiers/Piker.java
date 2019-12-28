@@ -1,6 +1,7 @@
 package Soldiers;
 
 import DukesOfTheRealm.Ost;
+import DukesOfTheRealm.ReserveOfSoldiers;
 import Enum.SoldierEnum;
 import Utility.Point2D;
 import Utility.Settings;
@@ -40,4 +41,11 @@ public class Piker extends Soldier
 	{
 		return Settings.PIKER_COST;
 	}
+
+	@Override
+	protected void addInReserve(final ReserveOfSoldiers reserve)
+	{
+		reserve.addPiker();
+	}
+
 }

@@ -1,12 +1,12 @@
 package Utility;
 
+import DukesOfTheRealm.Main;
+import Interface.IUpdate;
+
 /**
  *
- *
- * @author Utilisateur
- *
  */
-public class Time
+public class Time implements IUpdate
 {
 
 	/*************************************************/
@@ -80,17 +80,19 @@ public class Time
 	/*************************************************/
 
 	/**
-	 *
+	 * 
 	 */
+	@Override
 	public void update(final long now, final boolean pause)
 	{
-		frameStart(now);
-		if ((now - this.lastUpdate) >= this.cooldown)
+		newFrame(now);
+		if (now - this.lastUpdate >= this.cooldown)
 		{
 			this.lastUpdate = now;
 			if (this.print)
 			{
 				System.out.println(this.counter + " fps");
+				System.out.println(Main.nbSoldier + " soldiers" + "\n");
 			}
 			FPS = this.counter;
 			this.counter = 0;
@@ -102,7 +104,7 @@ public class Time
 	 *
 	 * @param now
 	 */
-	public void frameStart(final long now)
+	public void newFrame(final long now)
 	{
 		if (this.firstFrame)
 		{
@@ -110,7 +112,7 @@ public class Time
 			this.oldTime = now;
 			return;
 		}
-		deltaTime = (now - this.oldTime);
+		deltaTime = now - this.oldTime;
 		deltaTime /= Settings.GAME_FREQUENCY;
 		this.oldTime = now;
 	}

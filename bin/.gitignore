@@ -1,8 +1,12 @@
+/UI/
+/images/
+/DukesOfTheRealm/
+/Duke/
+/Utility/
 /Goal/
+/Enum/
 /SimpleGoal/
 /Soldiers/
-/UI/
-/Utility/
-/DukesOfTheRealm/
-/AStar/
 /Path/
+/Interface/
+/SaveSystem/

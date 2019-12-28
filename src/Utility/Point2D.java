@@ -2,20 +2,23 @@ package Utility;
 
 import java.io.Serializable;
 
+/**
+ * Implémentation d'un point en 2D.
+ */
 public class Point2D implements Serializable
 {
 	/**
-	 *
+	 * Coordonnée x.
 	 */
 	private double x;
 
 	/**
-	 *
+	 * Coordonnée y.
 	 */
 	private double y;
 
 	/**
-	 *
+	 * Constructeur par défaut de Point2D.
 	 */
 	public Point2D()
 	{
@@ -24,9 +27,9 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 *
-	 * @param x
-	 * @param y
+	 * Constructeur de Point2D.
+	 * @param x Coordonnée x.
+	 * @param y Coordonnée y.
 	 */
 	public Point2D(final double x, final double y)
 	{
@@ -35,77 +38,69 @@ public class Point2D implements Serializable
 	}
 
 	/**
-	 *
-	 * @param p
+	 * Constructeur par recopie de Point2D.
+	 * @param p Le point2D à recopier.
 	 */
 	public Point2D(final Point2D p)
 	{
 		this(p.x, p.y);
 	}
-
+	
 	/**
-	 *
-	 * @return
+	 * @return the x
 	 */
-	public double getX()
+	public final double getX()
 	{
-		return this.x;
+		return x;
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return the y
 	 */
-	public double getY()
+	public final double getY()
 	{
-		return this.y;
+		return y;
 	}
 
 	/**
-	 *
-	 * @param x
+	 * @param x the x to set
 	 */
-	public void setX(final double x)
+	public final void setX(double x)
 	{
 		this.x = x;
 	}
 
 	/**
-	 *
-	 * @param y
+	 * @param y the y to set
 	 */
-	public void setY(final double y)
+	public final void setY(double y)
 	{
 		this.y = y;
 	}
 
 	/**
-	 *
-	 * @param dx
-	 */
-	public void addDx(final double dx)
-	{
-		this.x += dx;
-	}
-
-	/**
-	 *
-	 * @param dy
-	 */
-	public void addDy(final double dy)
-	{
-		this.y += dy;
-	}
-
-	/**
-	 *
-	 * @param dx
-	 * @param dy
+	 * Déplace le point d'une certaine quantité dx et dy.
+	 * @param dx La quantité en x.
+	 * @param dy La quantité en y.
 	 */
 	public void addMotion(final double dx, final double dy)
 	{
 		this.x += dx;
 		this.y += dy;
+	}
+
+	/**
+	 * Calcul un point2D en soustrayant les coordonées du second avec le premier.
+	 * @param p Le point qui serra soustrait.
+	 * @return Retourne le resultat de la soustraction.
+	 */
+	public Point2D delta(final Point2D p)
+	{
+		if (p != null)
+		{
+			return new Point2D(Math.abs(this.x - p.x), Math.abs(this.y - p.y));
+		}
+		return null;
 	}
 	
 	/**

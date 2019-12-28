@@ -1,8 +1,13 @@
 package DukesOfTheRealm;
 
-import java.io.Serializable;
+import static Utility.Settings.KNIGHT_HP;
+import static Utility.Settings.ONAGER_HP;
+import static Utility.Settings.PIKER_HP;
 
-import Utility.Settings;
+import java.io.Serializable;
+import java.util.Random;
+
+import Enum.SoldierEnum;
 
 /**
  *
@@ -14,9 +19,10 @@ public class ReserveOfSoldiers implements Serializable
 	private int nbPikers = 0;
 	private int nbKnights = 0;
 	private int nbOnagers = 0;
-	private transient int pikersHPRemaining = Settings.PIKER_HP;
-	private transient int knigtHPRemaining = Settings.KNIGHT_HP;
-	private transient int onagerHPremaining = Settings.ONAGER_HP;
+	private int pikersHPRemaining = PIKER_HP;
+	private int knigtHPRemaining = KNIGHT_HP;
+	private int onagerHPremaining = ONAGER_HP;
+	private final Random rand = new Random();
 
 	/**
 	 *
@@ -24,6 +30,77 @@ public class ReserveOfSoldiers implements Serializable
 	public ReserveOfSoldiers()
 	{
 
+	}
+
+	public void randomRemoveHP(final SoldierEnum typeForce)
+	{
+		testRemoveHP();
+
+		if (this.stopAttack)
+		{
+			return;
+		}
+
+		switch (typeForce)
+		{
+			case Knight:
+				if (this.nbKnights > 0)
+				{
+					if (--this.knigtHPRemaining == 0)
+					{
+						this.nbKnights--;
+						this.knigtHPRemaining = KNIGHT_HP;
+					}
+				}
+				else
+				{
+					randomRemoveHP(SoldierEnum.Onager);
+				}
+				break;
+			case Onager:
+				if (this.nbOnagers > 0)
+				{
+					if (--this.onagerHPremaining == 0)
+					{
+						this.nbOnagers--;
+						this.onagerHPremaining = ONAGER_HP;
+					}
+				}
+				else
+				{
+					randomRemoveHP(SoldierEnum.Piker);
+				}
+				break;
+			case Piker:
+				if (this.nbPikers > 0)
+				{
+					if (--this.pikersHPRemaining == 0)
+					{
+						this.nbPikers--;
+						this.pikersHPRemaining = PIKER_HP;
+					}
+				}
+				else
+				{
+					randomRemoveHP(SoldierEnum.Knight);
+				}
+				break;
+			default:
+				break;
+
+		}
+	}
+
+	private void testRemoveHP()
+	{
+		boolean piker = this.nbPikers <= 0;
+		boolean knight = this.nbKnights <= 0;
+		boolean onager = this.nbOnagers <= 0;
+
+		if (piker && onager && knight)
+		{
+			this.stopAttack = true;
+		}
 	}
 
 	/**
@@ -52,147 +129,26 @@ public class ReserveOfSoldiers implements Serializable
 
 	/**
 	 *
-	 * @param x
-	 */
-	public void randomRemoveHP(int x)
-	{
-		x = x % Settings.NB_TYPES_OF_TROOPS;
-
-		if (this.stopAttack)
-		{
-			return;
-		}
-
-		switch (x)
-		{
-			case 0:
-				if (removePikerHP())
-				{
-					break;
-				}
-				else
-				{
-					randomRemoveHP(x + 1);
-				}
-				break;
-			case 1:
-				if (removeKnightHP())
-				{
-					break;
-				}
-				else
-				{
-					randomRemoveHP(x + 1);
-				}
-				break;
-			case 2:
-				if (removeOnagerHP())
-				{
-					break;
-				}
-				else
-				{
-					randomRemoveHP(x + 1);
-				}
-				break;
-			default:
-				break;
-		}
-
-		switchActor();
-	}
-
-	/**
-	 *
-	 */
-	private void switchActor()
-	{
-		if (this.nbKnights == 0 && this.nbPikers == 0 && this.nbOnagers == 0)
-		{
-			this.stopAttack = true;
-		}
-	}
-
-	/**
-	 *
+	 * @param  nbPikers
+	 * @param  nbKnights
+	 * @param  nbOnagers
 	 * @return
 	 */
-	private boolean removePikerHP()
+	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
-		if (this.nbPikers > 0)
+		if (this.nbPikers < nbPikers || this.nbKnights < nbKnights || this.nbOnagers < nbOnagers)
 		{
-			switch (this.pikersHPRemaining)
-			{
-				case 1:
-					this.pikersHPRemaining = Settings.PIKER_HP;
-					this.nbPikers--;
-					break;
-				default:
-					this.pikersHPRemaining--;
-					break;
-			}
-			return true;
+			return false;
 		}
-		return false;
-	}
 
-	/**
-	 *
-	 * @return
-	 */
-	private boolean removeKnightHP()
-	{
-		if (this.nbKnights > 0)
-		{
-			switch (this.knigtHPRemaining)
-			{
-				case 1:
-					this.knigtHPRemaining = Settings.KNIGHT_HP;
-					this.nbKnights--;
-					break;
-				default:
-					this.knigtHPRemaining--;
-					break;
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	private boolean removeOnagerHP()
-	{
-		if (this.nbOnagers > 0)
-		{
-			switch (this.onagerHPremaining)
-			{
-				case 1:
-					this.onagerHPremaining = Settings.ONAGER_HP;
-					this.nbOnagers--;
-					break;
-				default:
-					this.onagerHPremaining--;
-					break;
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 *
-	 * @param nbPikers
-	 * @param nbKnights
-	 * @param nbOnagers
-	 */
-	public void removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
-	{
 		this.nbKnights -= nbKnights;
 		this.nbPikers -= nbPikers;
 		this.nbOnagers -= nbOnagers;
+		if (this.nbKnights < 0 || this.nbOnagers < 0 || this.nbPikers < 0)
+		{
+			System.out.println("Reserve -> " + this.nbKnights + " " + this.nbOnagers + " " + this.nbPikers);
+		}
+		return true;
 	}
 
 	public void reactivateAttack()

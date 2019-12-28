@@ -15,6 +15,13 @@ public class SoldierGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		return castle.addProduction(this.type.getProduction());
+		return castle.addProduction(this.type.getProduction(castle));
 	}
+
+	@Override
+	public String toString()
+	{
+		return "SoldierGoal [type= 	" + this.type + "]";
+	}
+
 }

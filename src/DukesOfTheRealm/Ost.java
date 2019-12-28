@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;
 
-import Duke.Actor;
 import DukesOfTheRealm.Castle.Orientation;
 import Enum.SoldierEnum;
 import Interface.IUpdate;
@@ -39,11 +38,11 @@ public class Ost implements IUpdate, Serializable
 	private final ArrayList<Soldier> soldiers;
 	private int nbSoldiersSpawned;
 	private boolean fullyDeployed = false;
-	private final Actor originActor;
-	private final Actor destinationActor;
 
 	private transient Color color;
 	private transient long lastTime;
+
+	private boolean isBackup;
 
 	private boolean stopAttack = false;
 
@@ -52,7 +51,7 @@ public class Ost implements IUpdate, Serializable
 	/*************************************************/
 
 	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Color color, final Actor originActor, final Actor destinationActor)
+			final Color color, final boolean isBackup)
 	{
 		this.origin = origin;
 		this.destination = destination;
@@ -62,8 +61,7 @@ public class Ost implements IUpdate, Serializable
 		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
-		this.originActor = originActor;
-		this.destinationActor = destinationActor;
+		this.isBackup = isBackup;
 	}
 
 	/*************************************************/
@@ -97,6 +95,8 @@ public class Ost implements IUpdate, Serializable
 	@Override
 	public void update(final long now, final boolean pause)
 	{
+		this.isBackup = this.origin.getActor() == this.destination.getActor();
+
 		if (!this.fullyDeployed && Time(now, pause))
 		{
 			DeployOneSoldiersWave();
@@ -110,13 +110,14 @@ public class Ost implements IUpdate, Serializable
 
 				while (it.hasNext())
 				{
-					final Soldier s = it.next();
+					Soldier s = it.next();
 
 					if (s.isDead)
 					{
 						s.RemoveShapeToLayer();
 						this.destination.freeAttackLocation(s.getAttackLocation());
 						it.remove();
+						Main.nbSoldier--;
 					}
 					else
 					{
@@ -127,7 +128,6 @@ public class Ost implements IUpdate, Serializable
 			else
 			{
 				this.origin.removeOst();
-				this.destination.removeNbOstsarriving();
 			}
 		}
 	}
@@ -139,18 +139,18 @@ public class Ost implements IUpdate, Serializable
 	private int SetOstSpeed()
 	{
 		int minimalSpeed = Settings.KNIGHT_SPEED;
-		minimalSpeed = (this.nbPikers > 0) ? Settings.PIKER_SPEED : minimalSpeed;
-		minimalSpeed = (this.nbOnagers > 0) ? Settings.ONAGER_SPEED : minimalSpeed;
+		minimalSpeed = this.nbPikers > 0 ? Settings.PIKER_SPEED : minimalSpeed;
+		minimalSpeed = this.nbOnagers > 0 ? Settings.ONAGER_SPEED : minimalSpeed;
 		return minimalSpeed;
 	}
 
 	private Point2D SetSeparationPoint()
 	{
-		final Orientation area = getDestinationArea();
-		final int offsetX = (area == Orientation.NE || area == Orientation.SE) ? (-Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
-				: (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
-		final int offsetY = (area == Orientation.SE || area == Orientation.SW) ? (-Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
-				: (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
+		final Orientation area = GetDestinationArea();
+		final int offsetX = area == Orientation.NE || area == Orientation.SE ? -Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE
+				: Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER;
+		final int offsetY = area == Orientation.SE || area == Orientation.SW ? -Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE
+				: Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER;
 		final Point2D separationPoint = new Point2D(this.destination.getX() + offsetX, this.destination.getY() + offsetY);
 		return separationPoint;
 	}
@@ -196,23 +196,23 @@ public class Ost implements IUpdate, Serializable
 
 	private void DeployOneSoldiersWave()
 	{
-		final int nbSpawn = (this.nbSoldiersSpawned <= (this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS)) ? Settings.SIMULTANEOUS_SPAWNS
-				: (this.nbSoldiers - this.nbSoldiersSpawned);
-
+		final int nbSpawn = this.nbSoldiersSpawned <= this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS ? Settings.SIMULTANEOUS_SPAWNS
+				: this.nbSoldiers - this.nbSoldiersSpawned;
+		Main.nbSoldier += nbSpawn;
 		switch (this.origin.getOrientation())
 		{
 			case North:
 			case South:
 				for (int i = 0; i < nbSpawn; i++)
 				{
-					SpawnSoldier(this.origin.getX() + (Settings.THIRD_OF_CASTLE * i), this.origin.getY());
+					SpawnSoldier(this.origin.getX() + Settings.THIRD_OF_CASTLE * i, this.origin.getY());
 				}
 				break;
 			case West:
 			case East:
 				for (int i = 0; i < nbSpawn; i++)
 				{
-					SpawnSoldier(this.origin.getX(), this.origin.getY() + (Settings.THIRD_OF_CASTLE * i));
+					SpawnSoldier(this.origin.getX(), this.origin.getY() + Settings.THIRD_OF_CASTLE * i);
 				}
 				break;
 			default:
@@ -236,22 +236,22 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2 - 1), this,
-								this.speed);
+						final Piker piker = new Piker(layer,
+								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2), this, this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE - 1), this,
-								this.speed);
+						final Knight knight = new Knight(layer,
+								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE), this, this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE - 1), this,
-								this.speed);
+						final Onager onager = new Onager(layer,
+								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
 						this.nbSoldiersSpawned++;
@@ -264,19 +264,22 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1), this, this.speed);
+						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+								this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1), this, this.speed);
+						final Knight knight = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+								this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1), this, this.speed);
+						final Onager onager = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+								this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
 						this.nbSoldiersSpawned++;
@@ -289,22 +292,22 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2 - 1, y), this,
-								this.speed);
+						final Piker piker = new Piker(layer,
+								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2, y), this, this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE - 1, y), this,
-								this.speed);
+						final Knight knight = new Knight(layer,
+								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE, y), this, this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE - 1, y), this,
-								this.speed);
+						final Onager onager = new Onager(layer,
+								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
 						this.nbSoldiersSpawned++;
@@ -317,19 +320,22 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1, y), this, this.speed);
+						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+								this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1, y), this, this.speed);
+						final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+								this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1, y), this, this.speed);
+						final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+								this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
 						this.nbSoldiersSpawned++;
@@ -348,8 +354,8 @@ public class Ost implements IUpdate, Serializable
 	private AtomicReference<SoldierEnum> getNextAvailableSoldier()
 	{
 		final AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
-		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Piker).count();
-		final long nbCreatedOnagers = this.soldiers.stream().filter(soldier -> soldier.GetType() == SoldierEnum.Onager).count();
+		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Piker).count();
+		final long nbCreatedOnagers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Onager).count();
 
 		if (nbCreatedOnagers < this.nbOnagers)
 		{
@@ -372,7 +378,7 @@ public class Ost implements IUpdate, Serializable
 		{
 			this.lastTime = now;
 		}
-		if (now - this.lastTime > Settings.GAME_FREQUENCY / 2)
+		if (now - this.lastTime > Settings.GAME_FREQUENCY_OST)
 		{
 			this.lastTime = now;
 			return true;
@@ -382,36 +388,39 @@ public class Ost implements IUpdate, Serializable
 
 	public void win()
 	{
-		if (!this.stopAttack)
+		if (!this.stopAttack && !this.origin.getActor().isDead)
 		{
 			this.stopAttack = true;
-			Iterator<Castle> it = this.destinationActor.getCastles().iterator();
-			while (it.hasNext())
+			if (!this.isBackup)
 			{
-				Castle castle = it.next();
-				if (castle == this.destination)
-				{
-					it.remove();
-					this.originActor.castlesWaitForAdding.add(castle);
-					this.destination.switchColor(this.origin.getMyColor());
-					this.destination.resetQueue(false);
-					break;
-				}
+				this.origin.getActor().castlesWaitForAdding.add(this.destination);
+				this.destination.getActor().castlesWaitForDelete.add(this.destination);
+
+				this.destination.setActor(this.origin.getActor());
+
+				this.destination.switchColor(this.origin.getActor().getColor());
+				this.destination.resetQueue(false);
+				this.destination.reactivateAttack();
 			}
 		}
-
 	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-	public Castle getOrigin()
+	/**
+	 * @return the origin
+	 */
+	public final Castle getOrigin()
 	{
 		return this.origin;
 	}
 
-	public Castle getDestination()
+	/**
+	 * @return the destination
+	 */
+	public final Castle getDestination()
 	{
 		return this.destination;
 	}
@@ -423,38 +432,50 @@ public class Ost implements IUpdate, Serializable
 	{
 		return destinationArea;
 	}
-
+	
 	public Point2D getSeparationPoint()
 	{
 		return this.separationPoint;
 	}
 
-	public Point2D getWaitingPoint()
+	/**
+	 * @return the waitingPoint
+	 */
+	public final Point2D getWaitingPoint()
 	{
 		return this.waitingPoint;
 	}
 
-	public double getSpeed()
+	/**
+	 * @return the fullyDeployed
+	 */
+	public final boolean isFullyDeployed()
 	{
-		return this.speed;
+		return this.fullyDeployed;
 	}
 
-	public ArrayList<Soldier> getSoldiers()
+	/**
+	 * @return the isBackup
+	 */
+	public final boolean isBackup()
 	{
-		return this.soldiers;
+		return this.isBackup;
 	}
 
-	public boolean isStopAttack()
+	/**
+	 * @return the stopAttack
+	 */
+	public final boolean isStopAttack()
 	{
 		return this.stopAttack;
 	}
 
-	@Override
-	public String toString()
+	/**
+	 * @return the soldiers
+	 */
+	public final ArrayList<Soldier> getSoldiers()
 	{
-		return "Ost [nbPikers=" + this.nbPikers + ", nbKnights=" + this.nbKnights + ", nbOnagers=" + this.nbOnagers + ", nbSoldiers="
-				+ this.nbSoldiers + ", speed=" + this.speed + ", soldiers=" + this.soldiers + ", nbSoldiersSpawned="
-				+ this.nbSoldiersSpawned + ", fullyDeployed=" + this.fullyDeployed + ", color=" + this.color + "]";
+		return this.soldiers;
 	}
 
 }
