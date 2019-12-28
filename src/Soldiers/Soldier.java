@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Castle.Orientation;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.Sprite;
 import Enum.SoldierEnum;
+import Path.Path;
 import Utility.Point2D;
 import Utility.Settings;
 import Utility.Time;
@@ -30,6 +32,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	public boolean isDead = false;
 	protected Point2D attackLocation = null;
 	protected boolean isWaitingForAttackLocation = false;
+	protected Path path;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -54,6 +57,7 @@ public abstract class Soldier extends Sprite implements Serializable
 	{
 		if (this.attackLocation == null || this.isWaitingForAttackLocation)
 		{
+			//this.path = new Path(this.getCoordinate(), getSeparationPoint());
 			this.canMove = true;
 		}
 	}
@@ -78,12 +82,12 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	public void update(final long now, final boolean pause)
 	{
-		if (!this.isArrived)
+		if (this.canMove && !this.isArrived)
 		{
-			Move(getSeparationPoint());
+			Move(getSeparationPoint()); //Move(this.path.getPath().pop());
 		}
 
-		if (this.isArrived && !this.isInPosition)
+		if (this.isArrived && !this.isInPosition)	// Arrived to castle but not in position to attack
 		{
 			if (this.attackLocation != null)
 			{
@@ -116,12 +120,10 @@ public abstract class Soldier extends Sprite implements Serializable
 		{
 			this.attackLocation = getDestination().getNextAttackLocation();
 			this.isWaitingForAttackLocation = false;
-			this.canMove = true;
 		}
 		else
 		{
 			this.isWaitingForAttackLocation = true;
-			this.canMove = false;
 		}
 	}
 
@@ -131,30 +133,11 @@ public abstract class Soldier extends Sprite implements Serializable
 	 */
 	private void Move(final Point2D dst)
 	{
-		final int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
-		final int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
-
+		int directionX = getX() < dst.getX() ? 1 : getX() == dst.getX() ? 0 : -1;
+		int directionY = getY() < dst.getY() ? 1 : getY() == dst.getY() ? 0 : -1;
+		
 		double offsetX = this.stats.speed * Time.deltaTime * directionX;
 		double offsetY = this.stats.speed * Time.deltaTime * directionY;
-
-		// int alternateDirectionX;
-		// int alternateDirectionY;
-		// switch (Collisions.isCollisionApproaching(this.getCoordinate(), offsetX, offsetY))
-		// {
-		// case Settings.X_COLLISION:
-		// offsetX = 0;
-		// System.out.println("off x bloque");
-		// alternateDirectionY = getY() < dst.getY() ? 1 : -1;	//blocage infini, à changer
-		// offsetY = this.stats.speed * Time.deltaTime * alternateDirectionY;
-		// break;
-		// case Settings.Y_COLLISION:
-		// System.out.println("off y bloque");
-		// offsetY = 0;
-		// alternateDirectionX = getX() < dst.getX() ? 1 : -1;
-		// offsetX = this.stats.speed * Time.deltaTime * alternateDirectionX;
-		// break;
-		// default: break;
-		// }
 
 		if (this.canMove)
 		{
@@ -172,7 +155,6 @@ public abstract class Soldier extends Sprite implements Serializable
 		{
 			isInPosition();
 		}
-
 	}
 
 	private void isOutOfScreen()
@@ -188,11 +170,11 @@ public abstract class Soldier extends Sprite implements Serializable
 
 	private void isArrived()
 	{
-		if (getX() == getSeparationPoint().getX() && getY() == getSeparationPoint().getY())
+		if (getX() == getSeparationPoint().getX() && getY() == getSeparationPoint().getY()) //if (this.path.getPath().empty())
 		{
 			this.isArrived = true;
-			this.canMove = false;
 			SetAttackLocation();
+			//Calculer chemin vers position d'attaque
 		}
 	}
 
@@ -281,6 +263,11 @@ public abstract class Soldier extends Sprite implements Serializable
 	public Castle getDestination()
 	{
 		return this.itsOst.getDestination();
+	}
+	
+	public Orientation getDestinationArea()
+	{
+		return this.itsOst.getDestinationArea();
 	}
 
 	@Override

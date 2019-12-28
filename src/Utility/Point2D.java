@@ -107,4 +107,14 @@ public class Point2D implements Serializable
 		this.x += dx;
 		this.y += dy;
 	}
+	
+	/**
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public double distance(Point2D p)
+	{
+		return (this.x - p.getX())*(this.x - p.getX()) + (this.y - p.getY())*(this.y - p.getY());
+	}
 }

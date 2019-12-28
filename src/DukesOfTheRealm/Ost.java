@@ -28,6 +28,7 @@ public class Ost implements IUpdate, Serializable
 
 	private final Castle origin;
 	private final Castle destination;
+	private Orientation destinationArea;
 	private Point2D separationPoint = null;
 	private Point2D waitingPoint = null;
 	private final int nbPikers;
@@ -63,7 +64,6 @@ public class Ost implements IUpdate, Serializable
 		this.color = color;
 		this.originActor = originActor;
 		this.destinationActor = destinationActor;
-
 	}
 
 	/*************************************************/
@@ -73,6 +73,7 @@ public class Ost implements IUpdate, Serializable
 	@Override
 	public void start()
 	{
+		SetDestinationArea();
 		this.destination.addNbOstsarriving();
 		this.speed = SetOstSpeed();
 		this.separationPoint = SetSeparationPoint();
@@ -145,7 +146,7 @@ public class Ost implements IUpdate, Serializable
 
 	private Point2D SetSeparationPoint()
 	{
-		final Orientation area = GetDestinationArea();
+		final Orientation area = getDestinationArea();
 		final int offsetX = (area == Orientation.NE || area == Orientation.SE) ? (-Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
 				: (Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER);
 		final int offsetY = (area == Orientation.SE || area == Orientation.SW) ? (-Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE)
@@ -156,11 +157,9 @@ public class Ost implements IUpdate, Serializable
 
 	private Point2D SetWaitingPoint()
 	{
-		// new Point2D(x, y - 2 * (10 + Settings.SOLDIER_SIZE)) HAUT Gauche
-		final Orientation area = GetDestinationArea();
 		int offsetX = 0;
 		int offsetY = 0;
-		switch (area)
+		switch (getDestinationArea())
 		{
 			case NW:
 				offsetX = 2 * Settings.THIRD_OF_CASTLE;
@@ -183,18 +182,16 @@ public class Ost implements IUpdate, Serializable
 		return waitingPoint;
 	}
 
-	private Orientation GetDestinationArea()
+	private void SetDestinationArea()
 	{
-		Orientation area = Orientation.None;
 		if (this.origin.getX() <= this.destination.getX())
 		{
-			area = (this.origin.getY() <= this.destination.getY()) ? Orientation.SE : Orientation.NE;
+			this.destinationArea = (this.origin.getY() <= this.destination.getY()) ? Orientation.SE : Orientation.NE;
 		}
 		else
 		{
-			area = (this.origin.getY() <= this.destination.getY()) ? Orientation.SW : Orientation.NW;
+			this.destinationArea = (this.origin.getY() <= this.destination.getY()) ? Orientation.SW : Orientation.NW;
 		}
-		return area;
 	}
 
 	private void DeployOneSoldiersWave()
@@ -239,21 +236,21 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2), this,
+						final Piker piker = new Piker(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2 - 1), this,
 								this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE), this,
+						final Knight knight = new Knight(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE - 1), this,
 								this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this,
+						final Onager onager = new Onager(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE - 1), this,
 								this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
@@ -267,19 +264,19 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
+						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1), this, this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
+						final Knight knight = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1), this, this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
+						final Onager onager = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1), this, this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
 						this.nbSoldiersSpawned++;
@@ -292,21 +289,21 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2, y), this,
+						final Piker piker = new Piker(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2 - 1, y), this,
 								this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE, y), this,
+						final Knight knight = new Knight(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE - 1, y), this,
 								this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this,
+						final Onager onager = new Onager(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE - 1, y), this,
 								this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
@@ -320,19 +317,19 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType.get())
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
+						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1, y), this, this.speed);
 						this.soldiers.add(piker);
 						piker.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
+						final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1, y), this, this.speed);
 						this.soldiers.add(knight);
 						knight.Awake(this.color);
 						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
+						final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER + 1, y), this, this.speed);
 						this.soldiers.add(onager);
 						onager.Awake(this.color);
 						this.nbSoldiersSpawned++;
@@ -417,6 +414,14 @@ public class Ost implements IUpdate, Serializable
 	public Castle getDestination()
 	{
 		return this.destination;
+	}
+
+	/**
+	 * @return the destinationArea
+	 */
+	public Orientation getDestinationArea()
+	{
+		return destinationArea;
 	}
 
 	public Point2D getSeparationPoint()
