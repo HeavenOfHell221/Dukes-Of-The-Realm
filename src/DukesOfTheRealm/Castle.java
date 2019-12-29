@@ -141,7 +141,8 @@ public class Castle extends Sprite implements Serializable
 		this.caserne = new Caserne(this);
 		this.ost = null;
 		this.attackLocations = new Stack<>();
-		this.orientation = setOrientation();
+		//this.orientation = setOrientation();
+		this.orientation = Orientation.North;
 		startTransient(pane);
 		setAttackLocations();
 	}

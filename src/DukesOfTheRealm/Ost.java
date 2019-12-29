@@ -72,7 +72,6 @@ public class Ost implements IUpdate, Serializable
 	public void start()
 	{
 		SetDestinationArea();
-		this.destination.addNbOstsarriving();
 		this.speed = SetOstSpeed();
 		this.separationPoint = SetSeparationPoint();
 		this.waitingPoint = SetWaitingPoint();
@@ -146,7 +145,7 @@ public class Ost implements IUpdate, Serializable
 
 	private Point2D SetSeparationPoint()
 	{
-		final Orientation area = GetDestinationArea();
+		final Orientation area = getDestinationArea();
 		final int offsetX = area == Orientation.NE || area == Orientation.SE ? -Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE
 				: Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER;
 		final int offsetY = area == Orientation.SE || area == Orientation.SW ? -Settings.GAP_WITH_SOLDIER - Settings.SOLDIER_SIZE

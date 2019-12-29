@@ -31,7 +31,7 @@ public class Settings
 	/****************************************************/
 
 	/* Florin */ /* Can be balanced */
-	public static final int FLORIN_PER_SECOND = 5; // 5
+	public static final int FLORIN_PER_SECOND = 500; // 5
 	public static final float FLORIN_FACTOR_BARON = 0.1f;
 
 	/* Levels */ /* Can be balanced */
@@ -40,13 +40,13 @@ public class Settings
 	public static final int LEVEL_UP_DURATION_FACTOR = 3; // en sec
 
 	/* Castle number */
-	public static final int AI_NUMBER = 7;
-	public static final int BARON_NUMBER = 8;
+	public static final int AI_NUMBER = 20;
+	public static final int BARON_NUMBER = 0;
 
 	/* Starter */ /* Can be balanced */
 	public static final int STARTER_KNIGHT = 15; // 15
 	public static final int STARTER_PIKER = 30; // 30
-	public static final int STARTER_ONAGER = 0; // 0
+	public static final int STARTER_ONAGER = 200; // 0
 
 	/* Other */
 	public static final int NB_ATTACK_LOCATIONS = 12;
@@ -82,7 +82,7 @@ public class Settings
 	/* Speed */ /* Can be balanced */ /* Not above 100 */
 	public static final int PIKER_SPEED = 45;	//45
 	public static final int KNIGHT_SPEED = 80;	//80
-	public static final int ONAGER_SPEED = 25;	//25
+	public static final int ONAGER_SPEED = 70;	//25
 
 	/* Production time in second */ /* Can be balanced */
 	public static final double PIKER_TIME_PRODUCTION = 0.5f; // 0.5
@@ -107,7 +107,7 @@ public class Settings
 	
 	/* Game */
 	public static final double MARGIN_PERCENTAGE = 0.75;
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) ((CASTLE_SIZE * 3) * 1.33f);
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) ((CASTLE_SIZE * 2) * 1.33f);
 	
 	/* Door */
 	public static final double DOOR_WIDTH = CASTLE_SIZE / 2;

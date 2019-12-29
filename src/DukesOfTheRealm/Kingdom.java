@@ -19,6 +19,7 @@ import Duke.DukeAI;
 import Duke.Player;
 import Interface.IUpdate;
 import UI.UIManager;
+import Utility.Collision;
 import Utility.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -152,7 +153,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 				actor.getCastles().forEach(castle ->
 				{
 					castle.startTransient(pane);
-//					Collisions.addPoint(castle.getCoordinate());
+					Collision.addPoint(castle.getCoordinate());
 				});
 				actor.addEventAllCastles();
 			});
@@ -299,7 +300,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 				castle.setColor(this.actors.get(i).getColor());
 				castle.start(1, this.playfieldLayer, p, this.actors.get(i));
 				this.actors.get(i).addFirstCastle(castle);
-//				Collisions.addPoint(castle.getCoordinate());
+				Collision.addPoint(castle.getCoordinate());
 			}
 		}
 	}
@@ -315,7 +316,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	private Color randomColor(final Random rand)
 	{
 		Color color = this.colors.get(rand.nextInt(this.colors.size()));
-		this.colors.remove(color);
+		//this.colors.remove(color);
 		return color;
 	}
 

@@ -104,12 +104,56 @@ public class Point2D implements Serializable
 	}
 	
 	/**
-	 * 
-	 * @param p
-	 * @return
+	 * Calcul la distance entre ce point et le point p en paramètre.
+	 * @param p Le second point.
+	 * @return La distance entre ce point et le point p.
 	 */
 	public double distance(Point2D p)
 	{
-		return (this.x - p.getX())*(this.x - p.getX()) + (this.y - p.getY())*(this.y - p.getY());
+		if(p != null)
+		{
+			double xbxa = this.x - p.getX();
+			double ybya = this.y - p.getY();
+			return Math.sqrt(xbxa * xbxa + ybya * ybya);
+		}
+		
+		return Double.POSITIVE_INFINITY;
 	}
+	
+	
+
+	@Override
+	public String toString()
+	{
+		return "Point2D [x=" + x + ", y=" + y + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (getClass() != obj.getClass())
+		{
+			return false;
+		}
+		Point2D other = (Point2D) obj;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+		{
+			return false;
+		}
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	
 }
