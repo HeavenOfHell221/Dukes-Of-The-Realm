@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
- * Reprï¿½sente le royaume. Contient tout les acteurs du royaume.
+ * Représente le royaume. Contient tous les acteurs du royaume.
  */
 public class Kingdom extends Parent implements Serializable, IUpdate
 {
@@ -48,26 +48,26 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	private ArrayList<Actor> actors;
 
 	/**
-	 * Liste des couleurs atribuable ï¿½ chaque acteur.
+	 * Liste des couleurs atribuables à chaque acteur.
 	 */
 	private transient ArrayList<Color> colors;
 
 	/**
-	 * Rï¿½fï¿½rence au joueur.
+	 * Référence au joueur.
 	 *
 	 * @see Player
 	 */
 	private Player player;
 
 	/**
-	 * Pane principale du jeu.
+	 * Pane principal du jeu.
 	 *
 	 * @see Main#playfieldLayer
 	 */
 	private transient Pane playfieldLayer;
 
 	/**
-	 * Condition pour que le royaume se mette ï¿½ jour.
+	 * Condition pour que le royaume se mette à jour.
 	 *
 	 * @see Kingdom#update(long, boolean)
 	 */
@@ -80,7 +80,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
-	 * Constructeur par dï¿½faut Kingdom.
+	 * Constructeur par défaut Kingdom.
 	 */
 	public Kingdom()
 	{
@@ -105,7 +105,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Initialise les composents transient du jeu.
+	 * Initialise les composants transients du jeu.
 	 *
 	 * @param Le pane principal.
 	 * @see      Main#loadGame()
@@ -173,11 +173,11 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
-	 * Fonction appelï¿½ ï¿½ chaque image.
+	 * Fonction appelée à chaque image.
 	 * <p>
-	 * Elle permet de mettre ï¿½ jour tout le jeu. On met ï¿½ jour les acteurs qui eux mï¿½me mettent
-	 * ï¿½ jour leurs chateaux, qui eux mï¿½me mettent ï¿½ jour leur ost, <br>
-	 * qui eux mï¿½me mettent ï¿½ jour leur unitï¿½s sur le terrain...
+	 * Elle permet de mettre à jour tout le jeu. On met à jour les acteurs qui eux même mettent
+	 * à jour leurs châteaux, qui eux même mettent à jour leur ost, <br>
+	 * qui eux même mettent à jour leur unités sur le terrain...
 	 * </p>
 	 *
 	 * @see Main#update(long, boolean)
@@ -237,13 +237,13 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
-	 * Fonction crï¿½ant les acteurs et les chï¿½teaux lors d'un nouveau jeu.
+	 * Fonction créant les acteurs et les châteaux lors d'un nouveau jeu.
 	 * <p>
-	 * Elle va crï¿½er les IA et les Baron puis le nombre de chï¿½teau suffisant pour que chaque acteur
-	 * ait un chï¿½teau au dï¿½but (joueur compris). <br>
-	 * A la crï¿½ation d'un chï¿½teau, elle teste la distance avec les autres pour respecter la distance
-	 * minimale entre 2 chï¿½teaux. <br>
-	 * Elle affecte ï¿½galement une couleur ï¿½ chaque IA et une couleur commue ï¿½ tout les Baron.
+	 * Elle va créer les IA et les Baron puis le nombre de château suffisant pour que chaque acteur
+	 * ait un château au début (joueur compris). <br>
+	 * A la création d'un château, elle teste la distance avec les autres pour respecter la distance
+	 * minimale entre 2 châteaux. <br>
+	 * Elle affecte également une couleur à chaque IA et une couleur commune à tout les Baron.
 	 * </p>
 	 *
 	 * @see Kingdom#start(Pane)
@@ -256,7 +256,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	{
 		Random rand = new Random();
 
-		// Crï¿½ation des IA
+		// Création des IA
 		for (int i = 0; i < AI_NUMBER; i++)
 		{
 			Actor a = new DukeAI();
@@ -268,7 +268,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 
 		Color colorBaron = Color.DARKGRAY;
 
-		// Crï¿½ation des Baron
+		// Création des Baron
 		for (int i = 0; i < BARON_NUMBER; i++)
 		{
 			Actor a = new Baron();
@@ -281,7 +281,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 		final ArrayList<Castle> listCastle = new ArrayList<>();
 		final int iterationMax = 10000;
 
-		// Crï¿½ation des chï¿½teaux
+		// Création des chï¿½teaux
 		for (int i = 0; i < AI_NUMBER + BARON_NUMBER + 1; i++)
 		{
 			Point2D p = getRandomCoordinates(rand);
@@ -306,7 +306,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Rï¿½cupï¿½re une couleur au hasard et la renvoie.
+	 * Récupère une couleur au hasard et la renvoie.
 	 *
 	 * @param  rand Un objet de type Random.
 	 * @return      Une couleur de la liste colors.
@@ -321,11 +321,11 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Teste s'il existe un chï¿½teau trop proche des coordonnï¿½es donnï¿½s en paramï¿½tre.
+	 * Teste s'il existe un château trop proche des coordonnées données en paramètre.
 	 * 
-	 * @param  castles    Liste des chï¿½teaux dï¿½jï¿½ crï¿½es.
-	 * @param  coordinate Les coordonnï¿½es du potentiel futur chï¿½teau.
-	 * @return            Retourne true si la distance est respectï¿½, false sinon.
+	 * @param  castles    Liste des châteaux déjà crées.
+	 * @param  coordinate Les coordonnées du potentiel futur château.
+	 * @return            Retourne true si la distance est respectée, false sinon.
 	 * @see               Kingdom#createWorld()
 	 * @see               Kingdom#distanceBetween(Point2D, Point2D)
 	 * @see               Settings#MIN_DISTANCE_BETWEEN_TWO_CASTLE
@@ -344,11 +344,11 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Calcul le distance entre deux points (les coordonnï¿½es d'un chï¿½teau et les coordonnï¿½es du
-	 * chï¿½teau qu'on voudrait crï¿½er).
+	 * Calcule la distance entre deux points (les coordonnées d'un château et les coordonnées du
+	 * château qu'on voudrait créer).
 	 * 
-	 * @param  castleCoord Les coordonnï¿½es du chï¿½teau courant.
-	 * @param  coord       Les coordonnï¿½es du chï¿½tau qu'on voudrait crï¿½er.
+	 * @param  castleCoord Les coordonnées du château courant.
+	 * @param  coord       Les coordonnées du châtau qu'on voudrait créer.
 	 * @return             Retourne la distance entre les deux points.
 	 * @see                Kingdom#isCastleToClose(ArrayList, Point2D)
 	 */
@@ -360,10 +360,10 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Renvoie des coordonnï¿½es alï¿½atoires pour positionner un chï¿½teau.
+	 * Renvoie des coordonnées aléatoires pour positionner un château.
 	 * 
-	 * @param  rand Un objet de type Random pour l'alï¿½atoire.
-	 * @return      Retourne des coordonnï¿½es.
+	 * @param  rand Un objet de type Random pour l'aléatoire.
+	 * @return      Retourne des coordonnées.
 	 * @see         Kingdom#createWorld()
 	 */
 	public Point2D getRandomCoordinates(final Random rand)
@@ -374,10 +374,10 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Renvoie un acteur alï¿½atoire du royaume en ne prenant pas en compte l'acteur qui utilise cette
+	 * Renvoie un acteur aléatoire du royaume en ne prenant pas en compte l'acteur qui utilise cette
 	 * fonction.
 	 * 
-	 * @param  actor L'acteur qui serra retirï¿½ de la liste
+	 * @param  actor L'acteur qui serra retiré de la liste
 	 * @return       Retourne un acteur du royaume ou null si la liste ne contient que l'acteur
 	 *               appelelant cette fonction.
 	 * @see          Goal.GeneratorGoal#getNewGoalBattle(Castle)
@@ -404,7 +404,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
-	 * @param playfieldLayer the playfieldLayer to set
+	 * @param playfieldLayer le playfieldLayer à mettre en place
 	 */
 	public final void setPlayfieldLayer(final Pane playfieldLayer)
 	{
