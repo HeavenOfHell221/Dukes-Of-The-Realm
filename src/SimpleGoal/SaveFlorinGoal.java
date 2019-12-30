@@ -2,10 +2,20 @@ package SimpleGoal;
 
 import DukesOfTheRealm.Castle;
 
+/**
+ * 
+ */
 public class SaveFlorinGoal extends Goal
 {
+	/**
+	 * 
+	 */
 	private final int saveAmount;
 
+	/**
+	 * 
+	 * @param saveAmount
+	 */
 	public SaveFlorinGoal(final int saveAmount)
 	{
 		this.saveAmount = saveAmount;
@@ -20,6 +30,8 @@ public class SaveFlorinGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "SaveFlorinGoal [saveAmount= " + this.saveAmount + "]";
+		return "SaveFlorinGoal [saveAmount=" + saveAmount + "]";
 	}
+	
+	
 }

@@ -3,10 +3,20 @@ package SimpleGoal;
 import DukesOfTheRealm.Castle;
 import Enum.SoldierEnum;
 
+/**
+ * 
+ */
 public class SoldierGoal extends Goal
 {
+	/**
+	 * 
+	 */
 	private final SoldierEnum type;
 
+	/**
+	 * 
+	 * @param type
+	 */
 	public SoldierGoal(final SoldierEnum type)
 	{
 		this.type = type;
@@ -17,11 +27,4 @@ public class SoldierGoal extends Goal
 	{
 		return castle.addProduction(this.type.getProduction(castle));
 	}
-
-	@Override
-	public String toString()
-	{
-		return "SoldierGoal [type= 	" + this.type + "]";
-	}
-
 }

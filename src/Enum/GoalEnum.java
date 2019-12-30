@@ -17,23 +17,25 @@ public enum GoalEnum
 	public static GoalEnum getRandomType()
 	{
 		Random rand = new Random();
-		switch (rand.nextInt(10))
+		switch (rand.nextInt(12))
 		{
 			case 0:
 			case 1:
 			case 2:
-				return Production; // 30%
-			case 3:
+				return Production;
 			case 4:
-				return Finance; // 20%
+				return Finance;
 			case 5:
-				return Battle; // 10%
+			case 3:
+			case 10:
+				return Battle;
 			case 6:
 			case 7:
-				return Backup; // 20%
+				return Backup;
 			case 8:
 			case 9:
-				return Building; // 20%
+			case 11:
+				return Building;
 			default:
 				return Production;
 		}

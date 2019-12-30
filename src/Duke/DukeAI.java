@@ -126,7 +126,9 @@ public class DukeAI extends Actor implements Serializable
 	 */
 	private void putNewGoal(final Castle castle)
 	{
-		this.goalMap.put(castle, getNewGoal(castle));
+		Goal g = getNewGoal(castle);
+		this.goalMap.put(castle, g);
+		System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
 	}
 
 	/**

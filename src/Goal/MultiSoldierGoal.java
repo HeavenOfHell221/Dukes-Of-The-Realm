@@ -14,64 +14,50 @@ public class MultiSoldierGoal extends Goal
 	private final int nbKnights;
 	private final int nbOnagers;
 
-	public MultiSoldierGoal(final Castle castle, int nbPikers, int nbKnights, int nbOnagers)
+	public MultiSoldierGoal(final Castle castle, int nbPikers_, int nbKnights_, int nbOnagers_)
 	{
+		//System.out.println(nbPikers_ + " " + nbKnights_ + " " + nbOnagers_);
 		this.goals = new GenericGoal();
 		Random rand = new Random();
 
-		if (castle.getNbPikersInProduction() + nbPikers > 150)
-		{
-			nbPikers -= castle.getNbPikersInProduction() + nbPikers - 150;
-		}
+		this.nbPikers = nbPikers_;
+		this.nbKnights = nbKnights_;
+		this.nbOnagers = nbOnagers_;
 
-		if (castle.getNbKnightsInProduction() + nbKnights > 100)
-		{
-			nbKnights -= castle.getNbKnightsInProduction() + nbKnights - 100;
-		}
-
-		if (castle.getNbOnagersInProduction() + nbOnagers > 60)
-		{
-			nbOnagers -= castle.getNbOnagersInProduction() + nbOnagers - 60;
-		}
-
-		this.nbPikers = nbPikers;
-		this.nbKnights = nbKnights;
-		this.nbOnagers = nbOnagers;
-
-		int count = nbPikers + nbKnights + nbOnagers;
+		int count = nbPikers_ + nbKnights_ + nbOnagers_;
 
 		while (count > 0)
 		{
 			switch (rand.nextInt(3))
 			{
 				case 0:
-					if (nbPikers > 0)
+					if (nbPikers_ > 0)
 					{
 						this.goals.addLast(new SoldierGoal(SoldierEnum.Piker));
-						nbPikers--;
+						nbPikers_--;
 					}
 					break;
 
 				case 1:
-					if (nbKnights > 0)
+					if (nbKnights_ > 0)
 					{
 						this.goals.addLast(new SoldierGoal(SoldierEnum.Knight));
-						nbKnights--;
+						nbKnights_--;
 					}
 					break;
 
 				case 2:
-					if (nbOnagers > 0)
+					if (nbOnagers_ > 0)
 					{
 						this.goals.addLast(new SoldierGoal(SoldierEnum.Onager));
-						nbOnagers--;
+						nbOnagers_--;
 					}
 					break;
 
 				default:
 					break;
 			}
-			count = nbPikers + nbKnights + nbOnagers;
+			count = nbPikers_ + nbKnights_ + nbOnagers_;
 		}
 	}
 

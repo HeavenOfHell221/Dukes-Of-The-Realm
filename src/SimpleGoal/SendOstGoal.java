@@ -2,13 +2,39 @@ package SimpleGoal;
 
 import DukesOfTheRealm.Castle;
 
+/**
+ * 
+ *
+ */
 public class SendOstGoal extends Goal
 {
+	/**
+	 * 
+	 */
 	private Castle destination;
+	
+	/**
+	 * 
+	 */
 	private final int nbPikers;
+	
+	/**
+	 * 
+	 */
 	private final int nbKnights;
+	
+	/**
+	 * 
+	 */
 	private final int nbOnagers;
 
+	/**
+	 * 
+	 * @param destination
+	 * @param nbPikers
+	 * @param nbKnights
+	 * @param nbOnagers
+	 */
 	public SendOstGoal(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
 		this.destination = destination;
@@ -23,8 +49,13 @@ public class SendOstGoal extends Goal
 		return castle.createOst(this.destination, this.nbPikers, this.nbKnights, this.nbOnagers, false);
 	}
 
-	public void setDestination(final Castle castle)
+	/**
+	 * @param destination the destination to set
+	 */
+	public final void setDestination(Castle destination)
 	{
-		this.destination = castle;
+		this.destination = destination;
 	}
+
+	
 }

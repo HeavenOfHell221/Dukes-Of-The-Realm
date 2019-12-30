@@ -43,7 +43,7 @@ public class GeneratorGoal implements Serializable
 
 	private static Goal getNewGoalBuilding(final Castle castle)
 	{
-		return new CastleGoal();
+		return new CastleGoal(castle);
 	}
 
 	private static Goal getNewGoalFinance(final Castle castle)
@@ -52,9 +52,10 @@ public class GeneratorGoal implements Serializable
 		switch (rand.nextInt(2))
 		{
 			case 0:
-				return new SaveFlorinGoal(rand.nextInt(501) * castle.getLevel());
 			case 1:
-				return new SaveSoldierGoal(castle, rand.nextInt(lvl * 5) + lvl, rand.nextInt(lvl * 5) + lvl, rand.nextInt(lvl * 5) + lvl);
+				return new SaveFlorinGoal(rand.nextInt(201) * castle.getLevel() + 100);
+			//case 1:
+				//return new SaveSoldierGoal(castle, rand.nextInt(lvl * 5) + lvl, rand.nextInt(lvl * 5) + lvl, rand.nextInt(lvl * 5) + lvl);
 			default:
 				break;
 		}
@@ -66,16 +67,23 @@ public class GeneratorGoal implements Serializable
 		final int lvl = castle.getLevel();
 		DukeAI actor = (DukeAI) castle.getActor();
 		Actor actorTarget = actor.getKingdom().getRandomActor(actor);
+		
+		if(actorTarget.getCastles().size() <= 0)
+		{
+			return null;
+		}
+		
 		Castle castleTarget = actorTarget.getCastles().get(rand.nextInt(actorTarget.getCastles().size()));
 		AttackGoal g = null;
+		
 		switch (rand.nextInt(2))
 		{
 			case 0:
-				g = new AttackGoal(castle, 0, rand.nextInt(15 + lvl) + rand.nextInt(6) * lvl, 0);
+				g = new AttackGoal(castle, 0, rand.nextInt(10 + lvl) + rand.nextInt(4) * lvl, 0);
 				break;
 			case 1:
-				g = new AttackGoal(castle, 0, rand.nextInt(11 + lvl) + rand.nextInt(4) * lvl,
-						rand.nextInt(8 + lvl) + rand.nextInt(3) * lvl);
+				g = new AttackGoal(castle, 0, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl,
+						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
 				break;
 			default:
 				break;
@@ -92,7 +100,7 @@ public class GeneratorGoal implements Serializable
 		switch (rand.nextInt(2))
 		{
 			case 0:
-				return new BackupGoal(castle, castle.getNbPikers(), castle.getNbKnights(), 0);
+				return new BackupGoal(castle, castle.getNbPikers()/2, castle.getNbKnights()/2, 0);
 			case 1:
 				return new BackupGoal(castle, 0, castle.getNbKnights(), 0);
 			default:
@@ -108,29 +116,34 @@ public class GeneratorGoal implements Serializable
 		{
 			// Piker
 			case 0:
-				return new MultiSoldierGoal(castle, rand.nextInt(11 + lvl) + rand.nextInt(3) * lvl, 0, 0);
+				return new MultiSoldierGoal(castle, rand.nextInt(12 + lvl) + rand.nextInt(3) * lvl, 0, 0);
 			// Knight
 			case 1:
-				return new MultiSoldierGoal(castle, 0, rand.nextInt(11 + lvl) + rand.nextInt(3) * lvl, 0);
+				return new MultiSoldierGoal(castle, 0, rand.nextInt(8 + lvl) + rand.nextInt(3) * lvl, 0);
 			// Onager
 			case 2:
-				return new MultiSoldierGoal(castle, 0, 0, rand.nextInt(11 + lvl) + rand.nextInt(3) * lvl);
+				return new MultiSoldierGoal(castle, 0, 0, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
 			// Piker + Knight
 			case 3:
-				return new MultiSoldierGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
+				return new MultiSoldierGoal(castle, 
+						rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl,
 						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, 0);
 			// Piker + Onager
 			case 4:
-				return new MultiSoldierGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, 0,
+				return new MultiSoldierGoal(castle, 
+						rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl, 0,
 						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
 			// Knight + Onager
 			case 5:
-				return new MultiSoldierGoal(castle, 0, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
-						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
+				return new MultiSoldierGoal(castle, 0, 
+						rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl,
+						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
 			// Piker + Knight + Onager
 			case 6:
-				return new MultiSoldierGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
-						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
+				return new MultiSoldierGoal(castle, 
+						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
+						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl, 
+						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
 			default:
 				break;
 		}

@@ -30,7 +30,7 @@ public class BackupGoal extends Goal
 			AttackGoal g = new AttackGoal(origin, nbPikers, nbKnights, nbOnagers);
 			g.setGoal(this.destination);
 			this.goals.addLast(g);
-			this.goals.addLast(new SaveSoldierGoal(origin, nbPikers, nbKnights, 0));
+			//this.goals.addLast(new SaveSoldierGoal(origin, nbPikers, nbKnights, 0));
 		}
 	}
 
@@ -43,6 +43,10 @@ public class BackupGoal extends Goal
 	@Override
 	public String toString()
 	{
+		if(this.nbPikers == -1)
+		{
+			return "BackupGoal [Failed : No second castle]";
+		}
 		return "BackupGoal [nbPikers= " + this.nbPikers + ", nbKnights= " + this.nbKnights + ", nbOnagers= " + this.nbOnagers + "]";
 	}
 }
