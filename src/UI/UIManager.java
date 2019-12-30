@@ -230,7 +230,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 
 		this.attackPreview.switchCastle(castle, attackVisible);
 		this.productionUnitPreview.switchCastle(castle, productionVisible);
-		this.castlePreview.switchCastle(castle, castleSwitch, productionVisible, attackVisible);
+		this.castlePreview.switchCastle(castle, castleSwitch, attackVisible);
 	}
 
 	@Override

@@ -41,9 +41,9 @@ public enum SoldierEnum implements Serializable
 	}
 
 	/**
-	 * Incrémente le nombre d'unité en production et renvoi l'objet associé à l'énumération.
+	 * Incrémente le nombre d'unité en production et retourne l'objet associé à l'énumération (si l'énumération est Piker alors on retourne un objet de type Piker).
 	 * 
-	 * @param  currentCastle Le château auquel va être produit l'unité.
+	 * @param  currentCastle Le château où va être produit l'unité.
 	 * @return               L'objet qui serra produit suivant l'énumération.
 	 */
 	public IProductionUnit getProduction(final Castle currentCastle)

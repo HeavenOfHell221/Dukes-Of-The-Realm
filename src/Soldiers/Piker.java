@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 
 public class Piker extends Soldier
 {
-
 	public Piker(final Pane layer, final Point2D coord, final Ost itsOst, final int speed)
 	{
 		super(layer, coord, itsOst);

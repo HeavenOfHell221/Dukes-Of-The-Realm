@@ -6,18 +6,10 @@ import DukesOfTheRealm.Castle;
 import Interface.IGoal;
 
 /**
- * 
+ * Classe abstraite représentant un objectif et classe mère de tout les objectifs.
  */
 public abstract class Goal implements IGoal, Serializable
 {
-	/**
-	 * 
-	 */
-	public Goal()
-	{
-
-	}
-
 	@Override
 	public abstract boolean goal(final Castle castle);
 }

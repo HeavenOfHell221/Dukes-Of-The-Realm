@@ -22,5 +22,5 @@ public interface IUpdate
 	 * @param now   Le temps écoulé depuis la création du programme.
 	 * @param pause Boolean spécifiant si la pause est activé ou non.
 	 */
-	void update(long now, boolean pause);
+	void update(final long now, final boolean pause);
 }
