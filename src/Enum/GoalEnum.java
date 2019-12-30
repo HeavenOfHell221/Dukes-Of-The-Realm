@@ -16,7 +16,7 @@ public enum GoalEnum
 	public static GoalEnum getRandomType()
 	{
 		Random rand = new Random();
-		switch (rand.nextInt(13))
+		switch (rand.nextInt(10))
 		{
 			case 0:
 			case 1:
@@ -26,9 +26,6 @@ public enum GoalEnum
 			case 4:
 				return Finance; // 20%
 			case 5:
-			case 10:
-			case 11:
-			case 12:
 				return Battle; // 10%
 			case 6:
 			case 7:

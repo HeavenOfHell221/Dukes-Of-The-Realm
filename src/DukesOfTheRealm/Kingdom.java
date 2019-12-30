@@ -316,7 +316,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	private Color randomColor(final Random rand)
 	{
 		Color color = this.colors.get(rand.nextInt(this.colors.size()));
-		//this.colors.remove(color);
+		this.colors.remove(color);
 		return color;
 	}
 

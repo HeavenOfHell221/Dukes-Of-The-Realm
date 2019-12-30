@@ -125,7 +125,7 @@ public class Collision
 		while(it.hasNext())
 		{
 			Point2D pNext = it.next();
-			if(pSoldier.distance(pNext) <= CASTLE_SIZE * 1.5f && isCollision == CollisionEnum.None)
+			if(pSoldier.distance(pNext) <= (CASTLE_SIZE  + GAP_WITH_SOLDIER + SOLDIER_SIZE) && isCollision == CollisionEnum.None)
 			{
 				isCollision = testCollision(pSoldier, pNext);
 			}

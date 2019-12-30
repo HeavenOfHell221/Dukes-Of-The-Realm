@@ -206,25 +206,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 						addMotion(0, getMotion(-1));
 						break;
 					case None:
-						if(dst.getX() > this.coordinate.getX())
-						{
-							addMotion(getMotion(1), 0);
-						}
-						else if(dst.getX() < this.coordinate.getX())
-						{
-							addMotion(offsetX, offsetY);
-						}
-						else
-						{
-							if(dst.getY() > this.coordinate.getY())
-							{
-								addMotion(getMotion(1), 0);
-							}
-							else if(dst.getY() < this.coordinate.getY())
-							{
-								addMotion(offsetX, offsetY);
-							}
-						}
+						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 1, 0)) {}
+						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 1, 0)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
+						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
 						break;
 					default:
 						break;
@@ -238,25 +225,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 						addMotion(getMotion(1), 0);
 						break;
 					case None:
-						if(dst.getX() > this.coordinate.getX())
-						{
-							addMotion(offsetX, offsetY);
-						}
-						else if(dst.getX() < this.coordinate.getX())
-						{
-							addMotion(0, getMotion(1));
-						}
-						else
-						{
-							if(dst.getY() > this.coordinate.getY())
-							{
-								addMotion(0, getMotion(1));
-							}
-							else if(dst.getY() < this.coordinate.getY())
-							{
-								addMotion(offsetX, offsetY);
-							}
-						}
+						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 0, 1)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), 0, 1)) {}
+						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
+						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
 						break;
 					default:
 						break;
@@ -271,25 +245,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 						addMotion(0, getMotion(1));
 						break;
 					case None:
-						if(dst.getX() > this.coordinate.getX())
-						{
-							addMotion(offsetX, offsetY);
-						}
-						else if(dst.getX() < this.coordinate.getX())
-						{
-							addMotion(getMotion(-1), 0);
-						}
-						else
-						{
-							if(dst.getY() > this.coordinate.getY())
-							{
-								addMotion(getMotion(-1), 0);
-							}
-							else if(dst.getY() < this.coordinate.getY())
-							{
-								addMotion(offsetX, offsetY);
-							}
-						}
+						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), -1, 0)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), -1, 0)) {}
+						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
+						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
 						break;
 					default:
 						break;
@@ -302,25 +263,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 						addMotion(getMotion(-1), 0);
 						break;
 					case None:
-						if(dst.getX() > this.coordinate.getX())
-						{
-							addMotion(offsetX, offsetY);
-						}
-						else if(dst.getX() < this.coordinate.getX())
-						{
-							addMotion(0, getMotion(-1));
-						}
-						else
-						{
-							if(dst.getY() > this.coordinate.getY())
-							{
-								addMotion(0, getMotion(-1));
-							}
-							else if(dst.getY() < this.coordinate.getY())
-							{
-								addMotion(offsetX, offsetY);
-							}
-						}
+						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 0, -1)) {}
+						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), 0, -1)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
+						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
+						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
 						break;
 					default:
 						break;
@@ -343,10 +291,18 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 				addMotion(getMotion(1), 0);
 				break;
 			case Inside:
-				addMotion(-offsetX * 1, -offsetY * 1);
+				switch(this.lastCollision)
+				{
+					case Left: addMotion(getMotion(-1), 0); break;
+					case Right: addMotion(getMotion(1), 0); break;
+					case Bottom: addMotion(0, getMotion(1)); break;
+					case Top: addMotion(0, getMotion(-1)); break;
+					case None: addMotion(-offsetX, -offsetY); break;
+					default: break;
+				}
 				break;
 			case None:
-				this.lastCollision = CollisionEnum.None;
+				this.lastCollision = this.collisionState;
 				addMotion(offsetX, offsetY);
 				break;
 			default:
@@ -362,6 +318,15 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 		{
 			isInPosition();
 		}
+	}
+
+	private boolean AIMoveHandle(boolean predicat, int directionX, int directionY)
+	{
+		if(predicat)
+		{
+			addMotion(getMotion(directionX), getMotion(directionY));
+		}
+		return predicat;
 	}
 	
 	private double getMotion(int direction)
