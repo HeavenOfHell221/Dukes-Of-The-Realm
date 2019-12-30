@@ -7,8 +7,6 @@ import static Utility.Settings.ONAGER_COST;
 import static Utility.Settings.PIKER_COST;
 import static Utility.Settings.SCENE_WIDTH;
 
-import java.io.Serializable;
-
 import DukesOfTheRealm.Castle;
 import Interface.IProductionUnit;
 import Interface.IUI;
@@ -35,38 +33,93 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public final class UIProductionUnitPreview extends Parent implements IUpdate, Serializable, IUI
+/**
+ * 
+ */
+public final class UIProductionUnitPreview extends Parent implements IUpdate, IUI
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	private final Button buttonCreatePiker;
+	
+	/**
+	 * 
+	 */
 	private final Button buttonCreateKnight;
+	
+	/**
+	 * 
+	 */
 	private final Button buttonCreateOnager;
+	
+	/**
+	 * 
+	 */
 	private final Button buttonUpgradeCastle;
 
+	/**
+	 * 
+	 */
 	private final Button removeLastProduction;
+	
+	/**
+	 * 
+	 */
 	private final Button removeAllProduction;
 
+	/**
+	 * 
+	 */
 	private final Rectangle background;
 
+	/**
+	 * 
+	 */
 	private final Rectangle backgroundTime;
+	
+	/**
+	 * 
+	 */
 	private final Rectangle fillTime;
 
+	/**
+	 * 
+	 */
 	private Castle currentCastle;
 
+	/**
+	 * 
+	 */
 	private Text pikerCost;
+	
+	/**
+	 * 
+	 */
 	private Text onagerCost;
+	
+	/**
+	 * 
+	 */
 	private Text knightCost;
 
+	/**
+	 * 
+	 */
 	private Text castleCost;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 * 
+	 */
 	public UIProductionUnitPreview()
 	{
 		this.buttonCreatePiker = new Button();
@@ -118,6 +171,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		getChildren().add(node);
 	}
 
+	/**
+	 * 
+	 * @param node
+	 */
 	public void removeNode(final Node node)
 	{
 		getChildren().remove(node);
@@ -137,6 +194,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		setVisible(this.removeLastProduction, visible);
 	}
 
+	/**
+	 * 
+	 * @param fractionFill
+	 */
 	public void setFill(final double fractionFill)
 	{
 		if (fractionFill >= 1)
@@ -152,6 +213,9 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.fillTime.setWidth(5 + fractionFill * 235);
 	}
 
+	/**
+	 * 
+	 */
 	private void setBar()
 	{
 		this.backgroundTime.setFill(Color.TAN);
@@ -172,6 +236,9 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.fillTime.setEffect(i);
 	}
 
+	/**
+	 * 
+	 */
 	private void setAllButtons()
 	{
 		this.buttonCreateKnight
@@ -286,6 +353,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		addEventMouse(this.removeLastProduction);
 	}
 
+	/**
+	 * 
+	 * @param b
+	 * @param p
+	 */
 	private void addProduction(final Button b, final IProductionUnit p)
 	{
 		if (this.currentCastle.addProduction(p))
@@ -298,6 +370,9 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void setBackground()
 	{
 		final Stop[] stops = new Stop[]
@@ -312,6 +387,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		this.background.setArcWidth(60);
 	}
 
+	/**
+	 * 
+	 * @param b
+	 */
 	private void addEventMouse(final Button b)
 	{
 		b.setMinSize(64, 64);
@@ -333,6 +412,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		});
 	}
 
+	/**
+	 * 
+	 * @param b
+	 */
 	private void setButtonShadow(final Button b)
 	{
 		final Bloom bloom = new Bloom();
@@ -378,6 +461,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, Se
 		relocate(this.background, SCENE_WIDTH * margin - 17, offset - 22);
 	}
 
+	/**
+	 * 
+	 * @param castle
+	 * @param productionVisible
+	 */
 	public void switchCastle(final Castle castle, final boolean productionVisible)
 	{
 		this.currentCastle = castle;

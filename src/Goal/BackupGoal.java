@@ -43,6 +43,10 @@ public class BackupGoal extends Goal
 	@Override
 	public String toString()
 	{
+		if(this.nbPikers == -1)
+		{
+			return "BackupGoal [Failed : No second castle]";
+		}
 		return "BackupGoal [nbPikers= " + this.nbPikers + ", nbKnights= " + this.nbKnights + ", nbOnagers= " + this.nbOnagers + "]";
 	}
 }

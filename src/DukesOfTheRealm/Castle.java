@@ -226,10 +226,10 @@ public class Castle extends Sprite implements Serializable
 	public void randomSoldier()
 	{
 		final Random rand = new Random();
-		final int levelSq = this.level * this.level;
-		this.reserveOfSoldiers.setNbKnights(rand.nextInt(levelSq) + rand.nextInt(6) * this.level);
-		this.reserveOfSoldiers.setNbPikers(rand.nextInt(levelSq) + rand.nextInt(5) * this.level);
-		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(levelSq) + rand.nextInt(4) * this.level);
+		final int levelSq = this.level * (this.level/4);
+		this.reserveOfSoldiers.setNbKnights(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
+		this.reserveOfSoldiers.setNbPikers(rand.nextInt(levelSq) + rand.nextInt(2) * this.level);
+		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(levelSq) + rand.nextInt(2) * this.level);
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package UI;
 
-import java.io.Serializable;
-
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
@@ -18,75 +16,71 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * Gère les modules d'iinterface utilisateur du jeu.
+ * @see UIAttackPreview
+ * @see UICastlePreview
+ * @see UIProductionUnitPreview
  */
-public class UIManager extends Parent implements IUI, Serializable, IUpdate
+public class UIManager extends Parent implements IUI, IUpdate
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
 	/**
-	 *
+	 * Instance de la classe UIManager utilisé comme singleton.
 	 */
 	private static UIManager instance = new UIManager();
 
 	/**
-	 *
+	 * Référence à un oobjet UIAttackPreview qui va s'occuper de l'interface utilisateur des attaques.
+	 * @See UIAttackPreview
 	 */
 	private UIAttackPreview attackPreview;
 
 	/**
-	 *
+	 * Référence à un oobjet UIProductionUnitPreview qui va s'occuper de l'interface utilisateur de la production.
+	 * @see UIProductionUnitPreview
 	 */
 	private UIProductionUnitPreview productionUnitPreview;
 
 	/**
-	 *
+	 * Référence à un objet UICastlePreview qui va s'occuper de l'interface utilisateur des données afficher des châteaux.
+	 * @see UICastlePreview
 	 */
 	private UICastlePreview castlePreview;
 
 	/**
-	 *
+	 * Référence au pane principale du jeu.
+	 * @see DukesOfTheRealm.Main#playfieldLayer
 	 */
 	private Pane playfieldLayer;
 
 	/**
-	 *
+	 * Background principal qui dissocie la partie "jeu" de la partie "interface utilisateur"
 	 */
 	private Rectangle background;
 
 	/**
-	 *
+	 * Référence sur le dernier château sélectionné.
+	 * @see UIManager#switchCastle(Castle)
+	 * @see DukesOfTheRealm.Castle
 	 */
 	private Castle currentCastle;
 
 	/**
-	 *
+	 * Référence sur l'avant dernier château sélectionné.
+	 * @see UIManager#switchCastle(Castle)
+	 * @see DukesOfTheRealm.Castle
 	 */
 	private Castle lastCastle;
-
-	/**
-	 *
-	 */
-	private boolean productionVisible = false;
-
-	/**
-	 *
-	 */
-	private boolean attackVisible = false;
-
-	/**
-	 *
-	 */
-	private boolean castleSwitch = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
 	/**
-	 *
+	 * Constructeur par défaut de UIManager.
 	 */
 	private UIManager()
 	{
@@ -97,9 +91,6 @@ public class UIManager extends Parent implements IUI, Serializable, IUpdate
 	/********************* START *********************/
 	/*************************************************/
 
-	/**
-	 *
-	 */
 	@Override
 	public void start()
 	{
@@ -113,8 +104,10 @@ public class UIManager extends Parent implements IUI, Serializable, IUpdate
 	}
 
 	/**
-	 *
-	 * @param pane
+	 * Méthode appelé avant la méthode start pour créer les références des différents objets qui gère l'interface, le background et set le pane.
+	 * @param pane Le pane principal du jeu.
+	 * @see UIManager#start()
+	 * @see DukesOfTheRealm.Main#playfieldLayer
 	 */
 	public void awake(final Pane pane)
 	{
@@ -159,7 +152,8 @@ public class UIManager extends Parent implements IUI, Serializable, IUpdate
 	}
 
 	/**
-	 *
+	 * Initialise les paramètres du background tel que sa couleur et ses effets visuels.
+	 * @see UIManager#background
 	 */
 	private void setBackground()
 	{
@@ -195,48 +189,48 @@ public class UIManager extends Parent implements IUI, Serializable, IUpdate
 	}
 
 	/**
-	 *
-	 * @param castle
+	 * Change le château courant et rend visible ou invisible les modules UI en fonction de l'acteur du nouveau château courant.
+	 * @param castle Le nouveau château courant.
 	 */
 	public void switchCastle(final Castle castle)
 	{
 		this.lastCastle = this.currentCastle;
 		this.currentCastle = castle;
 
-		this.attackVisible = false;
-		this.productionVisible = false;
-		this.castleSwitch = false;
+		boolean attackVisible = false;
+		boolean productionVisible = false;
+		boolean castleSwitch = false;
 
 		if (this.lastCastle == null)
 		{
-			this.productionVisible = true;
+			productionVisible = true;
 		}
 		else if (!this.currentCastle.getActor().isPlayer() && this.lastCastle.getActor().isPlayer())
 		{
-			this.attackVisible = true;
+			attackVisible = true;
 		}
 		else if (this.currentCastle.getActor().isPlayer() && this.lastCastle.getActor().isPlayer())
 		{
 			if (this.currentCastle == this.lastCastle)
 			{
-				this.productionVisible = true;
+				productionVisible = true;
 			}
 			else
 			{
-				this.attackVisible = true;
+				attackVisible = true;
 			}
 		}
 		else if (this.currentCastle.getActor().isPlayer() && !this.lastCastle.getActor().isPlayer())
 		{
-			this.productionVisible = true;
+			productionVisible = true;
 		}
 
-		Main.pause = this.attackVisible;
-		this.castleSwitch = !this.attackVisible;
+		Main.pause = attackVisible;
+		castleSwitch = !attackVisible;
 
-		this.attackPreview.switchCastle(castle, this.attackVisible);
-		this.productionUnitPreview.switchCastle(castle, this.productionVisible);
-		this.castlePreview.switchCastle(castle, this.castleSwitch, this.productionVisible, this.attackVisible);
+		this.attackPreview.switchCastle(castle, attackVisible);
+		this.productionUnitPreview.switchCastle(castle, productionVisible);
+		this.castlePreview.switchCastle(castle, castleSwitch, productionVisible, attackVisible);
 	}
 
 	@Override

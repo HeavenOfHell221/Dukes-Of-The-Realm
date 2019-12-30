@@ -1,7 +1,5 @@
 package UI;
 
-import java.io.Serializable;
-
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
@@ -22,102 +20,128 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
- *
+ * Gère l'interface utilisateur des attaques.
  */
-public final class UIAttackPreview extends Parent implements IUpdate, Serializable, IUI
+public final class UIAttackPreview extends Parent implements IUpdate, IUI
 {
 	/**
-	 *
+	 * Background qui délimite l'interface utilisateur de ce module.
 	 */
 	private transient Rectangle background;
 
 	/**
-	 *
+	 * Bouton permettant de lancer une attaque ou d'envoyer des renforts.
 	 */
 	private final Button buttonAttack;
 
 	/**
-	 *
+	 * Bouton permettant d'augmenter le nombre de Knight dans l'ost.
+	 * <p>
+	 * Cliquer : Augmente de 1 à chaque clique. <br>
+	 * Molette souris vers le haut : Augmente de 1 à chaque crant.
+	 * </p>
 	 */
 	private final Button upKnight;
 
 	/**
-	 *
+	 * Bouton permettant d'augmenter le nombre de Piker dans l'ost.
+	 * <p>
+	 * Cliquer : Augmente de 1 à chaque clique. <br>
+	 * Molette souris vers le haut : Augmente de 1 à chaque crant.
+	 * </p>
 	 */
 	private final Button upPiker;
 
 	/**
-	 *
+	 * Bouton permettant d'augmenter le nombre de Onager dans l'ost.
+	 * <p>
+	 * Cliquer : Augmente de 1 à chaque clique. <br>
+	 * Molette souris vers le haut : Augmente de 1 à chaque crant.
+	 * </p>
 	 */
 	private final Button upOnager;
 
 	/**
-	 *
+	 * Bouton permettant de diminuer le nombre de Knight dans l'ost.
+	 * <p>
+	 * Cliquer : diminue de 1 à chaque clique. <br>
+	 * Molette souris vers le bas : diminue de 1 à chaque crant.
+	 * </p>
 	 */
 	private final Button downKnight;
 
 	/**
-	 *
+	 * Bouton permettant de diminuer le nombre de Piker dans l'ost.
+	 * <p>
+	 * Cliquer : diminue de 1 à chaque clique. <br>
+	 * Molette souris vers le bas : diminue de 1 à chaque crant.
+	 * </p>
 	 */
 	private final Button downPiker;
 
 	/**
-	 *
+	 * Bouton permettant de diminuer le nombre de Onager dans l'ost.
+	 * <p>
+	 * Cliquer : diminue de 1 à chaque clique. <br>
+	 * Molette souris vers le bas : diminue de 1 à chaque crant.
+	 * </p>
 	 */
 	private final Button downOnager;
 
 	/**
-	 *
+	 * Icone représentant le Knight sur l'interface.
 	 */
 	private final ImageView imageKnight;
 
 	/**
-	 *
+	 * Icone représentant le Piker sur l'interface.
 	 */
 	private final ImageView imagePiker;
 
 	/**
-	 *
+	 * Icone représentant le Onager sur l'interface.
 	 */
 	private final ImageView imageOnager;
 
 	/**
-	 *
+	 * Texte qui affiche le nombre actuelle de Piker dans l'ost en cours de création.
 	 */
 	private final Text nbPikerText;
 
 	/**
-	 *
+	 * Texte qui affiche le nombre actuelle de Onager dans l'ost en cours de création.
 	 */
 	private final Text nbOnagerText;
 
 	/**
-	 *
+	 * Texte qui affiche le nombre actuelle de Knight dans l'ost en cours de création.
 	 */
 	private final Text nbKnightText;
 
 	/**
-	 *
+	 * Nombre actuelle de Piker dans l'ost en cours de création.
 	 */
 	private int nbPiker;
 
 	/**
-	 *
+	 * Nombre actuelle de Knight dans l'ost en cours de création.
 	 */
 	private int nbKnight;
 
 	/**
-	 *
+	 * Nombre actuelle de Onager dans l'ost en cours de création.
 	 */
 	private int nbOnager;
 
 	/**
-	 *
+	 * Référence sur le château que va recevoir l'ost.
+	 * @see UIAttackPreview#switchCastle(Castle, boolean)
 	 */
 	private Castle currentCastle;
 
 	/**
-	 *
+	 * Référence sur le château qui va envoyer l'ost.
+	 * @see UIAttackPreview#switchCastle(Castle, boolean)
 	 */
 	private Castle lastCastle;
 
@@ -126,7 +150,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	/*************************************************/
 
 	/**
-	 *
+	 * Constructeur par défaut de UIAttackPreview.
 	 */
 	public UIAttackPreview()
 	{
@@ -181,7 +205,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	/*************************************************/
 
 	/**
-	 *
+	 * Méthode qui va initialiser tout les objets Text de ce module.
+	 * @see UIAttackPreview#setText(Text, int)
 	 */
 	private void setAllTexts()
 	{
@@ -191,9 +216,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
-	 * @param text
-	 * @param font
+	 * Initalise un objet Text avec des paramètres prédéfinis.
+	 * @param text Lobjet Text qu'on initialise
+	 * @param font La taille de la police.
 	 */
 	private void setText(final Text text, final int font)
 	{
@@ -205,7 +230,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
+	 * Remet à 0 le nombre de chaque unité qui est affiché.
 	 */
 	private void resetOst()
 	{
@@ -215,9 +240,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
-	 * @param b
-	 * @param url
+	 * Initialise le style d'un bouton, sa taille et le cursor lorsque la souris passe dessus.
+	 * @param b Le bouton à initialiser.
+	 * @param url Le chemin pour accéder à l'image du bouton.
 	 */
 	private void setStyle(final Button b, final String url)
 	{
@@ -229,7 +254,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
+	 * Initialise et place les événements de la souris sur tout les boutons du module.
 	 */
 	private void setAllButtons()
 	{
@@ -346,7 +371,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
+	 * Réinitialise entièrement le module et le rend invisible.
 	 */
 	private void reset()
 	{
@@ -358,7 +383,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
+	 * Initialise le background (couleur, effets, apparence graphique..)
 	 */
 	private void setBackground()
 	{
@@ -449,9 +474,10 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	}
 
 	/**
-	 *
-	 * @param castle
-	 * @param attackVisible
+	 * Change le château courant et fixe la visibilité de ce module en fonction du boolean attackVisible.
+	 * @param castle Le nouveau château courant.
+	 * @param attackVisible Spécifie si ce module est visible ou non.
+	 * @see UIManager#switchCastle(Castle)
 	 */
 	public void switchCastle(final Castle castle, final boolean attackVisible)
 	{

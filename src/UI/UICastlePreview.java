@@ -1,7 +1,5 @@
 package UI;
 
-import java.io.Serializable;
-
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
 import Interface.IUpdate;
@@ -16,9 +14,13 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
- *
+ * Gère l'interface utilisateur des données des châteaux.
+ * <p>
+ * Affiche les données du dernier château selectionné. <br>
+ * Dans le cas où selectionner un château lance la création d'une ost, les données du château reste sur le château qui lance l'ost.
+ * </p>
  */
-public final class UICastlePreview extends Parent implements Serializable, IUI, IUpdate
+public final class UICastlePreview extends Parent implements IUI, IUpdate
 {
 
 	/*************************************************/
@@ -208,11 +210,6 @@ public final class UICastlePreview extends Parent implements Serializable, IUI, 
 	 */
 	private void setBackground()
 	{
-		/*
-		 * final Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.BLACK)}; final
-		 * LinearGradient lg2 = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
-		 * background.setStroke(lg2);
-		 */
 		this.background.setStroke(Color.WHITE);
 		this.background.setStrokeWidth(3);
 		this.background.setArcHeight(60);
@@ -310,7 +307,6 @@ public final class UICastlePreview extends Parent implements Serializable, IUI, 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
-
 	/**
 	 * @return the currentCastle
 	 */
