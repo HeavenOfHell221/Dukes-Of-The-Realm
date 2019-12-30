@@ -30,7 +30,7 @@ public class BackupGoal extends Goal
 			AttackGoal g = new AttackGoal(origin, nbPikers, nbKnights, nbOnagers);
 			g.setGoal(this.destination);
 			this.goals.addLast(g);
-			this.goals.addLast(new SaveSoldierGoal(origin, nbPikers, nbKnights, 0));
+			//this.goals.addLast(new SaveSoldierGoal(origin, nbPikers, nbKnights, 0));
 		}
 	}
 

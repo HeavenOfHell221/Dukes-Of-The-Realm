@@ -267,7 +267,14 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		this.buttonCreateKnight.setOnMousePressed(event -> addProduction(this.buttonCreateKnight, new Knight()));
 
 		this.buttonUpgradeCastle
-				.setOnMousePressed(event -> addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())));
+				.setOnMousePressed(event -> 
+				{
+					if(addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())))
+					{
+						this.currentCastle.setNbCastleInProduction(this.currentCastle.getNbCastleInProduction() + 1);
+					}
+				}
+				);
 
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
 		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.removeLastProduction(true));
@@ -327,7 +334,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			Text t = new Text();
 			this.castleCost = t;
-			t.setText(LEVEL_UP_COST_FACTOR * this.currentCastle.getLevel() + "");
+			t.setText(LEVEL_UP_COST_FACTOR * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction()) + "");
 			t.setFont(new Font(30));
 			t.setFill(Color.ORANGERED);
 			t.setStyle("-fx-font-weight: bold");
@@ -357,17 +364,20 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 * 
 	 * @param b
 	 * @param p
+	 * @return
 	 */
-	private void addProduction(final Button b, final IProductionUnit p)
+	private boolean addProduction(final Button b, final IProductionUnit p)
 	{
 		if (this.currentCastle.addProduction(p))
 		{
 			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.LIGHTGREEN, 30, 0.33, 0, 0));
+			return true;
 		}
 		else
 		{
-			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 30, 0.33, 0, 0));
+			b.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.ORANGERED, 30, 0.33, 0, 0));	
 		}
+		return false;
 	}
 
 	/**

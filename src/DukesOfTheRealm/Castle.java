@@ -443,6 +443,26 @@ public class Castle extends Sprite implements Serializable
 		return this.caserne.getNbPikersInProduction();
 	}
 
+	
+	
+	/**
+	 * @return
+	 * @see DukesOfTheRealm.Caserne#getNbCastleInProduction()
+	 */
+	public final int getNbCastleInProduction()
+	{
+		return caserne.getNbCastleInProduction();
+	}
+
+	/**
+	 * @param nbCastleInProduction
+	 * @see DukesOfTheRealm.Caserne#setNbCastleInProduction(int)
+	 */
+	public final void setNbCastleInProduction(int nbCastleInProduction)
+	{
+		caserne.setNbCastleInProduction(nbCastleInProduction);
+	}
+
 	/**
 	 * @return
 	 * @see    DukesOfTheRealm.Caserne#getNbOnagersInProduction()

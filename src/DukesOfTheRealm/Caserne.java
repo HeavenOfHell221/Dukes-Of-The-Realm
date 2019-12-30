@@ -7,6 +7,7 @@ import Interface.IProductionUnit;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
+import Utility.Settings;
 import Utility.Time;
 
 public class Caserne implements Serializable
@@ -20,6 +21,7 @@ public class Caserne implements Serializable
 	private int nbPikersInProduction;
 	private int nbOnagersInProduction;
 	private int nbKnightsInProduction;
+	private int nbCastleInProduction;
 
 	public Caserne(final Castle castle)
 	{
@@ -29,6 +31,7 @@ public class Caserne implements Serializable
 		this.nbPikersInProduction = 0;
 		this.nbKnightsInProduction = 0;
 		this.nbOnagersInProduction = 0;
+		this.nbCastleInProduction = 0;
 	}
 
 	public void updateProduction()
@@ -46,6 +49,7 @@ public class Caserne implements Serializable
 				if (p.getClass() == Castle.class)
 				{
 					this.castle.levelUp();
+					this.nbCastleInProduction--;
 				}
 				else if (p.getClass() == Piker.class)
 				{
@@ -113,7 +117,8 @@ public class Caserne implements Serializable
 	 */
 	public boolean addProduction(final IProductionUnit newProduction)
 	{
-		if (newProduction == null || !this.castle.removeFlorin(newProduction.getProductionCost()))
+		if (newProduction == null 
+				|| !this.castle.removeFlorin(newProduction.getProductionCost() + this.nbCastleInProduction * Settings.LEVEL_UP_COST_FACTOR))
 		{
 			return false;
 		}
@@ -200,4 +205,21 @@ public class Caserne implements Serializable
 		this.nbKnightsInProduction = nbKnightsInProduction;
 	}
 
+	/**
+	 * @return the nbCastleInProduction
+	 */
+	public final int getNbCastleInProduction()
+	{
+		return nbCastleInProduction;
+	}
+
+	/**
+	 * @param nbCastleInProduction the nbCastleInProduction to set
+	 */
+	public final void setNbCastleInProduction(int nbCastleInProduction)
+	{
+		this.nbCastleInProduction = nbCastleInProduction;
+	}
+
+	
 }

@@ -53,7 +53,7 @@ public class GeneratorGoal implements Serializable
 		{
 			case 0:
 			case 1:
-				return new SaveFlorinGoal(rand.nextInt(201) * castle.getLevel());
+				return new SaveFlorinGoal(rand.nextInt(201) * castle.getLevel() + 100);
 			//case 1:
 				//return new SaveSoldierGoal(castle, rand.nextInt(lvl * 5) + lvl, rand.nextInt(lvl * 5) + lvl, rand.nextInt(lvl * 5) + lvl);
 			default:
@@ -125,20 +125,25 @@ public class GeneratorGoal implements Serializable
 				return new MultiSoldierGoal(castle, 0, 0, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
 			// Piker + Knight
 			case 3:
-				return new MultiSoldierGoal(castle, rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl,
+				return new MultiSoldierGoal(castle, 
+						rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl,
 						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl, 0);
 			// Piker + Onager
 			case 4:
-				return new MultiSoldierGoal(castle, rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl, 0,
+				return new MultiSoldierGoal(castle, 
+						rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl, 0,
 						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl);
 			// Knight + Onager
 			case 5:
-				return new MultiSoldierGoal(castle, 0, rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl,
+				return new MultiSoldierGoal(castle, 0, 
+						rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl,
 						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
 			// Piker + Knight + Onager
 			case 6:
-				return new MultiSoldierGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
-						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
+				return new MultiSoldierGoal(castle, 
+						rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
+						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl, 
+						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
 			default:
 				break;
 		}
