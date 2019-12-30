@@ -1,7 +1,19 @@
 package DukesOfTheRealm;
 
+import static Utility.Settings.ATTACK_LOCATIONS_PER_SIDE;
+import static Utility.Settings.CASTLE_SIZE;
+import static Utility.Settings.GAP_WITH_SOLDIER;
+import static Utility.Settings.LEVEL_UP_COST_FACTOR;
+import static Utility.Settings.LEVEL_UP_DURATION_FACTOR;
+import static Utility.Settings.LEVEL_UP_DURATION_OFFSET;
+import static Utility.Settings.NB_ATTACK_LOCATIONS;
+import static Utility.Settings.SOLDIER_SIZE;
+import static Utility.Settings.STARTER_KNIGHT;
+import static Utility.Settings.STARTER_ONAGER;
+import static Utility.Settings.STARTER_PIKER;
+import static Utility.Settings.THIRD_OF_CASTLE;
+
 import java.io.Serializable;
-import java.util.ArrayDeque;
 import java.util.Random;
 import java.util.Stack;
 
@@ -9,14 +21,16 @@ import Duke.Actor;
 import Enum.SoldierEnum;
 import Interface.IProductionUnit;
 import Utility.Point2D;
-import static Utility.Settings.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
  * Représente un château.
- * <p>Extends de la classe Sprite.</p>
+ * <p>
+ * Extends de la classe Sprite.
+ * </p>
+ * 
  * @see Sprite
  */
 public class Castle extends Sprite implements Serializable
@@ -49,25 +63,29 @@ public class Castle extends Sprite implements Serializable
 	private int level = 1;
 
 	/**
-	 * La réserve d'unité du château. 
+	 * La réserve d'unité du château.
+	 * 
 	 * @see ReserveOfSoldiers
 	 */
-	private ReserveOfSoldiers reserveOfSoldiers; 
+	private ReserveOfSoldiers reserveOfSoldiers;
 
 	/**
 	 * La caserne du château.
+	 * 
 	 * @see Caserne
 	 */
 	private Caserne caserne;
 
 	/**
 	 * L'ost du château.
+	 * 
 	 * @see Ost
 	 */
 	private Ost ost;
 
 	/**
 	 * L'orientation de la porte pour ce château.
+	 * 
 	 * @see Orientation
 	 */
 	private Orientation orientation;
@@ -84,6 +102,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Les points où les unités peuvent se placer pour attaquer ce château.
+	 * 
 	 * @see Castle#setAttackLocations()
 	 * @see Castle#freeAttackLocation(Point2D)
 	 * @see Ost
@@ -92,6 +111,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * L'acteur à qui appartient ce château.
+	 * 
 	 * @see Actor
 	 */
 	private Actor actor;
@@ -125,11 +145,12 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Initalise ce château.
+	 * 
 	 * @param level Le niveau de ce château
-	 * @param pane Le pane pour afficher la réprésentation graphique de ce château.
+	 * @param pane  Le pane pour afficher la réprésentation graphique de ce château.
 	 * @param coord Les coordonnées de ce château.
 	 * @param actor L'acteur à qui appartient ce château.
-	 * @see Kingdom#createWorld()
+	 * @see         Kingdom#createWorld()
 	 */
 	public void start(final int level, final Pane pane, final Point2D coord, final Actor actor)
 	{
@@ -141,7 +162,7 @@ public class Castle extends Sprite implements Serializable
 		this.caserne = new Caserne(this);
 		this.ost = null;
 		this.attackLocations = new Stack<>();
-		//this.orientation = setOrientation();
+		// this.orientation = setOrientation();
 		this.orientation = Orientation.North;
 		startTransient(pane);
 		setAttackLocations();
@@ -149,8 +170,9 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Initalise les éléments transient de ce château.
-	 * @param pane Le pane pour afficher la réprésentation graphique de ce château. 
-	 * @see Kingdom#startTransient(Pane)
+	 * 
+	 * @param pane Le pane pour afficher la réprésentation graphique de ce château.
+	 * @see        Kingdom#startTransient(Pane)
 	 */
 	public void startTransient(final Pane pane)
 	{
@@ -168,6 +190,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Met à jour la caserne.
+	 * 
 	 * @see Caserne#updateProduction()
 	 */
 	public void updateProduction()
@@ -177,9 +200,10 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Met à jour l'ost si ce château en a une.
-	 * @param now Le temps actuel.
+	 * 
+	 * @param now   Le temps actuel.
 	 * @param pause Boolean représentant si la pause est activé ou non.
-	 * @see Ost#update(long, boolean)
+	 * @see         Ost#update(long, boolean)
 	 */
 	public void updateOst(final long now, final boolean pause)
 	{
@@ -195,13 +219,14 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Donne à un Baron un nombre aléatoire d'unités proportionnel au niveau de ce château.
+	 * 
 	 * @see Duke.Baron#addFirstCastle(Castle)
 	 * @see ReserveOfSoldiers
 	 */
 	public void randomSoldier()
 	{
 		final Random rand = new Random();
-		final int levelSq = this.level * this.level; 
+		final int levelSq = this.level * this.level;
 		this.reserveOfSoldiers.setNbKnights(rand.nextInt(levelSq) + rand.nextInt(6) * this.level);
 		this.reserveOfSoldiers.setNbPikers(rand.nextInt(levelSq) + rand.nextInt(5) * this.level);
 		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(levelSq) + rand.nextInt(4) * this.level);
@@ -209,6 +234,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Donne un nombre fini d'unités pour le joueur et les IA.
+	 * 
 	 * @see ReserveOfSoldiers
 	 * @see Utility.Settings#STARTER_KNIGHT
 	 * @see Utility.Settings#STARTER_ONAGER
@@ -222,40 +248,11 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * Prend au hasard l'une des 4 orientations de base pour la porte.
-	 * @return Retourne l'orientation de la porte.
-	 * @see Castle#start(int, Pane, Point2D, Actor)
-	 */
-	private Orientation setOrientation()
-	{
-		final Random rand = new Random();
-		Orientation orientation = Orientation.None;
-
-		switch (rand.nextInt(4)) // Possibilité : 0, 1, 2, 3
-		{
-			case 0:
-				orientation = Orientation.North;
-				break;
-			case 1:
-				orientation = Orientation.South;
-				break;
-			case 2:
-				orientation = Orientation.West;
-				break;
-			case 3:
-				orientation = Orientation.East;
-				break;
-			default:
-				break;
-		}
-		return orientation;
-	}
-
-	/**
 	 * Initialise et affiche la représentation graphique du château aisni que de la porte.
+	 * 
 	 * @param pane Le pane principale.
-	 * @see Sprite#addCastleRepresentation(Pane)
-	 * @see DukesOfTheRealm.Sprite#addDoorRepresentation(Pane, Orientation)
+	 * @see        Sprite#addCastleRepresentation(Pane)
+	 * @see        DukesOfTheRealm.Sprite#addDoorRepresentation(Pane, Orientation)
 	 */
 	public void addRepresentation(final Pane pane)
 	{
@@ -266,6 +263,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Augmente de 1 le niveau de ce château.
+	 * 
 	 * @see Castle#level
 	 */
 	public void levelUp()
@@ -275,8 +273,9 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Ajoute des Florin au total de ce château.
+	 * 
 	 * @param amount Le nombre de Florin à ajouter.
-	 * @see Castle#totalFlorin
+	 * @see          Castle#totalFlorin
 	 */
 	public void addFlorin(final double amount)
 	{
@@ -285,8 +284,9 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Retire le nombre de Florin en paramètre si cela est possible.
-	 * @param amount Le nombre de Florin à retirer.
-	 * @return Retourne true si les Florin on été retirés et false sinon.
+	 * 
+	 * @param  amount Le nombre de Florin à retirer.
+	 * @return        Retourne true si les Florin on été retirés et false sinon.
 	 */
 	public boolean removeFlorin(final double amount)
 	{
@@ -300,9 +300,11 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Teste si ce château à au moins un certain nombre de Florin.
+	 * 
 	 * @param  amount Le nombre de Florin qu'on teste.
-	 * @return Retourne true si le château à au moins le nombre de Florin donné en paramètre, false sinon.
-	 * @see Castle#removeFlorin(double)
+	 * @return        Retourne true si le château à au moins le nombre de Florin donné en paramètre,
+	 *                false sinon.
+	 * @see           Castle#removeFlorin(double)
 	 */
 	public boolean enoughOfFlorin(final double amount)
 	{
@@ -312,18 +314,20 @@ public class Castle extends Sprite implements Serializable
 	/**
 	 * Crée une ost avec un château destination et un nombre d'unités.
 	 * <p>
-	 * L'ost serra crée si ce château n'en contient pas déjà une, si la destination n'est pas ce château et que la réserve contient <br>
+	 * L'ost serra crée si ce château n'en contient pas déjà une, si la destination n'est pas ce château
+	 * et que la réserve contient <br>
 	 * le nombre d'unités nécessaire.
 	 * </p>
+	 * 
 	 * @param  destination Le château destination de l'ost.
-	 * @param  nbPikers Le nombre de Piker de l'ost.
-	 * @param  nbKnights Le nombre de Knight de l'ost.
-	 * @param  nbOnagers Le nombre d'Onager de l'ost.
-	 * @param isBackup Est ce que c'est une attaque ou des renforts.
-	 * @return Retourne true si l'ost a été crée, false sinon.
-	 * @see Ost
-	 * @see Ost#start()
-	 * @see ReserveOfSoldiers#removeSoldiers(int, int, int)
+	 * @param  nbPikers    Le nombre de Piker de l'ost.
+	 * @param  nbKnights   Le nombre de Knight de l'ost.
+	 * @param  nbOnagers   Le nombre d'Onager de l'ost.
+	 * @param  isBackup    Est ce que c'est une attaque ou des renforts.
+	 * @return             Retourne true si l'ost a été crée, false sinon.
+	 * @see                Ost
+	 * @see                Ost#start()
+	 * @see                ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
 	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, final boolean isBackup)
 	{
@@ -341,11 +345,12 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Force ce château à ne plus avoir d'ost.
+	 * 
 	 * @see Ost#update(long, boolean)
 	 */
 	public void removeOst()
 	{
-		if(this.ost != null && this.ost.getSoldiers().size() == 0) 
+		if (this.ost != null && this.ost.getSoldiers().size() == 0)
 		{
 			this.ost = null;
 		}
@@ -356,6 +361,7 @@ public class Castle extends Sprite implements Serializable
 	 * <p>
 	 * Utilisé quand le château change de propriétaire.
 	 * </p>
+	 * 
 	 * @param color La nouvelle couleur.
 	 */
 	public void switchColor(final Color color)
@@ -423,11 +429,11 @@ public class Castle extends Sprite implements Serializable
 	{
 		this.attackLocations.push(FreedAttackLocation);
 	}
-	
+
 	/*************************************************/
 	/************** DELEGATES METHODS ****************/
 	/*************************************************/
-	
+
 	/**
 	 * @return
 	 * @see    DukesOfTheRealm.Caserne#getNbPikersInProduction()
@@ -481,7 +487,7 @@ public class Castle extends Sprite implements Serializable
 	{
 		this.caserne.setNbKnightsInProduction(nbKnightsInProduction);
 	}
-	
+
 	/**
 	 *
 	 * @see DukesOfTheRealm.ReserveOfSoldiers#addPiker()
@@ -508,7 +514,7 @@ public class Castle extends Sprite implements Serializable
 	{
 		this.reserveOfSoldiers.addOnager();
 	}
-	
+
 	/**
 	 * @return
 	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
@@ -618,6 +624,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Calcul le coût de production de ce château en fonction de son niveau.
+	 * 
 	 * @return Retourne son coût de production.
 	 */
 	@Override
@@ -631,11 +638,12 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final double getTotalFlorin()
 	{
-		return totalFlorin;
+		return this.totalFlorin;
 	}
 
 	/**
 	 * Calcul le temps de production de ce château en fonction de son niveau.
+	 * 
 	 * @return Retourne son temps de production.
 	 */
 	@Override
@@ -649,7 +657,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final int getLevel()
 	{
-		return level;
+		return this.level;
 	}
 
 	/**
@@ -657,7 +665,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final Orientation getOrientation()
 	{
-		return orientation;
+		return this.orientation;
 	}
 
 	/**
@@ -665,7 +673,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final Color getMyColor()
 	{
-		return myColor;
+		return this.myColor;
 	}
 
 	/**
@@ -678,6 +686,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Set the level
+	 * 
 	 * @param level
 	 */
 	public void setLevel(final int level)
@@ -687,6 +696,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Set the color
+	 * 
 	 * @param color
 	 */
 	public void setColor(final Color color)
@@ -716,5 +726,5 @@ public class Castle extends Sprite implements Serializable
 	public final void setActor(final Actor actor)
 	{
 		this.actor = actor;
-	}	
+	}
 }

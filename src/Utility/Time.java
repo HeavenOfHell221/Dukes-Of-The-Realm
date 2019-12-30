@@ -80,7 +80,7 @@ public class Time implements IUpdate
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void update(final long now, final boolean pause)

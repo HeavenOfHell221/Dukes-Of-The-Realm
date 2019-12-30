@@ -10,7 +10,7 @@ public interface IUpdate
 	 */
 	default void start()
 	{
-		
+
 	}
 
 	/**
@@ -18,7 +18,8 @@ public interface IUpdate
 	 * <p>
 	 * Cette méthode est appelé à chaque image.
 	 * </p>
-	 * @param now Le temps écoulé depuis la création du programme.
+	 * 
+	 * @param now   Le temps écoulé depuis la création du programme.
 	 * @param pause Boolean spécifiant si la pause est activé ou non.
 	 */
 	void update(long now, boolean pause);

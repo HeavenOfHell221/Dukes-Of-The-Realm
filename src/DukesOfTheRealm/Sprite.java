@@ -83,7 +83,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 */
 	protected Sprite()
 	{
-		
+
 	}
 
 	/*************************************************/
@@ -195,7 +195,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected final void AddOnagerRepresentation()
 	{
@@ -212,7 +212,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	}
 
 	/**
-	 * 
+	 *
 	 * @param shape
 	 * @param width
 	 * @param height

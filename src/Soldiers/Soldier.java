@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.Castle.Orientation;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
@@ -35,7 +34,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	protected Point2D attackLocation = null;
 	protected boolean isWaitingForAttackLocation = false;
 	private CollisionEnum collisionState = CollisionEnum.None;
-	
+
 	private CollisionEnum lastCollision = CollisionEnum.None;
 
 	/*************************************************/
@@ -43,7 +42,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param layer
 	 * @param coord
 	 * @param itsOst
@@ -56,7 +55,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected Soldier()
 	{
@@ -67,6 +66,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/********************* START *********************/
 	/*************************************************/
 
+	@Override
 	public void start()
 	{
 
@@ -102,7 +102,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			Move(getSeparationPoint());
 		}
 
-		if (this.isArrived && !this.isInPosition)	// Arrived to castle but not in position to attack
+		if (this.isArrived && !this.isInPosition) // Arrived to castle but not in position to attack
 		{
 			if (this.attackLocation != null)
 			{
@@ -138,13 +138,13 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
-	 * 
+	 *
 	 * @param reserve
 	 */
 	protected abstract void addInReserve(ReserveOfSoldiers reserve);
 
 	/**
-	 * 
+	 *
 	 */
 	private final void SetAttackLocation()
 	{
@@ -160,7 +160,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dst
 	 * @param factorSpeed
 	 */
@@ -170,114 +170,171 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 		{
 			return;
 		}
-		
+
 		isOutOfScreen();
-		
-		if(this.isDead)
+
+		if (this.isDead)
 		{
 			return;
 		}
-		
-		if(dst.delta(this.coordinate).getX() <= 0.5d)
+
+		if (dst.delta(this.coordinate).getX() <= 0.5d)
 		{
 			this.coordinate.setX(dst.getX());
 		}
-		
-		if(dst.delta(this.coordinate).getY() <= 0.5d)
+
+		if (dst.delta(this.coordinate).getY() <= 0.5d)
 		{
 			this.coordinate.setY(dst.getY());
 		}
-		
-		int directionX = getX() < dst.getX() ? 1 : getX() == (int) dst.getX() /*|| dst.delta(this.coordinate).getX() <= 0.5d*/ ? 0 : -1;
-		int directionY = getY() < dst.getY() ? 1 : getY() == (int) dst.getY() /*|| dst.delta(this.coordinate).getY() <= 0.5d*/ ? 0 : -1;
-			
+
+		int directionX = getX() < dst.getX() ? 1 : getX() == (int) dst.getX() /* || dst.delta(this.coordinate).getX() <= 0.5d */ ? 0 : -1;
+		int directionY = getY() < dst.getY() ? 1 : getY() == (int) dst.getY() /* || dst.delta(this.coordinate).getY() <= 0.5d */ ? 0 : -1;
+
 		double offsetX = getMotion(directionX);
 		double offsetY = getMotion(directionY);
 
-		this.collisionState = Collision.testCollisionWithAllCastlesNearby(new Point2D(coordinate.getX() + offsetX, coordinate.getY() + offsetY));
-		
-		switch(this.collisionState)
-		{		
+		this.collisionState = Collision
+				.testCollisionWithAllCastlesNearby(new Point2D(this.coordinate.getX() + offsetX, this.coordinate.getY() + offsetY));
+
+		switch (this.collisionState)
+		{
 			case LeftTop:
-				
-				switch(this.lastCollision)
+
+				switch (this.lastCollision)
 				{
 					case Left:
 						addMotion(0, getMotion(-1));
 						break;
 					case None:
-						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 1, 0)) {}
-						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 1, 0)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
-						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
+						if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 1, 0))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 1, 0))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0))
+						{
+						}
 						break;
 					default:
 						break;
 				}
-				
+
 				break;
 			case TopRight:
-				switch(this.lastCollision)
+				switch (this.lastCollision)
 				{
 					case Top:
 						addMotion(getMotion(1), 0);
 						break;
 					case None:
-						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 0, 1)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), 0, 1)) {}
-						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
-						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
+						if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 0, 1))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), 0, 1))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0))
+						{
+						}
 						break;
 					default:
 						break;
 				}
-				
+
 				break;
 			case RightBottom:
-				
-				switch(this.lastCollision)
+
+				switch (this.lastCollision)
 				{
 					case Right:
 						addMotion(0, getMotion(1));
 						break;
 					case None:
-						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), -1, 0)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), -1, 0)) {}
-						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
-						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
+						if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), -1, 0))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), -1, 0))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0))
+						{
+						}
 						break;
 					default:
 						break;
 				}
 				break;
 			case BottomLeft:
-				switch(this.lastCollision)
+				switch (this.lastCollision)
 				{
 					case Bottom:
 						addMotion(getMotion(-1), 0);
 						break;
 					case None:
-						if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 0, -1)) {}
-						else if(AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), 0, -1)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX, directionY)) {}
-						else if(AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY)) {}
-						else if(AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0)) {}
+						if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() > this.coordinate.getY(), 0, -1))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() > this.coordinate.getX() && dst.getY() < this.coordinate.getY(), 0, -1))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() > this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() < this.coordinate.getX() && dst.getY() < this.coordinate.getY(), directionX,
+								directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getX() == this.coordinate.getX(), 0, directionY))
+						{
+						}
+						else if (AIMoveHandle(dst.getY() == this.coordinate.getY(), directionX, 0))
+						{
+						}
 						break;
 					default:
 						break;
 				}
-				break;	
+				break;
 			case Right:
 				this.lastCollision = this.collisionState;
 				addMotion(0, getMotion(1));
-				break;	
+				break;
 			case Left:
 				this.lastCollision = this.collisionState;
 				addMotion(0, getMotion(-1));
@@ -291,14 +348,25 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 				addMotion(getMotion(1), 0);
 				break;
 			case Inside:
-				switch(this.lastCollision)
+				switch (this.lastCollision)
 				{
-					case Left: addMotion(getMotion(-1), 0); break;
-					case Right: addMotion(getMotion(1), 0); break;
-					case Bottom: addMotion(0, getMotion(1)); break;
-					case Top: addMotion(0, getMotion(-1)); break;
-					case None: addMotion(-offsetX, -offsetY); break;
-					default: break;
+					case Left:
+						addMotion(getMotion(-1), 0);
+						break;
+					case Right:
+						addMotion(getMotion(1), 0);
+						break;
+					case Bottom:
+						addMotion(0, getMotion(1));
+						break;
+					case Top:
+						addMotion(0, getMotion(-1));
+						break;
+					case None:
+						addMotion(-offsetX, -offsetY);
+						break;
+					default:
+						break;
 				}
 				break;
 			case None:
@@ -307,9 +375,9 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 				break;
 			default:
 				break;
-			
+
 		}
-		
+
 		if (!this.isArrived)
 		{
 			isArrived();
@@ -320,22 +388,22 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 		}
 	}
 
-	private boolean AIMoveHandle(boolean predicat, int directionX, int directionY)
+	private boolean AIMoveHandle(final boolean predicat, final int directionX, final int directionY)
 	{
-		if(predicat)
+		if (predicat)
 		{
 			addMotion(getMotion(directionX), getMotion(directionY));
 		}
 		return predicat;
 	}
-	
-	private double getMotion(int direction)
+
+	private double getMotion(final int direction)
 	{
 		return this.stats.speed * Time.deltaTime * direction;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void isOutOfScreen()
 	{
@@ -349,8 +417,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	private void isArrived()
 	{
 		Point2D p = this.coordinate.delta(getSeparationPoint());
-		
-		if(p.getX() < 1 && p.getY() < 1)
+
+		if (p.getX() < 1 && p.getY() < 1)
 		{
 			this.isArrived = true;
 			SetAttackLocation();
@@ -362,8 +430,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 		if (!this.isWaitingForAttackLocation)
 		{
 			Point2D p = this.coordinate.delta(this.attackLocation);
-			
-			if(p.getX() < 1 && p.getY() < 1)
+
+			if (p.getX() < 1 && p.getY() < 1)
 			{
 				this.isInPosition = true;
 			}
@@ -371,7 +439,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void attack()
 	{
@@ -400,7 +468,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 	/*************** DELEGATES METHODS ***************/
 	/*************************************************/
-	
+
 	/**
 	 * @return
 	 * @see    DukesOfTheRealm.Ost#getSeparationPoint()
@@ -454,16 +522,16 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	{
 		return this.itsOst.getDestination();
 	}
-	
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
 	@Override
 	public abstract double getProductionTime();
-	
+
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public abstract int getProductionCost();
@@ -473,7 +541,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	 */
 	public final SoldierEnum getType()
 	{
-		return type;
+		return this.type;
 	}
 
 	/**

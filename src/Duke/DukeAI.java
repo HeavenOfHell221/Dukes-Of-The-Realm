@@ -13,6 +13,7 @@ import Utility.Settings;
 
 /**
  * Classe dérivée d'Actor, représente les IA qui jouent contre le joueur.
+ * 
  * @see Actor
  */
 public class DukeAI extends Actor implements Serializable
@@ -20,26 +21,29 @@ public class DukeAI extends Actor implements Serializable
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	/**
 	 * Dernière fois que ce Duke à vérifié ses objectifs.
+	 * 
 	 * @see DukeAI#time(long, boolean)
 	 * @see DukeAI#update(long, boolean)
 	 */
 	private long lastTime;
-	
+
 	/**
 	 * Map des objectifs pour chaque château de ce Duke.
 	 * <p>
-	 * Clé: Un château, Valeur: Son objectif associé. 
+	 * Clé: Un château, Valeur: Son objectif associé.
 	 * </p>
+	 * 
 	 * @see DukeAI#update(long, boolean)
 	 * @see DukeAI#putNewGoal(Castle)
 	 */
 	private final HashMap<Castle, Goal> goalMap;
-	
+
 	/**
 	 * Référence au royaume auquel appartient ce DukeIA.
+	 * 
 	 * @see DukesOfTheRealm.Kingdom
 	 * @see Goal.GeneratorGoal#getNewGoalBattle(Castle)
 	 */
@@ -48,7 +52,7 @@ public class DukeAI extends Actor implements Serializable
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
+
 	/**
 	 * Constructeur par défaut de DukeIA.
 	 */
@@ -57,13 +61,13 @@ public class DukeAI extends Actor implements Serializable
 		super();
 		this.goalMap = new HashMap<>();
 	}
-	
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	/**
-	 * 
+	 *
 	 * @param kingdom
 	 */
 	public void start(final Kingdom kingdom)
@@ -74,7 +78,7 @@ public class DukeAI extends Actor implements Serializable
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
-	
+
 	@Override
 	public void update(final long now, final boolean pause)
 	{
@@ -102,11 +106,11 @@ public class DukeAI extends Actor implements Serializable
 			}
 		}
 	}
-	
+
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	@Override
 	public void addFirstCastle(final Castle castle)
 	{
@@ -116,8 +120,9 @@ public class DukeAI extends Actor implements Serializable
 
 	/**
 	 * Génère un nouvel objectif pour le château en paramètre et le place dans la map.
+	 * 
 	 * @param castle Le château courant.
-	 * @see Goal.GeneratorGoal
+	 * @see          Goal.GeneratorGoal
 	 */
 	private void putNewGoal(final Castle castle)
 	{
@@ -125,10 +130,12 @@ public class DukeAI extends Actor implements Serializable
 	}
 
 	/**
-	 * Bloque une action durant un certain temps pour qu'elle s'effectue à un intervalle régulier (inférieur à 1 fois par image).
-	 * @param now Le temps écoulé depuis la création du programme.
-	 * @param pause Boolean spécifiant si la pause est activé ou non.
-	 * @return Retourne true si l'action est possible, false sinon.
+	 * Bloque une action durant un certain temps pour qu'elle s'effectue à un intervalle régulier
+	 * (inférieur à 1 fois par image).
+	 * 
+	 * @param  now   Le temps écoulé depuis la création du programme.
+	 * @param  pause Boolean spécifiant si la pause est activé ou non.
+	 * @return       Retourne true si l'action est possible, false sinon.
 	 */
 	private boolean time(final long now, final boolean pause)
 	{
@@ -147,7 +154,7 @@ public class DukeAI extends Actor implements Serializable
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
-	
+
 	/**
 	 * @return the kingdom
 	 */

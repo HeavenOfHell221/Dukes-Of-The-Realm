@@ -5,6 +5,7 @@ import java.io.Serializable;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
+import Interface.IUpdate;
 import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,30 +17,77 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
-public class UIManager extends Parent implements IUI, Serializable
+/**
+ *
+ */
+public class UIManager extends Parent implements IUI, Serializable, IUpdate
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
 	private static UIManager instance = new UIManager();
+
+	/**
+	 *
+	 */
 	private UIAttackPreview attackPreview;
+
+	/**
+	 *
+	 */
 	private UIProductionUnitPreview productionUnitPreview;
+
+	/**
+	 *
+	 */
 	private UICastlePreview castlePreview;
+
+	/**
+	 *
+	 */
 	private Pane playfieldLayer;
+
+	/**
+	 *
+	 */
 	private Rectangle background;
 
+	/**
+	 *
+	 */
 	private Castle currentCastle;
+
+	/**
+	 *
+	 */
 	private Castle lastCastle;
 
+	/**
+	 *
+	 */
 	private boolean productionVisible = false;
+
+	/**
+	 *
+	 */
 	private boolean attackVisible = false;
+
+	/**
+	 *
+	 */
 	private boolean castleSwitch = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
 	private UIManager()
 	{
 
@@ -49,6 +97,10 @@ public class UIManager extends Parent implements IUI, Serializable
 	/********************* START *********************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
+	@Override
 	public void start()
 	{
 		addAllNodes();
@@ -60,6 +112,10 @@ public class UIManager extends Parent implements IUI, Serializable
 		getProductionUnitPreview().start();
 	}
 
+	/**
+	 *
+	 * @param pane
+	 */
 	public void awake(final Pane pane)
 	{
 		this.playfieldLayer = pane;
@@ -74,6 +130,7 @@ public class UIManager extends Parent implements IUI, Serializable
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+	@Override
 	public void update(final long now, final boolean pause)
 	{
 		if (this.currentCastle != null && this.currentCastle.getActor() != null)
@@ -101,6 +158,9 @@ public class UIManager extends Parent implements IUI, Serializable
 		this.background.toBack();
 	}
 
+	/**
+	 *
+	 */
 	private void setBackground()
 	{
 		final Stop[] stops = new Stop[]
@@ -134,6 +194,10 @@ public class UIManager extends Parent implements IUI, Serializable
 		relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
 	}
 
+	/**
+	 *
+	 * @param castle
+	 */
 	public void switchCastle(final Castle castle)
 	{
 		this.lastCastle = this.currentCastle;
@@ -175,9 +239,16 @@ public class UIManager extends Parent implements IUI, Serializable
 		this.castlePreview.switchCastle(castle, this.castleSwitch, this.productionVisible, this.attackVisible);
 	}
 
-	public void setPlayfieldLayer(final Pane playfieldLayer)
+	@Override
+	public void setAllVisible(final boolean visible)
 	{
-		instance.playfieldLayer = playfieldLayer;
+		setVisible(this.background, visible);
+	}
+
+	@Override
+	public void setVisible(final Node node, final boolean visible)
+	{
+		node.setVisible(visible);
 	}
 
 	/*************************************************/
@@ -190,6 +261,14 @@ public class UIManager extends Parent implements IUI, Serializable
 	public static final UIManager getInstance()
 	{
 		return instance;
+	}
+
+	/**
+	 * @param playfieldLayer the playfieldLayer to set
+	 */
+	public final void setPlayfieldLayer(final Pane playfieldLayer)
+	{
+		instance.playfieldLayer = playfieldLayer;
 	}
 
 	/**
@@ -214,17 +293,5 @@ public class UIManager extends Parent implements IUI, Serializable
 	public static final UICastlePreview getCastlePreview()
 	{
 		return instance.castlePreview;
-	}
-
-	@Override
-	public void setAllVisible(final boolean visible)
-	{
-
-	}
-
-	@Override
-	public void setVisible(final Node node, final boolean visible)
-	{
-		node.setVisible(visible);
 	}
 }

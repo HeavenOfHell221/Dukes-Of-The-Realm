@@ -28,6 +28,7 @@ public class Point2D implements Serializable
 
 	/**
 	 * Constructeur de Point2D.
+	 * 
 	 * @param x Coordonnée x.
 	 * @param y Coordonnée y.
 	 */
@@ -39,19 +40,20 @@ public class Point2D implements Serializable
 
 	/**
 	 * Constructeur par recopie de Point2D.
+	 * 
 	 * @param p Le point2D à recopier.
 	 */
 	public Point2D(final Point2D p)
 	{
 		this(p.x, p.y);
 	}
-	
+
 	/**
 	 * @return the x
 	 */
 	public final double getX()
 	{
-		return x;
+		return this.x;
 	}
 
 	/**
@@ -59,13 +61,13 @@ public class Point2D implements Serializable
 	 */
 	public final double getY()
 	{
-		return y;
+		return this.y;
 	}
 
 	/**
 	 * @param x the x to set
 	 */
-	public final void setX(double x)
+	public final void setX(final double x)
 	{
 		this.x = x;
 	}
@@ -73,13 +75,14 @@ public class Point2D implements Serializable
 	/**
 	 * @param y the y to set
 	 */
-	public final void setY(double y)
+	public final void setY(final double y)
 	{
 		this.y = y;
 	}
 
 	/**
 	 * Déplace le point d'une certaine quantité dx et dy.
+	 * 
 	 * @param dx La quantité en x.
 	 * @param dy La quantité en y.
 	 */
@@ -91,8 +94,9 @@ public class Point2D implements Serializable
 
 	/**
 	 * Calcul un point2D en soustrayant les coordonées du second avec le premier.
-	 * @param p Le point qui serra soustrait.
-	 * @return Retourne le resultat de la soustraction.
+	 * 
+	 * @param  p Le point qui serra soustrait.
+	 * @return   Retourne le resultat de la soustraction.
 	 */
 	public Point2D delta(final Point2D p)
 	{
@@ -102,34 +106,33 @@ public class Point2D implements Serializable
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Calcul la distance entre ce point et le point p en paramètre.
-	 * @param p Le second point.
-	 * @return La distance entre ce point et le point p.
+	 * 
+	 * @param  p Le second point.
+	 * @return   La distance entre ce point et le point p.
 	 */
-	public double distance(Point2D p)
+	public double distance(final Point2D p)
 	{
-		if(p != null)
+		if (p != null)
 		{
 			double xbxa = this.x - p.getX();
 			double ybya = this.y - p.getY();
 			return Math.sqrt(xbxa * xbxa + ybya * ybya);
 		}
-		
+
 		return Double.POSITIVE_INFINITY;
 	}
-	
-	
 
 	@Override
 	public String toString()
 	{
-		return "Point2D [x=" + x + ", y=" + y + "]";
+		return "Point2D [x=" + this.x + ", y=" + this.y + "]";
 	}
 
 	@Override
-	public boolean equals(Object obj)
+	public boolean equals(final Object obj)
 	{
 		if (this == obj)
 		{
@@ -144,16 +147,15 @@ public class Point2D implements Serializable
 			return false;
 		}
 		Point2D other = (Point2D) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+		if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x))
 		{
 			return false;
 		}
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+		if (Double.doubleToLongBits(this.y) != Double.doubleToLongBits(other.y))
 		{
 			return false;
 		}
 		return true;
 	}
-	
-	
+
 }

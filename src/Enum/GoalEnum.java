@@ -11,6 +11,7 @@ public enum GoalEnum
 
 	/**
 	 * Permet d'avoir un générateur de catégorie d'objectif aléatoire.
+	 * 
 	 * @return Une catégorie d'objectif.
 	 */
 	public static GoalEnum getRandomType()

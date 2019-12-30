@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Classe dérivée d'Actor, réprésente le joueur.
+ * 
  * @see Actor
  */
 public class Player extends Actor implements Serializable
@@ -18,7 +19,7 @@ public class Player extends Actor implements Serializable
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
+
 	/**
 	 * Constructeur par défaut de Player.
 	 */
@@ -26,11 +27,11 @@ public class Player extends Actor implements Serializable
 	{
 		super();
 	}
-	
+
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
-	
+
 	@Override
 	public void startTransient(final Color color, final Pane pane)
 	{
@@ -40,17 +41,17 @@ public class Player extends Actor implements Serializable
 			this.castles.forEach(castle -> castle.setColor(this.color));
 		}
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
-	
+
 	@Override
 	protected void updateFlorin(final Castle castle)
 	{
 		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
 	}
-	
+
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/

@@ -36,21 +36,21 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Pane principal pour afficher les éléments graphiques.
-	 * 
+	 *
 	 * @see Main#Awake(Stage)
 	 */
 	private Pane playfieldLayer;
 
 	/**
 	 * Scene principale.
-	 * 
+	 *
 	 * @see Main#Awake(Stage)
 	 */
 	private Scene mainScene;
 
 	/**
 	 * Boucle de jeu du Lobby.
-	 * 
+	 *
 	 * @see Main#Awake(Stage)
 	 * @see Main#start(Stage)
 	 */
@@ -58,7 +58,7 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Boucle de jeu principale.
-	 * 
+	 *
 	 * @see Main#Awake(Stage)
 	 * @see Main#start(Stage)
 	 */
@@ -66,49 +66,49 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Group root de JavaFX.
-	 * 
+	 *
 	 * @see Main#start(Stage)
 	 */
 	private Group root;
 
 	/**
 	 * Gère les inputs (Espace et Space) du joueur.
-	 * 
+	 *
 	 * @see Input
 	 */
 	private Input input;
 
 	/**
 	 * Utilitaire pour calculer les IPS (Image Par Seconde).
-	 * 
+	 *
 	 * @see Time
 	 */
 	private Time time;
 
 	/**
 	 * Le royaume dans lequel le jeu ce déroulera.
-	 * 
+	 *
 	 * @see Kingdom
 	 */
 	private Kingdom kingdom;
 
 	/**
 	 * Temps à laquelle l'image précédente à commencé.
-	 * 
+	 *
 	 * @see Main#Time(long)
 	 */
 	private long lastTime = 0;
 
 	/**
 	 * Active ou non la pause du jeu.
-	 * 
+	 *
 	 * @see Main#start(Stage)
 	 */
 	public static boolean pause = false;
 
 	/**
 	 * Force la pause du jeu lors d'un lancement d'une ost.
-	 * 
+	 *
 	 * @see UIManager#switchCastle(Castle)
 	 * @see UIAttackPreview#reset()
 	 */
@@ -116,7 +116,7 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Est ce que c'est un nouveau jeu ou une sauvegarde qu'on récupère.
-	 * 
+	 *
 	 * @see Main#newGame()
 	 * @see Kingdom#startTransient(Pane)
 	 */
@@ -128,7 +128,7 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Fonction start de l'application.
-	 * 
+	 *
 	 * @param primaryStage Le stage par défaut construit par JavaFX.
 	 */
 	@Override
@@ -189,7 +189,7 @@ public class Main extends Application implements IUpdate
 	 * <p>
 	 * Les boutons du Lobby sont également créés ici.
 	 * </p>
-	 * 
+	 *
 	 * @param primaryStage Le stage par défaut construit par JavaFX.
 	 * @see                Main#root
 	 * @see                Main#mainScene
@@ -266,8 +266,8 @@ public class Main extends Application implements IUpdate
 	 * <p>
 	 * Va être appelé dans le handle de la boucle mainGameLoop.
 	 * </p>
-	 * 
-	 * @see         Main#start(Stage)
+	 *
+	 * @see Main#start(Stage)
 	 * @see Interface.IUpdate
 	 */
 	@Override
@@ -284,7 +284,7 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Calcul le delta entre le temps now et le lastTime.
-	 * 
+	 *
 	 * @param  now Temps à laquelle l'image à commencé.
 	 * @return     Retourne true si le delta entre now et lastTime est supérieur à 0.2 secondes.
 	 * @see        Main#lastTime
@@ -302,7 +302,7 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Initialise un nouveau jeu en créant un royaume.
-	 * 
+	 *
 	 * @see Main#Awake(Stage)
 	 * @see Kingdom
 	 * @see Kingdom#start(Pane)
@@ -323,7 +323,7 @@ public class Main extends Application implements IUpdate
 	 * <p>
 	 * Utilise la fonction startTrantient(Pane) pour recréer les éléments de JavaFX non sauvegardé.
 	 * </p>
-	 * 
+	 *
 	 * @see Main#Awake(Stage)
 	 * @see SaveSystem#load()
 	 * @see Kingdom#startTransient(Pane)
@@ -346,7 +346,7 @@ public class Main extends Application implements IUpdate
 
 	/**
 	 * Entrée du programme (main).
-	 * 
+	 *
 	 * @param args Les arguments du programme.
 	 */
 	public static void main(final String[] args)

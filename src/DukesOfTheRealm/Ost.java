@@ -185,11 +185,11 @@ public class Ost implements IUpdate, Serializable
 	{
 		if (this.origin.getX() <= this.destination.getX())
 		{
-			this.destinationArea = (this.origin.getY() <= this.destination.getY()) ? Orientation.SE : Orientation.NE;
+			this.destinationArea = this.origin.getY() <= this.destination.getY() ? Orientation.SE : Orientation.NE;
 		}
 		else
 		{
-			this.destinationArea = (this.origin.getY() <= this.destination.getY()) ? Orientation.SW : Orientation.NW;
+			this.destinationArea = this.origin.getY() <= this.destination.getY() ? Orientation.SW : Orientation.NW;
 		}
 	}
 
@@ -429,9 +429,9 @@ public class Ost implements IUpdate, Serializable
 	 */
 	public Orientation getDestinationArea()
 	{
-		return destinationArea;
+		return this.destinationArea;
 	}
-	
+
 	public Point2D getSeparationPoint()
 	{
 		return this.separationPoint;

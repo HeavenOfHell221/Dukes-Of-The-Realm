@@ -21,39 +21,113 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+/**
+ *
+ */
 public final class UIAttackPreview extends Parent implements IUpdate, Serializable, IUI
 {
+	/**
+	 *
+	 */
 	private transient Rectangle background;
 
+	/**
+	 *
+	 */
 	private final Button buttonAttack;
 
+	/**
+	 *
+	 */
 	private final Button upKnight;
+
+	/**
+	 *
+	 */
 	private final Button upPiker;
+
+	/**
+	 *
+	 */
 	private final Button upOnager;
 
+	/**
+	 *
+	 */
 	private final Button downKnight;
+
+	/**
+	 *
+	 */
 	private final Button downPiker;
+
+	/**
+	 *
+	 */
 	private final Button downOnager;
 
+	/**
+	 *
+	 */
 	private final ImageView imageKnight;
+
+	/**
+	 *
+	 */
 	private final ImageView imagePiker;
+
+	/**
+	 *
+	 */
 	private final ImageView imageOnager;
 
+	/**
+	 *
+	 */
 	private final Text nbPikerText;
+
+	/**
+	 *
+	 */
 	private final Text nbOnagerText;
+
+	/**
+	 *
+	 */
 	private final Text nbKnightText;
 
+	/**
+	 *
+	 */
 	private int nbPiker;
+
+	/**
+	 *
+	 */
 	private int nbKnight;
+
+	/**
+	 *
+	 */
 	private int nbOnager;
 
+	/**
+	 *
+	 */
 	private Castle currentCastle;
+
+	/**
+	 *
+	 */
 	private Castle lastCastle;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
 	public UIAttackPreview()
 	{
 		this.imageKnight = newImageView("/images/mounted-knight-white.png", 64, 64);
@@ -106,6 +180,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
 	private void setAllTexts()
 	{
 		setText(this.nbPikerText, 38);
@@ -113,6 +190,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		setText(this.nbOnagerText, 38);
 	}
 
+	/**
+	 *
+	 * @param text
+	 * @param font
+	 */
 	private void setText(final Text text, final int font)
 	{
 		text.setFont(new Font(font));
@@ -122,6 +204,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		text.setText("0");
 	}
 
+	/**
+	 *
+	 */
 	private void resetOst()
 	{
 		this.nbKnight = 0;
@@ -129,6 +214,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		this.nbPiker = 0;
 	}
 
+	/**
+	 *
+	 * @param b
+	 * @param url
+	 */
 	private void setStyle(final Button b, final String url)
 	{
 		b.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('" + url + "'); "
@@ -138,6 +228,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		b.setCursor(Cursor.HAND);
 	}
 
+	/**
+	 *
+	 */
 	private void setAllButtons()
 	{
 
@@ -252,6 +345,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		});
 	}
 
+	/**
+	 *
+	 */
 	private void reset()
 	{
 		this.nbKnight = 0;
@@ -261,6 +357,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		Main.pause = false;
 	}
 
+	/**
+	 *
+	 */
 	private void setBackground()
 	{
 		final Stop[] stops = new Stop[]
@@ -349,6 +448,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, Serializab
 		resetOst();
 	}
 
+	/**
+	 *
+	 * @param castle
+	 * @param attackVisible
+	 */
 	public void switchCastle(final Castle castle, final boolean attackVisible)
 	{
 		this.lastCastle = this.currentCastle;

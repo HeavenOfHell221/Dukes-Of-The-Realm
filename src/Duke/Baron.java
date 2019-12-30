@@ -13,6 +13,7 @@ import Utility.Time;
 
 /**
  * Classe dérivée d'Actor, représente les acteurs neutre qui n'ont pas d'IA.
+ * 
  * @see Actor
  */
 public class Baron extends Actor implements Serializable
@@ -20,7 +21,7 @@ public class Baron extends Actor implements Serializable
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
-	
+
 	/**
 	 * Constructeur par défaut de Baron.
 	 */
@@ -28,17 +29,17 @@ public class Baron extends Actor implements Serializable
 	{
 		super();
 	}
-	
+
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
-	
+
 	@Override
 	protected void updateFlorin(final Castle castle)
 	{
 		castle.addFlorin(FLORIN_PER_SECOND * FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime);
 	}
-	
+
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
@@ -54,12 +55,11 @@ public class Baron extends Actor implements Serializable
 		return " -- Florin/s";
 	}
 
-
 	@Override
 	public void addFirstCastle(final Castle castle)
 	{
 		final Random rand = new Random();
-		
+
 		castle.setLevel(rand.nextInt(RANDOM_LEVEL_CASTLE_BARON) + OFFSET_LEVEL_CASTLE_BARON);
 		castle.addFlorin(rand.nextInt(castle.getLevel() * 200) + castle.getLevel() * 50);
 		castle.randomSoldier();

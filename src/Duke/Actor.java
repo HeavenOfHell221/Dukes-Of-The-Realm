@@ -22,7 +22,8 @@ import javafx.scene.shape.Rectangle;
 /**
  * Représente les différents acteur du jeu.
  * <p>
- * C'est autour des acteurs que le jeu s'articule. Chacun des acteurs contient une liste des châteaux qui lui appartient.
+ * C'est autour des acteurs que le jeu s'articule. Chacun des acteurs contient une liste des
+ * châteaux qui lui appartient.
  * </p>
  */
 public abstract class Actor implements Serializable, IUpdate
@@ -35,46 +36,50 @@ public abstract class Actor implements Serializable, IUpdate
 	 * Le nom de cet acteur.
 	 */
 	protected String name = "";
-	
+
 	/**
 	 * La liste des châteaux appartenant à cet acteur.
 	 */
 	protected ArrayList<Castle> castles;
-	
+
 	/**
 	 * La couleur utilisé pour réprésenter cet acteur (château, unités).
 	 */
 	protected transient Color color;
-	
+
 	/**
 	 * Référence au pane du principal du jeu.
 	 */
 	protected transient Pane pane;
-	
+
 	/**
 	 * Liste des châteaux en attente d'ajout dans la liste castles.
 	 * <p>
-	 * Lorsque cet acteur gagne un château, il est ajouté à cette liste dans la même boucle de jeu (même image).
-	 * Avant le prochain Update de cet acteur, il ajoute tous les châteaux de cette liste aux siens puis vide cette liste.
+	 * Lorsque cet acteur gagne un château, il est ajouté à cette liste dans la même boucle de jeu (même
+	 * image). Avant le prochain Update de cet acteur, il ajoute tous les châteaux de cette liste aux
+	 * siens puis vide cette liste.
 	 * </p>
+	 * 
 	 * @see Actor#castles
 	 * @see Actor#addOrRemoveCastleList()
 	 */
 	public ArrayDeque<Castle> castlesWaitForAdding;
-	
+
 	/**
 	 * Liste des châteaux en attente de suppression dans la liste castles.
 	 * <p>
-	 * Lorsque cet acteur perd un château, il est ajouté à cette liste et serra supprimé de la liste castles avant le prochain Update.
+	 * Lorsque cet acteur perd un château, il est ajouté à cette liste et serra supprimé de la liste
+	 * castles avant le prochain Update.
 	 * </p>
+	 * 
 	 * @see Actor#castles
 	 * @see Actor#addOrRemoveCastleList()
 	 */
 	public ArrayDeque<Castle> castlesWaitForDelete;
-	
+
 	/**
-	 * Boolean servant à savoir si cet acteur est encore vivant.
-	 * Un acteur n'ayant plus de château est considéré comme mort.
+	 * Boolean servant à savoir si cet acteur est encore vivant. Un acteur n'ayant plus de château est
+	 * considéré comme mort.
 	 */
 	public boolean isDead = false;
 
@@ -98,8 +103,9 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Initialise les composents transient de cet acteur.
+	 * 
 	 * @param color La couleur de cet acteur.
-	 * @param pane Le pane principal du jeu.
+	 * @param pane  Le pane principal du jeu.
 	 */
 	public void startTransient(final Color color, final Pane pane)
 	{
@@ -118,10 +124,12 @@ public abstract class Actor implements Serializable, IUpdate
 	public void update(final long now, final boolean pause)
 	{
 		addOrRemoveCastleList();
-		
-		if(this.isDead)
+
+		if (this.isDead)
+		{
 			return;
-		
+		}
+
 		Iterator<Castle> it = this.castles.iterator();
 		while (it.hasNext())
 		{
@@ -134,6 +142,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute les nouveaux châteaux s'il y en a et supprime les châteaux conquis par d'autres acteurs.
+	 * 
 	 * @see Actor#update(long, boolean)
 	 * @see Actor#castlesWaitForAdding
 	 * @see Actor#castlesWaitForDelete
@@ -165,10 +174,12 @@ public abstract class Actor implements Serializable, IUpdate
 	/**
 	 * Met à jour les Florin d'un château en particulier à chaque nouvelle image.
 	 * <p>
-	 * A chaque image on ajoute une certaine quantité de Florin pour avoir la quantité souhaité sur 1 seconde.
+	 * A chaque image on ajoute une certaine quantité de Florin pour avoir la quantité souhaité sur 1
+	 * seconde.
 	 * </p>
+	 * 
 	 * @param castle Le château auquel on ajoute des Florin.
-	 * @see DukesOfTheRealm.Castle#addFlorin(double)
+	 * @see          DukesOfTheRealm.Castle#addFlorin(double)
 	 */
 	protected void updateFlorin(final Castle castle)
 	{
@@ -184,22 +195,23 @@ public abstract class Actor implements Serializable, IUpdate
 	 * <p>
 	 * Retrouve le château en question et modifie le UI en fonction.
 	 * </p>
+	 * 
 	 * @param event L'événement crée lors d'un clique sur un château.
-	 * @see Actor#addEvent(Castle)
-	 * @see Actor#switchCastle(Castle)
+	 * @see         Actor#addEvent(Castle)
+	 * @see         Actor#switchCastle(Castle)
 	 */
 	protected void castleHandle(final MouseEvent event)
 	{
 		if (event.getButton() == MouseButton.PRIMARY)
 		{
-			getCastles().stream().filter(castle -> castle.getShape() == (Rectangle) event.getSource())
-				.limit(1).forEach(castle ->switchCastle(castle));
+			getCastles().stream().filter(castle -> castle.getShape() == (Rectangle) event.getSource()).limit(1)
+					.forEach(castle -> switchCastle(castle));
 		}
 	}
 
 	/**
-	 * 
-	 * @param castle
+	 *
+	 * @param  castle
 	 * @return
 	 */
 	public String florinIncome(final Castle castle)
@@ -208,7 +220,7 @@ public abstract class Actor implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 * @param castle
 	 */
 	public void addFirstCastle(final Castle castle)
@@ -218,7 +230,7 @@ public abstract class Actor implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 * @param castle
 	 */
 	protected void addEvent(final Castle castle)
@@ -227,7 +239,7 @@ public abstract class Actor implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void addEventAllCastles()
 	{
@@ -235,9 +247,9 @@ public abstract class Actor implements Serializable, IUpdate
 	}
 
 	/**
-	 * 
+	 *
 	 * @param castle
-	 * @see UI.UIManager#switchCastle(Castle)
+	 * @see          UI.UIManager#switchCastle(Castle)
 	 */
 	protected void switchCastle(final Castle castle)
 	{
@@ -246,14 +258,15 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Permet de savoir si un acteur est un joueur ou non.
+	 * 
 	 * @return Retourne false pour tout les acteurs sauf ceux étant de la classe Player.
-	 * @see Player#isPlayer()
+	 * @see    Player#isPlayer()
 	 */
 	public boolean isPlayer()
 	{
 		return false;
 	}
-	
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
@@ -263,7 +276,7 @@ public abstract class Actor implements Serializable, IUpdate
 	 */
 	public final Color getColor()
 	{
-		return color;
+		return this.color;
 	}
 
 	/**
@@ -287,7 +300,7 @@ public abstract class Actor implements Serializable, IUpdate
 	 */
 	public final String getName()
 	{
-		return name;
+		return this.name;
 	}
 
 	/**
@@ -295,6 +308,6 @@ public abstract class Actor implements Serializable, IUpdate
 	 */
 	public final ArrayList<Castle> getCastles()
 	{
-		return castles;
+		return this.castles;
 	}
 }

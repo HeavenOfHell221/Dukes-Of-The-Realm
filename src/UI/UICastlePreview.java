@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import DukesOfTheRealm.Castle;
 import Interface.IUI;
+import Interface.IUpdate;
 import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,38 +15,98 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public final class UICastlePreview extends Parent implements Serializable, IUI
+/**
+ *
+ */
+public final class UICastlePreview extends Parent implements Serializable, IUI, IUpdate
 {
 
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
 	private final ImageView imageKnight;
+
+	/**
+	 *
+	 */
 	private final ImageView imagePiker;
+
+	/**
+	 *
+	 */
 	private final ImageView imageOnager;
+
+	/**
+	 *
+	 */
 	private final ImageView imageFlorin;
 
+	/**
+	 *
+	 */
 	private final Text level;
+
+	/**
+	 *
+	 */
 	private final Text owner;
+
+	/**
+	 *
+	 */
 	private final Text florinIncome;
 
+	/**
+	 *
+	 */
 	private final Text nbKnight;
+
+	/**
+	 *
+	 */
 	private final Text nbPiker;
+
+	/**
+	 *
+	 */
 	private final Text nbOnager;
+
+	/**
+	 *
+	 */
 	private final Text nbFlorin;
 
+	/**
+	 *
+	 */
 	private final Rectangle background;
 
+	/**
+	 *
+	 */
 	private Castle currentCastle;
+
+	/**
+	 *
+	 */
 	private Castle lastCastle;
 
+	/**
+	 *
+	 */
 	private boolean attackVisible = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
 	public UICastlePreview()
 	{
 		this.imageKnight = newImageView("/images/mounted-knight-white.png", 64, 64);
@@ -69,6 +130,10 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/********************* START *********************/
 	/*************************************************/
 
+	/**
+	 *
+	 */
+	@Override
 	public void start()
 	{
 		addAllNodes();
@@ -81,6 +146,7 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+	@Override
 	public void update(final long now, final boolean pause)
 	{
 		if (this.currentCastle != null)
@@ -89,6 +155,9 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		}
 	}
 
+	/**
+	 *
+	 */
 	private void updateTexts()
 	{
 		if (this.attackVisible)
@@ -114,6 +183,9 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/*
+	 *
+	 */
 	private void setAllTexts()
 	{
 		setText(this.level, 24);
@@ -131,6 +203,9 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		getChildren().add(node);
 	}
 
+	/**
+	 *
+	 */
 	private void setBackground()
 	{
 		/*
@@ -185,6 +260,11 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		addNode(this.nbPiker);
 	}
 
+	/**
+	 *
+	 * @param text
+	 * @param font
+	 */
 	private void setText(final Text text, final int font)
 	{
 		text.setFont(new Font(font));
@@ -210,6 +290,13 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 		setVisible(this.nbPiker, visible);
 	}
 
+	/**
+	 *
+	 * @param castle
+	 * @param castleSwitch
+	 * @param productionVisible
+	 * @param attackVisible
+	 */
 	public void switchCastle(final Castle castle, final boolean castleSwitch, final boolean productionVisible, final boolean attackVisible)
 	{
 		this.lastCastle = this.currentCastle;
@@ -219,6 +306,10 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 			this.currentCastle = castle;
 		}
 	}
+
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
 
 	/**
 	 * @return the currentCastle
@@ -251,9 +342,4 @@ public final class UICastlePreview extends Parent implements Serializable, IUI
 	{
 		this.lastCastle = lastCastle;
 	}
-
-	/*************************************************/
-	/*************** GETTERS / SETTERS ***************/
-	/*************************************************/
-
 }

@@ -1,5 +1,9 @@
 package Enum;
 
+import static Utility.Settings.KNIGHT_COST;
+import static Utility.Settings.ONAGER_COST;
+import static Utility.Settings.PIKER_COST;
+
 import java.io.Serializable;
 import java.util.Random;
 
@@ -8,7 +12,6 @@ import Interface.IProductionUnit;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
-import static Utility.Settings.*;
 
 /**
  * Enumération des différents type d'unités.
@@ -19,6 +22,7 @@ public enum SoldierEnum implements Serializable
 
 	/**
 	 * Récupère le coût de production à partir du type de l'énumération.
+	 * 
 	 * @return Le coût de production.
 	 */
 	public int getCost()
@@ -38,8 +42,9 @@ public enum SoldierEnum implements Serializable
 
 	/**
 	 * Incrémente le nombre d'unité en production et renvoi l'objet associé à l'énumération.
-	 * @param currentCastle Le château auquel va être produit l'unité.
-	 * @return L'objet qui serra produit suivant l'énumération.
+	 * 
+	 * @param  currentCastle Le château auquel va être produit l'unité.
+	 * @return               L'objet qui serra produit suivant l'énumération.
 	 */
 	public IProductionUnit getProduction(final Castle currentCastle)
 	{
@@ -61,6 +66,7 @@ public enum SoldierEnum implements Serializable
 
 	/**
 	 * Générateur d'énumération aléatoire.
+	 * 
 	 * @return Un type d'unité aléatoire.
 	 */
 	public static SoldierEnum getRandomType()
@@ -76,7 +82,7 @@ public enum SoldierEnum implements Serializable
 				return Onager;
 			default:
 				return null;
-					
+
 		}
 	}
 }
