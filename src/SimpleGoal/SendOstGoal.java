@@ -29,7 +29,7 @@ public class SendOstGoal extends Goal
 
 	/**
 	 * Constructeur de SendOStGoal.
-	 * 
+	 *
 	 * @param destination Le château destination de l'ost.
 	 * @param nbPikers    Le nombre de Piker à envoyer dans l'ost.
 	 * @param nbKnights   Le nombre de Knight à envoyer dans l'ost.

@@ -14,7 +14,7 @@ public class BackupGoal extends Goal
 {
 	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
-	 * 
+	 *
 	 * @see GenericGoal
 	 */
 	private final GenericGoal goals;

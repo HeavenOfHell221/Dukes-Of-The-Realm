@@ -62,7 +62,7 @@ public class Caserne implements Serializable
 
 	/**
 	 * Constructeur de Caserne.
-	 * 
+	 *
 	 * @param castle Le château à qui appartient cette caserne.
 	 */
 	public Caserne(final Castle castle)
@@ -129,7 +129,7 @@ public class Caserne implements Serializable
 
 	/**
 	 * Retire la production en fin de queue.
-	 * 
+	 *
 	 * @param refoundFlorin Spécifie si on rend le coût en Florin de la production ou non.
 	 */
 	public void removeLastProduction(final boolean refoundFlorin)
@@ -147,7 +147,7 @@ public class Caserne implements Serializable
 
 	/**
 	 * Retire tout les éléments de la queue.
-	 * 
+	 *
 	 * @param refundFlorin Spécifie si on rend le coût en Florin de la production ou non.
 	 */
 	public void resetQueue(final boolean refundFlorin)
@@ -173,7 +173,7 @@ public class Caserne implements Serializable
 
 	/**
 	 * Ajoute une production à la fin de la queue si le château a assez de Florin pour la payer.
-	 * 
+	 *
 	 * @param  newProduction La nouvelle production.
 	 * @return               Retourne true si le production a bien été ajouté, false sinon.
 	 */
@@ -181,7 +181,7 @@ public class Caserne implements Serializable
 	{
 		if (newProduction.getClass() == Castle.class)
 		{
-			if (!this.castle.removeFlorin(newProduction.getProductionCost() + this.nbCastleInProduction * Settings.LEVEL_UP_COST_FACTOR))
+			if (!this.castle.removeFlorin(newProduction.getProductionCost() + this.nbCastleInProduction * Settings.LEVEL_UP_COST))
 			{
 				return false;
 			}

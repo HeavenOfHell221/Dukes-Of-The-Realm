@@ -1,7 +1,7 @@
 package UI;
 
 import static Utility.Settings.KNIGHT_COST;
-import static Utility.Settings.LEVEL_UP_COST_FACTOR;
+import static Utility.Settings.LEVEL_UP_COST;
 import static Utility.Settings.MARGIN_PERCENTAGE;
 import static Utility.Settings.ONAGER_COST;
 import static Utility.Settings.PIKER_COST;
@@ -85,42 +85,42 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Barre qui grandi en fonction du ratio entre le temps restant de production et le temps total
-	 * 
+	 *
 	 * @see DukesOfTheRealm.Caserne#ratio
 	 */
 	private final Rectangle fillTime;
 
 	/**
 	 * Référence sur le château courant.
-	 * 
+	 *
 	 * @see UIProductionUnitPreview#switchCastle(Castle, boolean)
 	 */
 	private Castle currentCastle;
 
 	/**
 	 * Coût de production d'un Piker affiché sur le bouton.
-	 * 
+	 *
 	 * @see UIProductionUnitPreview#buttonCreatePiker
 	 */
 	private Text pikerCost;
 
 	/**
 	 * Coût de production d'un Onager affiché sur le bouton.
-	 * 
+	 *
 	 * @see UIProductionUnitPreview#buttonCreateOnager
 	 */
 	private Text onagerCost;
 
 	/**
 	 * Coût de production d'un Knight affiché sur le bouton.
-	 * 
+	 *
 	 * @see UIProductionUnitPreview#buttonCreateKnight
 	 */
 	private Text knightCost;
 
 	/**
 	 * Coût de production de l'amélioration du château affiché sur le bouton.
-	 * 
+	 *
 	 * @see UIProductionUnitPreview#buttonUpgradeCastle
 	 */
 	private Text castleCost;
@@ -185,7 +185,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Retire un noeud pour qu'il ne soit plus visible.
-	 * 
+	 *
 	 * @param node Le noeud qu'on retire.
 	 */
 	public void removeNode(final Node node)
@@ -209,7 +209,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Met à l'échelle la barre de production par rapport au ratio.
-	 * 
+	 *
 	 * @param fractionFill
 	 * @see                UIProductionUnitPreview#fillTime
 	 */
@@ -230,7 +230,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Initialise le background de la barre de production avec des paramètres prédéfinis.
-	 * 
+	 *
 	 * @see UIProductionUnitPreview#backgroundTime
 	 */
 	private void setBar()
@@ -350,7 +350,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			Text t = new Text();
 			this.castleCost = t;
-			t.setText(LEVEL_UP_COST_FACTOR * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction()) + "");
+			t.setText(LEVEL_UP_COST * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction()) + "");
 			t.setFont(new Font(30));
 			t.setFill(Color.ORANGERED);
 			t.setStyle("-fx-font-weight: bold");
@@ -378,7 +378,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Change la couleur du shadom du bouton suivant si la production a bien été ajouté ou non.
-	 * 
+	 *
 	 * @param  b Le bouton qui vient d'être activé.
 	 * @param  p La production qu'on veut produire.
 	 * @return   Retourne true si la production a bien été ajouté à la queue de production de la caserne
@@ -417,7 +417,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Ajoute des événements sur un bouton.
-	 * 
+	 *
 	 * @param b Le bouton.
 	 */
 	private void addEventMouse(final Button b)
@@ -443,7 +443,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Ajoute un bloom sur un bouton ainsi que de l'ombre.
-	 * 
+	 *
 	 * @param b Le bouton.
 	 */
 	private void setButtonShadow(final Button b)
@@ -493,7 +493,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Change le château courant et rend visible ou invisible ce module.
-	 * 
+	 *
 	 * @param castle            Le nouveau château courant.
 	 * @param productionVisible Spécifie si les parties graphiques de ce module seront visible ou non.
 	 */

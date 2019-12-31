@@ -48,7 +48,7 @@ public class GeneratorGoal implements Serializable
 
 	/**
 	 * Prend au hasard un type d'objectif et retoune un objectif de ce type.
-	 * 
+	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un objectif pour l'IA.
 	 * @see           Enum.GoalEnum
@@ -75,7 +75,7 @@ public class GeneratorGoal implements Serializable
 
 	/**
 	 * Génère un objectif lié aux bâtiments (amélioration de niveau).
-	 * 
+	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un objectif.
 	 */
@@ -86,7 +86,7 @@ public class GeneratorGoal implements Serializable
 
 	/**
 	 * Génère un objectif lié au Florin.
-	 * 
+	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un ojectif.
 	 */
@@ -102,7 +102,7 @@ public class GeneratorGoal implements Serializable
 	 * <p>
 	 * Récupère la liste des acteurs en supprimant l'acteur qui demande la liste.
 	 * </p>
-	 * 
+	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un objectif.
 	 */
@@ -141,7 +141,7 @@ public class GeneratorGoal implements Serializable
 
 	/**
 	 * Génère un objectif lié aux renforts.
-	 * 
+	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un objectif.
 	 */
@@ -163,7 +163,7 @@ public class GeneratorGoal implements Serializable
 
 	/**
 	 * Génère un objectif visant à produire des unités.
-	 * 
+	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un objectif.
 	 */

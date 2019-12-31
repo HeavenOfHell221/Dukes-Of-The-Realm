@@ -90,7 +90,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 	/**
 	 * Référence sur le château courant.
-	 * 
+	 *
 	 * @see UICastlePreview#updateTexts()
 	 * @see UICastlePreview#switchCastle(Castle, boolean)
 	 */
@@ -98,7 +98,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 	/**
 	 * Référence sur l'ancien château courant.
-	 * 
+	 *
 	 * @see UICastlePreview#updateTexts()
 	 * @see UICastlePreview#switchCastle(Castle, boolean)
 	 */
@@ -106,7 +106,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 	/**
 	 * Boolean spécifiant si l'interface d'attaque est visible ou non.
-	 * 
+	 *
 	 * @see UICastlePreview#updateTexts()
 	 * @see UICastlePreview#switchCastle(Castle, boolean)
 	 */
@@ -197,7 +197,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 	/**
 	 * Initialise tout les textes de ce module.
-	 * 
+	 *
 	 * @see UICastlePreview#setText(Text, int)
 	 */
 	private void setAllTexts()
@@ -219,7 +219,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 	/**
 	 * Initialise les attributs du background.
-	 * 
+	 *
 	 * @see UICastlePreview#background
 	 */
 	private void setBackground()
@@ -274,7 +274,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	/**
 	 * Initialise un texte donné en paramètre en lui donnant une taille de police, un alignement et une
 	 * couleur.
-	 * 
+	 *
 	 * @param text Le texte à initialiser.
 	 * @param font La taille de police.
 	 */
@@ -306,7 +306,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	/**
 	 * Change le château courant si le boolean castleSwitch est à true et modifie l'ancien château
 	 * courant.
-	 * 
+	 *
 	 * @param castle        Le potentiel nouveau château courant.
 	 * @param castleSwitch  Spécifie si on doit changer le château courant.
 	 * @param attackVisible Spécifie si le UI d'attaque est affiché ou non.
