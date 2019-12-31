@@ -47,10 +47,4 @@ public class Piker extends Soldier
 	{
 		reserve.addPiker();
 	}
-
-	@Override
-	public void removeInProduction(final Caserne caserne)
-	{
-		caserne.setNbPikersInProduction(caserne.getNbPikersInProduction() - 1);
-	}
 }

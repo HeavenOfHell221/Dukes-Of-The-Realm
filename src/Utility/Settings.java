@@ -45,7 +45,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde de base. (Château niveau 1).
 	 */
-	public static final int FLORIN_PER_SECOND = 5;
+	public static final int FLORIN_PER_SECOND = 50;
 
 	/**
 	 * Pourcentage de réduction des FLORIN_PER_SECOND pour les Baron.

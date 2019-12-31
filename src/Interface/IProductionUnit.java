@@ -39,11 +39,4 @@ public interface IProductionUnit
 	{
 
 	}
-
-	/**
-	 * Une fois la production terminé, on retire 1 au nombre de production dans la queue.
-	 *
-	 * @param caserne La caserne où l'ont va retirer une production terminé.
-	 */
-	void removeInProduction(Caserne caserne);
 }

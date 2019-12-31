@@ -75,7 +75,13 @@ public class AttackGoal extends Goal
 		int realNbKnights = nbKnights_ < this.nbKnights ? this.nbKnights - nbKnights_ : 0;
 		int realNbOnagers = nbOnagers_ < this.nbOnagers ? this.nbOnagers - nbOnagers_ : 0;
 
-		this.goals.addLast(new MultiSoldierGoal(this.castleOrigin, realNbPikers, realNbKnights, realNbOnagers));
+		MultiSoldierGoal multiSoldierGoal = new MultiSoldierGoal(this.castleOrigin, realNbPikers, realNbKnights, realNbOnagers);
+		//System.out.println(this.castleOrigin.getNbPikersInProduction() + " " +
+		//this.castleOrigin.getNbKnightsInProduction() + " " + this.castleOrigin.getNbOnagersInProduction());
+		if(realNbKnights > 0 || realNbPikers > 0 || realNbOnagers > 0)
+		{
+			this.goals.addLast(multiSoldierGoal);
+		}
 		this.goals.addLast(new SendOstGoal(castleDestination, this.nbPikers, this.nbKnights, this.nbOnagers));
 	}
 
@@ -85,24 +91,25 @@ public class AttackGoal extends Goal
 		// Au moment de lancer l'ost
 		if (this.goals.size() == 1)
 		{
+			final int nbPikers_ = castleOrigin.getNbPikers() + castleOrigin.getNbPikersInProduction();
+			final int nbOnagers_ = castleOrigin.getNbOnagers() + castleOrigin.getNbOnagersInProduction();
+			final int nbKnights_ = castleOrigin.getNbKnights() + castleOrigin.getNbKnightsInProduction();
+				
 			// Si le château qu'on veut attaquer est maintenant à nous
 			if (this.castleOrigin.getActor() == this.castleDestination.getActor())
 			{
 				// On annule l'attaque
-				this.goals.pollFirst();
+				this.goals.pollFirst(); 
 			}
 
 			// Si nous n'avons plus assez d'unités
-			if (castleOrigin.getNbPikers() < this.nbPikers || castleOrigin.getNbKnights() < this.nbKnights
-					|| castleOrigin.getNbOnagers() < this.nbOnagers)
+			if (nbPikers_ < this.nbPikers || nbKnights_ < this.nbKnights || nbOnagers_ < this.nbOnagers)
 			{
-				int nbPikers_ = castleOrigin.getNbPikers() + castleOrigin.getNbPikersInProduction();
-				int nbOnagers_ = castleOrigin.getNbOnagers() + castleOrigin.getNbOnagersInProduction();
-				int nbKnights_ = castleOrigin.getNbKnights() + castleOrigin.getNbKnightsInProduction();
-
 				int realNbPikers = nbPikers_ < this.nbPikers ? this.nbPikers - nbPikers_ : 0;
 				int realNbKnights = nbKnights_ < this.nbKnights ? this.nbKnights - nbKnights_ : 0;
 				int realNbOnagers = nbOnagers_ < this.nbOnagers ? this.nbOnagers - nbOnagers_ : 0;
+				
+				//System.out.println(this.castleOrigin.getActor().getName() + " " + realNbPikers + " " + realNbKnights + " " + realNbOnagers);
 
 				// On reproduit des unités avant de lancer l'ost
 				this.goals.addFirst(new MultiSoldierGoal(castleOrigin, realNbPikers, realNbKnights, realNbOnagers));
