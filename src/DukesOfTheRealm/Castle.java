@@ -450,13 +450,6 @@ public class Castle extends Sprite implements Serializable
 		this.attackLocations.push(FreedAttackLocation);
 	}
 
-	@Override
-	public void removeInProduction(final Caserne caserne)
-	{
-		caserne.setNbCastleInProduction(caserne.getNbCastleInProduction() - 1);
-	}
-
-
 	/*************************************************/
 	/************** DELEGATES METHODS ****************/
 	/*************************************************/

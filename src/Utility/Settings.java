@@ -65,7 +65,7 @@ public class Settings
 	/**
 	 * Augmentation du temps d'amélioration pour chaque niveau de château.
 	 */
-	public static final int LEVEL_UP_DURATION_FACTOR = 3;
+	public static final int LEVEL_UP_DURATION_FACTOR = 2;
 
 	/**
 	 * Nombre d'IA.
@@ -198,7 +198,7 @@ public class Settings
 	/**
 	 * Temps de production d'un Onager (en seconde).
 	 */
-	public static final double ONAGER_TIME_PRODUCTION = 4f;
+	public static final double ONAGER_TIME_PRODUCTION = 3f;
 
 	/****************************************************/
 	/********************* GRAPHICS *********************/

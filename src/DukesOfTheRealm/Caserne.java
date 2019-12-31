@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 
 import Interface.IProductionUnit;
+import Soldiers.Knight;
+import Soldiers.Onager;
+import Soldiers.Piker;
 import Utility.Settings;
 import Utility.Time;
 
@@ -87,6 +90,7 @@ public class Caserne implements Serializable
 	 */
 	public void updateProduction()
 	{
+		//System.out.println(this.castle.getActor().getName() + " -> " + this.nbPikersInProduction + " " + this.nbKnightsInProduction + " " + this.nbOnagersInProduction);
 		if (this.productionUnit.size() > 0)
 		{
 			// On retire du temps
@@ -103,13 +107,24 @@ public class Caserne implements Serializable
 				if (p.getClass() == Castle.class)
 				{
 					this.castle.levelUp();
+					this.nbCastleInProduction--;
 				}
-				else
+				else if(p.getClass() == Onager.class)
 				{
-					p.addProduction(this.castle.getReserveOfSoldiers());
+					this.nbOnagersInProduction--;
+					this.castle.addOnager();
 				}
-
-				p.removeInProduction(this);
+				else if(p.getClass() == Piker.class)
+				{
+					this.nbPikersInProduction--;
+					this.castle.addPiker();
+				}
+				else if(p.getClass() == Knight.class)
+				{
+					this.nbKnightsInProduction--;
+					this.castle.addKnight();
+				}
+				
 
 				if (this.productionUnit.size() > 0)
 				{
@@ -141,7 +156,6 @@ public class Caserne implements Serializable
 			{
 				this.castle.addFlorin(i.getProductionCost());
 			}
-			i.removeInProduction(this);
 		}
 	}
 
@@ -158,47 +172,65 @@ public class Caserne implements Serializable
 			{
 				IProductionUnit i = this.productionUnit.pollFirst();
 				this.castle.addFlorin(i.getProductionCost());
-				i.removeInProduction(this);
 			}
 		}
 		else
 		{
 			this.productionUnit.clear();
-			this.nbCastleInProduction = 0;
-			this.nbKnightsInProduction = 0;
-			this.nbPikersInProduction = 0;
-			this.nbOnagersInProduction = 0;
+			
 		}
+		this.nbCastleInProduction = 0;
+		this.nbKnightsInProduction = 0;
+		this.nbPikersInProduction = 0;
+		this.nbOnagersInProduction = 0;
 	}
 
 	/**
 	 * Ajoute une production à la fin de la queue si le château a assez de Florin pour la payer.
 	 *
-	 * @param  newProduction La nouvelle production.
+	 * @param  p La nouvelle production.
 	 * @return               Retourne true si le production a bien été ajouté, false sinon.
 	 */
-	public boolean addProduction(final IProductionUnit newProduction)
+	public boolean addProduction(final IProductionUnit p)
 	{
-		if (newProduction.getClass() == Castle.class)
+		if (p.getClass() == Castle.class)
 		{
-			if (!this.castle.removeFlorin(newProduction.getProductionCost() + this.nbCastleInProduction * Settings.LEVEL_UP_COST))
+			if (!this.castle.removeFlorin(p.getProductionCost() + this.nbCastleInProduction * Settings.LEVEL_UP_COST))
 			{
 				return false;
 			}
 		}
 		else
 		{
-			if (!this.castle.removeFlorin(newProduction.getProductionCost()))
+			if (!this.castle.removeFlorin(p.getProductionCost()))
 			{
 				return false;
 			}
 		}
+		
+		if (p.getClass() == Castle.class)
+		{
+			this.nbCastleInProduction++;
+		}
+		else if(p.getClass() == Onager.class)
+		{
+			this.nbOnagersInProduction++;
+		}
+		else if(p.getClass() == Piker.class)
+		{
+			this.nbPikersInProduction++;
+		}
+		else if(p.getClass() == Knight.class)
+		{
+			this.nbKnightsInProduction++;
+		}
 
-		this.productionUnit.addLast(newProduction);
+		
+		this.productionUnit.addLast(p);
 
 		if (this.productionUnit.size() == 1)
 		{
-			this.productionTime = newProduction.getProductionTime();
+			this.productionTime = p.getProductionTime();
 		}
 
 		return true;

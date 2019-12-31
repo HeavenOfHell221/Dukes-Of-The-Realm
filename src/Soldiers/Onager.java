@@ -61,10 +61,4 @@ public class Onager extends Soldier
 	{
 		reserve.addOnager();
 	}
-
-	@Override
-	public void removeInProduction(final Caserne caserne)
-	{
-		caserne.setNbOnagersInProduction(caserne.getNbOnagersInProduction() - 1);
-	}
 }

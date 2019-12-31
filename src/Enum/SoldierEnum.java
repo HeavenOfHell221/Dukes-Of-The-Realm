@@ -52,13 +52,10 @@ public enum SoldierEnum implements Serializable
 		switch (this)
 		{
 			case Piker:
-				currentCastle.setNbPikersInProduction(currentCastle.getNbPikersInProduction() + 1);
 				return new Piker();
 			case Knight:
-				currentCastle.setNbKnightsInProduction(currentCastle.getNbKnightsInProduction() + 1);
 				return new Knight();
 			case Onager:
-				currentCastle.setNbOnagersInProduction(currentCastle.getNbOnagersInProduction() + 1);
 				return new Onager();
 			default:
 				return null;

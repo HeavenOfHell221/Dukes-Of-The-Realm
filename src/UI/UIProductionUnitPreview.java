@@ -286,10 +286,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		this.buttonUpgradeCastle.setOnMousePressed(event ->
 		{
-			if (addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())))
-			{
-				this.currentCastle.setNbCastleInProduction(this.currentCastle.getNbCastleInProduction() + 1);
-			}
+			addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel()));
 		});
 
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
