@@ -48,9 +48,9 @@ public class Knight extends Soldier
 	{
 		reserve.addKnight();
 	}
-	
+
 	@Override
-	public void removeInProduction(Caserne caserne)
+	public void removeInProduction(final Caserne caserne)
 	{
 		caserne.setNbKnightsInProduction(caserne.getNbKnightsInProduction() - 1);
 	}

@@ -59,7 +59,7 @@ public abstract class Actor implements Serializable, IUpdate
 	 * image). Avant le prochain Update de cet acteur, il ajoute tous les châteaux de cette liste aux
 	 * siens puis vide cette liste.
 	 * </p>
-	 * 
+	 *
 	 * @see Actor#castles
 	 * @see Actor#addOrRemoveCastleList()
 	 */
@@ -71,7 +71,7 @@ public abstract class Actor implements Serializable, IUpdate
 	 * Lorsque cet acteur perd un château, il est ajouté à cette liste et serra supprimé de la liste
 	 * castles avant le prochain Update.
 	 * </p>
-	 * 
+	 *
 	 * @see Actor#castles
 	 * @see Actor#addOrRemoveCastleList()
 	 */
@@ -103,7 +103,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Initialise les composents transient de cet acteur.
-	 * 
+	 *
 	 * @param color La couleur de cet acteur.
 	 * @param pane  Le pane principal du jeu.
 	 */
@@ -142,7 +142,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute les nouveaux châteaux s'il y en a et supprime les châteaux conquis par d'autres acteurs.
-	 * 
+	 *
 	 * @see Actor#update(long, boolean)
 	 * @see Actor#castlesWaitForAdding
 	 * @see Actor#castlesWaitForDelete
@@ -177,7 +177,7 @@ public abstract class Actor implements Serializable, IUpdate
 	 * A chaque image on ajoute une certaine quantité de Florin pour avoir la quantité souhaité sur 1
 	 * seconde.
 	 * </p>
-	 * 
+	 *
 	 * @param castle Le château auquel on ajoute des Florin.
 	 * @see          DukesOfTheRealm.Castle#addFlorin(double)
 	 */
@@ -195,7 +195,7 @@ public abstract class Actor implements Serializable, IUpdate
 	 * <p>
 	 * Retrouve le château en question et modifie le UI en fonction.
 	 * </p>
-	 * 
+	 *
 	 * @param event L'événement crée lors d'un clique sur un château.
 	 * @see         Actor#addEvent(Castle)
 	 * @see         Actor#switchCastle(Castle)
@@ -258,7 +258,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Permet de savoir si un acteur est un joueur ou non.
-	 * 
+	 *
 	 * @return Retourne false pour tout les acteurs sauf ceux étant de la classe Player.
 	 * @see    Player#isPlayer()
 	 */

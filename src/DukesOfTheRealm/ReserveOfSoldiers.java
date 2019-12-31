@@ -15,14 +15,53 @@ import Enum.SoldierEnum;
  */
 public class ReserveOfSoldiers implements Serializable
 {
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
+
+	/**
+	 *
+	 */
 	private boolean stopAttack = false;
+
+	/**
+	 *
+	 */
 	private int nbPikers = 0;
+
+	/**
+	 *
+	 */
 	private int nbKnights = 0;
+
+	/**
+	 *
+	 */
 	private int nbOnagers = 0;
+
+	/**
+	 *
+	 */
 	private int pikersHPRemaining = PIKER_HP;
+
+	/**
+	 *
+	 */
 	private int knigtHPRemaining = KNIGHT_HP;
+
+	/**
+	 *
+	 */
 	private int onagerHPremaining = ONAGER_HP;
+
+	/**
+	 *
+	 */
 	private final Random rand = new Random();
+
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
 
 	/**
 	 *
@@ -32,6 +71,14 @@ public class ReserveOfSoldiers implements Serializable
 
 	}
 
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+
+	/**
+	 *
+	 * @param typeForce
+	 */
 	public void randomRemoveHP(final SoldierEnum typeForce)
 	{
 		testRemoveHP();
@@ -91,6 +138,9 @@ public class ReserveOfSoldiers implements Serializable
 		}
 	}
 
+	/**
+	 *
+	 */
 	private void testRemoveHP()
 	{
 		boolean piker = this.nbPikers <= 0;
@@ -151,78 +201,71 @@ public class ReserveOfSoldiers implements Serializable
 		return true;
 	}
 
+	/**
+	 *
+	 */
 	public void reactivateAttack()
 	{
 		this.stopAttack = false;
 	}
 
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+
 	/**
-	 *
-	 * @return
+	 * @return the nbPikers
 	 */
-	public int getNbPikers()
+	public final int getNbPikers()
 	{
 		return this.nbPikers;
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return the stopAttack
 	 */
-	public int getNbKnights()
+	public final boolean isStopAttack()
+	{
+		return this.stopAttack;
+	}
+
+	/**
+	 * @return the nbKnights
+	 */
+	public final int getNbKnights()
 	{
 		return this.nbKnights;
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return the nbOnagers
 	 */
-	public int getNbOnagers()
+	public final int getNbOnagers()
 	{
 		return this.nbOnagers;
 	}
 
 	/**
-	 *
-	 * @param nbPikers
+	 * @param nbPikers the nbPikers to set
 	 */
-	public void setNbPikers(final int nbPikers)
+	public final void setNbPikers(final int nbPikers)
 	{
 		this.nbPikers = nbPikers;
 	}
 
 	/**
-	 *
-	 * @param nbKnights
+	 * @param nbKnights the nbKnights to set
 	 */
-	public void setNbKnights(final int nbKnights)
+	public final void setNbKnights(final int nbKnights)
 	{
 		this.nbKnights = nbKnights;
 	}
 
 	/**
-	 *
-	 * @param nbOnagers
+	 * @param nbOnagers the nbOnagers to set
 	 */
-	public void setNbOnagers(final int nbOnagers)
+	public final void setNbOnagers(final int nbOnagers)
 	{
 		this.nbOnagers = nbOnagers;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public boolean isStopAttack()
-	{
-		return this.stopAttack;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "ReserveOfSoldiers [stopAttack=" + this.stopAttack + ", nbPikers=" + this.nbPikers + ", nbKnights=" + this.nbKnights
-				+ ", nbOnagers=" + this.nbOnagers + "]";
 	}
 }

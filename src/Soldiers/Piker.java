@@ -49,7 +49,7 @@ public class Piker extends Soldier
 	}
 
 	@Override
-	public void removeInProduction(Caserne caserne)
+	public void removeInProduction(final Caserne caserne)
 	{
 		caserne.setNbPikersInProduction(caserne.getNbPikersInProduction() - 1);
 	}

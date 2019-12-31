@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Classe dérivée d'Actor, réprésente le joueur.
- * 
+ *
  * @see Actor
  */
 public class Player extends Actor implements Serializable

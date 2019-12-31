@@ -19,27 +19,30 @@ public interface IProductionUnit
 	 * @return Retourne le coût de l'amélioration.
 	 */
 	int getProductionCost();
-	
+
 	/**
 	 * Ajoute une unité dans la réserve.
+	 * 
 	 * @param reserveOfSoldiers La réserve où va être ajouté les unités.
 	 */
-	default void addProduction(ReserveOfSoldiers reserveOfSoldiers)
+	default void addProduction(final ReserveOfSoldiers reserveOfSoldiers)
 	{
-		
+
 	}
-	
+
 	/**
 	 * Améliore le château en paramètre.
+	 * 
 	 * @param castle Le château qui va augmenter de niveau.
 	 */
-	default void CastleUp(Castle castle)
+	default void CastleUp(final Castle castle)
 	{
-		
+
 	}
-	
+
 	/**
 	 * Une fois la production terminé, on retire 1 au nombre de production dans la queue.
+	 * 
 	 * @param caserne La caserne où l'ont va retirer une production terminé.
 	 */
 	void removeInProduction(Caserne caserne);

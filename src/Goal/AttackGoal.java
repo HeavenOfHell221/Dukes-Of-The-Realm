@@ -11,30 +11,31 @@ public class AttackGoal extends Goal
 {
 	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
+	 * 
 	 * @see GenericGoal
 	 */
 	private final GenericGoal goals;
-	
+
 	/**
 	 * Le château origin de l'ost.
 	 */
 	private final Castle castleOrigin;
-	
+
 	/**
 	 * Le château destination de l'ost.
 	 */
-	private Castle castleDestination;
-	
+	private final Castle castleDestination;
+
 	/**
 	 * Le nombre de Piker dans l'ost.
 	 */
 	private final int nbPikers;
-	
+
 	/**
 	 * Le nombre de Knight dans l'ost.
 	 */
 	private final int nbKnights;
-	
+
 	/**
 	 * Le nombre de Onager dans l'ost.
 	 */
@@ -42,21 +43,22 @@ public class AttackGoal extends Goal
 
 	/**
 	 * Constructeur de AttackGoal.
-	 * 
+	 *
 	 * <p>
-	 * Calcul le manque d'unité pour créer l'ost et produit un objectif MultiSoldierGoal pour produire les unités manquante.
-	 * Créé ensuite un objectif SendOstGoal pour envoyer l'ost.
+	 * Calcul le manque d'unité pour créer l'ost et produit un objectif MultiSoldierGoal pour produire
+	 * les unités manquante. Créé ensuite un objectif SendOstGoal pour envoyer l'ost.
 	 * </p>
-	 * 
-	 * @param castleOrigin Le château d'où va partir l'ost.
+	 *
+	 * @param castleOrigin      Le château d'où va partir l'ost.
 	 * @param castleDestination Le château destination de l'ost.
-	 * @param nbPikers Le nombre de Piker dans l'ost.
-	 * @param nbKnights Le nombre de Knight dans l'ost.
-	 * @param nbOnagers Le nombre de Onager dans l'ost.
-	 * @see MultiSoldierGoal
-	 * @see SimpleGoal.SendOstGoal
+	 * @param nbPikers          Le nombre de Piker dans l'ost.
+	 * @param nbKnights         Le nombre de Knight dans l'ost.
+	 * @param nbOnagers         Le nombre de Onager dans l'ost.
+	 * @see                     MultiSoldierGoal
+	 * @see                     SimpleGoal.SendOstGoal
 	 */
-	public AttackGoal(final Castle castleOrigin, final Castle castleDestination, final int nbPikers, final int nbKnights, final int nbOnagers)
+	public AttackGoal(final Castle castleOrigin, final Castle castleDestination, final int nbPikers, final int nbKnights,
+			final int nbOnagers)
 	{
 		this.goals = new GenericGoal();
 		this.castleOrigin = castleOrigin;
@@ -64,7 +66,7 @@ public class AttackGoal extends Goal
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
 		this.castleDestination = castleDestination;
-		
+
 		int nbPikers_ = this.castleOrigin.getNbPikers() + this.castleOrigin.getNbPikersInProduction();
 		int nbOnagers_ = this.castleOrigin.getNbOnagers() + this.castleOrigin.getNbOnagersInProduction();
 		int nbKnights_ = this.castleOrigin.getNbKnights() + this.castleOrigin.getNbKnightsInProduction();

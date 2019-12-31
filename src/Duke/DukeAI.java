@@ -13,7 +13,7 @@ import Utility.Settings;
 
 /**
  * Classe dérivée d'Actor, représente les IA qui jouent contre le joueur.
- * 
+ *
  * @see Actor
  */
 public class DukeAI extends Actor implements Serializable
@@ -24,7 +24,7 @@ public class DukeAI extends Actor implements Serializable
 
 	/**
 	 * Dernière fois que ce Duke à vérifié ses objectifs.
-	 * 
+	 *
 	 * @see DukeAI#time(long, boolean)
 	 * @see DukeAI#update(long, boolean)
 	 */
@@ -35,7 +35,7 @@ public class DukeAI extends Actor implements Serializable
 	 * <p>
 	 * Clé: Un château, Valeur: Son objectif associé.
 	 * </p>
-	 * 
+	 *
 	 * @see DukeAI#update(long, boolean)
 	 * @see DukeAI#putNewGoal(Castle)
 	 */
@@ -43,7 +43,7 @@ public class DukeAI extends Actor implements Serializable
 
 	/**
 	 * Référence au royaume auquel appartient ce DukeIA.
-	 * 
+	 *
 	 * @see DukesOfTheRealm.Kingdom
 	 * @see Goal.GeneratorGoal#getNewGoalBattle(Castle)
 	 */
@@ -120,7 +120,7 @@ public class DukeAI extends Actor implements Serializable
 
 	/**
 	 * Génère un nouvel objectif pour le château en paramètre et le place dans la map.
-	 * 
+	 *
 	 * @param castle Le château courant.
 	 * @see          Goal.GeneratorGoal
 	 */
@@ -128,13 +128,13 @@ public class DukeAI extends Actor implements Serializable
 	{
 		Goal g = getNewGoal(castle);
 		this.goalMap.put(castle, g);
-		//System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
+		// System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
 	}
 
 	/**
 	 * Bloque une action durant un certain temps pour qu'elle s'effectue à un intervalle régulier
 	 * (inférieur à 1 fois par image).
-	 * 
+	 *
 	 * @param  now   Le temps écoulé depuis la création du programme.
 	 * @param  pause Boolean spécifiant si la pause est activé ou non.
 	 * @return       Retourne true si l'action est possible, false sinon.

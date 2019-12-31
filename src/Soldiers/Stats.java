@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Contient les données d'une unité (vitesse de déplacement, point de vie, dégâts).
+ * 
  * @see Soldier
  */
 public class Stats implements Serializable
@@ -12,12 +13,12 @@ public class Stats implements Serializable
 	 * La vitesse de déplacement de l'unité.
 	 */
 	public int speed;
-	
+
 	/**
 	 * Les points de vie de l'unité.
 	 */
 	public int health;
-	
+
 	/**
 	 * Les dégâts de l'unité.
 	 */
@@ -25,7 +26,8 @@ public class Stats implements Serializable
 
 	/**
 	 * Constructeur de Stats.
-	 * @param speed La vitesse de déplacement de l'unité.
+	 * 
+	 * @param speed  La vitesse de déplacement de l'unité.
 	 * @param health Les points de vie de l'unité.
 	 * @param damage les dégâts de l'unité.
 	 */

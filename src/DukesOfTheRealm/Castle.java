@@ -35,7 +35,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class Castle extends Sprite implements Serializable
 {
-
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -163,8 +162,7 @@ public class Castle extends Sprite implements Serializable
 		this.caserne = new Caserne(this);
 		this.ost = null;
 		this.attackLocations = new Stack<>();
-		// this.orientation = setOrientation();
-		this.orientation = Orientation.North;
+		this.orientation = setOrientation();
 		startTransient(pane);
 		setAttackLocations();
 	}
@@ -218,6 +216,19 @@ public class Castle extends Sprite implements Serializable
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	private Orientation setOrientation()
+	{
+		Random rand = new Random();
+		switch(rand.nextInt(4))
+		{
+			case 0: return Orientation.East;
+			case 1: return Orientation.North;
+			case 2: return Orientation.West;
+			case 3: return Orientation.South;
+		}
+		return Orientation.None;
+	}
+	
 	/**
 	 * Donne à un Baron un nombre aléatoire d'unités proportionnel au niveau de ce château.
 	 * 

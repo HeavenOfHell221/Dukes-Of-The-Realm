@@ -14,20 +14,21 @@ public class MultiSoldierGoal extends Goal
 {
 	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
+	 * 
 	 * @see GenericGoal
 	 */
 	private final GenericGoal goals;
-	
+
 	/**
 	 * Nombre de Piker qu'on veut créer
 	 */
 	private final int nbPikers;
-	
+
 	/**
 	 * Nombre de Knight qu'on veut créer.
 	 */
 	private final int nbKnights;
-	
+
 	/**
 	 * Nombre de Onager qu'on veut créer.
 	 */
@@ -38,11 +39,12 @@ public class MultiSoldierGoal extends Goal
 	 * <p>
 	 * Va remplir la queue aléatoirement entre les différents type d'unité.
 	 * </p>
-	 * @param castle Le château sur lequel cet ojectif est à accomplir.
-	 * @param nbPikers_ Le nombre de Piker à produire.
+	 * 
+	 * @param castle     Le château sur lequel cet ojectif est à accomplir.
+	 * @param nbPikers_  Le nombre de Piker à produire.
 	 * @param nbKnights_ Le nombre de Knight à produire.
 	 * @param nbOnagers_ Le nombre de Onager à produire.
-	 * @see SimpleGoal.SoldierGoal
+	 * @see              SimpleGoal.SoldierGoal
 	 */
 	public MultiSoldierGoal(final Castle castle, int nbPikers_, int nbKnights_, int nbOnagers_)
 	{

@@ -7,26 +7,28 @@ import DukesOfTheRealm.Castle;
 import SimpleGoal.Goal;
 
 /**
- * Objectif visant à envoyer du renfort à un château nous appartenant.
- * Reproduit le même montant d'unité que dans le nombre envoyé en renfort.
+ * Objectif visant à envoyer du renfort à un château nous appartenant. Reproduit le même montant
+ * d'unité que dans le nombre envoyé en renfort.
  */
 public class BackupGoal extends Goal
 {
 	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
+	 * 
 	 * @see GenericGoal
 	 */
 	private final GenericGoal goals;
 
 	/**
 	 * Constructeur de BackupGoal.
-	 * 
+	 *
 	 * <p>
-	 * Crée une liste de château sans le château qui doit envoyer du renfort. Si la liste est vide alors l'objectif est infaisable et la queue reste vide.
+	 * Crée une liste de château sans le château qui doit envoyer du renfort. Si la liste est vide alors
+	 * l'objectif est infaisable et la queue reste vide.
 	 * </p>
-	 * 
-	 * @param origin Le château qui va envoyer du renfort.
-	 * @param nbPikers Le nombre de Piker à envoyer.
+	 *
+	 * @param origin    Le château qui va envoyer du renfort.
+	 * @param nbPikers  Le nombre de Piker à envoyer.
 	 * @param nbKnights Le nombre de Knight à envoyer.
 	 * @param nbOnagers Le nombre de Onager à envoyer.
 	 */

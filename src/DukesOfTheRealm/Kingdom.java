@@ -322,7 +322,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 
 	/**
 	 * Teste s'il existe un ch�teau trop proche des coordonn�es donn�s en param�tre.
-	 * 
+	 *
 	 * @param  castles    Liste des ch�teaux d�j� cr�es.
 	 * @param  coordinate Les coordonn�es du potentiel futur ch�teau.
 	 * @return            Retourne true si la distance est respect�, false sinon.
@@ -346,7 +346,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/**
 	 * Calcul le distance entre deux points (les coordonn�es d'un ch�teau et les coordonn�es du
 	 * ch�teau qu'on voudrait cr�er).
-	 * 
+	 *
 	 * @param  castleCoord Les coordonn�es du ch�teau courant.
 	 * @param  coord       Les coordonn�es du ch�tau qu'on voudrait cr�er.
 	 * @return             Retourne la distance entre les deux points.
@@ -361,7 +361,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 
 	/**
 	 * Renvoie des coordonn�es al�atoires pour positionner un ch�teau.
-	 * 
+	 *
 	 * @param  rand Un objet de type Random pour l'al�atoire.
 	 * @return      Retourne des coordonn�es.
 	 * @see         Kingdom#createWorld()
@@ -376,7 +376,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/**
 	 * Renvoie un acteur al�atoire du royaume en ne prenant pas en compte l'acteur qui utilise cette
 	 * fonction.
-	 * 
+	 *
 	 * @param  actor L'acteur qui serra retir� de la liste
 	 * @return       Retourne un acteur du royaume ou null si la liste ne contient que l'acteur
 	 *               appelelant cette fonction.

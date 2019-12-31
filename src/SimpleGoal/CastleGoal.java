@@ -10,14 +10,15 @@ public class CastleGoal extends Goal
 	/**
 	 * Le niveau du château qu'on veut améliorer.
 	 */
-	private int level;
-	
+	private final int level;
+
 	/**
 	 * Constucteur de CastleGoal
+	 * 
 	 * @param castle Le château qu'on veut améliorer.
-	 * @see Goal.GeneratorGoal
+	 * @see          Goal.GeneratorGoal
 	 */
-	public CastleGoal(Castle castle)
+	public CastleGoal(final Castle castle)
 	{
 		this.level = castle.getLevel();
 	}
@@ -31,6 +32,6 @@ public class CastleGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "CastleGoal [level=" + (level+1) + "]";
+		return "CastleGoal [level=" + (this.level + 1) + "]";
 	}
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
-import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.CollisionEnum;
 import Enum.SoldierEnum;
@@ -136,7 +135,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	/**
 	 *
 	 */

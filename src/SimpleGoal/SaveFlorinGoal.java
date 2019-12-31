@@ -14,9 +14,10 @@ public class SaveFlorinGoal extends Goal
 
 	/**
 	 * Constructeur de SaveFlorinGoal.
+	 * 
 	 * @param saveAmount Le montant de Florin à avoir.
-	 * @see SaveFlorinGoal#saveAmount
-	 * @see Goal.GeneratorGoal
+	 * @see              SaveFlorinGoal#saveAmount
+	 * @see              Goal.GeneratorGoal
 	 */
 	public SaveFlorinGoal(final int saveAmount)
 	{
@@ -32,6 +33,6 @@ public class SaveFlorinGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "SaveFlorinGoal [saveAmount=" + saveAmount + "]";
+		return "SaveFlorinGoal [saveAmount=" + this.saveAmount + "]";
 	}
 }
