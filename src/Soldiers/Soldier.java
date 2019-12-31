@@ -127,7 +127,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			}
 			else
 			{
-				addInReserve(getDestination().getReserveOfSoldiers());
+				addProduction(getDestination().getReserveOfSoldiers());
 				this.isDead = true;
 			}
 		}
@@ -136,13 +136,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
-	/**
-	 *
-	 * @param reserve
-	 */
-	protected abstract void addInReserve(ReserveOfSoldiers reserve);
-
+	
 	/**
 	 *
 	 */

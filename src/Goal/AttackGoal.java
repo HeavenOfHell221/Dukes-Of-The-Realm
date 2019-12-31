@@ -4,6 +4,9 @@ import DukesOfTheRealm.Castle;
 import SimpleGoal.Goal;
 import SimpleGoal.SendOstGoal;
 
+/**
+ * Objectif visant à envoyer une attaque vers un autre château d'un utre acteur.
+ */
 public class AttackGoal extends Goal
 {
 	/**
@@ -42,6 +45,7 @@ public class AttackGoal extends Goal
 	 * 
 	 * <p>
 	 * Calcul le manque d'unité pour créer l'ost et produit un objectif MultiSoldierGoal pour produire les unités manquante.
+	 * Créé ensuite un objectif SendOstGoal pour envoyer l'ost.
 	 * </p>
 	 * 
 	 * @param castleOrigin Le château d'où va partir l'ost.
