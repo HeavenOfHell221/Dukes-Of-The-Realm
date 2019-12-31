@@ -30,7 +30,7 @@ public class Main extends Application implements IUpdate
 	/*************************************************/
 
 	/**
-	 * Nombre d'unité affiché sur la grille de jeu. Utilisé pour effectuer des tests de performance.
+	 * Nombre d'unités affichées sur la grille de jeu. Utilisé pour effectuer des tests de performance.
 	 */
 	public static int nbSoldier;
 
@@ -42,7 +42,7 @@ public class Main extends Application implements IUpdate
 	private Pane playfieldLayer;
 
 	/**
-	 * Scene principale.
+	 * Scène principale.
 	 *
 	 * @see Main#Awake(Stage)
 	 */
@@ -283,7 +283,7 @@ public class Main extends Application implements IUpdate
 	/*************************************************/
 
 	/**
-	 * Calcul le delta entre le temps now et le lastTime.
+	 * Calcule le delta entre le temps now et le lastTime.
 	 *
 	 * @param  now Temps à laquelle l'image à commencé.
 	 * @return     Retourne true si le delta entre now et lastTime est supérieur à 0.2 secondes.

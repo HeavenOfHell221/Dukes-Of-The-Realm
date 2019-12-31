@@ -17,6 +17,9 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * Représente une ost. Contient tous les soldats qui la compose.
+ */
 public class Ost implements IUpdate, Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -25,31 +28,105 @@ public class Ost implements IUpdate, Serializable
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * Référence sur le château d'orgine de l'ost.
+	 */
 	private final Castle origin;
+	
+	/**
+	 * Référence sur le château de destination de l'ost.
+	 */
 	private final Castle destination;
+	
+	/**
+	 * La direction générale vers laquelle l'ost se dirige : Nord-Ouest / Nord-Est / Sud-Ouest / Sud-Est.
+	 */
 	private Orientation destinationArea;
+	
+	/**
+	 * Le point autours du château de destination vers lequel toutes les unités de l'ost se dirigent dans un premier temps.
+	 */
 	private Point2D separationPoint = null;
+	
+	/**
+	 * Le point d'attente autours du château de destination où une unité se positionne si toutes les positions d'attaque du château sont occupées.
+	 */
 	private Point2D waitingPoint = null;
-	private final int nbPikers;
-	private final int nbKnights;
-	private final int nbOnagers;
+	
+	/**
+	 * Le nombre total de soldats qui composent l'ost, tous types confondus.
+	 */
 	private final int nbSoldiers;
+	
+	/**
+	 * Le nombre de soldats de type Piquiers qui composent l'ost.
+	 */
+	private final int nbPikers;
+	
+	/**
+	 * Le nombre de soldats de type Chevaliers qui composent l'ost.
+	 */
+	private final int nbKnights;
+	
+	/**
+	 * Le nombre de soldats de type Catapulte qui composent l'ost.
+	 */
+	private final int nbOnagers;
+	
+	/**
+	 * La vitesse de déplacement de l'ost.
+	 */
 	private int speed;
+	
+	/**
+	 * La liste contenant toutes les références vers les soldats de l'ost.
+	 */
 	private final ArrayList<Soldier> soldiers;
+	
+	/**
+	 * Le nombre de soldats qui ont été déployés sur le terrain.
+	 */
 	private int nbSoldiersSpawned;
+	
+	/**
+	 * Un booléen indiquant si l'ost est entièrement déployée sur le terrain.
+	 */
 	private boolean fullyDeployed = false;
 
+	/**
+	 * La couleur qui représente l'ost à l'écran.
+	 */
 	private transient Color color;
+	
+	/**
+	 * Donne la date du dernier déploiement d'unité.
+	 */
 	private transient long lastTime;
 
+	/**
+	 * Booléen indiquant si l'ost correspond à un envoi de renforts d'un château à un autre d'un même acteur.
+	 */
 	private boolean isBackup;
 
+	/**
+	 * Un booléen indiquant si l'attaque est actuellement stopée ou non.
+	 */
 	private boolean stopAttack = false;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
 
+	/**
+	 * Constructeur Ost.
+	 * @param origin la référence vers le château d'origine.
+	 * @param destination la référence vers le château de destination.
+	 * @param nbPikers le nombre de soldats de type Piquier.
+	 * @param nbKnights le nombre de soldats de type Chevalier.
+	 * @param nbOnagers le nombre de soldats de type Catapulte.
+	 * @param color la couleur permettant de représenter l'ost à l'écran.
+	 * @param isBackup le booléen indiquant si l'ost correspond à un transport de renforts vers un château allié.
+	 */
 	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
 			final Color color, final boolean isBackup)
 	{
@@ -77,6 +154,10 @@ public class Ost implements IUpdate, Serializable
 		this.waitingPoint = SetWaitingPoint();
 	}
 
+	/**
+	 * Initialise les composants transients du jeu.
+	 * @param color la couleur permettant de représenter l'ost à l'écran.
+	 */
 	public void startTransient(final Color color)
 	{
 		this.color = color;
@@ -135,6 +216,10 @@ public class Ost implements IUpdate, Serializable
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/**
+	 * Calcule la vitesse de déplacement de l'ost selon les unités qui la compose.
+	 * @return la vitesse de déplacement de l'ost.
+	 */
 	private int SetOstSpeed()
 	{
 		int minimalSpeed = Settings.KNIGHT_SPEED;
@@ -143,6 +228,11 @@ public class Ost implements IUpdate, Serializable
 		return minimalSpeed;
 	}
 
+	/**
+	 * Détermine le point de séparation de l'ost autours du château adverse en fonction de la position de celui-ci par rapport au château d'origine de l'ost.
+	 * Par exemple pour un château adverse situé au Nord-Est du château de départ le point de séparation sera au Sud-Ouest du château adverse.
+	 * @return le point de séparation de l'ost.
+	 */
 	private Point2D SetSeparationPoint()
 	{
 		final Orientation area = getDestinationArea();
@@ -154,6 +244,10 @@ public class Ost implements IUpdate, Serializable
 		return separationPoint;
 	}
 
+	/**
+	 * Détermine le point d'attente d'une unité autours du château adverse en fonction de la position de celui-ci par rapport au château d'origine de l'ost.
+	 * @return le point d'attente d'une unité.
+	 */
 	private Point2D SetWaitingPoint()
 	{
 		int offsetX = 0;
@@ -181,6 +275,9 @@ public class Ost implements IUpdate, Serializable
 		return waitingPoint;
 	}
 
+	/**
+	 * Détermine et met en place la direction générale vers laquelle l'ost se dirige : Nord-Ouest / Nord-Est / Sud-Ouest / Sud-Est.
+	 */
 	private void SetDestinationArea()
 	{
 		if (this.origin.getX() <= this.destination.getX())
@@ -193,6 +290,11 @@ public class Ost implements IUpdate, Serializable
 		}
 	}
 
+	/**
+	 * Déploie une vague de soldat sur le terrain.
+	 * Le nombre de soldats déployés en une vague correspond au nombre par défaut ou au nombre d'unités restantes à déployer s'il en reste moins.
+	 * @see Settings
+	 */
 	private void DeployOneSoldiersWave()
 	{
 		final int nbSpawn = this.nbSoldiersSpawned <= this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS ? Settings.SIMULTANEOUS_SPAWNS
@@ -224,15 +326,20 @@ public class Ost implements IUpdate, Serializable
 		}
 	}
 
+	/**
+	 * Fais apparaître un soldat sur le terrain.
+	 * @param x l'abscisse du soldat à créer.
+	 * @param y l'ordonnée du soldat à créer.
+	 */
 	private void SpawnSoldier(final int x, final int y)
 	{
-		final AtomicReference<SoldierEnum> soldierType = getNextAvailableSoldier();
+		final SoldierEnum soldierType = getNextAvailableSoldier();
 		final Pane layer = this.origin.getLayer();
 
 		switch (this.origin.getOrientation())
 		{
 			case North:
-				switch (soldierType.get())
+				switch (soldierType)
 				{
 					case Piker:
 						final Piker piker = new Piker(layer,
@@ -260,7 +367,7 @@ public class Ost implements IUpdate, Serializable
 				}
 				break;
 			case South:
-				switch (soldierType.get())
+				switch (soldierType)
 				{
 					case Piker:
 						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
@@ -288,7 +395,7 @@ public class Ost implements IUpdate, Serializable
 				}
 				break;
 			case West:
-				switch (soldierType.get())
+				switch (soldierType)
 				{
 					case Piker:
 						final Piker piker = new Piker(layer,
@@ -316,7 +423,7 @@ public class Ost implements IUpdate, Serializable
 				}
 				break;
 			case East:
-				switch (soldierType.get())
+				switch (soldierType)
 				{
 					case Piker:
 						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
@@ -350,7 +457,12 @@ public class Ost implements IUpdate, Serializable
 
 	}
 
-	private AtomicReference<SoldierEnum> getNextAvailableSoldier()
+	/**
+	 * Détermine le prochain type de soldat à déployer parmi ceux qui ne l'ont pas encore été.
+	 * La priorité est donnée aux unités les plus lentes.
+	 * @return le type du prochain soldat à déployer.
+	 */
+	private SoldierEnum getNextAvailableSoldier()
 	{
 		final AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
 		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Piker).count();
@@ -368,9 +480,16 @@ public class Ost implements IUpdate, Serializable
 		{
 			slowestType.set(SoldierEnum.Knight);
 		}
-		return slowestType;
+		return slowestType.get();
 	}
 
+	/**
+	 * Vérifie si le temps écoulé depuis le dernier déploiement de soldats est suffisant pour pouvoir en déployer à nouveau.
+	 * @param now la date actuelle.
+	 * @param pause le booléen indiquant si le jeu est en pause.
+	 * @return true si le delta entre now et lastTime est supérieur au temps fixé par défaut entre deux déploiement de soldats.
+	 * @see Settings
+	 */
 	private boolean Time(final long now, final boolean pause)
 	{
 		if (pause)
@@ -385,6 +504,10 @@ public class Ost implements IUpdate, Serializable
 		return false;
 	}
 
+	/**
+	 * Réalise les traitements nécéssaires lorsque l'ost à vaincu le château adverse : modifier le propriétaire du château et sa couleur, 
+	 * et réinitialiser sa file de production.
+	 */
 	public void win()
 	{
 		if (!this.stopAttack && !this.origin.getActor().isDead)
@@ -409,7 +532,7 @@ public class Ost implements IUpdate, Serializable
 	/*************************************************/
 
 	/**
-	 * @return the origin
+	 * @return la référence vers le château d'origine.
 	 */
 	public final Castle getOrigin()
 	{
@@ -417,7 +540,7 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * @return the destination
+	 * @return la référence vers le château de destination.
 	 */
 	public final Castle getDestination()
 	{
@@ -425,20 +548,23 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * @return the destinationArea
+	 * @return la position du château adverse par rapport au château d'origine.
 	 */
 	public Orientation getDestinationArea()
 	{
 		return this.destinationArea;
 	}
 
+	/**
+	 * @return le point de séparation de l'ost autours du château adverse.
+	 */
 	public Point2D getSeparationPoint()
 	{
 		return this.separationPoint;
 	}
 
 	/**
-	 * @return the waitingPoint
+	 * @return le point d'attente d'une unité autours du château adverse.
 	 */
 	public final Point2D getWaitingPoint()
 	{
@@ -446,7 +572,7 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * @return the fullyDeployed
+	 * @return le booléen indiquant si l'ost est entièrement déployée ou non.
 	 */
 	public final boolean isFullyDeployed()
 	{
@@ -454,7 +580,7 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * @return the isBackup
+	 * @return le booléen indiquant si l'ost correspond à un envoi de renforts vers un château allié.
 	 */
 	public final boolean isBackup()
 	{
@@ -462,7 +588,7 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * @return the stopAttack
+	 * @return le booléen indiquant si l'attaque est stoppée.
 	 */
 	public final boolean isStopAttack()
 	{
@@ -470,7 +596,7 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * @return the soldiers
+	 * @return la liste de soldats composant l'ost.
 	 */
 	public final ArrayList<Soldier> getSoldiers()
 	{
