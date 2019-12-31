@@ -374,7 +374,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Renvoie un acteur aléatoire du royaume en ne prenant pas en compte l'acteur qui utilise cette
+	 * Renvoie un acteur al�atoire du royaume en ne prenant pas en compte l'acteur qui utilise cette
 	 * fonction.
 	 *
 	 * @param  actor L'acteur qui serra retiré de la liste

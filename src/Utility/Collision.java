@@ -32,6 +32,10 @@ public class Collision
 		this.castlesCoord = new ArrayList<>();
 	}
 
+	/**
+	 * Ajoute un à la liste des châteaux de l'instance.
+	 * @param p le point représentant les coordonnées du château à ajouter
+	 */
 	public static void addPoint(final Point2D p)
 	{
 		instance.castlesCoord.add(p);

@@ -155,7 +155,7 @@ public class Ost implements IUpdate, Serializable
 	}
 
 	/**
-	 * Initialise les composants transients du jeu.
+	 * Initialise les composants transients d'une ost.
 	 * @param color la couleur permettant de représenter l'ost à l'écran.
 	 */
 	public void startTransient(final Color color)
