@@ -10,28 +10,65 @@ import java.util.Random;
 import Enum.SoldierEnum;
 
 /**
- *
- *
+ * Réserve qui contient le nombre de chaque unité pour un château.
  */
 public class ReserveOfSoldiers implements Serializable
 {
-	private boolean stopAttack = false;
-	private int nbPikers = 0;
-	private int nbKnights = 0;
-	private int nbOnagers = 0;
-	private int pikersHPRemaining = PIKER_HP;
-	private int knigtHPRemaining = KNIGHT_HP;
-	private int onagerHPremaining = ONAGER_HP;
-	private final Random rand = new Random();
+	/*************************************************/
+	/******************* ATTRIBUTS *******************/
+	/*************************************************/
 
 	/**
-	 *
+	 * Spécifie si les unités adverses doivent essayer de retirer des points de vie aux unités de la
+	 * réserve ou non.
 	 */
-	public ReserveOfSoldiers()
-	{
+	private boolean stopAttack = false;
 
-	}
+	/**
+	 * Nombre de Piker dans la réserve.
+	 */
+	private int nbPikers = 0;
 
+	/**
+	 * Nombre de Knight dans la réserve.
+	 */
+	private int nbKnights = 0;
+
+	/**
+	 * Nombre de Onager dans la réserve.
+	 */
+	private int nbOnagers = 0;
+
+	/**
+	 * Nombre point de vie courant des Piker. Si égale à 0, le château perd 1 Piker.
+	 */
+	private int pikersHPRemaining = PIKER_HP;
+
+	/**
+	 * Nombre point de vie courant des Knight. Si égale à 0, le château perd 1 Knight.
+	 */
+	private int knigtHPRemaining = KNIGHT_HP;
+
+	/**
+	 * Nombre de point de vie courant des Onager. si égale à 0, le château perd 1 Onager.
+	 */
+	private int onagerHPremaining = ONAGER_HP;
+
+	/**
+	 * Object Random pour gérer l'aléatoire.
+	 */
+	private final Random rand = new Random();
+
+	/*************************************************/
+	/******************* METHODES ********************/
+	/*************************************************/
+
+	/**
+	 * Retire aléatoirement un point de vie à un type d'unité.
+	 * 
+	 * @param typeForce Le type d'unité qu iva perdre un point de vie, aléatoire la 1ère fois et forcé
+	 *                  si on tombe sur un type d'unité où il y en a 0 dans le château attaqué.
+	 */
 	public void randomRemoveHP(final SoldierEnum typeForce)
 	{
 		testRemoveHP();
@@ -91,6 +128,9 @@ public class ReserveOfSoldiers implements Serializable
 		}
 	}
 
+	/**
+	 * Teste si on peut encore retirer des points de vie (si il reste des unités dans la réserve).
+	 */
 	private void testRemoveHP()
 	{
 		boolean piker = this.nbPikers <= 0;
@@ -104,7 +144,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 *
+	 * Ajoute un Piker à la réserve.
 	 */
 	public void addPiker()
 	{
@@ -112,7 +152,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 *
+	 * Ajoute un Knight à la réserve.
 	 */
 	public void addKnight()
 	{
@@ -120,7 +160,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 *
+	 * Ajoute un Onager à la réserve.
 	 */
 	public void addOnager()
 	{
@@ -128,11 +168,13 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 *
-	 * @param  nbPikers
-	 * @param  nbKnights
-	 * @param  nbOnagers
-	 * @return
+	 * Retire, après avoir lancé une ost par exemple, un certain nombre d'unité dans la réserve.
+	 * 
+	 * @param  nbPikers  Le nombre de Piker à retirer.
+	 * @param  nbKnights Le nombre de Knight à retirer.
+	 * @param  nbOnagers Le nombre de Onager à retirer.
+	 * @return           Retourne true si tout c'est bien passé, retourne false si on ne peut pas
+	 *                   retirer toutes les unités désirées.
 	 */
 	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
@@ -144,85 +186,75 @@ public class ReserveOfSoldiers implements Serializable
 		this.nbKnights -= nbKnights;
 		this.nbPikers -= nbPikers;
 		this.nbOnagers -= nbOnagers;
-		if (this.nbKnights < 0 || this.nbOnagers < 0 || this.nbPikers < 0)
-		{
-			System.out.println("Reserve -> " + this.nbKnights + " " + this.nbOnagers + " " + this.nbPikers);
-		}
+
 		return true;
 	}
 
+	/**
+	 * Réactive les attaques de cette réserve.
+	 */
 	public void reactivateAttack()
 	{
 		this.stopAttack = false;
 	}
 
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+
 	/**
-	 *
-	 * @return
+	 * @return the nbPikers
 	 */
-	public int getNbPikers()
+	public final int getNbPikers()
 	{
 		return this.nbPikers;
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return the stopAttack
 	 */
-	public int getNbKnights()
+	public final boolean isStopAttack()
+	{
+		return this.stopAttack;
+	}
+
+	/**
+	 * @return the nbKnights
+	 */
+	public final int getNbKnights()
 	{
 		return this.nbKnights;
 	}
 
 	/**
-	 *
-	 * @return
+	 * @return the nbOnagers
 	 */
-	public int getNbOnagers()
+	public final int getNbOnagers()
 	{
 		return this.nbOnagers;
 	}
 
 	/**
-	 *
-	 * @param nbPikers
+	 * @param nbPikers the nbPikers to set
 	 */
-	public void setNbPikers(final int nbPikers)
+	public final void setNbPikers(final int nbPikers)
 	{
 		this.nbPikers = nbPikers;
 	}
 
 	/**
-	 *
-	 * @param nbKnights
+	 * @param nbKnights the nbKnights to set
 	 */
-	public void setNbKnights(final int nbKnights)
+	public final void setNbKnights(final int nbKnights)
 	{
 		this.nbKnights = nbKnights;
 	}
 
 	/**
-	 *
-	 * @param nbOnagers
+	 * @param nbOnagers the nbOnagers to set
 	 */
-	public void setNbOnagers(final int nbOnagers)
+	public final void setNbOnagers(final int nbOnagers)
 	{
 		this.nbOnagers = nbOnagers;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public boolean isStopAttack()
-	{
-		return this.stopAttack;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "ReserveOfSoldiers [stopAttack=" + this.stopAttack + ", nbPikers=" + this.nbPikers + ", nbKnights=" + this.nbKnights
-				+ ", nbOnagers=" + this.nbOnagers + "]";
 	}
 }

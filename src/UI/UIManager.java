@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * Gère les modules d'iinterface utilisateur du jeu.
+ *
  * @see UIAttackPreview
  * @see UICastlePreview
  * @see UIProductionUnitPreview
@@ -34,24 +35,30 @@ public class UIManager extends Parent implements IUI, IUpdate
 
 	/**
 	 * Référence à un oobjet UIAttackPreview qui va s'occuper de l'interface utilisateur des attaques.
+	 *
 	 * @See UIAttackPreview
 	 */
 	private UIAttackPreview attackPreview;
 
 	/**
-	 * Référence à un oobjet UIProductionUnitPreview qui va s'occuper de l'interface utilisateur de la production.
+	 * Référence à un oobjet UIProductionUnitPreview qui va s'occuper de l'interface utilisateur de la
+	 * production.
+	 *
 	 * @see UIProductionUnitPreview
 	 */
 	private UIProductionUnitPreview productionUnitPreview;
 
 	/**
-	 * Référence à un objet UICastlePreview qui va s'occuper de l'interface utilisateur des données afficher des châteaux.
+	 * Référence à un objet UICastlePreview qui va s'occuper de l'interface utilisateur des données
+	 * afficher des châteaux.
+	 *
 	 * @see UICastlePreview
 	 */
 	private UICastlePreview castlePreview;
 
 	/**
 	 * Référence au pane principale du jeu.
+	 *
 	 * @see DukesOfTheRealm.Main#playfieldLayer
 	 */
 	private Pane playfieldLayer;
@@ -63,6 +70,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 
 	/**
 	 * Référence sur le dernier château sélectionné.
+	 *
 	 * @see UIManager#switchCastle(Castle)
 	 * @see DukesOfTheRealm.Castle
 	 */
@@ -70,6 +78,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 
 	/**
 	 * Référence sur l'avant dernier château sélectionné.
+	 *
 	 * @see UIManager#switchCastle(Castle)
 	 * @see DukesOfTheRealm.Castle
 	 */
@@ -104,10 +113,12 @@ public class UIManager extends Parent implements IUI, IUpdate
 	}
 
 	/**
-	 * Méthode appelé avant la méthode start pour créer les références des différents objets qui gère l'interface, le background et set le pane.
+	 * Méthode appelé avant la méthode start pour créer les références des différents objets qui gère
+	 * l'interface, le background et set le pane.
+	 *
 	 * @param pane Le pane principal du jeu.
-	 * @see UIManager#start()
-	 * @see DukesOfTheRealm.Main#playfieldLayer
+	 * @see        UIManager#start()
+	 * @see        DukesOfTheRealm.Main#playfieldLayer
 	 */
 	public void awake(final Pane pane)
 	{
@@ -153,6 +164,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 
 	/**
 	 * Initialise les paramètres du background tel que sa couleur et ses effets visuels.
+	 *
 	 * @see UIManager#background
 	 */
 	private void setBackground()
@@ -189,7 +201,9 @@ public class UIManager extends Parent implements IUI, IUpdate
 	}
 
 	/**
-	 * Change le château courant et rend visible ou invisible les modules UI en fonction de l'acteur du nouveau château courant.
+	 * Change le château courant et rend visible ou invisible les modules UI en fonction de l'acteur du
+	 * nouveau château courant.
+	 *
 	 * @param castle Le nouveau château courant.
 	 */
 	public void switchCastle(final Castle castle)
@@ -230,7 +244,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 
 		this.attackPreview.switchCastle(castle, attackVisible);
 		this.productionUnitPreview.switchCastle(castle, productionVisible);
-		this.castlePreview.switchCastle(castle, castleSwitch, productionVisible, attackVisible);
+		this.castlePreview.switchCastle(castle, castleSwitch, attackVisible);
 	}
 
 	@Override

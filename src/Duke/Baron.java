@@ -13,7 +13,7 @@ import Utility.Time;
 
 /**
  * Classe dérivée d'Actor, représente les acteurs neutre qui n'ont pas d'IA.
- * 
+ *
  * @see Actor
  */
 public class Baron extends Actor implements Serializable

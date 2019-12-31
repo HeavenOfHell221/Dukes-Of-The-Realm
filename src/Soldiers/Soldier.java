@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
-import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.CollisionEnum;
 import Enum.SoldierEnum;
@@ -127,7 +126,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			}
 			else
 			{
-				addInReserve(getDestination().getReserveOfSoldiers());
+				addProduction(getDestination().getReserveOfSoldiers());
 				this.isDead = true;
 			}
 		}
@@ -136,12 +135,6 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
-	/**
-	 *
-	 * @param reserve
-	 */
-	protected abstract void addInReserve(ReserveOfSoldiers reserve);
 
 	/**
 	 *

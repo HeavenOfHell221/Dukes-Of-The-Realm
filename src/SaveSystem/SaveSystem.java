@@ -16,7 +16,7 @@ public class SaveSystem
 {
 	/**
 	 * Sauvegarde le royaume dans un fichier prédéfini "DukesOfTheRealm.bin".
-	 * 
+	 *
 	 * @param kingdom Le royaume à sauvegarder.
 	 */
 	public static void save(final Kingdom kingdom)
@@ -41,7 +41,12 @@ public class SaveSystem
 
 	/**
 	 * Charge une partie précédement sauvegarder.
-	 * 
+	 *
+	 * <p>
+	 * Après le chargement du royaume, toutes les objets possédant une méthode startTransient
+	 * l'appeleront pour créer les objets transient (couleur, pane, shape..).
+	 * </p>
+	 *
 	 * @return Le royaume chargé, ou null en cas d'erreur.
 	 */
 	public static Kingdom load()

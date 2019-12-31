@@ -135,12 +135,14 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 
 	/**
 	 * Référence sur le château que va recevoir l'ost.
+	 *
 	 * @see UIAttackPreview#switchCastle(Castle, boolean)
 	 */
 	private Castle currentCastle;
 
 	/**
 	 * Référence sur le château qui va envoyer l'ost.
+	 *
 	 * @see UIAttackPreview#switchCastle(Castle, boolean)
 	 */
 	private Castle lastCastle;
@@ -206,6 +208,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 
 	/**
 	 * Méthode qui va initialiser tout les objets Text de ce module.
+	 *
 	 * @see UIAttackPreview#setText(Text, int)
 	 */
 	private void setAllTexts()
@@ -217,6 +220,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 
 	/**
 	 * Initalise un objet Text avec des paramètres prédéfinis.
+	 *
 	 * @param text Lobjet Text qu'on initialise
 	 * @param font La taille de la police.
 	 */
@@ -241,7 +245,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 
 	/**
 	 * Initialise le style d'un bouton, sa taille et le cursor lorsque la souris passe dessus.
-	 * @param b Le bouton à initialiser.
+	 *
+	 * @param b   Le bouton à initialiser.
 	 * @param url Le chemin pour accéder à l'image du bouton.
 	 */
 	private void setStyle(final Button b, final String url)
@@ -474,10 +479,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	}
 
 	/**
-	 * Change le château courant et fixe la visibilité de ce module en fonction du boolean attackVisible.
-	 * @param castle Le nouveau château courant.
+	 * Change le château courant et fixe la visibilité de ce module en fonction du boolean
+	 * attackVisible.
+	 *
+	 * @param castle        Le nouveau château courant.
 	 * @param attackVisible Spécifie si ce module est visible ou non.
-	 * @see UIManager#switchCastle(Castle)
+	 * @see                 UIManager#switchCastle(Castle)
 	 */
 	public void switchCastle(final Castle castle, final boolean attackVisible)
 	{

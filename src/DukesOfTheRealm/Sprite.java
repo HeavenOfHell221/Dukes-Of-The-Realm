@@ -40,7 +40,6 @@ import javafx.scene.shape.StrokeType;
 
 /**
  *
- *
  */
 public abstract class Sprite extends Parent implements IProductionUnit, Serializable
 {
@@ -63,32 +62,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 	 *
 	 */
 	protected Point2D coordinate;
-
-	/**
-	 *
-	 */
-	protected double width;
-
-	/**
-	 *
-	 */
-	protected double height;
-
-	/*************************************************/
-	/***************** CONSTRUCTEURS *****************/
-	/*************************************************/
-
-	/**
-	 *
-	 */
-	protected Sprite()
-	{
-
-	}
-
-	/*************************************************/
-	/********************* START *********************/
-	/*************************************************/
 
 	/*************************************************/
 	/******************** UPDATE *********************/
@@ -120,9 +93,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		pane.getChildren().add(this.shape);
 		r.setCursor(Cursor.HAND);
 
-		this.width = CASTLE_SIZE;
-		this.height = CASTLE_SIZE;
-
 		addShadow(r, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_SIZE, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_OFFSET, CASTLE_SHADOW_RADIUS,
 				CASTLE_SHADOW_COLOR);
 		addStroke(r, CASTLE_STROKE_THICKNESS, CASTLE_STROKE_TYPE, CASTLE_STROKE_COLOR);
@@ -130,7 +100,9 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 *
-	 * @param pane
+	 * @param  pane
+	 * @param  orientation
+	 * @return
 	 */
 	protected Rectangle addDoorRepresentation(final Pane pane, final Orientation orientation)
 	{
@@ -167,8 +139,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		final Circle c = new Circle(getX(), getY(), r);
 		c.setMouseTransparent(true);
 		this.shape = c;
-		this.width = 2 * r;
-		this.height = 2 * r;
 		updateUIShape();
 		addStroke(c, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(c, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
@@ -186,8 +156,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 		t.setMouseTransparent(true);
 		this.shape = t;
-		this.width = s;
-		this.height = s;
 		updateUIShape();
 		addStroke(t, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(t, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
@@ -203,8 +171,6 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		final Rectangle r = new Rectangle(getX(), getY(), s, s);
 		r.setMouseTransparent(true);
 		this.shape = r;
-		this.width = s;
-		this.height = s;
 		updateUIShape();
 		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
@@ -329,6 +295,10 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 		updateUIShape();
 	}
 
+	/**
+	 *
+	 * @param color
+	 */
 	public void setColorShape(final Color color)
 	{
 		this.shape.setFill(color);

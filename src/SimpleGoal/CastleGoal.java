@@ -3,15 +3,22 @@ package SimpleGoal;
 import DukesOfTheRealm.Castle;
 
 /**
- * 
+ * Objectif visant à augmenter d'un niveau un château.
  */
 public class CastleGoal extends Goal
 {
-	private int level;
 	/**
-	 * 
+	 * Le niveau du château qu'on veut améliorer.
 	 */
-	public CastleGoal(Castle castle)
+	private final int level;
+
+	/**
+	 * Constucteur de CastleGoal
+	 *
+	 * @param castle Le château qu'on veut améliorer.
+	 * @see          Goal.GeneratorGoal
+	 */
+	public CastleGoal(final Castle castle)
 	{
 		this.level = castle.getLevel();
 	}
@@ -25,8 +32,6 @@ public class CastleGoal extends Goal
 	@Override
 	public String toString()
 	{
-		return "CastleGoal [level=" + (level+1) + "]";
+		return "CastleGoal [level=" + (this.level + 1) + "]";
 	}
-	
-	
 }

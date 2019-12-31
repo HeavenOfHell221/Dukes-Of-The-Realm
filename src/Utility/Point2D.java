@@ -28,7 +28,7 @@ public class Point2D implements Serializable
 
 	/**
 	 * Constructeur de Point2D.
-	 * 
+	 *
 	 * @param x Coordonnée x.
 	 * @param y Coordonnée y.
 	 */
@@ -40,7 +40,7 @@ public class Point2D implements Serializable
 
 	/**
 	 * Constructeur par recopie de Point2D.
-	 * 
+	 *
 	 * @param p Le point2D à recopier.
 	 */
 	public Point2D(final Point2D p)
@@ -82,7 +82,7 @@ public class Point2D implements Serializable
 
 	/**
 	 * Déplace le point d'une certaine quantité dx et dy.
-	 * 
+	 *
 	 * @param dx La quantité en x.
 	 * @param dy La quantité en y.
 	 */
@@ -94,7 +94,7 @@ public class Point2D implements Serializable
 
 	/**
 	 * Calcul un point2D en soustrayant les coordonées du second avec le premier.
-	 * 
+	 *
 	 * @param  p Le point qui serra soustrait.
 	 * @return   Retourne le resultat de la soustraction.
 	 */
@@ -109,7 +109,7 @@ public class Point2D implements Serializable
 
 	/**
 	 * Calcul la distance entre ce point et le point p en paramètre.
-	 * 
+	 *
 	 * @param  p Le second point.
 	 * @return   La distance entre ce point et le point p.
 	 */

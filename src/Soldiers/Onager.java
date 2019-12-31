@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import Enum.SoldierEnum;
@@ -43,8 +44,14 @@ public class Onager extends Soldier
 	}
 
 	@Override
-	protected void addInReserve(final ReserveOfSoldiers reserve)
+	public void addProduction(final ReserveOfSoldiers reserve)
 	{
 		reserve.addOnager();
+	}
+
+	@Override
+	public void removeInProduction(final Caserne caserne)
+	{
+		caserne.setNbOnagersInProduction(caserne.getNbOnagersInProduction() - 1);
 	}
 }

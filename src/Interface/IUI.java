@@ -12,7 +12,7 @@ public interface IUI
 {
 	/**
 	 * Ajoute un noeud au pane.
-	 * 
+	 *
 	 * @param Node à ajouter au pane.
 	 */
 	void addNode(final Node node);
@@ -29,14 +29,14 @@ public interface IUI
 
 	/**
 	 * Rend visible/invisible tous les noeuds.
-	 * 
+	 *
 	 * @param visible Boolean activant ou desactivant la visibilité des noeuds.
 	 */
 	void setAllVisible(final boolean visible);
 
 	/**
 	 * Met à jour l'emplaement d'un noeud.
-	 * 
+	 *
 	 * @param node Le noeud à déplacer.
 	 * @param x    La coordonnée x de nouvel emplacement.
 	 * @param y    La coordonnée y du nouvel emplacement.
@@ -48,7 +48,7 @@ public interface IUI
 
 	/**
 	 * Change la visibilité d'un noeud.
-	 * 
+	 *
 	 * @param node    Le noeud auquel on veut changer la visibilité.
 	 * @param visible Boolean spécifiant s'il est visible ou non.
 	 */
@@ -59,7 +59,7 @@ public interface IUI
 
 	/**
 	 * Charge une image en mémoire en allant la chercher dans un répertoire donné.
-	 * 
+	 *
 	 * @param  path   Le chemin permettant d'accéder à l'image.
 	 * @param  width  La largeur de l'image.
 	 * @param  height La hauteur de l'image.
