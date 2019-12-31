@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Augmentation du coût d'amélioration du château (Pour chaque niveau on ajoute LEVEL_UP_COST).
 	 */
-	public static final int LEVEL_UP_COST = 300;
+	public static final int LEVEL_UP_COST = 250;
 
 	/**
 	 * Offset pour le temps d'amélioration du château.
@@ -210,7 +210,7 @@ public class Settings
 	public static final int CASTLE_SIZE = 60;
 
 	/**
-	 * Taille en pixel d'un châteai divisé par 3.
+	 * Taille en pixel d'un château divisé par 3.
 	 */
 	public static final int THIRD_OF_CASTLE = CASTLE_SIZE / 3;
 

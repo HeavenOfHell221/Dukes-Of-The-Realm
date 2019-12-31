@@ -102,7 +102,7 @@ public class Caserne implements Serializable
 
 				if (p.getClass() == Castle.class)
 				{
-					p.CastleUp(this.castle);
+					this.castle.levelUp();
 				}
 				else
 				{

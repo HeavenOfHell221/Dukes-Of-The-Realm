@@ -456,15 +456,6 @@ public class Castle extends Sprite implements Serializable
 		caserne.setNbCastleInProduction(caserne.getNbCastleInProduction() - 1);
 	}
 
-	/**
-	 * Augmente de niveau le château passé en paramètre.
-	 *
-	 * @param castle Le château qui va up.
-	 */
-	public void castleUp(final Castle castle)
-	{
-		castle.levelUp();
-	}
 
 	/*************************************************/
 	/************** DELEGATES METHODS ****************/
