@@ -23,8 +23,9 @@ public interface IProductionUnit
 	 * Fait l'action de fin de production (amélioration ou ajout d'unité) sur le château en paramètre.
 	 *
 	 * @param castle Le château à qui appartient la production terminé.
+	 * @param Est    ce que c'est une unité annulé ou non.
 	 */
-	void productionFinished(Castle castle);
+	void productionFinished(Castle castle, boolean cancel);
 
 	/**
 	 * Ajoute 1 à l'amélioration ou au type d'unité qui va être produit.

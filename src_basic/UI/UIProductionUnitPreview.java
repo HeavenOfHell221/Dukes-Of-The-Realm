@@ -14,9 +14,11 @@ import Interface.IUpdate;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
+import Utility.Input;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.BlurType;
@@ -102,28 +104,33 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 *
 	 * @see UIProductionUnitPreview#buttonCreatePiker
 	 */
-	private Text pikerCost;
+	private final Text pikerCost;
 
 	/**
 	 * Coût de production d'un Onager affiché sur le bouton.
 	 *
 	 * @see UIProductionUnitPreview#buttonCreateOnager
 	 */
-	private Text onagerCost;
+	private final Text onagerCost;
 
 	/**
 	 * Coût de production d'un Knight affiché sur le bouton.
 	 *
 	 * @see UIProductionUnitPreview#buttonCreateKnight
 	 */
-	private Text knightCost;
+	private final Text knightCost;
 
 	/**
 	 * Coût de production de l'amélioration du château affiché sur le bouton.
 	 *
 	 * @see UIProductionUnitPreview#buttonUpgradeCastle
 	 */
-	private Text castleCost;
+	private final Text castleCost;
+
+	/**
+	 * Object Input pour récupérer les touches clavier saisies par l'utilisateur.
+	 */
+	private Input input;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -146,6 +153,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		this.backgroundTime = new Rectangle(240, 40);
 		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
 
+		this.castleCost = new Text();
+		this.knightCost = new Text();
+		this.onagerCost = new Text();
+		this.pikerCost = new Text();
 	}
 
 	/*************************************************/
@@ -161,6 +172,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setBackground();
 		setBar();
 		setAllVisible(false);
+		setAllTexts();
+		this.castleCost.setVisible(false);
+		this.knightCost.setVisible(false);
+		this.onagerCost.setVisible(false);
+		this.pikerCost.setVisible(false);
 	}
 
 	/*************************************************/
@@ -171,11 +187,98 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	public void update(final long now, final boolean pause)
 	{
 		setFill(this.currentCastle.getRatio());
+
+		if (this.castleCost.isVisible())
+		{
+			if (this.input.isShift())
+			{
+				int price = 0;
+
+				for (int i = 0; i < 10; i++)
+				{
+					price += LEVEL_UP_COST * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction() + i);
+				}
+
+				this.castleCost.setText(price + "");
+			}
+			else
+			{
+				this.castleCost
+						.setText(LEVEL_UP_COST * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction()) + "");
+			}
+
+		}
+
+		if (this.pikerCost.isVisible())
+		{
+			if (this.input.isShift())
+			{
+				this.pikerCost.setText(PIKER_COST * 10 + "");
+			}
+			else
+			{
+				this.pikerCost.setText(PIKER_COST + "");
+			}
+		}
+
+		if (this.onagerCost.isVisible())
+		{
+
+			if (this.input.isShift())
+			{
+				this.onagerCost.setText(ONAGER_COST * 10 + "");
+			}
+			else
+			{
+				this.onagerCost.setText(ONAGER_COST + "");
+			}
+		}
+
+		if (this.knightCost.isVisible())
+		{
+
+			if (this.input.isShift())
+			{
+				this.knightCost.setText(KNIGHT_COST * 10 + "");
+			}
+			else
+			{
+				this.knightCost.setText(KNIGHT_COST + "");
+			}
+		}
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
+
+	/**
+	 * Initalise tout les textes de ce module.
+	 */
+	private void setAllTexts()
+	{
+		setText(this.castleCost);
+		setText(this.knightCost);
+		setText(this.onagerCost);
+		setText(this.pikerCost);
+	}
+
+	/**
+	 * Initialise un texte avec des paramètres prédéfinis.
+	 * 
+	 * @param t Le texte à initialiser.
+	 */
+	private void setText(final Text t)
+	{
+		t.setFont(new Font(30));
+		t.setFill(Color.ORANGERED);
+		t.setStyle("-fx-font-weight: bold");
+		t.setWrappingWidth(100);
+		t.setStroke(Color.BLACK);
+		t.setStrokeWidth(2);
+		t.setTextAlignment(TextAlignment.LEFT);
+		t.setMouseTransparent(true);
+	}
 
 	@Override
 	public void addNode(final Node node)
@@ -280,13 +383,92 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/anticlockwise-rotation.png'); "
 						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
 
-		this.buttonCreateOnager.setOnMousePressed(event -> addProduction(this.buttonCreateOnager, new Onager()));
-		this.buttonCreatePiker.setOnMousePressed(event -> addProduction(this.buttonCreatePiker, new Piker()));
-		this.buttonCreateKnight.setOnMousePressed(event -> addProduction(this.buttonCreateKnight, new Knight()));
+		this.buttonCreateOnager.setOnMousePressed(event ->
+		{
+			if (this.input.isAlt())
+			{
+				while (addProduction(this.buttonCreateOnager, new Onager()))
+				{
+				}
+			}
+			else if (this.input.isShift())
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					addProduction(this.buttonCreateOnager, new Onager());
+				}
+
+			}
+			else
+			{
+				addProduction(this.buttonCreateOnager, new Onager());
+			}
+
+		});
+
+		this.buttonCreatePiker.setOnMousePressed(event ->
+		{
+			if (this.input.isAlt())
+			{
+				while (addProduction(this.buttonCreatePiker, new Piker()))
+				{
+				}
+			}
+			else if (this.input.isShift())
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					addProduction(this.buttonCreatePiker, new Piker());
+				}
+			}
+			else
+			{
+				addProduction(this.buttonCreatePiker, new Piker());
+			}
+
+		});
+
+		this.buttonCreateKnight.setOnMousePressed(event ->
+		{
+			if (this.input.isAlt())
+			{
+				while (addProduction(this.buttonCreateKnight, new Knight()))
+				{
+				}
+			}
+			else if (this.input.isShift())
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					addProduction(this.buttonCreateKnight, new Knight());
+				}
+			}
+			else
+			{
+				addProduction(this.buttonCreateKnight, new Knight());
+			}
+
+		});
 
 		this.buttonUpgradeCastle.setOnMousePressed(event ->
 		{
-			addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel()));
+			if (this.input.isAlt())
+			{
+				while (addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())))
+				{
+				}
+			}
+			else if (this.input.isShift())
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel()));
+				}
+			}
+			else
+			{
+				addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel()));
+			}
 		});
 
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
@@ -294,76 +476,28 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		this.buttonCreatePiker.setOnMouseEntered(event ->
 		{
-			Text t = new Text();
-			this.pikerCost = t;
-			t.setText(PIKER_COST + "");
-			t.setFont(new Font(30));
-			t.setFill(Color.ORANGERED);
-			t.setStyle("-fx-font-weight: bold");
-			t.setWrappingWidth(50);
-			t.setStroke(Color.BLACK);
-			t.setStrokeWidth(2);
-			t.setTextAlignment(TextAlignment.CENTER);
-			t.relocate(this.buttonCreatePiker.getLayoutX(), this.buttonCreatePiker.getLayoutY());
-			t.setMouseTransparent(true);
-			addNode(t);
+			this.pikerCost.setVisible(true);
 		});
 
 		this.buttonCreateKnight.setOnMouseEntered(event ->
 		{
-			Text t = new Text();
-			this.knightCost = t;
-			t.setText(KNIGHT_COST + "");
-			t.setFont(new Font(30));
-			t.setFill(Color.ORANGERED);
-			t.setStyle("-fx-font-weight: bold");
-			t.setWrappingWidth(50);
-			t.setStroke(Color.BLACK);
-			t.setStrokeWidth(2);
-			t.setTextAlignment(TextAlignment.CENTER);
-			t.relocate(this.buttonCreateKnight.getLayoutX(), this.buttonCreateKnight.getLayoutY());
-			t.setMouseTransparent(true);
-			addNode(t);
+			this.knightCost.setVisible(true);
 		});
 
 		this.buttonCreateOnager.setOnMouseEntered(event ->
 		{
-			Text t = new Text();
-			this.onagerCost = t;
-			t.setText(ONAGER_COST + "");
-			t.setFont(new Font(30));
-			t.setFill(Color.ORANGERED);
-			t.setStyle("-fx-font-weight: bold");
-			t.setWrappingWidth(70);
-			t.setStroke(Color.BLACK);
-			t.setStrokeWidth(2);
-			t.setTextAlignment(TextAlignment.CENTER);
-			t.relocate(this.buttonCreateOnager.getLayoutX(), this.buttonCreateOnager.getLayoutY());
-			t.setMouseTransparent(true);
-			addNode(t);
+			this.onagerCost.setVisible(true);
 		});
 
 		this.buttonUpgradeCastle.setOnMouseEntered(event ->
 		{
-			Text t = new Text();
-			this.castleCost = t;
-			t.setText(LEVEL_UP_COST * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction()) + "");
-			t.setFont(new Font(30));
-			t.setFill(Color.ORANGERED);
-			t.setStyle("-fx-font-weight: bold");
-			t.setWrappingWidth(70);
-			t.setStroke(Color.BLACK);
-			t.setStrokeWidth(2);
-			t.setTextAlignment(TextAlignment.CENTER);
-			t.relocate(this.buttonUpgradeCastle.getLayoutX(), this.buttonUpgradeCastle.getLayoutY());
-			t.setMouseTransparent(true);
-			addNode(t);
+			this.castleCost.setVisible(true);
 		});
 
-		this.buttonCreateKnight.setOnMouseExited(event -> removeNode(this.knightCost));
-		this.buttonCreatePiker.setOnMouseExited(event -> removeNode(this.pikerCost));
-		this.buttonCreateOnager.setOnMouseExited(event -> removeNode(this.onagerCost));
-		this.buttonUpgradeCastle.setOnMouseExited(event -> removeNode(this.castleCost));
+		this.buttonCreateKnight.setOnMouseExited(event -> this.knightCost.setVisible(false));
+		this.buttonCreatePiker.setOnMouseExited(event -> this.pikerCost.setVisible(false));
+		this.buttonCreateOnager.setOnMouseExited(event -> this.onagerCost.setVisible(false));
+		this.buttonUpgradeCastle.setOnMouseExited(event -> this.castleCost.setVisible(false));
 
 		addEventMouse(this.buttonCreateKnight);
 		addEventMouse(this.buttonCreateOnager);
@@ -463,6 +597,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		addNode(this.fillTime);
 		addNode(this.removeAllProduction);
 		addNode(this.removeLastProduction);
+		addNode(this.castleCost);
+		addNode(this.knightCost);
+		addNode(this.onagerCost);
+		addNode(this.pikerCost);
 	}
 
 	@Override
@@ -476,11 +614,14 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		relocate(this.buttonCreatePiker, SCENE_WIDTH * margin + i * 0, offset);
 		relocate(this.buttonCreateKnight, SCENE_WIDTH * margin + i * 1, offset);
 		relocate(this.buttonCreateOnager, SCENE_WIDTH * margin + i * 2, offset);
+		relocate(this.buttonUpgradeCastle, SCENE_WIDTH * margin + i * 1, offset + i * 1);
+		relocate(this.castleCost, this.buttonUpgradeCastle.getLayoutX(), this.buttonUpgradeCastle.getLayoutY() + 20);
+		relocate(this.knightCost, this.buttonCreateKnight.getLayoutX(), this.buttonCreateKnight.getLayoutY() + 20);
+		relocate(this.pikerCost, this.buttonCreatePiker.getLayoutX(), this.buttonCreatePiker.getLayoutY() + 20);
+		relocate(this.onagerCost, this.buttonCreateOnager.getLayoutX(), this.buttonCreateOnager.getLayoutY() + 20);
 
 		relocate(this.removeAllProduction, SCENE_WIDTH * margin + i * 2 - i * 0.5f, offset + i * 3);
 		relocate(this.removeLastProduction, SCENE_WIDTH * margin + i * 1 - i * 0.5f, offset + i * 3);
-
-		relocate(this.buttonUpgradeCastle, SCENE_WIDTH * margin + i * 1, offset + i * 1);
 
 		relocate(this.fillTime, SCENE_WIDTH * margin + 1, offset + i * 4);
 		relocate(this.backgroundTime, SCENE_WIDTH * margin + 1, offset + i * 4);
@@ -504,4 +645,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
+	/**
+	 * @param scene the scene to set
+	 */
+	public void setScene(final Scene scene)
+	{
+		this.input = new Input(scene);
+		this.input.addListeners();
+	}
 }

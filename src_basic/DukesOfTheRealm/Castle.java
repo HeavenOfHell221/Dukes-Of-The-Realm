@@ -217,9 +217,12 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	@Override
-	public void productionFinished(final Castle castle)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		castle.levelUp();
+		if (!cancel)
+		{
+			castle.levelUp();
+		}
 		castle.getCaserne().nbCastleInProduction--;
 	}
 

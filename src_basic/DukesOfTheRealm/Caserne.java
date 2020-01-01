@@ -101,7 +101,7 @@ public class Caserne implements Serializable
 			{
 				final IProductionUnit p = this.productionUnit.pollFirst();
 
-				p.productionFinished(this.castle);
+				p.productionFinished(this.castle, false);
 
 				if (this.productionUnit.size() > 0)
 				{
@@ -133,7 +133,7 @@ public class Caserne implements Serializable
 			{
 				this.castle.addFlorin(i.getProductionCost(this.castle));
 			}
-			i.productionFinished(this.castle);
+			i.productionFinished(this.castle, true);
 		}
 	}
 
@@ -150,7 +150,7 @@ public class Caserne implements Serializable
 			{
 				IProductionUnit i = this.productionUnit.pollFirst();
 				this.castle.addFlorin(i.getProductionCost(this.castle));
-				i.productionFinished(this.castle);
+				i.productionFinished(this.castle, true);
 			}
 		}
 		else

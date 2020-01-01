@@ -1,6 +1,8 @@
 package Utility;
 
+import static javafx.scene.input.KeyCode.ALT;
 import static javafx.scene.input.KeyCode.ESCAPE;
+import static javafx.scene.input.KeyCode.SHIFT;
 import static javafx.scene.input.KeyCode.SPACE;
 
 import java.util.BitSet;
@@ -102,5 +104,25 @@ public class Input
 	public boolean isSpace()
 	{
 		return is(SPACE);
+	}
+
+	/**
+	 * Vérifie si la touche SHIFT du clavier est pressée.
+	 * 
+	 * @return true si elle l'est.
+	 */
+	public boolean isShift()
+	{
+		return is(SHIFT);
+	}
+
+	/**
+	 * Vérifie si la touche ALT du clavier est pressée.
+	 * 
+	 * @return true si elle l'est.
+	 */
+	public boolean isAlt()
+	{
+		return is(ALT);
 	}
 }

@@ -66,9 +66,12 @@ public class Knight extends Soldier
 	}
 
 	@Override
-	public void productionFinished(final Castle castle)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		castle.addKnight();
+		if (!cancel)
+		{
+			castle.addKnight();
+		}
 		castle.getCaserne().nbKnightsInProduction--;
 	}
 

@@ -65,9 +65,12 @@ public class Onager extends Soldier
 	}
 
 	@Override
-	public void productionFinished(final Castle castle)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		castle.addOnager();
+		if (!cancel)
+		{
+			castle.addOnager();
+		}
 		castle.getCaserne().nbOnagersInProduction--;
 	}
 

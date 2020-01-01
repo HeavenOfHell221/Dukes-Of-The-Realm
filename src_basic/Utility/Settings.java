@@ -85,12 +85,12 @@ public class Settings
 	/**
 	 * Nombre de Knight de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_KNIGHT = 15;
+	public static final int STARTER_KNIGHT = 10;
 
 	/**
 	 * Nombre de Piker de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_PIKER = 30;
+	public static final int STARTER_PIKER = 20;
 
 	/**
 	 * Nombre de Onager de base pour le joueur et les IA.
@@ -163,17 +163,17 @@ public class Settings
 	/**
 	 * Coût d'un Piker.
 	 */
-	public static final int PIKER_COST = 40;
+	public static final int PIKER_COST = 64;
 
 	/**
 	 * Coût d'un Knight.
 	 */
-	public static final int KNIGHT_COST = 80;
+	public static final int KNIGHT_COST = 128;
 
 	/**
 	 * Coût d'un Onager.
 	 */
-	public static final int ONAGER_COST = 120;
+	public static final int ONAGER_COST = 192;
 
 	/**
 	 * Vitesse de déplacement d'un Piker.

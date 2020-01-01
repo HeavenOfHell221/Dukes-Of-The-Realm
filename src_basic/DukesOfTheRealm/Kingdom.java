@@ -396,4 +396,5 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	{
 		this.playfieldLayer = playfieldLayer;
 	}
+
 }

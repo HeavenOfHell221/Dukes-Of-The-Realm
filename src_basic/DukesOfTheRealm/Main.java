@@ -225,6 +225,9 @@ public class Main extends Application implements IUpdate
 		final Button buttonPlay = new Button();
 		final Button buttonNew = new Button();
 
+		/* UI */
+		UIManager.getProductionUnitPreview().setScene(this.mainScene);
+
 		buttonPlay.setText("Play");
 		buttonNew.setText("New Game");
 

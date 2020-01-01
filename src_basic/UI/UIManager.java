@@ -39,7 +39,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 *
 	 * @see UIAttackPreview
 	 */
-	private UIAttackPreview attackPreview;
+	private final UIAttackPreview attackPreview;
 
 	/**
 	 * Référence à un oobjet UIProductionUnitPreview qui va s'occuper de l'interface utilisateur de la
@@ -47,7 +47,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 *
 	 * @see UIProductionUnitPreview
 	 */
-	private UIProductionUnitPreview productionUnitPreview;
+	private final UIProductionUnitPreview productionUnitPreview;
 
 	/**
 	 * Référence à un objet UICastlePreview qui va s'occuper de l'interface utilisateur des données
@@ -55,7 +55,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 *
 	 * @see UICastlePreview
 	 */
-	private UICastlePreview castlePreview;
+	private final UICastlePreview castlePreview;
 
 	/**
 	 * Référence au pane principale du jeu.
@@ -99,6 +99,9 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 */
 	private UIManager()
 	{
+		this.attackPreview = new UIAttackPreview();
+		this.castlePreview = new UICastlePreview();
+		this.productionUnitPreview = new UIProductionUnitPreview();
 		this.imagePause = newImageView("/images/pause.png", 128, 128);
 		this.imagePause.setMouseTransparent(true);
 	}
@@ -131,9 +134,6 @@ public class UIManager extends Parent implements IUI, IUpdate
 	{
 		this.playfieldLayer = pane;
 		this.background = new Rectangle(Settings.SCENE_WIDTH * (1 - Settings.MARGIN_PERCENTAGE), Settings.SCENE_HEIGHT * 2);
-		this.attackPreview = new UIAttackPreview();
-		this.castlePreview = new UICastlePreview();
-		this.productionUnitPreview = new UIProductionUnitPreview();
 		start();
 	}
 

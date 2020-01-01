@@ -66,9 +66,12 @@ public class Piker extends Soldier
 	}
 
 	@Override
-	public void productionFinished(final Castle castle)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		castle.addPiker();
+		if (!cancel)
+		{
+			castle.addPiker();
+		}
 		castle.getCaserne().nbPikersInProduction--;
 	}
 

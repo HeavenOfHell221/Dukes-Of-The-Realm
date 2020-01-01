@@ -44,9 +44,14 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	private final ImageView imageOnager;
 
 	/**
-	 * Icone des Florin?
+	 * Icone des Florin.
 	 */
 	private final ImageView imageFlorin;
+
+	/**
+	 * Icone de selection du château.
+	 */
+	private final ImageView imageCircle;
 
 	/**
 	 * Texte affichant le niveau du château selectionné.
@@ -125,6 +130,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		this.imagePiker = newImageView("/images/spartan-white.png", 64, 64);
 		this.imageOnager = newImageView("/images/catapult-white.png", 64, 64);
 		this.imageFlorin = newImageView("/images/coins.png", 64, 64);
+		this.imageCircle = newImageView("/images/circle.png", 128, 128);
 		this.level = new Text();
 		this.owner = new Text();
 		this.nbFlorin = new Text();
@@ -269,6 +275,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		addNode(this.nbKnight);
 		addNode(this.nbOnager);
 		addNode(this.nbPiker);
+		addNode(this.imageCircle);
 	}
 
 	/**
@@ -319,6 +326,8 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		if (castleSwitch)
 		{
 			this.currentCastle = castle;
+			this.imageCircle.relocate(this.currentCastle.getX() - Settings.CASTLE_SIZE / 1.9f,
+					this.currentCastle.getY() - Settings.CASTLE_SIZE / 1.9f);
 		}
 	}
 
