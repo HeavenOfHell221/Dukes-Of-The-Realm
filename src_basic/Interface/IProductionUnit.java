@@ -14,9 +14,10 @@ public interface IProductionUnit
 	double getProductionTime();
 
 	/**
+	 * @param Le château qui demande le coût.
 	 * @return Retourne le coût de l'amélioration.
 	 */
-	int getProductionCost();
+	int getProductionCost(Castle caslte);
 	
 	/**
 	 * Fait l'action de fin de production (amélioration ou ajout d'unité) sur le château en paramètre.

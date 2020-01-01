@@ -21,6 +21,7 @@ import Duke.Actor;
 import Enums.SoldierEnum;
 import Interface.IProductionUnit;
 import Utility.Point2D;
+import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -635,9 +636,9 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	@Override
-	public int getProductionCost()
+	public int getProductionCost(Castle castle)
 	{
-		return LEVEL_UP_COST * this.level;
+		return LEVEL_UP_COST * castle.level + castle.getCaserne().getNbCastleInProduction() * Settings.LEVEL_UP_COST;
 	}
 
 	/**

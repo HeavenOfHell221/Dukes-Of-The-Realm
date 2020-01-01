@@ -53,7 +53,7 @@ public class Onager extends Soldier
 	}
 
 	@Override
-	public int getProductionCost()
+	public int getProductionCost(Castle castle)
 	{
 		return Settings.ONAGER_COST;
 	}

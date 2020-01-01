@@ -54,7 +54,7 @@ public class Piker extends Soldier
 	}
 
 	@Override
-	public int getProductionCost()
+	public int getProductionCost(Castle castle)
 	{
 		return Settings.PIKER_COST;
 	}

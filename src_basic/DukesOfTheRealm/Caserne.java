@@ -135,8 +135,9 @@ public class Caserne implements Serializable
 		{
 			if (refoundFlorin)
 			{
-				this.castle.addFlorin(i.getProductionCost());
+				this.castle.addFlorin(i.getProductionCost(this.castle));
 			}
+			i.productionFinished(this.castle);
 		}
 	}
 
@@ -152,7 +153,8 @@ public class Caserne implements Serializable
 			while (!this.productionUnit.isEmpty())
 			{
 				IProductionUnit i = this.productionUnit.pollFirst();
-				this.castle.addFlorin(i.getProductionCost());
+				this.castle.addFlorin(i.getProductionCost(this.castle));
+				i.productionFinished(this.castle);
 			}
 		}
 		else
@@ -173,19 +175,9 @@ public class Caserne implements Serializable
 	 */
 	public boolean addProduction(final IProductionUnit p)
 	{
-		if (p.getClass() == Castle.class)
+		if (!this.castle.removeFlorin(p.getProductionCost(this.castle)))
 		{
-			if (!this.castle.removeFlorin(p.getProductionCost() + this.nbCastleInProduction * Settings.LEVEL_UP_COST))
-			{
-				return false;
-			}
-		}
-		else
-		{
-			if (!this.castle.removeFlorin(p.getProductionCost()))
-			{
-				return false;
-			}
+			return false;
 		}
 		
 		p.productionStart(this.castle);
