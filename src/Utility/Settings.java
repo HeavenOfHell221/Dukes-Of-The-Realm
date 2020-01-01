@@ -43,9 +43,14 @@ public class Settings
 	/****************************************************/
 
 	/**
-	 * Nombre de Florin par seconde de base. (Château niveau 1).
+	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
 	public static final int FLORIN_PER_SECOND = 5;
+	
+	/**
+	 * Nombre de Florin par seconde de base.
+	 */
+	public static final int FLORIN_PER_SECOND_OFFSET = 5;
 
 	/**
 	 * Pourcentage de réduction des FLORIN_PER_SECOND pour les Baron.
@@ -138,22 +143,22 @@ public class Settings
 	/**
 	 * Point de vie des Onager.
 	 */
-	public static final int ONAGER_HP = 10;
+	public static final int ONAGER_HP = 24;
 
 	/**
 	 * Dégâts des Piker.
 	 */
-	public static final int PIKER_DAMAGE = 15;
+	public static final int PIKER_DAMAGE = 14;
 
 	/**
 	 * Dégâts des Knight.
 	 */
-	public static final int KNIGHT_DAMAGE = 50;
+	public static final int KNIGHT_DAMAGE = 48;
 
 	/**
 	 * Dégâts des Onager.
 	 */
-	public static final int ONAGER_DAMAGE = 75;
+	public static final int ONAGER_DAMAGE = 135;
 
 	/**
 	 * Coût d'un Piker.
@@ -168,7 +173,7 @@ public class Settings
 	/**
 	 * Coût d'un Onager.
 	 */
-	public static final int ONAGER_COST = 120;
+	public static final int ONAGER_COST = 150;
 
 	/**
 	 * Vitesse de déplacement d'un Piker.
@@ -193,7 +198,7 @@ public class Settings
 	/**
 	 * Temps de production d'un Knight (en seconde).
 	 */
-	public static final double KNIGHT_TIME_PRODUCTION = 2f;
+	public static final double KNIGHT_TIME_PRODUCTION = 1.5f;
 
 	/**
 	 * Temps de production d'un Onager (en seconde).

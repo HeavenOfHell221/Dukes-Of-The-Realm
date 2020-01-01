@@ -12,7 +12,11 @@ import SimpleGoal.Goal;
 import Utility.Settings;
 
 /**
- * Classe dérivée d'Actor, représente les IA qui jouent contre le joueur.
+ * Représente les IA qui jouent contre le joueur.
+ * 
+ * <p>
+ * Extends de la classe Actor.
+ * </p>
  *
  * @see Actor
  */
@@ -42,7 +46,7 @@ public class DukeAI extends Actor implements Serializable
 	private final HashMap<Castle, Goal> goalMap;
 
 	/**
-	 * Référence au royaume auquel appartient ce DukeIA.
+	 * Référence au royaume auquel appartient ce Duke.
 	 *
 	 * @see DukesOfTheRealm.Kingdom
 	 * @see Goal.GeneratorGoal#getNewGoalBattle(Castle)
@@ -63,19 +67,6 @@ public class DukeAI extends Actor implements Serializable
 	}
 
 	/*************************************************/
-	/********************* START *********************/
-	/*************************************************/
-
-	/**
-	 *
-	 * @param kingdom
-	 */
-	public void start(final Kingdom kingdom)
-	{
-		this.kingdom = kingdom;
-	}
-
-	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
@@ -84,6 +75,8 @@ public class DukeAI extends Actor implements Serializable
 	{
 		super.update(now, pause);
 
+		// Toutes les 1 seconde, l'IA va compléter ses objectifs et en prendre un nouveau 
+		// si sont objectif courant est compléter.
 		if (time(now, pause))
 		{
 			Iterator<Castle> it = this.castles.iterator();
@@ -128,12 +121,20 @@ public class DukeAI extends Actor implements Serializable
 	{
 		Goal g = getNewGoal(castle);
 		this.goalMap.put(castle, g);
-		System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g); 
+		//System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g); 
+	}
+	
+	@Override
+	protected void addOrRemoveCastleList()
+	{
+		this.castlesWaitForDelete.forEach(castle -> this.goalMap.remove(castle));
+		
+		super.addOrRemoveCastleList();
 	}
 
 	/**
 	 * Bloque une action durant un certain temps pour qu'elle s'effectue à un intervalle régulier
-	 * (inférieur à 1 fois par image).
+	 * (inférieur à 1 fois par image). Dans cas, elle s'effectue toutes les 1 seconde.
 	 *
 	 * @param  now   Le temps écoulé depuis la création du programme.
 	 * @param  pause Boolean spécifiant si la pause est activé ou non.
@@ -145,7 +146,7 @@ public class DukeAI extends Actor implements Serializable
 		{
 			this.lastTime = now;
 		}
-		if (now - this.lastTime > Settings.GAME_FREQUENCY / 2)
+		if (now - this.lastTime > Settings.GAME_FREQUENCY)
 		{
 			this.lastTime = now;
 			return true;
@@ -165,4 +166,11 @@ public class DukeAI extends Actor implements Serializable
 		return this.kingdom;
 	}
 
+	/**
+	 * @param kingdom the kingdom to set
+	 */
+	public final void setKingdom(final Kingdom kingdom)
+	{
+		this.kingdom = kingdom;
+	}
 }

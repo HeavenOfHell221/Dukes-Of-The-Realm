@@ -58,7 +58,7 @@ public class Knight extends Soldier
 	}
 
 	@Override
-	public void addProduction(final ReserveOfSoldiers reserve)
+	public void addInReserve(final ReserveOfSoldiers reserve)
 	{
 		reserve.addKnight();
 	}

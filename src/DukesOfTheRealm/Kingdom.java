@@ -260,7 +260,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 		for (int i = 0; i < AI_NUMBER; i++)
 		{
 			Actor a = new DukeAI();
-			((DukeAI) a).start(this);
+			((DukeAI) a).setKingdom(this);
 			a.setName("Duke " + (i + 1));
 			this.actors.add(a);
 			a.setColor(randomColor(rand));

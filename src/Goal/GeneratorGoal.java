@@ -100,7 +100,8 @@ public class GeneratorGoal implements Serializable
 	/**
 	 * Génère un objectif lié aux attaques avec une ost.
 	 * <p>
-	 * Récupère la liste des acteurs en supprimant l'acteur qui demande la liste.
+	 * Récupère la liste des acteurs en supprimant l'acteur qui demande la liste. <br>
+	 * Les attaques ne contiennent pas de Piker.
 	 * </p>
 	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.

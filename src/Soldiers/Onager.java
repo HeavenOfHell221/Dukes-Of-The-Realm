@@ -57,7 +57,7 @@ public class Onager extends Soldier
 	}
 
 	@Override
-	public void addProduction(final ReserveOfSoldiers reserve)
+	public void addInReserve(final ReserveOfSoldiers reserve)
 	{
 		reserve.addOnager();
 	}

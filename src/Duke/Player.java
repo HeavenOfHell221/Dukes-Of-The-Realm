@@ -10,7 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Classe dérivée d'Actor, réprésente le joueur.
+ * Représente le joueur.
+ * 
+ * <p>
+ * Extends de la classe Actor.
+ * </p>
  *
  * @see Actor
  */
@@ -40,16 +44,6 @@ public class Player extends Actor implements Serializable
 		{
 			this.castles.forEach(castle -> castle.setColor(this.color));
 		}
-	}
-
-	/*************************************************/
-	/******************** UPDATE *********************/
-	/*************************************************/
-
-	@Override
-	protected void updateFlorin(final Castle castle)
-	{
-		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime);
 	}
 
 	/*************************************************/

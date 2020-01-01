@@ -29,7 +29,7 @@ public class Stats implements Serializable
 	 *
 	 * @param speed  La vitesse de déplacement de l'unité.
 	 * @param health Les points de vie de l'unité.
-	 * @param damage les dégâts de l'unité.
+	 * @param damage Les dégâts de l'unité.
 	 */
 	public Stats(final int speed, final int health, final int damage)
 	{

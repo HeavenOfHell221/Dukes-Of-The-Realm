@@ -5,7 +5,7 @@ import SimpleGoal.Goal;
 import SimpleGoal.SendOstGoal;
 
 /**
- * Objectif visant à envoyer une attaque vers un autre château d'un utre acteur.
+ * Objectif visant à envoyer une attaque vers un autre château d'un autre acteur.
  */
 public class AttackGoal extends Goal
 {
@@ -17,7 +17,7 @@ public class AttackGoal extends Goal
 	private final GenericGoal goals;
 
 	/**
-	 * Le château origin de l'ost.
+	 * Le château origine de l'ost.
 	 */
 	private final Castle castleOrigin;
 

@@ -44,7 +44,7 @@ public class BackupGoal extends Goal
 			Castle destination = list.get(rand.nextInt(list.size())); // On prend un château au hasard
 			AttackGoal g = new AttackGoal(origin, destination, nbPikers, nbKnights, nbOnagers);
 			this.goals.addLast(g);
-			this.goals.addLast(new MultiSoldierGoal(origin, nbPikers, nbKnights, 0));
+			this.goals.addLast(new MultiSoldierGoal(origin, nbPikers, nbKnights, nbOnagers));
 		}
 	}
 

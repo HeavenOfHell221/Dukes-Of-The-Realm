@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
+import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enum.CollisionEnum;
 import Enum.SoldierEnum;
@@ -173,7 +174,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			}
 			else
 			{
-				addProduction(getDestination().getReserveOfSoldiers());
+				addInReserve(this.getDestination().getReserveOfSoldiers());
 				this.isDead = true;
 			}
 		}
@@ -183,6 +184,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	/**
+	 * Ajoute une unité en renfort dans la réserve en paramètre.
+	 * @param reserve La réserve dans laquelle l'unité va.
+	 */
+	public abstract void addInReserve(ReserveOfSoldiers reserve);
+	
 	/**
 	 * Donne un point d'attaque au soldat s'il y en a un disponible, sinon le soldat passe en attente d'un point d'attaque
 	 */

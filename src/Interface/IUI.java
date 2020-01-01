@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * Interface utilisé pour le UI (User Interface). Donne un certain nombre de méthodes à implémenter
+ * Interface utilisée pour le UI (User Interface). Donne un certain nombre de méthodes à implémenter
  * ainsi que des méthodes par défaut.
  */
 public interface IUI
@@ -30,7 +30,7 @@ public interface IUI
 	/**
 	 * Rend visible/invisible tous les noeuds.
 	 *
-	 * @param visible Boolean activant ou desactivant la visibilité des noeuds.
+	 * @param visible Boolean activant ou désactivant la visibilité des noeuds.
 	 */
 	void setAllVisible(final boolean visible);
 
@@ -49,7 +49,7 @@ public interface IUI
 	/**
 	 * Change la visibilité d'un noeud.
 	 *
-	 * @param node    Le noeud auquel on veut changer la visibilité.
+	 * @param node    Le noeud qui change de visibilité.
 	 * @param visible Boolean spécifiant s'il est visible ou non.
 	 */
 	default void setVisible(final Node node, final boolean visible)
