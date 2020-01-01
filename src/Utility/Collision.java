@@ -33,7 +33,7 @@ public class Collision
 	}
 
 	/**
-	 * Ajoute un à la liste des châteaux de l'instance.
+	 * Ajoute les coordonées d'un château à la liste de l'instance.
 	 * @param p le point représentant les coordonnées du château à ajouter
 	 */
 	public static void addPoint(final Point2D p)
@@ -42,10 +42,11 @@ public class Collision
 	}
 
 	/**
-	 *
-	 * @param  pS
-	 * @param  pCastle
-	 * @return         Retourne true si une collision à été détecté, false sinon.
+	 * Test la collision entre deux points étant respectivement les coordonnées de l'unité et celles du château.
+	 * @param  pSoldier Les coordonnées de l'unité.
+	 * @param  pCastle Les coordonnées du château.
+	 * @return Si une collision est détecté, retourne l'emplacement de la collision.
+	 * @see Enum.CollisionEnum
 	 */
 	private static CollisionEnum testCollision(final Point2D pSoldier, final Point2D pCastle)
 	{
@@ -97,6 +98,8 @@ public class Collision
 			return CollisionEnum.BottomLeft;
 		}
 
+		/* Les cas où l'unité est en collision avec une seule face du château */
+		
 		if (rightA >= leftTopB.getX() && leftTopA.getX() < leftTopB.getX())
 		{
 			return CollisionEnum.Left;
@@ -120,6 +123,18 @@ public class Collision
 		return CollisionEnum.Inside;
 	}
 
+	/**
+	 * Teste les collisions entre une unité et tous les châteaux qui sont à une distance maximal du lui.
+	 * <p>
+	 * Il faut que le château ait une distance maximal de CASTLE_SIZE + GAP_WITH_SOLDIER + SOLDIER_SIZE pour qu'il soit tester.
+	 * </p>
+	 * @param pSoldier
+	 * @return Retourne l'état de la collision.
+	 * @see Enum.CollisionEnum
+	 * @see Utility.Settings#CASTLE_SIZE
+	 * @see Utility.Settings#SOLDIER_SIZE
+	 * @see Utility.Settings#GAP_WITH_SOLDIER
+	 */
 	public static CollisionEnum testCollisionWithAllCastlesNearby(final Point2D pSoldier)
 	{
 		CollisionEnum isCollision = CollisionEnum.None;

@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 
 /**
- * Contient tout les paramètres du jeu (constantes ou non) en static.
+ * Contient les paramètres du jeu (constantes ou non) en static.
  */
 public class Settings
 {
@@ -24,7 +24,7 @@ public class Settings
 	public static int SCENE_HEIGHT = 1080;
 
 	/**
-	 * Correspond à 1 seconde dans JavaFX.
+	 * Constante représentant 1 seconde dans JavaFX.
 	 */
 	public static final int GAME_FREQUENCY = 1000 * 1000 * 1000;
 
@@ -214,14 +214,6 @@ public class Settings
 	 */
 	public static final int THIRD_OF_CASTLE = CASTLE_SIZE / 3;
 
-	public static final double CASTLE_STROKE_THICKNESS = 2.0;
-	public static final StrokeType CASTLE_STROKE_TYPE = StrokeType.INSIDE;
-	public static final Color CASTLE_STROKE_COLOR = Color.BLACK;
-	public static final int CASTLE_SHADOW_SIZE = 1;
-	public static final int CASTLE_SHADOW_OFFSET = 6;
-	public static final int CASTLE_SHADOW_RADIUS = 11;
-	public static final Color CASTLE_SHADOW_COLOR = Color.BLACK;
-
 	/**
 	 * Fréquence d'apparition des unités lors de l'envoie d'une ost (en seconde).
 	 */
@@ -273,6 +265,16 @@ public class Settings
 	 */
 	public static final int ONAGER_REPRESENTATION_SIZE = SOLDIER_SIZE;
 
+	
+	/* Paramètres interne pour le visuel des châteaux et des unités */
+	
+	public static final double CASTLE_STROKE_THICKNESS = 2.0;
+	public static final StrokeType CASTLE_STROKE_TYPE = StrokeType.INSIDE;
+	public static final Color CASTLE_STROKE_COLOR = Color.BLACK;
+	public static final int CASTLE_SHADOW_SIZE = 1;
+	public static final int CASTLE_SHADOW_OFFSET = 6;
+	public static final int CASTLE_SHADOW_RADIUS = 11;
+	public static final Color CASTLE_SHADOW_COLOR = Color.BLACK;
 	public static final double SOLDIER_STROKE_THICKNESS = 1.5;
 	public static final StrokeType SOLDIER_STROKE_TYPE = StrokeType.INSIDE;
 	public static final Color SOLDIER_STROKE_COLOR = Color.BLACK;

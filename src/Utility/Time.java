@@ -5,6 +5,7 @@ import Interface.IUpdate;
 
 /**
  * Utilitaire pour calculer le nombre d'image par seconde et gérer le "temps réel" grâce à la variable deltaTime.
+ * @see Time#deltaTime
  */
 public class Time implements IUpdate
 {

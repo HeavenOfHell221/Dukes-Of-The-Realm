@@ -222,8 +222,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			this.coordinate.setY(dst.getY());
 		}
 
-		int directionX = getX() < dst.getX() ? 1 : getX() == (int) dst.getX() /* || dst.delta(this.coordinate).getX() <= 0.5d */ ? 0 : -1;
-		int directionY = getY() < dst.getY() ? 1 : getY() == (int) dst.getY() /* || dst.delta(this.coordinate).getY() <= 0.5d */ ? 0 : -1;
+		int directionX = getX() < dst.getX() ? 1 : getX() == (int) dst.getX() ? 0 : -1;
+		int directionY = getY() < dst.getY() ? 1 : getY() == (int) dst.getY() ? 0 : -1;
 
 		double offsetX = getMotion(directionX);
 		double offsetY = getMotion(directionY);
@@ -498,7 +498,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	{
 		if (!isStopAttack())
 		{
-			// Il va vouloir faire 1 point de damage
+			// Il va vouloir faire 1 point de dégâts
 			getDestination().randomRemoveHP();
 
 			// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
@@ -524,7 +524,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère le point de séparation de l'ost à laquelle le soldat appartient.
-	 * @return Le point de séparation de l'ost.
+	 * @return Retourne le point de séparation de l'ost.
 	 * @see    DukesOfTheRealm.Ost#getSeparationPoint()
 	 */
 	public Point2D getSeparationPoint()
@@ -534,7 +534,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère le point d'attente du soldat autours du château.
-	 * @return Le point d'attente du soldat
+	 * @return Retourne le point d'attente du soldat.
 	 * @see    DukesOfTheRealm.Ost#getWaitingPoint()
 	 */
 	public Point2D getWaitingPoint()
@@ -544,7 +544,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère la liste des soldats composants l'ost.
-	 * @return La liste des soldats
+	 * @return Retourne la liste des soldats.
 	 * @see    DukesOfTheRealm.Ost#getSoldiers()
 	 */
 	public ArrayList<Soldier> getSoldiers()
@@ -563,7 +563,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère l'état de l'attaque, si celle-ci est en cours ou stoppée.
-	 * @return L'état de l'attaque.
+	 * @return Retourne l'état de l'attaque.
 	 * @see    DukesOfTheRealm.Ost#isStopAttack()
 	 */
 	public boolean isStopAttack()
@@ -573,7 +573,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère le château de destination.
-	 * @return la référence vers le château de destination.
+	 * @return Retourne la référence vers le château de destination.
 	 * @see    DukesOfTheRealm.Ost#getDestination()
 	 */
 	public Castle getDestination()
@@ -588,9 +588,6 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	@Override
 	public abstract double getProductionTime();
 
-	/**
-	 *
-	 */
 	@Override
 	public abstract int getProductionCost();
 
