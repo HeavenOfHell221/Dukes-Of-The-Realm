@@ -90,7 +90,8 @@ public class Caserne implements Serializable
 	 */
 	public void updateProduction()
 	{
-		//System.out.println(this.castle.getActor().getName() + " -> " + this.nbPikersInProduction + " " + this.nbKnightsInProduction + " " + this.nbOnagersInProduction);
+		// System.out.println(this.castle.getActor().getName() + " -> " + this.nbPikersInProduction + " " +
+		// this.nbKnightsInProduction + " " + this.nbOnagersInProduction);
 		if (this.productionUnit.size() > 0)
 		{
 			// On retire du temps
@@ -109,22 +110,21 @@ public class Caserne implements Serializable
 					this.castle.levelUp();
 					this.nbCastleInProduction--;
 				}
-				else if(p.getClass() == Onager.class)
+				else if (p.getClass() == Onager.class)
 				{
 					this.nbOnagersInProduction--;
 					this.castle.addOnager();
 				}
-				else if(p.getClass() == Piker.class)
+				else if (p.getClass() == Piker.class)
 				{
 					this.nbPikersInProduction--;
 					this.castle.addPiker();
 				}
-				else if(p.getClass() == Knight.class)
+				else if (p.getClass() == Knight.class)
 				{
 					this.nbKnightsInProduction--;
 					this.castle.addKnight();
 				}
-				
 
 				if (this.productionUnit.size() > 0)
 				{
@@ -177,7 +177,7 @@ public class Caserne implements Serializable
 		else
 		{
 			this.productionUnit.clear();
-			
+
 		}
 		this.nbCastleInProduction = 0;
 		this.nbKnightsInProduction = 0;
@@ -189,7 +189,7 @@ public class Caserne implements Serializable
 	 * Ajoute une production à la fin de la queue si le château a assez de Florin pour la payer.
 	 *
 	 * @param  p La nouvelle production.
-	 * @return               Retourne true si le production a bien été ajouté, false sinon.
+	 * @return   Retourne true si le production a bien été ajouté, false sinon.
 	 */
 	public boolean addProduction(final IProductionUnit p)
 	{
@@ -207,25 +207,24 @@ public class Caserne implements Serializable
 				return false;
 			}
 		}
-		
+
 		if (p.getClass() == Castle.class)
 		{
 			this.nbCastleInProduction++;
 		}
-		else if(p.getClass() == Onager.class)
+		else if (p.getClass() == Onager.class)
 		{
 			this.nbOnagersInProduction++;
 		}
-		else if(p.getClass() == Piker.class)
+		else if (p.getClass() == Piker.class)
 		{
 			this.nbPikersInProduction++;
 		}
-		else if(p.getClass() == Knight.class)
+		else if (p.getClass() == Knight.class)
 		{
 			this.nbKnightsInProduction++;
 		}
 
-		
 		this.productionUnit.addLast(p);
 
 		if (this.productionUnit.size() == 1)

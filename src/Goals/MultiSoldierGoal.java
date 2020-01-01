@@ -1,9 +1,9 @@
-package Goal;
+package Goals;
 
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
-import Enum.SoldierEnum;
+import Enums.SoldierEnum;
 import SimpleGoal.Goal;
 import SimpleGoal.SoldierGoal;
 

@@ -4,14 +4,12 @@ import java.io.Serializable;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
-import Utility.Settings;
-import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
  * Représente le joueur.
- * 
+ *
  * <p>
  * Extends de la classe Actor.
  * </p>

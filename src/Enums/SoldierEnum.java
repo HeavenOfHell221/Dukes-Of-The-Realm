@@ -1,4 +1,4 @@
-package Enum;
+package Enums;
 
 import static Utility.Settings.KNIGHT_COST;
 import static Utility.Settings.ONAGER_COST;

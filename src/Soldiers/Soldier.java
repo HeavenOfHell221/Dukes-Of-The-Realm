@@ -7,8 +7,8 @@ import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
-import Enum.CollisionEnum;
-import Enum.SoldierEnum;
+import Enums.CollisionEnum;
+import Enums.SoldierEnum;
 import Interface.IUpdate;
 import Utility.Collision;
 import Utility.Point2D;
@@ -31,55 +31,59 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	 * Le type du soldat : Piquier / Chevalier / Catapulte.
 	 */
 	protected SoldierEnum type;
-	
+
 	/**
-	 * Une structure contenant les données d'un soldat : vitesse de déplacement, point de vie et dégâts à infliger.
+	 * Une structure contenant les données d'un soldat : vitesse de déplacement, point de vie et dégâts
+	 * à infliger.
 	 */
 	protected Stats stats;
-	
+
 	/**
 	 * Référence vers l'ost à laquelle le soldat appartient.
 	 */
 	protected Ost itsOst = null;
-	
+
 	/**
 	 * Booléen indiquant si le soldat est présent sur le terrain.
 	 */
 	public boolean onField = false;
-	
+
 	/**
 	 * Booléen indiquant si le soldat est arrivé au point de séparation autours du château adverse.
 	 */
 	protected boolean isArrived = false;
-	
+
 	/**
-	 * Booléen indiquant si le soldat est correctement positionné autours du château adverse pour l'attaquer.
+	 * Booléen indiquant si le soldat est correctement positionné autours du château adverse pour
+	 * l'attaquer.
 	 */
 	protected boolean isInPosition = false;
-	
+
 	/**
 	 * Booléen indiquant si le soldat est mort.
 	 */
 	public boolean isDead = false;
-	
+
 	/**
 	 * Le point autours du château adverse sur lequel le soldat se positionne pour attaquer
 	 */
 	protected Point2D attackLocation = null;
-	
+
 	/**
 	 * Booléen indiquant si le soldat est en attante d'un point d'attaque
 	 */
 	protected boolean isWaitingForAttackLocation = false;
-	
+
 	/**
 	 * Indique le statut actuel de collision du soldat.
+	 * 
 	 * @see CollisionEnum
 	 */
 	private CollisionEnum collisionState = CollisionEnum.None;
 
 	/**
-	 * Indique la dernière collision rencontrée par le soldat, utilisé pour traiter la collision entre le soldat et le coin d'un château.
+	 * Indique la dernière collision rencontrée par le soldat, utilisé pour traiter la collision entre
+	 * le soldat et le coin d'un château.
 	 */
 	private CollisionEnum lastCollision = CollisionEnum.None;
 
@@ -89,8 +93,9 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Constructeur Soldier
-	 * @param layer Le Pane pour afficher la réprésentation graphique de ce soldat.
-	 * @param coord Les coordonnées du soldat à son déploiement.
+	 * 
+	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.
+	 * @param coord  Les coordonnées du soldat à son déploiement.
 	 * @param itsOst La référence vers l'ost du soldat.
 	 */
 	public Soldier(final Pane layer, final Point2D coord, final Ost itsOst)
@@ -114,6 +119,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Affiche le soldat à l'écran.
+	 * 
 	 * @param color La couleur représentant le soldat sur le terrain.
 	 */
 	public void Awake(final Color color)
@@ -125,6 +131,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Initialise les composants transients du soldat.
+	 * 
 	 * @param pane Le Pane pour afficher la réprésentation graphique de ce soldat.
 	 */
 	public void startTransient(final Pane pane)
@@ -174,7 +181,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			}
 			else
 			{
-				addInReserve(this.getDestination().getReserveOfSoldiers());
+				addInReserve(getDestination().getReserveOfSoldiers());
 				this.isDead = true;
 			}
 		}
@@ -186,12 +193,14 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Ajoute une unité en renfort dans la réserve en paramètre.
+	 * 
 	 * @param reserve La réserve dans laquelle l'unité va.
 	 */
 	public abstract void addInReserve(ReserveOfSoldiers reserve);
-	
+
 	/**
-	 * Donne un point d'attaque au soldat s'il y en a un disponible, sinon le soldat passe en attente d'un point d'attaque
+	 * Donne un point d'attaque au soldat s'il y en a un disponible, sinon le soldat passe en attente
+	 * d'un point d'attaque
 	 */
 	private final void SetAttackLocation()
 	{
@@ -207,7 +216,9 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * Déplace le soldat d'une case vers sa destination, tout en évitant une collision avec un château, puis vérifie s'il est arrivé à destination.
+	 * Déplace le soldat d'une case vers sa destination, tout en évitant une collision avec un château,
+	 * puis vérifie s'il est arrivé à destination.
+	 * 
 	 * @param dst Les coordonnée du point de destination du soldat.
 	 */
 	private void Move(final Point2D dst)
@@ -430,12 +441,13 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * Autorise ou non le déplacement du soldat selon qu'un prédicat donné soit respecté.
-	 * Si le prédicat est bien respecté alors le déplacement est effectué.
-	 * @param predicat Le prédicat à vérifier.
-	 * @param directionX La direction selon l'axe des abscisses (1 ou -1).
-	 * @param directionY La direction selon l'axe des ordonnées (1 ou -1).
-	 * @return true si le déplacement a été effectué.
+	 * Autorise ou non le déplacement du soldat selon qu'un prédicat donné soit respecté. Si le prédicat
+	 * est bien respecté alors le déplacement est effectué.
+	 * 
+	 * @param  predicat   Le prédicat à vérifier.
+	 * @param  directionX La direction selon l'axe des abscisses (1 ou -1).
+	 * @param  directionY La direction selon l'axe des ordonnées (1 ou -1).
+	 * @return            true si le déplacement a été effectué.
 	 */
 	private boolean AIMoveHandle(final boolean predicat, final int directionX, final int directionY)
 	{
@@ -448,8 +460,9 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Calcule la déplacement réalisé par le soldat en une fois.
-	 * @param direction La direction du déplacement. Il peut être positif (1) ou négatif (-1).
-	 * @return Le déplacement du soldat.
+	 * 
+	 * @param  direction La direction du déplacement. Il peut être positif (1) ou négatif (-1).
+	 * @return           Le déplacement du soldat.
 	 */
 	private double getMotion(final int direction)
 	{
@@ -469,7 +482,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * Vérifie si le soldat est arrivé au point de séparation de l'ost autours du château adverse et modifie les données du soldats en conséquence.
+	 * Vérifie si le soldat est arrivé au point de séparation de l'ost autours du château adverse et
+	 * modifie les données du soldats en conséquence.
 	 */
 	private void isArrived()
 	{
@@ -483,7 +497,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * Vérifie si le soldat est arrivé à son point d'attaque autours du château adverse et modifie les données du soldats en conséquence.
+	 * Vérifie si le soldat est arrivé à son point d'attaque autours du château adverse et modifie les
+	 * données du soldats en conséquence.
 	 */
 	private void isInPosition()
 	{
@@ -499,7 +514,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	}
 
 	/**
-	 * Réalise une attaque sur le château adverse. Si le soldat attaquant dépense son dernier point d'attaque il est tué.
+	 * Réalise une attaque sur le château adverse. Si le soldat attaquant dépense son dernier point
+	 * d'attaque il est tué.
 	 */
 	private void attack()
 	{
@@ -531,6 +547,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère le point de séparation de l'ost à laquelle le soldat appartient.
+	 * 
 	 * @return Retourne le point de séparation de l'ost.
 	 * @see    DukesOfTheRealm.Ost#getSeparationPoint()
 	 */
@@ -541,6 +558,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère le point d'attente du soldat autours du château.
+	 * 
 	 * @return Retourne le point d'attente du soldat.
 	 * @see    DukesOfTheRealm.Ost#getWaitingPoint()
 	 */
@@ -551,6 +569,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère la liste des soldats composants l'ost.
+	 * 
 	 * @return Retourne la liste des soldats.
 	 * @see    DukesOfTheRealm.Ost#getSoldiers()
 	 */
@@ -561,6 +580,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Appelle la méthode win de l'ost lorsque le château adverse est vaincu.
+	 * 
 	 * @see DukesOfTheRealm.Ost#win()
 	 */
 	public void win()
@@ -570,6 +590,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère l'état de l'attaque, si celle-ci est en cours ou stoppée.
+	 * 
 	 * @return Retourne l'état de l'attaque.
 	 * @see    DukesOfTheRealm.Ost#isStopAttack()
 	 */
@@ -580,6 +601,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 
 	/**
 	 * Récupère le château de destination.
+	 * 
 	 * @return Retourne la référence vers le château de destination.
 	 * @see    DukesOfTheRealm.Ost#getDestination()
 	 */

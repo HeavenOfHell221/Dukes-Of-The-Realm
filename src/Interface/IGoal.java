@@ -5,7 +5,7 @@ import DukesOfTheRealm.Castle;
 /**
  * Interface des objectifs pour les IA.
  *
- * @see Goal.GeneratorGoal
+ * @see Goals.GeneratorGoal
  */
 public interface IGoal
 {
@@ -20,8 +20,9 @@ public interface IGoal
 	/**
 	 * Appel la méthode goal et retourne sont résultat.
 	 *
-	 * @return Retourne la valeur de retour de goal(Castle)
-	 * @see    IGoal#goal(Castle)
+	 * @param  castle Le château à qui appartient cet objectif.
+	 * @return        Retourne la valeur de retour de goal(Castle)
+	 * @see           IGoal#goal(Castle)
 	 */
 	default boolean isGoalIsCompleted(final Castle castle)
 	{

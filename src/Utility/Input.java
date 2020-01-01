@@ -27,6 +27,7 @@ public class Input
 
 	/**
 	 * Met en place la scène.
+	 * 
 	 * @param scene La scène dans laquelle les saisies clavier sont réalisées.
 	 */
 	public Input(final Scene scene)
@@ -74,8 +75,9 @@ public class Input
 
 	/**
 	 * Vérifie si une touche particulière du clavier est pressée.
-	 * @param key La touche à vérifier.
-	 * @return true si la touche est bien pressée.
+	 * 
+	 * @param  key La touche à vérifier.
+	 * @return     true si la touche est bien pressée.
 	 */
 	private boolean is(final KeyCode key)
 	{
@@ -84,6 +86,7 @@ public class Input
 
 	/**
 	 * Vérifie si la touche ESCAPE du clavier est pressée.
+	 * 
 	 * @return true si elle l'est.
 	 */
 	public boolean isExit()
@@ -93,6 +96,7 @@ public class Input
 
 	/**
 	 * Vérifie si la touche SPACE du clavier est pressée.
+	 * 
 	 * @return true si elle l'est.
 	 */
 	public boolean isSpace()

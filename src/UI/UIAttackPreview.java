@@ -499,7 +499,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	/*************************************************/
 
 	/**
-	 * @return
+	 * @return Retourne le nombre de Piker de lastCastle.
 	 * @see    DukesOfTheRealm.Castle#getNbPikers()
 	 */
 	public int getNbPikers()
@@ -508,7 +508,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	}
 
 	/**
-	 * @return
+	 * @return Retourne le nombre de Knight de lastCastle.
 	 * @see    DukesOfTheRealm.Castle#getNbKnights()
 	 */
 	public int getNbKnights()
@@ -517,7 +517,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	}
 
 	/**
-	 * @return
+	 * @return Retourne le nombre de Onager de lastCastle.
 	 * @see    DukesOfTheRealm.Castle#getNbOnagers()
 	 */
 	public int getNbOnagers()

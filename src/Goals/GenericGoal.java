@@ -1,4 +1,4 @@
-package Goal;
+package Goals;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
@@ -33,7 +33,8 @@ public class GenericGoal implements Serializable, IGoal
 
 	/**
 	 * Tant que la queue n'est pas vide, on essai de faire l'objectif en tête de queue. S'il est réussi,
-	 * on passe au suivant etc. Il y a une limite d'objectif faisable dans la même update qui est le niveau du château * 2.
+	 * on passe au suivant etc. Il y a une limite d'objectif faisable dans la même update qui est le
+	 * niveau du château * 2.
 	 *
 	 * @return Retourne true si la queue est vide, false sinon.
 	 */

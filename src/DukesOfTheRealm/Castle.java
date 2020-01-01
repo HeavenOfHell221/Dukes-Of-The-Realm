@@ -18,7 +18,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import Duke.Actor;
-import Enum.SoldierEnum;
+import Enums.SoldierEnum;
 import Interface.IProductionUnit;
 import Utility.Point2D;
 import javafx.scene.layout.Pane;
@@ -240,17 +240,17 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Donne à un Baron un nombre aléatoire d'unités proportionnel au niveau de ce château.
-	 *
+	 * 
 	 * @see Duke.Baron#addFirstCastle(Castle)
 	 * @see ReserveOfSoldiers
 	 */
 	public void randomSoldier()
 	{
 		final Random rand = new Random();
-		final int levelSq = this.level * (this.level / 4);
+		final int levelSq = this.level * (this.level / 6) + 1;
 		this.reserveOfSoldiers.setNbKnights(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
-		this.reserveOfSoldiers.setNbPikers(rand.nextInt(levelSq) + rand.nextInt(2) * this.level);
-		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(levelSq) + rand.nextInt(2) * this.level);
+		this.reserveOfSoldiers.setNbPikers(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
+		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
 	}
 
 	/**
@@ -273,7 +273,6 @@ public class Castle extends Sprite implements Serializable
 	 *
 	 * @param pane Le pane principale.
 	 * @see        Sprite#addCastleRepresentation(Pane)
-	 * @see        DukesOfTheRealm.Sprite#addDoorRepresentation(Pane, Orientation)
 	 */
 	public void addRepresentation(final Pane pane)
 	{
@@ -393,6 +392,9 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Crée les points d'attaque que prendront les unités qui attaqueront ce château.
+	 * 
+	 * @see Castle#attackLocations
+	 * @see Soldiers.Soldier#getAttackLocation()
 	 */
 	protected void setAttackLocations()
 	{
@@ -425,7 +427,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @return Retourne true si il y a des points d'attaque libre, false sinon.
+	 * @return Retourne true s'il y a des points d'attaque libre, false sinon.
 	 */
 	public boolean isAvailableAttackLocation()
 	{
@@ -455,7 +457,8 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#getNbPikersInProduction()
+	 * @return Retourne le nombre de Piker en production.
+	 * @see    DukesOfTheRealm.Caserne#getNbPikersInProduction()
 	 */
 	public final int getNbPikersInProduction()
 	{
@@ -463,7 +466,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#getNbCastleInProduction()
+	 * @return Retourne le nombre d'amélioration du château en production.
+	 * @see    DukesOfTheRealm.Caserne#getNbCastleInProduction()
 	 */
 	public final int getNbCastleInProduction()
 	{
@@ -471,15 +475,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#setNbCastleInProduction(int)
-	 */
-	public final void setNbCastleInProduction(final int nbCastleInProduction)
-	{
-		this.caserne.setNbCastleInProduction(nbCastleInProduction);
-	}
-
-	/**
-	 * @see DukesOfTheRealm.Caserne#getNbOnagersInProduction()
+	 * @return Retourne le nombre de Onager en production.
+	 * @see    DukesOfTheRealm.Caserne#getNbOnagersInProduction()
 	 */
 	public final int getNbOnagersInProduction()
 	{
@@ -487,35 +484,12 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#getNbKnightsInProduction()
+	 * @return Retourne le nombre de Knight en production.
+	 * @see    DukesOfTheRealm.Caserne#getNbKnightsInProduction()
 	 */
 	public final int getNbKnightsInProduction()
 	{
 		return this.caserne.getNbKnightsInProduction();
-	}
-
-	/**
-	 * @see DukesOfTheRealm.Caserne#setNbPikersInProduction(int)
-	 */
-	public final void setNbPikersInProduction(final int nbPikersInProduction)
-	{
-		this.caserne.setNbPikersInProduction(nbPikersInProduction);
-	}
-
-	/**
-	 * @see DukesOfTheRealm.Caserne#setNbOnagersInProduction(int)
-	 */
-	public final void setNbOnagersInProduction(final int nbOnagersInProduction)
-	{
-		this.caserne.setNbOnagersInProduction(nbOnagersInProduction);
-	}
-
-	/**
-	 * @see DukesOfTheRealm.Caserne#setNbKnightsInProduction(int)
-	 */
-	public final void setNbKnightsInProduction(final int nbKnightsInProduction)
-	{
-		this.caserne.setNbKnightsInProduction(nbKnightsInProduction);
 	}
 
 	/**
@@ -543,7 +517,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
+	 * @return retourne la valeur de retour de getNbPikers.
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
 	 */
 	public int getNbPikers()
 	{
@@ -551,7 +526,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbKnights()
+	 * @return Retourne la valeur de retour de getNbKnights.
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbKnights()
 	 */
 	public int getNbKnights()
 	{
@@ -559,7 +535,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#getNbOnagers()
+	 * @return Retourne la valeur de retour de getNbOnagers.
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbOnagers()
 	 */
 	public int getNbOnagers()
 	{
@@ -567,7 +544,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#removeLastProduction()
+	 * @param refoundFlorin Spécifie si on redonne les Florin ou non.
+	 * @see                 DukesOfTheRealm.Caserne#removeLastProduction(boolean)
 	 */
 	public void removeLastProduction(final boolean refoundFlorin)
 	{
@@ -575,15 +553,18 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#resetQueue(boolean)
+	 * @param refoundFlorin Spécifie si on redonne les Florin ou non.
+	 * @see                 DukesOfTheRealm.Caserne#resetQueue(boolean)
 	 */
-	public void resetQueue(final boolean refundFlorin)
+	public void resetQueue(final boolean refoundFlorin)
 	{
-		this.caserne.resetQueue(refundFlorin);
+		this.caserne.resetQueue(refoundFlorin);
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#addProduction(Interface.IProductionUnit)
+	 * @param  newProduction La nouvelle production.
+	 * @return               Retourne la valeur de retour de addProduction.
+	 * @see                  DukesOfTheRealm.Caserne#addProduction(Interface.IProductionUnit)
 	 */
 	public boolean addProduction(final IProductionUnit newProduction)
 	{
@@ -591,7 +572,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.Caserne#getRatio()
+	 * @return Retourne la valeur de retour de getRatio.
+	 * @see    DukesOfTheRealm.Caserne#getRatio()
 	 */
 	public final double getRatio()
 	{
@@ -599,7 +581,7 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(int)
+	 * @see DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(SoldierEnum)
 	 */
 	public void randomRemoveHP()
 	{
@@ -607,7 +589,11 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
+	 * @param  nbPikers  Le nombre de Piker à retirer.
+	 * @param  nbKnights Le nombre de Knight à retirer.
+	 * @param  nbOnagers Le nombre de Onager à retirer.
+	 * @return           Retourne la valeur de retour de removeSoldiers.
+	 * @see              DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
 	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
 	{
@@ -623,7 +609,8 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#isStopAttack()
+	 * @return Retourne la valeur de retour de isStopAttack.
+	 * @see    DukesOfTheRealm.ReserveOfSoldiers#isStopAttack()
 	 */
 	public boolean isStopAttack()
 	{
@@ -634,11 +621,6 @@ public class Castle extends Sprite implements Serializable
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
-	/**
-	 * Calcul le coût de production de ce château en fonction de son niveau.
-	 *
-	 * @return Retourne son coût de production.
-	 */
 	@Override
 	public int getProductionCost()
 	{
@@ -699,7 +681,7 @@ public class Castle extends Sprite implements Serializable
 	/**
 	 * Set the level
 	 *
-	 * @param level
+	 * @param level the level to set
 	 */
 	public void setLevel(final int level)
 	{
@@ -707,13 +689,11 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * Set the color
-	 *
-	 * @param color
+	 * @param myColor the myColor to set
 	 */
-	public void setColor(final Color color)
+	public final void setColor(final Color myColor)
 	{
-		this.myColor = color;
+		this.myColor = myColor;
 	}
 
 	/**

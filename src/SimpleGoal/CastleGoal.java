@@ -16,7 +16,7 @@ public class CastleGoal extends Goal
 	 * Constucteur de CastleGoal
 	 *
 	 * @param castle Le château qu'on veut améliorer.
-	 * @see          Goal.GeneratorGoal
+	 * @see          Goals.GeneratorGoal
 	 */
 	public CastleGoal(final Castle castle)
 	{

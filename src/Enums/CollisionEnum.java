@@ -1,13 +1,12 @@
-package Enum;
+package Enums;
 
 /**
  * Liste des collisions possible entre une unité et un château.
  * <p>
  * Ce qui comprend : <br>
  * Les 4 cotés d'un château (Top, Right, Bottom, Left) <br>
- * Les 4 coins d'un château (LeftTop, TopRight, RightBottom, BottomLeft)
- * L'intérieur du château (Inside)
- * Pas de collision (None)
+ * Les 4 coins d'un château (LeftTop, TopRight, RightBottom, BottomLeft) L'intérieur du château
+ * (Inside) Pas de collision (None)
  * </p>
  */
 public enum CollisionEnum
@@ -15,51 +14,51 @@ public enum CollisionEnum
 	/**
 	 * Coté nord
 	 */
-	Top, 
-	
+	Top,
+
 	/**
 	 * Coté est
 	 */
-	Right, 
-	
+	Right,
+
 	/**
 	 * Coté ouest
 	 */
-	Left, 
-	
+	Left,
+
 	/**
 	 * Coté sud
 	 */
-	Bottom, 
-	
+	Bottom,
+
 	/**
 	 * Coin nord ouest
 	 */
-	LeftTop, 
-	
+	LeftTop,
+
 	/**
 	 * Coin nord est
 	 */
-	TopRight, 
-	
+	TopRight,
+
 	/**
 	 * Coin sud est
 	 */
-	RightBottom, 
-	
+	RightBottom,
+
 	/**
 	 * Coin sud ouest
 	 */
-	BottomLeft, 
-	
+	BottomLeft,
+
 	/**
 	 * A l'intérieur
 	 */
-	Inside, 
-	
+	Inside,
+
 	/**
 	 * Aucune collision
 	 */
 	None;
-	
+
 }

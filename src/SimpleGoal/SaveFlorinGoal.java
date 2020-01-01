@@ -17,7 +17,7 @@ public class SaveFlorinGoal extends Goal
 	 *
 	 * @param saveAmount Le montant de Florin à avoir.
 	 * @see              SaveFlorinGoal#saveAmount
-	 * @see              Goal.GeneratorGoal
+	 * @see              Goals.GeneratorGoal
 	 */
 	public SaveFlorinGoal(final int saveAmount)
 	{

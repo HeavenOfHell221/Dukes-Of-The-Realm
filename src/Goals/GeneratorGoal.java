@@ -1,4 +1,4 @@
-package Goal;
+package Goals;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -6,7 +6,7 @@ import java.util.Random;
 import Duke.Actor;
 import Duke.DukeAI;
 import DukesOfTheRealm.Castle;
-import Enum.GoalEnum;
+import Enums.GoalEnum;
 import SimpleGoal.CastleGoal;
 import SimpleGoal.Goal;
 import SimpleGoal.SaveFlorinGoal;
@@ -51,7 +51,7 @@ public class GeneratorGoal implements Serializable
 	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
 	 * @return        Un objectif pour l'IA.
-	 * @see           Enum.GoalEnum
+	 * @see           Enums.GoalEnum
 	 */
 	public static Goal getNewGoal(final Castle castle)
 	{

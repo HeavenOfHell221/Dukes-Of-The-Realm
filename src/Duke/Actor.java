@@ -1,7 +1,5 @@
 package Duke;
 
-import static Utility.Settings.FLORIN_PER_SECOND;
-
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -183,7 +181,8 @@ public abstract class Actor implements Serializable, IUpdate
 	 */
 	protected void updateFlorin(final Castle castle)
 	{
-		castle.addFlorin(Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime + Settings.FLORIN_PER_SECOND_OFFSET * Time.deltaTime);
+		castle.addFlorin(
+				Settings.FLORIN_PER_SECOND * castle.getLevel() * Time.deltaTime + Settings.FLORIN_PER_SECOND_OFFSET * Time.deltaTime);
 	}
 
 	/*************************************************/
@@ -210,20 +209,24 @@ public abstract class Actor implements Serializable, IUpdate
 	}
 
 	/**
-	 * Concatène Une chaine de caracètre pour former le string affichant le nombre de Florin par seconde.
+	 * Concatène Une chaine de caracètre pour former le string affichant le nombre de Florin par
+	 * seconde.
+	 * 
 	 * @param  castle Le château afficher sur le UI.
-	 * @return Un string du type "0.2 Florin/s".
+	 * @return        Un string du type "0.2 Florin/s".
 	 */
 	public String florinIncome(final Castle castle)
 	{
-		return String.format("%.1f", (float) (Settings.FLORIN_PER_SECOND * castle.getLevel() + Settings.FLORIN_PER_SECOND_OFFSET)) + " Florin/s";
+		return String.format("%.1f", (float) (Settings.FLORIN_PER_SECOND * castle.getLevel() + Settings.FLORIN_PER_SECOND_OFFSET))
+				+ " Florin/s";
 	}
 
 	/**
 	 * Ajoute le premier château de cet acteur à sa liste et lui met l'événement castleHandle.
+	 * 
 	 * @param castle Le château qu'on ajoute.
-	 * @see Actor#addEvent(Castle)
-	 * @see Actor#castleHandle(MouseEvent)
+	 * @see          Actor#addEvent(Castle)
+	 * @see          Actor#castleHandle(MouseEvent)
 	 */
 	public void addFirstCastle(final Castle castle)
 	{
@@ -233,8 +236,9 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute l'événement castleHandle à un château.
+	 * 
 	 * @param castle Le château à qui on ajoute l'événement.
-	 * @see Actor#castleHandle(MouseEvent)
+	 * @see          Actor#castleHandle(MouseEvent)
 	 */
 	protected void addEvent(final Castle castle)
 	{
@@ -243,6 +247,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute l'événement castleHandle à tout les châteaux appartenant à la liste castles.
+	 * 
 	 * @see Actor#addEvent(Castle)
 	 * @see Actor#castles
 	 */
@@ -252,7 +257,9 @@ public abstract class Actor implements Serializable, IUpdate
 	}
 
 	/**
-	 * Lors d'un clique sur un château, on change le château courant des modules gérant l'interface utilisateur.
+	 * Lors d'un clique sur un château, on change le château courant des modules gérant l'interface
+	 * utilisateur.
+	 * 
 	 * @param castle Le châtea sur lequel on vient de cliquer.
 	 * @see          UI.UIManager#switchCastle(Castle)
 	 */

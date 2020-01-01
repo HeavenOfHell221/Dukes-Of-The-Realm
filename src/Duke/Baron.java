@@ -1,7 +1,6 @@
 package Duke;
 
 import static Utility.Settings.FLORIN_FACTOR_BARON;
-import static Utility.Settings.FLORIN_PER_SECOND;
 import static Utility.Settings.OFFSET_LEVEL_CASTLE_BARON;
 import static Utility.Settings.RANDOM_LEVEL_CASTLE_BARON;
 
@@ -14,7 +13,7 @@ import Utility.Time;
 
 /**
  * Représente les acteurs neutre qui n'ont pas d'IA.
- * 
+ *
  * <p>
  * Extends de la classe Actor.
  * </p>
@@ -42,7 +41,8 @@ public class Baron extends Actor implements Serializable
 	@Override
 	protected void updateFlorin(final Castle castle)
 	{
-		castle.addFlorin(Settings.FLORIN_PER_SECOND * FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime + FLORIN_FACTOR_BARON * Settings.FLORIN_PER_SECOND_OFFSET * Time.deltaTime);
+		castle.addFlorin(Settings.FLORIN_PER_SECOND * FLORIN_FACTOR_BARON * castle.getLevel() * Time.deltaTime
+				+ FLORIN_FACTOR_BARON * Settings.FLORIN_PER_SECOND_OFFSET * Time.deltaTime);
 	}
 
 	/*************************************************/
@@ -54,7 +54,8 @@ public class Baron extends Actor implements Serializable
 	{
 		if (this.castles.contains(castle))
 		{
-			String tmp = String.format("%.1f", Settings.FLORIN_PER_SECOND* castle.getLevel() * FLORIN_FACTOR_BARON + FLORIN_FACTOR_BARON * Settings.FLORIN_PER_SECOND_OFFSET);
+			String tmp = String.format("%.1f", Settings.FLORIN_PER_SECOND * castle.getLevel() * FLORIN_FACTOR_BARON
+					+ FLORIN_FACTOR_BARON * Settings.FLORIN_PER_SECOND_OFFSET);
 			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";

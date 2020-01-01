@@ -92,7 +92,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Référence sur le château courant.
 	 *
 	 * @see UICastlePreview#updateTexts()
-	 * @see UICastlePreview#switchCastle(Castle, boolean)
+	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private Castle currentCastle;
 
@@ -100,7 +100,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Référence sur l'ancien château courant.
 	 *
 	 * @see UICastlePreview#updateTexts()
-	 * @see UICastlePreview#switchCastle(Castle, boolean)
+	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private Castle lastCastle;
 
@@ -108,7 +108,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Boolean spécifiant si l'interface d'attaque est visible ou non.
 	 *
 	 * @see UICastlePreview#updateTexts()
-	 * @see UICastlePreview#switchCastle(Castle, boolean)
+	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private boolean attackVisible = false;
 

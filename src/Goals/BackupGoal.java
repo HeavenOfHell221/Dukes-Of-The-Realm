@@ -1,4 +1,4 @@
-package Goal;
+package Goals;
 
 import java.util.ArrayList;
 import java.util.Random;

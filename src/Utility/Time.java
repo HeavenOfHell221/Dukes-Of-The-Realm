@@ -4,7 +4,9 @@ import DukesOfTheRealm.Main;
 import Interface.IUpdate;
 
 /**
- * Utilitaire pour calculer le nombre d'image par seconde et gérer le "temps réel" grâce à la variable deltaTime.
+ * Utilitaire pour calculer le nombre d'image par seconde et gérer le "temps réel" grâce à la
+ * variable deltaTime.
+ * 
  * @see Time#deltaTime
  */
 public class Time implements IUpdate
@@ -21,6 +23,7 @@ public class Time implements IUpdate
 
 	/**
 	 * Le temps à la dernière remise à zéro du counter.
+	 * 
 	 * @see Time#counter
 	 */
 	private long lastUpdate;
@@ -38,9 +41,11 @@ public class Time implements IUpdate
 	/**
 	 * Durée de l'image précédente.
 	 * <p>
-	 * Très utile car elle permet d'avoir, peut importe le nombre d'image par seconde, un résultat constant.
-	 * Exemple : Si je veux 10 Florin par seconde, je vais multiplier 10 par deltaTime. Ainsi, peut importe le nombre d'image par seconde, j'aurai toujours 10 Florin.
-	 * Sans cela, je dois donner un nombre fixe de Florin à chaque image, donc nous n'avons pas la même quantité avec un jeu à 60 FPS et un jeu à 30FPS..
+	 * Très utile car elle permet d'avoir, peut importe le nombre d'image par seconde, un résultat
+	 * constant. Exemple : Si je veux 10 Florin par seconde, je vais multiplier 10 par deltaTime. Ainsi,
+	 * peut importe le nombre d'image par seconde, j'aurai toujours 10 Florin. Sans cela, je dois donner
+	 * un nombre fixe de Florin à chaque image, donc nous n'avons pas la même quantité avec un jeu à 60
+	 * FPS et un jeu à 30FPS..
 	 * </p>
 	 */
 	public static double deltaTime;
@@ -61,7 +66,8 @@ public class Time implements IUpdate
 
 	/**
 	 * Constructeur de Time.
-	 * @param print Spécifie si le nombre d'image par seconde doit être affiché dans la console. 
+	 * 
+	 * @param print Spécifie si le nombre d'image par seconde doit être affiché dans la console.
 	 */
 	public Time(final boolean print)
 	{
@@ -96,6 +102,7 @@ public class Time implements IUpdate
 
 	/**
 	 * Calcul la durée de l'image précédente.
+	 * 
 	 * @param now Le temps actuel.
 	 */
 	public void newFrame(final long now)

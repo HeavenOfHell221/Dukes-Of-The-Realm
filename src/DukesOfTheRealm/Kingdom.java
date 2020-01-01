@@ -43,7 +43,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	 * Liste des acteurs (joueur, IA et baron) du royaume.
 	 *
 	 * @see Kingdom#update(long now, boolean pause)
-	 * @See Actor
+	 * @see Actor
 	 */
 	private ArrayList<Actor> actors;
 
@@ -73,28 +73,14 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	 */
 	private transient boolean canUpdate = false;
 
-	// public static Collisions collisionsManagement;
-
-	/*************************************************/
-	/***************** CONSTRUCTEURS *****************/
-	/*************************************************/
-
-	/**
-	 * Constructeur par défaut Kingdom.
-	 */
-	public Kingdom()
-	{
-
-	}
-
 	/*************************************************/
 	/********************* START *********************/
 	/*************************************************/
 	/**
 	 * Initialise le kingdom.
 	 *
-	 * @param Le pane principal.
-	 * @see      Main#newGame()
+	 * @param pane Le pane principal.
+	 * @see        Main#newGame()
 	 */
 	public void start(final Pane pane)
 	{
@@ -107,9 +93,9 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/**
 	 * Initialise les composants transients du jeu.
 	 *
-	 * @param Le pane principal.
-	 * @see      Main#loadGame()
-	 * @see      Kingdom#start(Pane)
+	 * @param pane Le pane principal.
+	 * @see        Main#loadGame()
+	 * @see        Kingdom#start(Pane)
 	 */
 	public void startTransient(final Pane pane)
 	{
@@ -175,8 +161,8 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/**
 	 * Fonction appelée à chaque image.
 	 * <p>
-	 * Elle permet de mettre à jour tout le jeu. On met à jour les acteurs qui eux même mettent
-	 * à jour leurs châteaux, qui eux même mettent à jour leur ost, <br>
+	 * Elle permet de mettre à jour tout le jeu. On met à jour les acteurs qui eux même mettent à jour
+	 * leurs châteaux, qui eux même mettent à jour leur ost, <br>
 	 * qui eux même mettent à jour leur unités sur le terrain...
 	 * </p>
 	 *
@@ -239,8 +225,8 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/**
 	 * Fonction créant les acteurs et les châteaux lors d'un nouveau jeu.
 	 * <p>
-	 * Elle va créer les IA et les Baron puis le nombre de château suffisant pour que chaque acteur
-	 * ait un château au début (joueur compris). <br>
+	 * Elle va créer les IA et les Baron puis le nombre de château suffisant pour que chaque acteur ait
+	 * un château au début (joueur compris). <br>
 	 * A la création d'un château, elle teste la distance avec les autres pour respecter la distance
 	 * minimale entre 2 châteaux. <br>
 	 * Elle affecte également une couleur à chaque IA et une couleur commune à tous les Baron.
@@ -322,7 +308,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 
 	/**
 	 * Teste s'il existe un château trop proche des coordonnées données en paramètre.
-	 * 
+	 *
 	 * @param  castles    Liste des châteaux déjà  crées.
 	 * @param  coordinate Les coordonnées du potentiel futur château.
 	 * @return            Retourne true si la distance est respectée, false sinon.
@@ -344,9 +330,9 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Calcule la distance entre deux points (les coordonnées d'un château et les coordonnées du
-	 * château qu'on voudrait créer).
-	 * 
+	 * Calcule la distance entre deux points (les coordonnées d'un château et les coordonnées du château
+	 * qu'on voudrait créer).
+	 *
 	 * @param  castleCoord Les coordonnées du château courant.
 	 * @param  coord       Les coordonnées du château qu'on voudrait créer.
 	 * @return             Retourne la distance entre les deux points.
@@ -361,7 +347,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 
 	/**
 	 * Renvoie des coordonnées aléatoires pour positionner un château.
-	 * 
+	 *
 	 * @param  rand Un objet de type Random pour l'aléatoire.
 	 * @return      Retourne des coordonnées.
 	 * @see         Kingdom#createWorld()
@@ -374,13 +360,13 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	}
 
 	/**
-	 * Renvoie un acteur aléatoire du royaume en ne prenant pas en compte l'acteur qui utilise cette
+	 * Renvoie un acteur aléatoire du royaume en ne prennant pas en compte l'acteur qui utilise cette
 	 * fonction.
 	 *
 	 * @param  actor L'acteur qui serra retirÃ© de la liste
 	 * @return       Retourne un acteur du royaume ou null si la liste ne contient que l'acteur
 	 *               appelelant cette fonction.
-	 * @see          Goal.GeneratorGoal#getNewGoalBattle(Castle)
+	 * @see          Goals.GeneratorGoal#getNewGoalBattle(Castle)
 	 */
 	public Actor getRandomActor(final Actor actor)
 	{

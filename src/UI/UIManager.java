@@ -36,7 +36,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 	/**
 	 * Référence à un oobjet UIAttackPreview qui va s'occuper de l'interface utilisateur des attaques.
 	 *
-	 * @See UIAttackPreview
+	 * @see UIAttackPreview
 	 */
 	private UIAttackPreview attackPreview;
 

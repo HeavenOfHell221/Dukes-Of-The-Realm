@@ -1,9 +1,8 @@
 package Soldiers;
 
-import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
-import Enum.SoldierEnum;
+import Enums.SoldierEnum;
 import Utility.Point2D;
 import Utility.Settings;
 import javafx.scene.layout.Pane;
@@ -11,6 +10,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Classe représentant un soldat de type Chevalier.
+ * 
  * @see Soldier
  */
 public class Knight extends Soldier
@@ -18,10 +18,11 @@ public class Knight extends Soldier
 
 	/**
 	 * Constructeur Knight
-	 * @param layer Le Pane pour afficher la réprésentation graphique de ce soldat.
-	 * @param coord Les coordonnées du soldat à son déploiement.
+	 * 
+	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.
+	 * @param coord  Les coordonnées du soldat à son déploiement.
 	 * @param itsOst La référence vers l'ost du soldat.
-	 * @param speed La vitesse de déplacement du soldat.
+	 * @param speed  La vitesse de déplacement du soldat.
 	 */
 	public Knight(final Pane layer, final Point2D coord, final Ost itsOst, final int speed)
 	{

@@ -1,6 +1,6 @@
 package Duke;
 
-import static Goal.GeneratorGoal.getNewGoal;
+import static Goals.GeneratorGoal.getNewGoal;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import Utility.Settings;
 
 /**
  * Représente les IA qui jouent contre le joueur.
- * 
+ *
  * <p>
  * Extends de la classe Actor.
  * </p>
@@ -49,7 +49,7 @@ public class DukeAI extends Actor implements Serializable
 	 * Référence au royaume auquel appartient ce Duke.
 	 *
 	 * @see DukesOfTheRealm.Kingdom
-	 * @see Goal.GeneratorGoal#getNewGoalBattle(Castle)
+	 * @see Goals.GeneratorGoal#getNewGoalBattle(Castle)
 	 */
 	private Kingdom kingdom;
 
@@ -75,7 +75,7 @@ public class DukeAI extends Actor implements Serializable
 	{
 		super.update(now, pause);
 
-		// Toutes les 1 seconde, l'IA va compléter ses objectifs et en prendre un nouveau 
+		// Toutes les 1 seconde, l'IA va compléter ses objectifs et en prendre un nouveau
 		// si sont objectif courant est compléter.
 		if (time(now, pause))
 		{
@@ -115,20 +115,20 @@ public class DukeAI extends Actor implements Serializable
 	 * Génère un nouvel objectif pour le château en paramètre et le place dans la map.
 	 *
 	 * @param castle Le château courant.
-	 * @see          Goal.GeneratorGoal
+	 * @see          Goals.GeneratorGoal
 	 */
 	private void putNewGoal(final Castle castle)
 	{
 		Goal g = getNewGoal(castle);
 		this.goalMap.put(castle, g);
-		//System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g); 
+		// System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
 	}
-	
+
 	@Override
 	protected void addOrRemoveCastleList()
 	{
 		this.castlesWaitForDelete.forEach(castle -> this.goalMap.remove(castle));
-		
+
 		super.addOrRemoveCastleList();
 	}
 

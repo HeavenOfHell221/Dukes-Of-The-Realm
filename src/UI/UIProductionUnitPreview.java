@@ -210,7 +210,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	/**
 	 * Met à l'échelle la barre de production par rapport au ratio.
 	 *
-	 * @param fractionFill
+	 * @param fractionFill Le ratio.
 	 * @see                UIProductionUnitPreview#fillTime
 	 */
 	public void setFill(final double fractionFill)

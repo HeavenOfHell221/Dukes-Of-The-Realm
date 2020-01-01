@@ -46,7 +46,7 @@ public class Settings
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
 	public static final int FLORIN_PER_SECOND = 5;
-	
+
 	/**
 	 * Nombre de Florin par seconde de base.
 	 */
@@ -75,12 +75,12 @@ public class Settings
 	/**
 	 * Nombre d'IA.
 	 */
-	public static final int AI_NUMBER = 5;
+	public static final int AI_NUMBER = 6;
 
 	/**
 	 * Nombre de Baron.
 	 */
-	public static final int BARON_NUMBER = 6;
+	public static final int BARON_NUMBER = 5;
 
 	/**
 	 * Nombre de Knight de base pour le joueur et les IA.
@@ -119,7 +119,7 @@ public class Settings
 	/**
 	 * Plage d'aléatoire pour le niveau du château des Baron
 	 */
-	public static final int RANDOM_LEVEL_CASTLE_BARON = 15;
+	public static final int RANDOM_LEVEL_CASTLE_BARON = 16;
 
 	/**
 	 * Offset du niveau du château des Baron (donc le minimum).
@@ -148,17 +148,17 @@ public class Settings
 	/**
 	 * Dégâts des Piker.
 	 */
-	public static final int PIKER_DAMAGE = 14;
+	public static final int PIKER_DAMAGE = 20;
 
 	/**
 	 * Dégâts des Knight.
 	 */
-	public static final int KNIGHT_DAMAGE = 48;
+	public static final int KNIGHT_DAMAGE = 72;
 
 	/**
 	 * Dégâts des Onager.
 	 */
-	public static final int ONAGER_DAMAGE = 135;
+	public static final int ONAGER_DAMAGE = 144;
 
 	/**
 	 * Coût d'un Piker.
@@ -173,12 +173,12 @@ public class Settings
 	/**
 	 * Coût d'un Onager.
 	 */
-	public static final int ONAGER_COST = 150;
+	public static final int ONAGER_COST = 120;
 
 	/**
 	 * Vitesse de déplacement d'un Piker.
 	 */
-	public static final int PIKER_SPEED = 45;
+	public static final int PIKER_SPEED = 40;
 
 	/**
 	 * Vitesse de déplacement d'un Knight.
@@ -193,7 +193,7 @@ public class Settings
 	/**
 	 * Temps de production d'un Piker (en seconde).
 	 */
-	public static final double PIKER_TIME_PRODUCTION = 0.5f;
+	public static final double PIKER_TIME_PRODUCTION = 0.6f;
 
 	/**
 	 * Temps de production d'un Knight (en seconde).
@@ -270,9 +270,8 @@ public class Settings
 	 */
 	public static final int ONAGER_REPRESENTATION_SIZE = SOLDIER_SIZE;
 
-	
 	/* Paramètres interne pour le visuel des châteaux et des unités */
-	
+
 	public static final double CASTLE_STROKE_THICKNESS = 2.0;
 	public static final StrokeType CASTLE_STROKE_TYPE = StrokeType.INSIDE;
 	public static final Color CASTLE_STROKE_COLOR = Color.BLACK;

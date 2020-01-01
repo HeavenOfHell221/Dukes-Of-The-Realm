@@ -17,7 +17,8 @@ public interface IUpdate
 	 * Met à jour l'objet en question.
 	 * <p>
 	 * Cette méthode est appelé à chaque image. <br>
-	 * Attention: Comme elles sont appelées à chaque image et pour tout objet l'ayant, leur temps d'exécution impacte grandement le nombre de FPS en jeu.
+	 * Attention: Comme elles sont appelées à chaque image et pour tout objet l'ayant, leur temps
+	 * d'exécution impacte grandement le nombre de FPS en jeu.
 	 * </p>
 	 *
 	 * @param now   Le temps écoulé depuis la création du programme.

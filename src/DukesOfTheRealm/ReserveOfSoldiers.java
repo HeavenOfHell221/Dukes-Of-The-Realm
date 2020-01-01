@@ -7,7 +7,7 @@ import static Utility.Settings.PIKER_HP;
 import java.io.Serializable;
 import java.util.Random;
 
-import Enum.SoldierEnum;
+import Enums.SoldierEnum;
 
 /**
  * Réserve qui contient le nombre de chaque unité pour un château.
@@ -65,7 +65,7 @@ public class ReserveOfSoldiers implements Serializable
 
 	/**
 	 * Retire aléatoirement un point de vie à un type d'unité.
-	 * 
+	 *
 	 * @param typeForce Le type d'unité qu iva perdre un point de vie, aléatoire la 1ère fois et forcé
 	 *                  si on tombe sur un type d'unité où il y en a 0 dans le château attaqué.
 	 */
@@ -169,7 +169,7 @@ public class ReserveOfSoldiers implements Serializable
 
 	/**
 	 * Retire, après avoir lancé une ost par exemple, un certain nombre d'unité dans la réserve.
-	 * 
+	 *
 	 * @param  nbPikers  Le nombre de Piker à retirer.
 	 * @param  nbKnights Le nombre de Knight à retirer.
 	 * @param  nbOnagers Le nombre de Onager à retirer.

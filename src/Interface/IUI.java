@@ -13,7 +13,7 @@ public interface IUI
 	/**
 	 * Ajoute un noeud au pane.
 	 *
-	 * @param Node à ajouter au pane.
+	 * @param node à ajouter au pane.
 	 */
 	void addNode(final Node node);
 

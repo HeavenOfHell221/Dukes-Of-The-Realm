@@ -34,8 +34,8 @@ public class SendOstGoal extends Goal
 	 * @param nbPikers    Le nombre de Piker à envoyer dans l'ost.
 	 * @param nbKnights   Le nombre de Knight à envoyer dans l'ost.
 	 * @param nbOnagers   Le nombre de Onager à envoyer dans l'ost.
-	 * @see               Goal.AttackGoal
-	 * @see               Goal.BackupGoal
+	 * @see               Goals.AttackGoal
+	 * @see               Goals.BackupGoal
 	 */
 	public SendOstGoal(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
 	{

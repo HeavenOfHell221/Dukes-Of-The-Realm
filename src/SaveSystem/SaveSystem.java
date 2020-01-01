@@ -43,8 +43,8 @@ public class SaveSystem
 	 * Charge une partie précédement sauvegarder.
 	 *
 	 * <p>
-	 * Après le chargement du royaume, tous les objets possédant une méthode startTransient
-	 * l'appeleront pour créer les objets transient (couleur, pane, shape..).
+	 * Après le chargement du royaume, tous les objets possédant une méthode startTransient l'appeleront
+	 * pour créer les objets transient (couleur, pane, shape..).
 	 * </p>
 	 *
 	 * @return Le royaume chargé, ou null en cas d'erreur.

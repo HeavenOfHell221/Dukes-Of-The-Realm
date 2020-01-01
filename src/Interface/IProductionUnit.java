@@ -1,12 +1,8 @@
 package Interface;
 
-import DukesOfTheRealm.Caserne;
-import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.ReserveOfSoldiers;
-
 /**
- * Interface utilisé pour tout les objets pouvant être amélioré via le système de production.
- * Permet le polymorphisme entre les unités et les bâtiments.
+ * Interface utilisé pour tout les objets pouvant être amélioré via le système de production. Permet
+ * le polymorphisme entre les unités et les bâtiments.
  */
 public interface IProductionUnit
 {

@@ -1,4 +1,4 @@
-package Enum;
+package Enums;
 
 import java.util.Random;
 
@@ -10,38 +10,39 @@ public enum GoalEnum
 	/**
 	 * Objectif de production d'unité
 	 */
-	Production, 
-	
+	Production,
+
 	/**
 	 * Objectif d'attaque avec une ost
 	 */
-	Battle, 
-	
+	Battle,
+
 	/**
 	 * Objectif de renfort avec une ost
 	 */
-	Backup, 
-	
+	Backup,
+
 	/**
 	 * Objectif d'argent (par exemple: avoir x Florin)
 	 */
-	Finance, 
-	
+	Finance,
+
 	/**
 	 * Objectif d'amélioration de bâtiment
 	 */
 	Building;
 
 	/**
-	 * Permets d'avoir un générateur de catégorie d'objectif aléatoire où toutes les catérogies n'ont pas la même probabilité d'être tirées.
+	 * Permets d'avoir un générateur de catégorie d'objectif aléatoire où toutes les catérogies n'ont
+	 * pas la même probabilité d'être tirées.
 	 *
-	 *<p>
+	 * <p>
 	 * Production: 30.8% <br>
-	 * Finance:    7.7% <br>
-	 * Battle:     23.1% <br>
-	 * Backup:     15.3% <br>
-	 * Building:   23.1% <br>
-	 *</p>
+	 * Finance: 7.7% <br>
+	 * Battle: 23.1% <br>
+	 * Backup: 15.3% <br>
+	 * Building: 23.1% <br>
+	 * </p>
 	 *
 	 * @return Une catégorie d'objectif.
 	 */
