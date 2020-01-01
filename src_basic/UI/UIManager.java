@@ -84,11 +84,11 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 * @see DukesOfTheRealm.Castle
 	 */
 	private Castle lastCastle;
-	
+
 	/**
 	 * L'icone qui montre la pause.
 	 */
-	private ImageView imagePause;
+	private final ImageView imagePause;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -99,8 +99,8 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 */
 	private UIManager()
 	{
-		imagePause = newImageView("/images/pause.png", 128, 128);
-		imagePause.setMouseTransparent(true);
+		this.imagePause = newImageView("/images/pause.png", 128, 128);
+		this.imagePause.setMouseTransparent(true);
 	}
 
 	/*************************************************/
@@ -207,7 +207,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 	public void relocateAllNodes()
 	{
 		relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
-		relocate(this.imagePause, Settings.SCENE_WIDTH/2.3f, Settings.SCENE_HEIGHT/2.2f);
+		relocate(this.imagePause, Settings.SCENE_WIDTH / 2.3f, Settings.SCENE_HEIGHT / 2.2f);
 	}
 
 	/**

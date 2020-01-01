@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Classe représentant un soldat de type Piquier.
- * 
+ *
  * @see Soldier
  */
 public class Piker extends Soldier
@@ -19,7 +19,7 @@ public class Piker extends Soldier
 
 	/**
 	 * Constructeur Piker
-	 * 
+	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.
 	 * @param coord  Les coordonnées du soldat à son déploiement.
 	 * @param itsOst La référence vers l'ost du soldat.
@@ -54,7 +54,7 @@ public class Piker extends Soldier
 	}
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		return Settings.PIKER_COST;
 	}
@@ -64,17 +64,17 @@ public class Piker extends Soldier
 	{
 		reserve.addPiker();
 	}
-	
+
 	@Override
-	public void productionFinished(Castle castle)
+	public void productionFinished(final Castle castle)
 	{
 		castle.addPiker();
-		castle.getCaserne().removeNbPikersInProduction();
+		castle.getCaserne().nbPikersInProduction--;
 	}
-	
+
 	@Override
-	public void productionStart(Castle castle)
+	public void productionStart(final Castle castle)
 	{
-		castle.getCaserne().addNbPikersInProduction();
+		castle.getCaserne().nbPikersInProduction++;
 	}
 }

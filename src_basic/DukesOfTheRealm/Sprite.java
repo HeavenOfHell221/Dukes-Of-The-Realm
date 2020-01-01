@@ -84,7 +84,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Ajoute la représentation graphique d'un château à l'écran.
-	 * 
+	 *
 	 * @param pane Le Pane sur lequel afficher le sprite.
 	 */
 	protected final void addCastleRepresentation(final Pane pane)
@@ -101,7 +101,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Crée et ajoute la représentation graphique de la porte d'un château à l'écran.
-	 * 
+	 *
 	 * @param  pane        Le Pane sur lequel afficher le sprite.
 	 * @param  orientation L'orientation de la porte
 	 * @return             la porte créée.
@@ -181,7 +181,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Ajoute une ombre à la forme représentant un objet à l'écran.
-	 * 
+	 *
 	 * @param shape   La forme sur laquelle ajouter l'ombre.
 	 * @param width   La largeur de l'ombre.
 	 * @param height  La hauteur de l'ombre.
@@ -205,7 +205,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Ajoute un contour à la forme représentant un objet à l'écran.
-	 * 
+	 *
 	 * @param shape      La forme sur laquelle ajouter le contour.
 	 * @param thickness  L'épaisseur du contour.
 	 * @param strokeType Le type de contour, intérieur, extérieur ou à cheval.
@@ -235,7 +235,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Récupère la forme associée à l'objet.
-	 * 
+	 *
 	 * @return La forme.
 	 */
 	public final Shape getShape()
@@ -245,7 +245,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Récupère la coordonnée en abscisse de l'objet.
-	 * 
+	 *
 	 * @return La coordonnée en abscisse
 	 */
 	public final int getX()
@@ -255,7 +255,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Récupère la coordonnée en ordonnée de l'objet.
-	 * 
+	 *
 	 * @return La coordonnée en ordonnée.
 	 */
 	public final int getY()
@@ -265,7 +265,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Récupère les coordonnées de l'objet.
-	 * 
+	 *
 	 * @return Les coordonnées de l'objet.
 	 */
 	public final Point2D getCoordinate()
@@ -275,7 +275,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Récupère le Pane sur lequel l'objet est affiché.
-	 * 
+	 *
 	 * @return Le Pane.
 	 */
 	public final Pane getLayer()
@@ -285,7 +285,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Ajoute une valeur donnée aux coordonnées de l'objet.
-	 * 
+	 *
 	 * @param dx La valeur ajoutée sur l'axe des abscisses.
 	 * @param dy La valeur ajoutée sur l'axe des ordonnées.
 	 */
@@ -297,7 +297,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Met en place les coordonnées de l'objet.
-	 * 
+	 *
 	 * @param coordinate Les coordonnées de l'objet.
 	 */
 	public final void setCoordinate(final Point2D coordinate)
@@ -308,7 +308,7 @@ public abstract class Sprite extends Parent implements IProductionUnit, Serializ
 
 	/**
 	 * Met en place la couleur de l'objet.
-	 * 
+	 *
 	 * @param color La couleur de l'objet.
 	 */
 	public void setColorShape(final Color color)

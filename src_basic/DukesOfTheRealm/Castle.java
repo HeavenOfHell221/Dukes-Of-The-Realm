@@ -217,18 +217,18 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	@Override
-	public void productionFinished(Castle castle)
+	public void productionFinished(final Castle castle)
 	{
 		castle.levelUp();
-		castle.getCaserne().removeNbCastleInProduction();
+		castle.getCaserne().nbCastleInProduction--;
 	}
-	
+
 	@Override
-	public void productionStart(Castle castle)
+	public void productionStart(final Castle castle)
 	{
-		castle.getCaserne().addNbCastleInProduction();
+		castle.getCaserne().nbCastleInProduction++;
 	}
-	
+
 	/**
 	 * Choisi aléatoirement une orientation.
 	 *
@@ -254,7 +254,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Donne à un Baron un nombre aléatoire d'unités proportionnel au niveau de ce château.
-	 * 
+	 *
 	 * @see Duke.Baron#addFirstCastle(Castle)
 	 * @see ReserveOfSoldiers
 	 */
@@ -277,8 +277,8 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void startSoldier()
 	{
-		this.reserveOfSoldiers.setNbPikers(STARTER_PIKER);	
-		this.reserveOfSoldiers.setNbKnights(STARTER_KNIGHT); 
+		this.reserveOfSoldiers.setNbPikers(STARTER_PIKER);
+		this.reserveOfSoldiers.setNbKnights(STARTER_KNIGHT);
 		this.reserveOfSoldiers.setNbOnagers(STARTER_ONAGER);
 	}
 
@@ -406,7 +406,7 @@ public class Castle extends Sprite implements Serializable
 
 	/**
 	 * Crée les points d'attaque que prendront les unités qui attaqueront ce château.
-	 * 
+	 *
 	 * @see Castle#attackLocations
 	 * @see Soldiers.Soldier#getAttackLocation()
 	 */
@@ -636,7 +636,7 @@ public class Castle extends Sprite implements Serializable
 	/*************************************************/
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		return LEVEL_UP_COST * castle.level + castle.getCaserne().getNbCastleInProduction() * Settings.LEVEL_UP_COST;
 	}
@@ -646,7 +646,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final Caserne getCaserne()
 	{
-		return caserne;
+		return this.caserne;
 	}
 
 	/**
@@ -747,6 +747,6 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public final Ost getOst()
 	{
-		return ost;
+		return this.ost;
 	}
 }

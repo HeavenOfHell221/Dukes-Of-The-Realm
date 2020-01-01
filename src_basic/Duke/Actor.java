@@ -211,7 +211,7 @@ public abstract class Actor implements Serializable, IUpdate
 	/**
 	 * Concatène Une chaine de caracètre pour former le string affichant le nombre de Florin par
 	 * seconde.
-	 * 
+	 *
 	 * @param  castle Le château afficher sur le UI.
 	 * @return        Un string du type "0.2 Florin/s".
 	 */
@@ -223,7 +223,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute le premier château de cet acteur à sa liste et lui met l'événement castleHandle.
-	 * 
+	 *
 	 * @param castle Le château qu'on ajoute.
 	 * @see          Actor#addEvent(Castle)
 	 * @see          Actor#castleHandle(MouseEvent)
@@ -236,7 +236,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute l'événement castleHandle à un château.
-	 * 
+	 *
 	 * @param castle Le château à qui on ajoute l'événement.
 	 * @see          Actor#castleHandle(MouseEvent)
 	 */
@@ -247,7 +247,7 @@ public abstract class Actor implements Serializable, IUpdate
 
 	/**
 	 * Ajoute l'événement castleHandle à tout les châteaux appartenant à la liste castles.
-	 * 
+	 *
 	 * @see Actor#addEvent(Castle)
 	 * @see Actor#castles
 	 */
@@ -259,7 +259,7 @@ public abstract class Actor implements Serializable, IUpdate
 	/**
 	 * Lors d'un clique sur un château, on change le château courant des modules gérant l'interface
 	 * utilisateur.
-	 * 
+	 *
 	 * @param castle Le châtea sur lequel on vient de cliquer.
 	 * @see          UI.UIManager#switchCastle(Castle)
 	 */

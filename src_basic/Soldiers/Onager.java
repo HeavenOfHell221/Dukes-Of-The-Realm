@@ -11,14 +11,14 @@ import javafx.scene.paint.Color;
 
 /**
  * Classe représentant un soldat de type Catapulte.
- * 
+ *
  * @see Soldier
  */
 public class Onager extends Soldier
 {
 	/**
 	 * Constructeur Onager
-	 * 
+	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.
 	 * @param coord  Les coordonnées du soldat à son déploiement.
 	 * @param itsOst La référence vers l'ost du soldat.
@@ -53,7 +53,7 @@ public class Onager extends Soldier
 	}
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		return Settings.ONAGER_COST;
 	}
@@ -63,17 +63,17 @@ public class Onager extends Soldier
 	{
 		reserve.addOnager();
 	}
-	
+
 	@Override
-	public void productionFinished(Castle castle)
+	public void productionFinished(final Castle castle)
 	{
 		castle.addOnager();
-		castle.getCaserne().removeNbOnagersInProduction();
+		castle.getCaserne().nbOnagersInProduction--;
 	}
-	
+
 	@Override
-	public void productionStart(Castle castle)
+	public void productionStart(final Castle castle)
 	{
-		castle.getCaserne().addNbOnagersInProduction();
+		castle.getCaserne().nbOnagersInProduction++;
 	}
 }

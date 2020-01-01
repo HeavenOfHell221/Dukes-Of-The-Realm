@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Classe représentant un soldat de type Chevalier.
- * 
+ *
  * @see Soldier
  */
 public class Knight extends Soldier
@@ -19,7 +19,7 @@ public class Knight extends Soldier
 
 	/**
 	 * Constructeur Knight
-	 * 
+	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.
 	 * @param coord  Les coordonnées du soldat à son déploiement.
 	 * @param itsOst La référence vers l'ost du soldat.
@@ -54,7 +54,7 @@ public class Knight extends Soldier
 	}
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		return Settings.KNIGHT_COST;
 	}
@@ -64,17 +64,17 @@ public class Knight extends Soldier
 	{
 		reserve.addKnight();
 	}
-	
+
 	@Override
-	public void productionFinished(Castle castle)
+	public void productionFinished(final Castle castle)
 	{
 		castle.addKnight();
-		castle.getCaserne().removeNbKnightsInProduction();
+		castle.getCaserne().nbKnightsInProduction--;
 	}
-	
+
 	@Override
-	public void productionStart(Castle castle)
+	public void productionStart(final Castle castle)
 	{
-		castle.getCaserne().addNbKnightsInProduction();
+		castle.getCaserne().nbKnightsInProduction++;
 	}
 }

@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 
 import Interface.IProductionUnit;
-import Soldiers.Knight;
-import Soldiers.Onager;
-import Soldiers.Piker;
-import Utility.Settings;
 import Utility.Time;
 
 /**
@@ -42,22 +38,22 @@ public class Caserne implements Serializable
 	/**
 	 * Nombre de Piker dans la queue en attente.
 	 */
-	private int nbPikersInProduction;
+	public int nbPikersInProduction;
 
 	/**
 	 * Nombre de Onager dans la queue en attente.
 	 */
-	private int nbOnagersInProduction;
+	public int nbOnagersInProduction;
 
 	/**
 	 * Nombre de Knight dans la queue en attente.
 	 */
-	private int nbKnightsInProduction;
+	public int nbKnightsInProduction;
 
 	/**
 	 * Nombre de Castle dans la queue en attente.
 	 */
-	private int nbCastleInProduction;
+	public int nbCastleInProduction;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -104,7 +100,7 @@ public class Caserne implements Serializable
 			if (this.productionTime <= 0)
 			{
 				final IProductionUnit p = this.productionUnit.pollFirst();
-				
+
 				p.productionFinished(this.castle);
 
 				if (this.productionUnit.size() > 0)
@@ -179,7 +175,7 @@ public class Caserne implements Serializable
 		{
 			return false;
 		}
-		
+
 		p.productionStart(this.castle);
 
 		this.productionUnit.addLast(p);
@@ -191,71 +187,7 @@ public class Caserne implements Serializable
 
 		return true;
 	}
-	
-	/**
-	 * 
-	 */
-	public void addNbPikersInProduction()
-	{
-		this.nbPikersInProduction++;
-	}
-	
-	/**
-	 * 
-	 */
-	public void addNbOnagersInProduction()
-	{
-		this.nbOnagersInProduction++;
-	}
 
-	/**
-	 * 
-	 */
-	public void addNbKnightsInProduction()
-	{
-		this.nbKnightsInProduction++;
-	}
-
-	/**
-	 * 
-	 */
-	public void addNbCastleInProduction()
-	{
-		this.nbCastleInProduction++;
-	}
-	
-	/**
-	 * 
-	 */
-	public void removeNbPikersInProduction()
-	{
-		this.nbPikersInProduction--;
-	}
-	
-	/**
-	 * 
-	 */
-	public void removeNbOnagersInProduction()
-	{
-		this.nbOnagersInProduction--;
-	}
-	
-	/**
-	 * 
-	 */
-	public void removeNbKnightsInProduction()
-	{
-		this.nbKnightsInProduction--;
-	}
-	
-	/**
-	 * 
-	 */
-	public void removeNbCastleInProduction()
-	{
-		this.nbCastleInProduction--;
-	}
-	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/

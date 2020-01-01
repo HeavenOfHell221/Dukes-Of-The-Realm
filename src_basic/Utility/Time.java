@@ -6,7 +6,7 @@ import Interface.IUpdate;
 /**
  * Utilitaire pour calculer le nombre d'image par seconde et gérer le "temps réel" grâce à la
  * variable deltaTime.
- * 
+ *
  * @see Time#deltaTime
  */
 public class Time implements IUpdate
@@ -23,7 +23,7 @@ public class Time implements IUpdate
 
 	/**
 	 * Le temps à la dernière remise à zéro du counter.
-	 * 
+	 *
 	 * @see Time#counter
 	 */
 	private long lastUpdate;
@@ -66,7 +66,7 @@ public class Time implements IUpdate
 
 	/**
 	 * Constructeur de Time.
-	 * 
+	 *
 	 * @param print Spécifie si le nombre d'image par seconde doit être affiché dans la console.
 	 */
 	public Time(final boolean print)
@@ -102,7 +102,7 @@ public class Time implements IUpdate
 
 	/**
 	 * Calcul la durée de l'image précédente.
-	 * 
+	 *
 	 * @param now Le temps actuel.
 	 */
 	public void newFrame(final long now)

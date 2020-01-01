@@ -133,11 +133,7 @@ public class ReserveOfSoldiers implements Serializable
 	 */
 	private void testRemoveHP()
 	{
-		boolean piker = this.nbPikers <= 0;
-		boolean knight = this.nbKnights <= 0;
-		boolean onager = this.nbOnagers <= 0;
-
-		if (piker && onager && knight)
+		if (this.nbPikers <= 0 && this.nbKnights <= 0 && this.nbOnagers <= 0)
 		{
 			this.stopAttack = true;
 		}

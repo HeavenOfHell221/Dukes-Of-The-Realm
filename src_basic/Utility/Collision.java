@@ -34,7 +34,7 @@ public class Collision
 
 	/**
 	 * Ajoute les coordonées d'un château à la liste de l'instance.
-	 * 
+	 *
 	 * @param p le point représentant les coordonnées du château à ajouter
 	 */
 	public static void addPoint(final Point2D p)
@@ -45,7 +45,7 @@ public class Collision
 	/**
 	 * Test la collision entre deux points étant respectivement les coordonnées de l'unité et celles du
 	 * château.
-	 * 
+	 *
 	 * @param  pSoldier Les coordonnées de l'unité.
 	 * @param  pCastle  Les coordonnées du château.
 	 * @return          Si une collision est détecté, retourne l'emplacement de la collision.
@@ -132,7 +132,7 @@ public class Collision
 	 * Il faut que le château ait une distance maximal de CASTLE_SIZE + GAP_WITH_SOLDIER + SOLDIER_SIZE
 	 * pour qu'il soit tester.
 	 * </p>
-	 * 
+	 *
 	 * @param  pSoldier Les coordonnées d'une unité.
 	 * @return          Retourne l'état de la collision.
 	 * @see             Enums.CollisionEnum

@@ -66,8 +66,8 @@ public class AttackGoal extends Goal
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
 		this.castleDestination = castleDestination;
-		
-		if(castleOrigin.getOst() != null)
+
+		if (castleOrigin.getOst() != null)
 		{
 			return;
 		}

@@ -123,7 +123,7 @@ public class Ost implements IUpdate, Serializable
 
 	/**
 	 * Constructeur Ost.
-	 * 
+	 *
 	 * @param origin      la référence vers le château d'origine.
 	 * @param destination la référence vers le château de destination.
 	 * @param nbPikers    le nombre de soldats de type Piquier.
@@ -162,7 +162,7 @@ public class Ost implements IUpdate, Serializable
 
 	/**
 	 * Initialise les composants transients d'une ost.
-	 * 
+	 *
 	 * @param color la couleur permettant de représenter l'ost à l'écran.
 	 */
 	public void startTransient(final Color color)
@@ -225,7 +225,7 @@ public class Ost implements IUpdate, Serializable
 
 	/**
 	 * Calcule la vitesse de déplacement de l'ost selon les unités qui la compose.
-	 * 
+	 *
 	 * @return la vitesse de déplacement de l'ost.
 	 */
 	private int SetOstSpeed()
@@ -243,7 +243,7 @@ public class Ost implements IUpdate, Serializable
 	 * Par exemple pour un château adverse situé au Nord-Est du château de départ le point de séparation
 	 * sera au Sud-Ouest du château adverse.
 	 * </p>
-	 * 
+	 *
 	 * @return le point de séparation de l'ost.
 	 */
 	private Point2D SetSeparationPoint()
@@ -260,7 +260,7 @@ public class Ost implements IUpdate, Serializable
 	/**
 	 * Détermine le point d'attente d'une unité autours du château adverse en fonction de la position de
 	 * celui-ci par rapport au château d'origine de l'ost.
-	 * 
+	 *
 	 * @return le point d'attente d'une unité.
 	 */
 	private Point2D SetWaitingPoint()
@@ -309,7 +309,7 @@ public class Ost implements IUpdate, Serializable
 	/**
 	 * Déploie une vague de soldat sur le terrain. Le nombre de soldats déployés en une vague correspond
 	 * au nombre par défaut ou au nombre d'unités restantes à déployer s'il en reste moins.
-	 * 
+	 *
 	 * @see Settings
 	 */
 	private void DeployOneSoldiersWave()
@@ -345,7 +345,7 @@ public class Ost implements IUpdate, Serializable
 
 	/**
 	 * Fais apparaître un soldat sur le terrain.
-	 * 
+	 *
 	 * @param x l'abscisse du soldat à créer.
 	 * @param y l'ordonnée du soldat à créer.
 	 */
@@ -478,7 +478,7 @@ public class Ost implements IUpdate, Serializable
 	/**
 	 * Détermine le prochain type de soldat à déployer parmi ceux qui ne l'ont pas encore été. La
 	 * priorité est donnée aux unités les plus lentes.
-	 * 
+	 *
 	 * @return le type du prochain soldat à déployer.
 	 */
 	private SoldierEnum getNextAvailableSoldier()
@@ -505,7 +505,7 @@ public class Ost implements IUpdate, Serializable
 	/**
 	 * Vérifie si le temps écoulé depuis le dernier déploiement de soldats est suffisant pour pouvoir en
 	 * déployer à nouveau.
-	 * 
+	 *
 	 * @param  now   la date actuelle.
 	 * @param  pause le booléen indiquant si le jeu est en pause.
 	 * @return       true si le delta entre now et lastTime est supérieur au temps fixé par défaut entre
