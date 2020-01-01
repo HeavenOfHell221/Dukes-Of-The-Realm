@@ -65,12 +65,12 @@ public class Settings
 	/**
 	 * Offset pour le temps d'amélioration du château.
 	 */
-	public static final int LEVEL_UP_DURATION_OFFSET = 1;
+	public static final float LEVEL_UP_DURATION_OFFSET = 1f;
 
 	/**
 	 * Augmentation du temps d'amélioration pour chaque niveau de château.
 	 */
-	public static final int LEVEL_UP_DURATION_FACTOR = 2;
+	public static final float LEVEL_UP_DURATION_FACTOR = 2f;
 
 	/**
 	 * Nombre d'IA.
@@ -178,17 +178,17 @@ public class Settings
 	/**
 	 * Vitesse de déplacement d'un Piker.
 	 */
-	public static final int PIKER_SPEED = 40;
+	public static final int PIKER_SPEED = 65;
 
 	/**
 	 * Vitesse de déplacement d'un Knight.
 	 */
-	public static final int KNIGHT_SPEED = 80;
+	public static final int KNIGHT_SPEED = 100;
 
 	/**
 	 * Vitesse de déplacement d'un Onager.
 	 */
-	public static final int ONAGER_SPEED = 25;
+	public static final int ONAGER_SPEED = 30;
 
 	/**
 	 * Temps de production d'un Piker (en seconde).

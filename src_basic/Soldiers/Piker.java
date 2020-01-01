@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import Enums.SoldierEnum;
@@ -62,5 +63,18 @@ public class Piker extends Soldier
 	public void addInReserve(final ReserveOfSoldiers reserve)
 	{
 		reserve.addPiker();
+	}
+	
+	@Override
+	public void productionFinished(Castle castle)
+	{
+		castle.addPiker();
+		castle.getCaserne().removeNbPikersInProduction();
+	}
+	
+	@Override
+	public void productionStart(Castle castle)
+	{
+		castle.getCaserne().addNbPikersInProduction();
 	}
 }

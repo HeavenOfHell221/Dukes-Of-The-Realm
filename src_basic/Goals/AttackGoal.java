@@ -66,6 +66,11 @@ public class AttackGoal extends Goal
 		this.nbKnights = nbKnights;
 		this.nbOnagers = nbOnagers;
 		this.castleDestination = castleDestination;
+		
+		if(castleOrigin.getOst() != null)
+		{
+			return;
+		}
 
 		int nbPikers_ = this.castleOrigin.getNbPikers() + this.castleOrigin.getNbPikersInProduction();
 		int nbOnagers_ = this.castleOrigin.getNbOnagers() + this.castleOrigin.getNbOnagersInProduction();
@@ -75,13 +80,9 @@ public class AttackGoal extends Goal
 		int realNbKnights = nbKnights_ < this.nbKnights ? this.nbKnights - nbKnights_ : 0;
 		int realNbOnagers = nbOnagers_ < this.nbOnagers ? this.nbOnagers - nbOnagers_ : 0;
 
-		MultiSoldierGoal multiSoldierGoal = new MultiSoldierGoal(this.castleOrigin, realNbPikers, realNbKnights, realNbOnagers);
-		// System.out.println(this.castleOrigin.getNbPikersInProduction() + " " +
-		// this.castleOrigin.getNbKnightsInProduction() + " " +
-		// this.castleOrigin.getNbOnagersInProduction());
 		if (realNbKnights > 0 || realNbPikers > 0 || realNbOnagers > 0)
 		{
-			this.goals.addLast(multiSoldierGoal);
+			this.goals.addLast(new MultiSoldierGoal(this.castleOrigin, realNbPikers, realNbKnights, realNbOnagers));
 		}
 		this.goals.addLast(new SendOstGoal(castleDestination, this.nbPikers, this.nbKnights, this.nbOnagers));
 	}

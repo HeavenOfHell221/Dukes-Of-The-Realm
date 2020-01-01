@@ -215,6 +215,19 @@ public class Castle extends Sprite implements Serializable
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	@Override
+	public void productionFinished(Castle castle)
+	{
+		castle.levelUp();
+		castle.getCaserne().removeNbCastleInProduction();
+	}
+	
+	@Override
+	public void productionStart(Castle castle)
+	{
+		castle.getCaserne().addNbCastleInProduction();
+	}
+	
 	/**
 	 * Choisi aléatoirement une orientation.
 	 *
@@ -263,8 +276,8 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void startSoldier()
 	{
-		this.reserveOfSoldiers.setNbKnights(STARTER_KNIGHT);
-		this.reserveOfSoldiers.setNbPikers(STARTER_PIKER);
+		this.reserveOfSoldiers.setNbPikers(STARTER_PIKER);	
+		this.reserveOfSoldiers.setNbKnights(STARTER_KNIGHT); 
 		this.reserveOfSoldiers.setNbOnagers(STARTER_ONAGER);
 	}
 
@@ -628,6 +641,14 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
+	 * @return the caserne
+	 */
+	public final Caserne getCaserne()
+	{
+		return caserne;
+	}
+
+	/**
 	 * @return the totalFlorin
 	 */
 	public final double getTotalFlorin()
@@ -718,5 +739,13 @@ public class Castle extends Sprite implements Serializable
 	public final void setActor(final Actor actor)
 	{
 		this.actor = actor;
+	}
+
+	/**
+	 * @return the ost
+	 */
+	public final Ost getOst()
+	{
+		return ost;
 	}
 }

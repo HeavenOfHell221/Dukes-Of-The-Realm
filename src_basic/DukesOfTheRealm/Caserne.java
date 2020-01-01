@@ -104,27 +104,8 @@ public class Caserne implements Serializable
 			if (this.productionTime <= 0)
 			{
 				final IProductionUnit p = this.productionUnit.pollFirst();
-
-				if (p.getClass() == Castle.class)
-				{
-					this.castle.levelUp();
-					this.nbCastleInProduction--;
-				}
-				else if (p.getClass() == Onager.class)
-				{
-					this.nbOnagersInProduction--;
-					this.castle.addOnager();
-				}
-				else if (p.getClass() == Piker.class)
-				{
-					this.nbPikersInProduction--;
-					this.castle.addPiker();
-				}
-				else if (p.getClass() == Knight.class)
-				{
-					this.nbKnightsInProduction--;
-					this.castle.addKnight();
-				}
+				
+				p.productionFinished(this.castle);
 
 				if (this.productionUnit.size() > 0)
 				{
@@ -177,7 +158,6 @@ public class Caserne implements Serializable
 		else
 		{
 			this.productionUnit.clear();
-
 		}
 		this.nbCastleInProduction = 0;
 		this.nbKnightsInProduction = 0;
@@ -207,23 +187,8 @@ public class Caserne implements Serializable
 				return false;
 			}
 		}
-
-		if (p.getClass() == Castle.class)
-		{
-			this.nbCastleInProduction++;
-		}
-		else if (p.getClass() == Onager.class)
-		{
-			this.nbOnagersInProduction++;
-		}
-		else if (p.getClass() == Piker.class)
-		{
-			this.nbPikersInProduction++;
-		}
-		else if (p.getClass() == Knight.class)
-		{
-			this.nbKnightsInProduction++;
-		}
+		
+		p.productionStart(this.castle);
 
 		this.productionUnit.addLast(p);
 
@@ -234,7 +199,71 @@ public class Caserne implements Serializable
 
 		return true;
 	}
+	
+	/**
+	 * 
+	 */
+	public void addNbPikersInProduction()
+	{
+		this.nbPikersInProduction++;
+	}
+	
+	/**
+	 * 
+	 */
+	public void addNbOnagersInProduction()
+	{
+		this.nbOnagersInProduction++;
+	}
 
+	/**
+	 * 
+	 */
+	public void addNbKnightsInProduction()
+	{
+		this.nbKnightsInProduction++;
+	}
+
+	/**
+	 * 
+	 */
+	public void addNbCastleInProduction()
+	{
+		this.nbCastleInProduction++;
+	}
+	
+	/**
+	 * 
+	 */
+	public void removeNbPikersInProduction()
+	{
+		this.nbPikersInProduction--;
+	}
+	
+	/**
+	 * 
+	 */
+	public void removeNbOnagersInProduction()
+	{
+		this.nbOnagersInProduction--;
+	}
+	
+	/**
+	 * 
+	 */
+	public void removeNbKnightsInProduction()
+	{
+		this.nbKnightsInProduction--;
+	}
+	
+	/**
+	 * 
+	 */
+	public void removeNbCastleInProduction()
+	{
+		this.nbCastleInProduction--;
+	}
+	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
@@ -285,30 +314,6 @@ public class Caserne implements Serializable
 	public final int getNbKnightsInProduction()
 	{
 		return this.nbKnightsInProduction;
-	}
-
-	/**
-	 * @param nbPikersInProduction the nbPikersInProduction to set
-	 */
-	public final void setNbPikersInProduction(final int nbPikersInProduction)
-	{
-		this.nbPikersInProduction = nbPikersInProduction;
-	}
-
-	/**
-	 * @param nbOnagersInProduction the nbOnagersInProduction to set
-	 */
-	public final void setNbOnagersInProduction(final int nbOnagersInProduction)
-	{
-		this.nbOnagersInProduction = nbOnagersInProduction;
-	}
-
-	/**
-	 * @param nbKnightsInProduction the nbKnightsInProduction to set
-	 */
-	public final void setNbKnightsInProduction(final int nbKnightsInProduction)
-	{
-		this.nbKnightsInProduction = nbKnightsInProduction;
 	}
 
 	/**
