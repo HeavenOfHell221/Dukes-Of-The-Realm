@@ -8,6 +8,7 @@ import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -83,6 +84,11 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 * @see DukesOfTheRealm.Castle
 	 */
 	private Castle lastCastle;
+	
+	/**
+	 * L'icone qui montre la pause.
+	 */
+	private ImageView imagePause;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -93,7 +99,8 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 */
 	private UIManager()
 	{
-
+		imagePause = newImageView("/images/pause.png", 128, 128);
+		imagePause.setMouseTransparent(true);
 	}
 
 	/*************************************************/
@@ -143,6 +150,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 			this.attackPreview.update(now, pause);
 			this.castlePreview.update(now, pause);
 		}
+		this.imagePause.setVisible(pause);
 	}
 
 	/*************************************************/
@@ -192,12 +200,14 @@ public class UIManager extends Parent implements IUI, IUpdate
 		addNode(this.castlePreview);
 		addNode(this.productionUnitPreview);
 		addNode(this.background);
+		addNode(this.imagePause);
 	}
 
 	@Override
 	public void relocateAllNodes()
 	{
 		relocate(this.background, Settings.SCENE_WIDTH * (Settings.MARGIN_PERCENTAGE + 0.0375), 0);
+		relocate(this.imagePause, Settings.SCENE_WIDTH/2.3f, Settings.SCENE_HEIGHT/2.2f);
 	}
 
 	/**
