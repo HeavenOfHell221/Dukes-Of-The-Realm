@@ -7,6 +7,7 @@ import static javafx.scene.input.KeyCode.SPACE;
 
 import java.util.BitSet;
 
+import Interface.IUpdate;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -15,7 +16,7 @@ import javafx.scene.input.KeyEvent;
 /**
  * Gère les saisies clavier.
  */
-public class Input
+public class Input implements IUpdate
 {
 	/**
 	 * Le Bitset servant à stocker une touche clavier.
@@ -108,7 +109,7 @@ public class Input
 
 	/**
 	 * Vérifie si la touche SHIFT du clavier est pressée.
-	 * 
+	 *
 	 * @return true si elle l'est.
 	 */
 	public boolean isShift()
@@ -118,11 +119,20 @@ public class Input
 
 	/**
 	 * Vérifie si la touche ALT du clavier est pressée.
-	 * 
+	 *
 	 * @return true si elle l'est.
 	 */
 	public boolean isAlt()
 	{
 		return is(ALT);
+	}
+
+	@Override
+	public void update(final long now, final boolean pause)
+	{
+		if (!this.scene.getWindow().isFocused())
+		{
+			this.keyboardBitSet.clear();
+		}
 	}
 }

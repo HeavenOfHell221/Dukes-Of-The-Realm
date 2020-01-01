@@ -201,6 +201,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 		addNode(this.productionUnitPreview);
 		addNode(this.background);
 		addNode(this.imagePause);
+		this.imagePause.toFront();
 	}
 
 	@Override

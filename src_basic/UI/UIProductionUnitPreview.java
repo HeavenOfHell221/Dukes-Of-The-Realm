@@ -187,7 +187,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	public void update(final long now, final boolean pause)
 	{
 		setFill(this.currentCastle.getRatio());
-
+		this.input.update(now, pause);
 		if (this.castleCost.isVisible())
 		{
 			if (this.input.isShift())
@@ -265,7 +265,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 	/**
 	 * Initialise un texte avec des paramètres prédéfinis.
-	 * 
+	 *
 	 * @param t Le texte à initialiser.
 	 */
 	private void setText(final Text t)

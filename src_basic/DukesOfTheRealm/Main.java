@@ -163,7 +163,9 @@ public class Main extends Application implements IUpdate
 			public void handle(final long now)
 			{
 				processInput(Main.this.input, now);
+				Main.pause = !Main.this.mainScene.getWindow().isFocused();
 				update(now, Main.pause || Main.this.pauseForce);
+
 			}
 
 			private void processInput(final Input input, final long now)

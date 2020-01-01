@@ -75,12 +75,12 @@ public class Settings
 	/**
 	 * Nombre d'IA.
 	 */
-	public static final int AI_NUMBER = 6;
+	public static final int AI_NUMBER = 5;
 
 	/**
 	 * Nombre de Baron.
 	 */
-	public static final int BARON_NUMBER = 5;
+	public static final int BARON_NUMBER = 6;
 
 	/**
 	 * Nombre de Knight de base pour le joueur et les IA.
@@ -188,7 +188,7 @@ public class Settings
 	/**
 	 * Vitesse de déplacement d'un Onager.
 	 */
-	public static final int ONAGER_SPEED = 30;
+	public static final int ONAGER_SPEED = 35;
 
 	/**
 	 * Temps de production d'un Piker (en seconde).
@@ -233,7 +233,7 @@ public class Settings
 	/**
 	 * Distance minimal entre deux châteaux lors de leur apparition (en pixel).
 	 */
-	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) (CASTLE_SIZE * 3.5f * 1.33f);
+	public static final int MIN_DISTANCE_BETWEEN_TWO_CASTLE = (int) (CASTLE_SIZE * 5f);
 
 	/**
 	 * Taille (largeur) d'une porte d'un château (en pixel).
