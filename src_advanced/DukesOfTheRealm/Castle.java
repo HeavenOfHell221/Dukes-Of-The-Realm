@@ -124,6 +124,18 @@ public class Castle extends Sprite implements Serializable
 	private Wall wall;
 	
 	/**
+	 * Marché de ce château
+	 * @see Market
+	 */
+	private Market market;
+	
+	/**
+	 * Moulin de ce château.
+	 * @see Miller
+	 */
+	private Miller miller;
+	
+	/**
 	 * Caractère de ce château.
 	 * @see Enums.CharacterCastleEnum
 	 */
@@ -171,6 +183,8 @@ public class Castle extends Sprite implements Serializable
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
+		this.miller = new Miller();
+		this.market = new Market();
 		this.wall= new Wall();
 		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
 		this.caserne = new Caserne(this);

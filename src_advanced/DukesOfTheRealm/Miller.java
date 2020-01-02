@@ -1,6 +1,8 @@
 package DukesOfTheRealm;
 
-public class Miller
+import java.io.Serializable;
+
+public class Miller implements Serializable
 {
 
 }
