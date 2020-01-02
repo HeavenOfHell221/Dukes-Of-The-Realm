@@ -150,6 +150,21 @@ public class Settings
 	 * Point de vie des Onager.
 	 */
 	public static final int ONAGER_HP = 24;
+	
+	/**
+	 * Point de vie des Spy.
+	 */
+	public static final int PSY_HP = 0;
+	
+	/**
+	 * Point de vie des Berserker.
+	 */
+	public static final int BERSERKER_HP = 0;
+	
+	/**
+	 * Point de vie des Archer
+	 */
+	public static final int ARCHER_HP = 0;
 
 	/**
 	 * Dégâts des Piker.
@@ -165,6 +180,21 @@ public class Settings
 	 * Dégâts des Onager.
 	 */
 	public static final int ONAGER_DAMAGE = 144;
+	
+	/**
+	 * Dégâts des Psy. 
+	 */
+	public static final int PSY_DAMAGE = 0;
+	
+	/**
+	 * Dégâts des Berserker.
+	 */
+	public static final int BERSERKER_DAMAGE = 0;
+	
+	/**
+	 * Dégâts des Archer.
+	 */
+	public static final int ARCHER_DAMAGE = 0;
 
 	/**
 	 * Coût d'un Piker.
@@ -180,6 +210,21 @@ public class Settings
 	 * Coût d'un Onager.
 	 */
 	public static final int ONAGER_COST = 192;
+	
+	/**
+	 * Coût d'un Psy.
+	 */
+	public static final int PSY_COST = 0;
+	
+	/**
+	 * Coût d'un Berserker.
+	 */
+	public static final int BERSERKER_COST = 0;
+	
+	/**
+	 * Coût d'un Archer.
+	 */
+	public static final int ARCHER_COST = 0;
 
 	/**
 	 * Vitesse de déplacement d'un Piker.
@@ -195,21 +240,51 @@ public class Settings
 	 * Vitesse de déplacement d'un Onager.
 	 */
 	public static final int ONAGER_SPEED = 35;
+	
+	/**
+	 * Vitesse de déplacement d'un Psy.
+	 */
+	public static final int PSY_SPEED = 0;
+	
+	/**
+	 * Vitesse de déplacement d'un Berserker.
+	 */
+	public static final int BERSERKER_SPEED = 0;
+	
+	/**
+	 * Vetisse de déplacement d'un Archer.
+	 */
+	public static final int ARCHER_SPEED = 0;
 
 	/**
 	 * Temps de production d'un Piker (en seconde).
 	 */
-	public static final double PIKER_TIME_PRODUCTION = 0.6f;
+	public static final double PIKER_TIME_PRODUCTION = 0.6d;
 
 	/**
 	 * Temps de production d'un Knight (en seconde).
 	 */
-	public static final double KNIGHT_TIME_PRODUCTION = 1.5f;
+	public static final double KNIGHT_TIME_PRODUCTION = 1.5d;
 
 	/**
 	 * Temps de production d'un Onager (en seconde).
 	 */
-	public static final double ONAGER_TIME_PRODUCTION = 3f;
+	public static final double ONAGER_TIME_PRODUCTION = 3d;
+	
+	/**
+	 * Temps de production d'un Psy.
+	 */
+	public static final double PSY_TIME_PRODUCTION = 0d;
+	
+	/**
+	 * Temps de production d'un Berserker.
+	 */
+	public static final double BERSERKER_TIME_PRODUCTION = 0d;
+	
+	/**
+	 * Temps de production d'un Archer.
+	 */
+	public static final double ARCHER_TIME_PRODUCTION = 0d;
 
 	/****************************************************/
 	/********************* GRAPHICS *********************/
