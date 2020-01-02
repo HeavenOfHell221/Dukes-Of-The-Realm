@@ -29,7 +29,7 @@ public abstract class Actor implements Serializable, IUpdate
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
+	
 	/**
 	 * Le nom de cet acteur.
 	 */

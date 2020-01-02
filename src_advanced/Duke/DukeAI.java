@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Kingdom;
+import Enums.CharacterDukeEnum;
 import SimpleGoal.Goal;
 import Utility.Settings;
 
@@ -26,6 +27,12 @@ public class DukeAI extends Actor implements Serializable
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	/**
+	 * Le caractère de ce Duke.
+	 * @see Enums.CharacterDukeEnum
+	 */
+	private CharacterDukeEnum character;
+	
 	/**
 	 * Dernière fois que ce Duke à vérifié ses objectifs.
 	 *
