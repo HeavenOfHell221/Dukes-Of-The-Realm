@@ -1,5 +1,7 @@
 package Enums;
 
+import java.io.Serializable;
+
 /**
  * Liste des collisions possible entre une unité et un château.
  * <p>
@@ -9,7 +11,7 @@ package Enums;
  * (Inside) Pas de collision (None)
  * </p>
  */
-public enum CollisionEnum
+public enum CollisionEnum  implements Serializable
 {
 	/**
 	 * Coté nord

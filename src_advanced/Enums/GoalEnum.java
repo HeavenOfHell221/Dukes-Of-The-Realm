@@ -1,11 +1,12 @@
 package Enums;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Enumération des différentes catégories d'objectifs pour les IA.
  */
-public enum GoalEnum
+public enum GoalEnum  implements Serializable
 {
 	/**
 	 * Objectif de production d'unité
