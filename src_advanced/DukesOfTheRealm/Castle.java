@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import Duke.Actor;
+import Enums.CharacterCastleEnum;
 import Enums.SoldierEnum;
 import Interface.IProductionUnit;
 import Utility.Point2D;
@@ -121,6 +122,12 @@ public class Castle extends Sprite implements Serializable
 	 * @see Wall
 	 */
 	private Wall wall;
+	
+	/**
+	 * Caractère de ce château.
+	 * @see Enums.CharacterCastleEnum
+	 */
+	private CharacterCastleEnum character;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -164,10 +171,11 @@ public class Castle extends Sprite implements Serializable
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
-		this.reserveOfSoldiers = new ReserveOfSoldiers();
+		this.wall= new Wall();
+		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
 		this.caserne = new Caserne(this);
 		this.ost = null;
-		this.wall= new Wall();
+		
 		this.attackLocations = new Stack<>();
 		this.orientation = setOrientation();
 		startTransient(pane);
@@ -639,6 +647,16 @@ public class Castle extends Sprite implements Serializable
 	public boolean isStopAttack()
 	{
 		return this.reserveOfSoldiers.isStopAttack();
+	}
+	
+	
+	/**
+	 * @return Retourne le multiplicateur du rempart.
+	 * @see DukesOfTheRealm.Wall#getMultiplicator()
+	 */
+	public final float getWallMultiplicator()
+	{
+		return wall.getMultiplicator();
 	}
 
 	/*************************************************/

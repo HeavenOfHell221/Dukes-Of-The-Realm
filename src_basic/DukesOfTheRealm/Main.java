@@ -162,7 +162,8 @@ public class Main extends Application implements IUpdate
 			@Override
 			public void handle(final long now)
 			{
-				processInput(Main.this.input, now);
+				if(!Main.pause)
+					processInput(Main.this.input, now);
 				update(now, Main.pause || Main.this.pauseForce);
 
 			}

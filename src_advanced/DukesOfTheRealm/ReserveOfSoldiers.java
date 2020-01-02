@@ -19,6 +19,11 @@ public class ReserveOfSoldiers implements Serializable
 	/*************************************************/
 
 	/**
+	 * Référence sur le château qui contient cette réserve.
+	 */
+	private Castle castle;
+	
+	/**
 	 * Spécifie si les unités adverses doivent essayer de retirer des points de vie aux unités de la
 	 * réserve ou non.
 	 */
@@ -42,23 +47,39 @@ public class ReserveOfSoldiers implements Serializable
 	/**
 	 * Nombre point de vie courant des Piker. Si égale à 0, le château perd 1 Piker.
 	 */
-	private int pikersHPRemaining = PIKER_HP;
+	private int pikersHPRemaining;
 
 	/**
 	 * Nombre point de vie courant des Knight. Si égale à 0, le château perd 1 Knight.
 	 */
-	private int knigtHPRemaining = KNIGHT_HP;
+	private int knigtHPRemaining;
 
 	/**
 	 * Nombre de point de vie courant des Onager. si égale à 0, le château perd 1 Onager.
 	 */
-	private int onagerHPremaining = ONAGER_HP;
+	private int onagerHPremaining;
 
 	/**
 	 * Object Random pour gérer l'aléatoire.
 	 */
 	private final Random rand = new Random();
+	
+	/*************************************************/
+	/***************** CONSTRUCTEURS *****************/
+	/*************************************************/
 
+	/**
+	 * Constructeur de ReserveOfSoldier.
+	 * @param castle Le château qui contient cette réserve.
+	 */
+	public ReserveOfSoldiers(Castle castle)
+	{
+		this.castle = castle;
+		this.knigtHPRemaining = (int) (KNIGHT_HP * this.castle.getWallMultiplicator());
+		this.pikersHPRemaining = (int) (PIKER_HP * this.castle.getWallMultiplicator());
+		this.knigtHPRemaining = (int) (ONAGER_HP * this.castle.getWallMultiplicator());
+	}
+	
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
@@ -86,7 +107,7 @@ public class ReserveOfSoldiers implements Serializable
 					if (--this.knigtHPRemaining == 0)
 					{
 						this.nbKnights--;
-						this.knigtHPRemaining = KNIGHT_HP;
+						this.knigtHPRemaining = (int) (KNIGHT_HP * this.castle.getWallMultiplicator());
 					}
 				}
 				else
@@ -100,7 +121,7 @@ public class ReserveOfSoldiers implements Serializable
 					if (--this.onagerHPremaining == 0)
 					{
 						this.nbOnagers--;
-						this.onagerHPremaining = ONAGER_HP;
+						this.onagerHPremaining = (int) (ONAGER_HP * this.castle.getWallMultiplicator());
 					}
 				}
 				else
@@ -114,7 +135,7 @@ public class ReserveOfSoldiers implements Serializable
 					if (--this.pikersHPRemaining == 0)
 					{
 						this.nbPikers--;
-						this.pikersHPRemaining = PIKER_HP;
+						this.pikersHPRemaining = (int) (PIKER_HP * this.castle.getWallMultiplicator());
 					}
 				}
 				else
