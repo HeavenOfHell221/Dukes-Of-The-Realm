@@ -1,6 +1,14 @@
 package DukesOfTheRealm;
 
-import static Utility.Settings.*;
+import static Utility.Settings.ATTACK_LOCATIONS_PER_SIDE;
+import static Utility.Settings.CASTLE_COST;
+import static Utility.Settings.CASTLE_PRODUCTION_OFFSET;
+import static Utility.Settings.CASTLE_PRODUCTION_TIME_PER_LEVEL;
+import static Utility.Settings.CASTLE_SIZE;
+import static Utility.Settings.GAP_WITH_SOLDIER;
+import static Utility.Settings.NB_ATTACK_LOCATIONS;
+import static Utility.Settings.SOLDIER_SIZE;
+import static Utility.Settings.THIRD_OF_CASTLE;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -95,18 +103,19 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * @see Actor
 	 */
 	private Actor actor;
-	
+
 	/**
 	 * Contient tout les bâtiments de ce château.
 	 */
 	private BuildingPack<IBuilding> buildingPack;
-	
+
 	/**
 	 * Caractère de ce château.
+	 * 
 	 * @see Enums.CharacterCastleEnum
 	 */
 	private CharacterCastleEnum character;
-	
+
 	private ReserveOfSoldiers reserveOfSoldiers;
 
 	/*************************************************/
@@ -151,10 +160,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
-		this.buildingPack = new BuildingPack<IBuilding>(this, new Caserne(this), new Market(), new Miller(), new Wall());
+		this.buildingPack = new BuildingPack<>(this, new Caserne(this), new Market(), new Miller(), new Wall());
 		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
 		this.ost = null;
-		
+
 		this.attackLocations = new Stack<>();
 		this.orientation = setOrientation();
 		startTransient(pane);
@@ -217,7 +226,8 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		{
 			castle.levelUp();
 		}
-		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Castle, castle.getCaserne().getBuildingPack().get(BuildingEnum.Castle) - 1);
+		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Castle,
+				castle.getCaserne().getBuildingPack().get(BuildingEnum.Castle) - 1);
 	}
 
 	@Override
@@ -259,8 +269,8 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		final Random rand = new Random();
 		final int levelSq = this.level * (this.level / 6) + 1;
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
 		}
@@ -273,7 +283,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public void startSoldier()
 	{
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			getReserveOfSoldiers().getSoldierPack().replace(s, s.starter);
 		}
@@ -357,13 +367,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * @see                Ost#start()
 	 * @see                ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
-	public boolean createOst(final Castle destination, SoldierPack<Integer> soldierPack)
+	public boolean createOst(final Castle destination, final SoldierPack<Integer> soldierPack)
 	{
 		if (this.ost == null)
 		{
-			if (removeSoldiers(new SoldierPack<Integer>(soldierPack)) && this != destination)
+			if (removeSoldiers(new SoldierPack<>(soldierPack)) && this != destination)
 			{
-				this.ost = new Ost(this, destination, new SoldierPack<Integer>(soldierPack), this.myColor);
+				this.ost = new Ost(this, destination, new SoldierPack<>(soldierPack), this.myColor);
 				this.ost.start();
 				return true;
 			}
@@ -464,29 +474,29 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/************** DELEGATES METHODS ****************/
 	/*************************************************/
 
-	public boolean removeSoldiers(SoldierPack<Integer> soldierPack)
+	public boolean removeSoldiers(final SoldierPack<Integer> soldierPack)
 	{
 		return getReserveOfSoldiers().removeSoldiers(soldierPack);
 	}
-	
+
 	/**
 	 * @return Retourne le multiplicateur du rempart.
-	 * @see Wall#getMultiplicator()
+	 * @see    Wall#getMultiplicator()
 	 */
 	public float getWallMultiplicator()
 	{
-		return ((Wall)getBuilding(BuildingEnum.Wall)).getMultiplicator();
+		return ((Wall) getBuilding(BuildingEnum.Wall)).getMultiplicator();
 	}
-	
+
 	/**
 	 * @return Retourne la valeur de retour isStopAttack.
-	 * @see ReserveOfSoldiers#isStopAttack()
+	 * @see    ReserveOfSoldiers#isStopAttack()
 	 */
 	public boolean isStopAttack()
 	{
 		return getReserveOfSoldiers().isStopAttack();
 	}
-	
+
 	/**
 	 * @see ReserveOfSoldiers#randomRemoveHP(SoldierEnum)
 	 */
@@ -494,31 +504,32 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		getReserveOfSoldiers().randomRemoveHP(SoldierEnum.getRandomTypeWithDefense());
 	}
-	
+
 	/**
 	 * Ajoute une production dans la caserne.
-	 * @param p La production ajouté dans la caserne.
-	 * @return Retourne si la production a bien été rajouté.
+	 * 
+	 * @param  p La production ajouté dans la caserne.
+	 * @return   Retourne si la production a bien été rajouté.
 	 */
-	public boolean addProduction(IProduction p)
+	public boolean addProduction(final IProduction p)
 	{
 		return getCaserne().addProduction(p);
 	}
-	
+
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
 	/**
-	 * @param key La clé.
-	 * @return Retourne le bâtiment souhaité.
-	 * @see Utility.BuildingPack#get(Enums.BuildingEnum)
+	 * @param  key La clé.
+	 * @return     Retourne le bâtiment souhaité.
+	 * @see        Utility.BuildingPack#get(Enums.BuildingEnum)
 	 */
-	public IBuilding getBuilding(BuildingEnum key)
+	public IBuilding getBuilding(final BuildingEnum key)
 	{
-		return buildingPack.get(key);
+		return this.buildingPack.get(key);
 	}
-	
+
 	/**
 	 * @return La réserve de ce château.
 	 */
@@ -526,12 +537,12 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		return this.reserveOfSoldiers;
 	}
-	
+
 	public Caserne getCaserne()
 	{
 		return (Caserne) getBuilding(BuildingEnum.Caserne);
 	}
-	
+
 	@Override
 	public int getProductionCost(final Castle castle)
 	{
@@ -560,6 +571,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/**
 	 * @return the level
 	 */
+	@Override
 	public final int getLevel()
 	{
 		return this.level;
@@ -594,6 +606,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 *
 	 * @param level the level to set
 	 */
+	@Override
 	public void setLevel(final int level)
 	{
 		this.level = level;
@@ -636,13 +649,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public final CharacterCastleEnum getCharacter()
 	{
-		return character;
+		return this.character;
 	}
 
 	/**
 	 * @param character the character to set
 	 */
-	public final void setCharacter(CharacterCastleEnum character)
+	public final void setCharacter(final CharacterCastleEnum character)
 	{
 		this.character = character;
 	}

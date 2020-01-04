@@ -27,7 +27,7 @@ public class AttackGoal extends Goal
 	 * Le château destination de l'ost.
 	 */
 	private final Castle castleDestination;
-	
+
 	/**
 	 * Contient le nombre d'unité à envoyer dans l'ost.
 	 */
@@ -43,11 +43,11 @@ public class AttackGoal extends Goal
 	 *
 	 * @param castleOrigin      Le château d'où va partir l'ost.
 	 * @param castleDestination Le château destination de l'ost.
-	 * @param soldierPack Contient le nombre d'unité dans l'ost.
+	 * @param soldierPack       Contient le nombre d'unité dans l'ost.
 	 * @see                     MultiSoldierGoal
 	 * @see                     SimpleGoal.SendOstGoal
 	 */
-	public AttackGoal(final Castle castleOrigin, final Castle castleDestination, SoldierPack<Integer> soldierPack)
+	public AttackGoal(final Castle castleOrigin, final Castle castleDestination, final SoldierPack<Integer> soldierPack)
 	{
 		this.goals = new GenericGoal();
 		this.castleOrigin = castleOrigin;
@@ -58,31 +58,31 @@ public class AttackGoal extends Goal
 		{
 			return;
 		}
-		
-		SoldierPack<Integer> nbSoldier = new SoldierPack<Integer>();
-		SoldierPack<Integer> realNbSoldier = new SoldierPack<Integer>();
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		SoldierPack<Integer> nbSoldier = new SoldierPack<>();
+		SoldierPack<Integer> realNbSoldier = new SoldierPack<>();
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			nbSoldier.replace(s, getReserveSoldier(s) + getCaserneSoldier(s));
 		}
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
-			realNbSoldier.replace(s, nbSoldier.get(s) < soldierPack.get(s) ? (soldierPack.get(s) - nbSoldier.get(s)) : 0);
+			realNbSoldier.replace(s, nbSoldier.get(s) < soldierPack.get(s) ? soldierPack.get(s) - nbSoldier.get(s) : 0);
 		}
 
 		int count = 0;
-		for(int i : realNbSoldier.values())
+		for (int i : realNbSoldier.values())
 		{
 			count += i;
 		}
-		
+
 		if (count > 0)
 		{
 			this.goals.addLast(new MultiSoldierGoal(this.castleOrigin, realNbSoldier));
 		}
-		
+
 		this.goals.addLast(new SendOstGoal(castleDestination, soldierPack));
 	}
 
@@ -92,9 +92,9 @@ public class AttackGoal extends Goal
 		// Au moment de lancer l'ost
 		if (this.goals.size() == 1)
 		{
-			SoldierPack<Integer> nbSoldier = new SoldierPack<Integer>();
-			
-			for(SoldierEnum s : SoldierEnum.values())
+			SoldierPack<Integer> nbSoldier = new SoldierPack<>();
+
+			for (SoldierEnum s : SoldierEnum.values())
 			{
 				nbSoldier.replace(s, getReserveSoldier(s) + getCaserneSoldier(s));
 			}
@@ -105,12 +105,12 @@ public class AttackGoal extends Goal
 				// On annule l'attaque
 				this.goals.pollFirst();
 			}
-			
+
 			boolean canSendOst = true;
-			
-			for(SoldierEnum s : SoldierEnum.values())
+
+			for (SoldierEnum s : SoldierEnum.values())
 			{
-				if(nbSoldier.get(s) < soldierPack.get(s))
+				if (nbSoldier.get(s) < this.soldierPack.get(s))
 				{
 					canSendOst = false;
 				}
@@ -119,11 +119,11 @@ public class AttackGoal extends Goal
 			// Si nous n'avons plus assez d'unités
 			if (!canSendOst)
 			{
-				SoldierPack<Integer> realNbSoldier = new SoldierPack<Integer>();
-				
-				for(SoldierEnum s : SoldierEnum.values())
+				SoldierPack<Integer> realNbSoldier = new SoldierPack<>();
+
+				for (SoldierEnum s : SoldierEnum.values())
 				{
-					realNbSoldier.replace(s, nbSoldier.get(s) < soldierPack.get(s) ? (soldierPack.get(s) - nbSoldier.get(s)) : 0);
+					realNbSoldier.replace(s, nbSoldier.get(s) < this.soldierPack.get(s) ? this.soldierPack.get(s) - nbSoldier.get(s) : 0);
 				}
 
 				// On reproduit des unités avant de lancer l'ost
@@ -134,41 +134,41 @@ public class AttackGoal extends Goal
 
 		return this.goals.goal(castleOrigin);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private SoldierPack<Integer> getReserveSoldierPack()
 	{
 		return this.castleOrigin.getReserveOfSoldiers().getSoldierPack();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private SoldierPack<Integer> getCaserneSoldierPack()
 	{
 		return this.castleOrigin.getCaserne().getSoldierPack();
 	}
-	
+
 	/**
-	 * 
-	 * @param s
+	 *
+	 * @param  s
 	 * @return
 	 */
-	private int getReserveSoldier(SoldierEnum s)
+	private int getReserveSoldier(final SoldierEnum s)
 	{
 		return getReserveSoldierPack().get(s);
 	}
-	
+
 	/**
-	 * 
-	 * @param s
+	 *
+	 * @param  s
 	 * @return
 	 */
-	private int getCaserneSoldier(SoldierEnum s)
+	private int getCaserneSoldier(final SoldierEnum s)
 	{
 		return getCaserneSoldierPack().get(s);
 	}

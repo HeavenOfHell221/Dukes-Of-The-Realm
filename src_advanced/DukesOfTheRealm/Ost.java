@@ -1,16 +1,8 @@
 package DukesOfTheRealm;
 
-import static Utility.Settings.ARCHER_SPEED;
-import static Utility.Settings.BERSERKER_SPEED;
-import static Utility.Settings.KNIGHT_SPEED;
-import static Utility.Settings.ONAGER_SPEED;
-import static Utility.Settings.PIKER_SPEED;
-import static Utility.Settings.SPY_SPEED;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicReference;
 
 import DukesOfTheRealm.Castle.Orientation;
 import Enums.SoldierEnum;
@@ -61,7 +53,7 @@ public class Ost implements IUpdate, Serializable
 	 * positions d'attaque du château sont occupées.
 	 */
 	private Point2D waitingPoint = null;
-	
+
 	/**
 	 * Nombre d'unité total de l'ost.
 	 */
@@ -69,9 +61,10 @@ public class Ost implements IUpdate, Serializable
 
 	/**
 	 * Nombre d'unité de l'ost.
+	 * 
 	 * @see Utility.SoldierPack
 	 */
-	private SoldierPack<Integer> soldierPack;
+	private final SoldierPack<Integer> soldierPack;
 
 	/**
 	 * La vitesse de déplacement de l'ost.
@@ -126,20 +119,20 @@ public class Ost implements IUpdate, Serializable
 	 * @param soldierPack Le nombre d'unité dans l'ost.
 	 * @param color       la couleur permettant de représenter l'ost à l'écran.
 	 */
-	public Ost(final Castle origin, final Castle destination, SoldierPack<Integer> soldierPack, final Color color)
+	public Ost(final Castle origin, final Castle destination, final SoldierPack<Integer> soldierPack, final Color color)
 	{
 		this.origin = origin;
 		this.destination = destination;
 		this.soldierPack = soldierPack;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
-		
+
 		int count = 0;
-		for(int i : soldierPack.values())
+		for (int i : soldierPack.values())
 		{
 			count += i;
 		}
-		
+
 		this.nbSoldiers = count;
 	}
 
@@ -179,7 +172,7 @@ public class Ost implements IUpdate, Serializable
 	public void update(final long now, final boolean pause)
 	{
 		this.isBackup = this.origin.getActor() == this.destination.getActor();
-		
+
 		if (!this.fullyDeployed && Time(now, pause))
 		{
 			DeployOneSoldiersWave();
@@ -226,11 +219,11 @@ public class Ost implements IUpdate, Serializable
 	 */
 	private int SetOstSpeed()
 	{
-		int minimalSpeed = Integer.MAX_VALUE;	
+		int minimalSpeed = Integer.MAX_VALUE;
 
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
-			minimalSpeed = soldierPack.get(s) > 0 && s.speed < minimalSpeed ? s.speed : minimalSpeed;
+			minimalSpeed = this.soldierPack.get(s) > 0 && s.speed < minimalSpeed ? s.speed : minimalSpeed;
 		}
 		return minimalSpeed;
 	}
@@ -315,7 +308,7 @@ public class Ost implements IUpdate, Serializable
 	{
 		final int nbSpawn = this.nbSoldiersSpawned <= this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS ? Settings.SIMULTANEOUS_SPAWNS
 				: this.nbSoldiers - this.nbSoldiersSpawned;
-		
+
 		Main.nbSoldier += nbSpawn;
 		switch (this.origin.getOrientation())
 		{
@@ -336,13 +329,13 @@ public class Ost implements IUpdate, Serializable
 			default:
 				break;
 		}
-		
+
 		if (this.nbSoldiersSpawned == this.nbSoldiers)
 		{
 			this.fullyDeployed = true;
 		}
 	}
-	
+
 	/**
 	 * Fais apparaître un soldat sur le terrain.
 	 *
@@ -360,35 +353,32 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType)
 				{
 					case Piker:
-						soldier = new Piker(layer,
-								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2), this, this.speed);
+						soldier = new Piker(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2),
+								this, this.speed);
 						break;
 					case Knight:
-						soldier = new Knight(layer,
-								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE), this, this.speed);
+						soldier = new Knight(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE),
+								this, this.speed);
 						break;
 					case Onager:
-						soldier = new Onager(layer,
-								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
+						soldier = new Onager(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE),
+								this, this.speed);
 					default:
 						break;
 				}
-				
+
 				break;
 			case South:
 				switch (soldierType)
 				{
 					case Piker:
-						soldier = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
-								this.speed);
+						soldier = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
 						break;
 					case Knight:
-						soldier = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
-								this.speed);
+						soldier = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
 						break;
 					case Onager:
-						soldier = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
-								this.speed);
+						soldier = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
 						break;
 					default:
 						break;
@@ -398,16 +388,16 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType)
 				{
 					case Piker:
-						soldier = new Piker(layer,
-								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2, y), this, this.speed);
+						soldier = new Piker(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2, y),
+								this, this.speed);
 						break;
 					case Knight:
-						soldier = new Knight(layer,
-								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE, y), this, this.speed);
+						soldier = new Knight(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE, y),
+								this, this.speed);
 						break;
 					case Onager:
-						soldier = new Onager(layer,
-								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
+						soldier = new Onager(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y),
+								this, this.speed);
 						break;
 					default:
 						break;
@@ -417,16 +407,13 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType)
 				{
 					case Piker:
-						soldier = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
-								this.speed);
+						soldier = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
 						break;
 					case Knight:
-						soldier = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
-								this.speed);
+						soldier = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
 						break;
 					case Onager:
-						soldier = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
-								this.speed);
+						soldier = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
 						break;
 					default:
 						break;
@@ -437,42 +424,42 @@ public class Ost implements IUpdate, Serializable
 				break;
 		}
 
-		if(soldier != null)
+		if (soldier != null)
 		{
 			this.soldiers.add(soldier);
 			soldier.Awake(this.color);
 			this.nbSoldiersSpawned++;
-			soldierPack.replace(soldierType, soldierPack.get(soldierType) - 1);
+			this.soldierPack.replace(soldierType, this.soldierPack.get(soldierType) - 1);
 		}
 	}
 
 	/**
-	 * Détermine le prochain type de soldat à déployer parmi ceux qui ne l'ont pas encore été.
-	 * La priorité est prédéfinie.
+	 * Détermine le prochain type de soldat à déployer parmi ceux qui ne l'ont pas encore été. La
+	 * priorité est prédéfinie.
 	 *
 	 * @return le type du prochain soldat à déployer.
 	 */
 	private SoldierEnum getNextAvailableSoldier()
 	{
 		SoldierEnum nextType;
-		
-		if(soldierPack.get(SoldierEnum.Onager) > 0)
+
+		if (this.soldierPack.get(SoldierEnum.Onager) > 0)
 		{
 			nextType = SoldierEnum.Onager;
 		}
-		else if(soldierPack.get(SoldierEnum.Spy) > 0)
+		else if (this.soldierPack.get(SoldierEnum.Spy) > 0)
 		{
 			nextType = SoldierEnum.Spy;
 		}
-		else if(soldierPack.get(SoldierEnum.Archer) > 0)
+		else if (this.soldierPack.get(SoldierEnum.Archer) > 0)
 		{
 			nextType = SoldierEnum.Archer;
 		}
-		else if(soldierPack.get(SoldierEnum.Berserker) > 0)
+		else if (this.soldierPack.get(SoldierEnum.Berserker) > 0)
 		{
 			nextType = SoldierEnum.Berserker;
 		}
-		else if(soldierPack.get(SoldierEnum.Piker) > 0)
+		else if (this.soldierPack.get(SoldierEnum.Piker) > 0)
 		{
 			nextType = SoldierEnum.Piker;
 		}
@@ -480,7 +467,7 @@ public class Ost implements IUpdate, Serializable
 		{
 			nextType = SoldierEnum.Knight;
 		}
-		
+
 		return nextType;
 	}
 
@@ -612,6 +599,6 @@ public class Ost implements IUpdate, Serializable
 	 */
 	public final int getSpeed()
 	{
-		return speed;
+		return this.speed;
 	}
 }

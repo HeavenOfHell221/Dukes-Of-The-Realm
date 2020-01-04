@@ -1,7 +1,5 @@
 package Duke;
 
-import static Goals.GeneratorGoal.getNewGoal;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,10 +28,11 @@ public class DukeAI extends Actor implements Serializable
 
 	/**
 	 * Le caractère de ce Duke.
+	 * 
 	 * @see Enums.CharacterDukeEnum
 	 */
 	private CharacterDukeEnum character;
-	
+
 	/**
 	 * Dernière fois que ce Duke à vérifié ses objectifs.
 	 *
@@ -128,8 +127,8 @@ public class DukeAI extends Actor implements Serializable
 	 */
 	private void putNewGoal(final Castle castle)
 	{
-		//Goal g = getNewGoal(castle, castle.getCharacter());
-		//this.goalMap.put(castle, g);
+		// Goal g = getNewGoal(castle, castle.getCharacter());
+		// this.goalMap.put(castle, g);
 		// System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
 	}
 
@@ -187,16 +186,17 @@ public class DukeAI extends Actor implements Serializable
 	/**
 	 * @param character the character to set
 	 */
-	public final void setCharacter(CharacterDukeEnum character)
+	public final void setCharacter(final CharacterDukeEnum character)
 	{
 		this.character = character;
 	}
-	
+
 	/**
 	 * Change le caractère de ce nouveau château.
+	 * 
 	 * @param castle Le château que ce Duke vient d'acquérir.
 	 */
-	private void addNewCharacterInThisNewCastle(Castle castle)
+	private void addNewCharacterInThisNewCastle(final Castle castle)
 	{
 		CharacterCastleEnum character = CharacterCastleEnum.getRandomType(this.character);
 		castle.setCharacter(character);

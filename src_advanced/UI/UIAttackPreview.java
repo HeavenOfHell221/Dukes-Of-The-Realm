@@ -5,6 +5,7 @@ import DukesOfTheRealm.Main;
 import Enums.SoldierEnum;
 import Interface.IUI;
 import Interface.IUpdate;
+import Utility.Input;
 import Utility.Settings;
 import Utility.SoldierPack;
 import javafx.scene.Cursor;
@@ -39,7 +40,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	/**
 	 * Nombre actuelle d'unité dans l'ost en cours de création.
 	 */
-	private SoldierPack<Integer> soldierPack;
+	private final SoldierPack<Integer> soldierPack;
 
 	/**
 	 * Référence sur le château que va recevoir l'ost.
@@ -62,8 +63,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 * Molette souris vers le haut : Augmente de 1 à chaque crant.
 	 * </p>
 	 */
-	private SoldierPack<Button> upSoldier;
-	
+	private final SoldierPack<Button> upSoldier;
+
 	/**
 	 * Boutons permettant de diminuer le nombre d'une unité dans l'ost.
 	 * <p>
@@ -71,17 +72,19 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 * Molette souris vers le bas : diminue de 1 à chaque crant.
 	 * </p>
 	 */
-	private SoldierPack<Button> downSoldier;
-	
+	private final SoldierPack<Button> downSoldier;
+
 	/**
 	 * Textes qui affiche le nombre actuelle des unités dans l'ost en cours de création.
 	 */
-	private SoldierPack<Text> textSoldier;
-	
+	private final SoldierPack<Text> textSoldier;
+
 	/**
 	 * Icones représentant les unités sur l'interface.
 	 */
-	private SoldierPack<ImageView> imageSoldier;
+	private final SoldierPack<ImageView> imageSoldier;
+	
+	private Input input;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -92,12 +95,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 */
 	public UIAttackPreview()
 	{
-		this.soldierPack = new SoldierPack<Integer>();
-		this.upSoldier = new SoldierPack<Button>();
-		this.downSoldier = new SoldierPack<Button>();
-		this.imageSoldier = new SoldierPack<ImageView>();
-		this.textSoldier = new SoldierPack<Text>();
-		
+		this.soldierPack = new SoldierPack<>();
+		this.upSoldier = new SoldierPack<>();
+		this.downSoldier = new SoldierPack<>();
+		this.imageSoldier = new SoldierPack<>();
+		this.textSoldier = new SoldierPack<>();
+
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_64.png", 64, 64));
 		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_64.png", 64, 64));
 		this.imageSoldier.replace(SoldierEnum.Onager, newImageView("/images/OnagerPreview_64.png", 64, 64));
@@ -106,10 +109,10 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/SpyPreview_64.png", 64, 64));
 
 		this.background = new Rectangle(340, 530);
-		
+
 		this.buttonAttack = new Button();
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.upSoldier.replace(s, new Button());
 			this.downSoldier.replace(s, new Button());
@@ -141,7 +144,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.textSoldier.get(s).setText(this.soldierPack.get(s).toString());
 		}
@@ -158,7 +161,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 */
 	private void setAllTexts()
 	{
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setText(this.textSoldier.get(s), 38);
 		}
@@ -184,7 +187,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 */
 	private void resetOst()
 	{
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.soldierPack.replace(s, 0);
 		}
@@ -213,42 +216,121 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 
 		setStyle(this.buttonAttack, "images/Attack_64.png");
 
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setStyle(this.downSoldier.get(s), "images/RemoveSoldierOst_64.png");
 			setStyle(this.upSoldier.get(s), "images/AddSoldierOst_64.png");
-			
+
 			this.upSoldier.get(s).setOnMousePressed(event ->
 			{
-				if(this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+				if(this.input.isShift())
 				{
-					this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+					for(int i = 0; i < 10; i++)
+					{
+						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
+					}
 				}
+				else if(this.input.isAlt())
+				{
+					while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+					}
+				}
+				else
+				{
+					if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+					}
+				}
+				
 			});
-			
+
 			this.upSoldier.get(s).setOnScroll(event ->
 			{
-				if(event.getDeltaY() > 0 && this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+				if(this.input.isShift())
 				{
-					this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+					for(int i = 0; i < 10; i++)
+					{
+						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
+					}
 				}
+				else if(this.input.isAlt() && event.getDeltaY() > 0)
+				{
+					while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+					}
+				}
+				else if(event.getDeltaY() > 0)
+				{
+					if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+					}
+				}			
 			});
-			
+
 			this.downSoldier.get(s).setOnMousePressed(event ->
 			{
-				this.soldierPack.replace(s, this.soldierPack.get(s) > 0 ?  (this.soldierPack.get(s) - 1) : 0);
+				if(this.input.isShift())
+				{
+					for(int i = 0; i < 10; i++)
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) > 0 ? this.soldierPack.get(s) - 1 : 0);
+					}
+				}
+				else if(this.input.isAlt())
+				{
+					while(this.soldierPack.get(s) > 0)
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
+					}
+				}
+				else
+				{
+					this.soldierPack.replace(s, this.soldierPack.get(s) > 0 ? this.soldierPack.get(s) - 1 : 0);
+				}
+				
 			});
-			
+
 			this.downSoldier.get(s).setOnScroll(event ->
 			{
-				if(event.getDeltaY() < 0 && this.soldierPack.get(s) > 0)
+				if(this.input.isShift())
 				{
-					this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
+					for(int i = 0; i < 10; i++)
+					{
+						if (this.soldierPack.get(s) > 0)
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
+						}
+					}
 				}
+				else if(this.input.isAlt() && event.getDeltaY() < 0)
+				{
+					while (this.soldierPack.get(s) > 0)
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
+					}
+				}
+				else
+				{
+					if (event.getDeltaY() < 0 && this.soldierPack.get(s) > 0)
+					{
+						this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
+					}
+				}	
 			});
-			
+
 		}
-		
+
 		this.buttonAttack.setOnMousePressed(e ->
 		{
 			this.lastCastle.createOst(this.currentCastle, this.soldierPack);
@@ -294,8 +376,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	{
 		addNode(this.background);
 		addNode(this.buttonAttack);
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			addNode(this.upSoldier.get(s));
 			addNode(this.downSoldier.get(s));
@@ -311,8 +393,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		final int offset = 530;
 		final float margin = (float) Settings.MARGIN_PERCENTAGE + 0.053f;
 		int multiplier = 0;
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin + 20, 20 + offset + i * multiplier);
 			relocate(this.upSoldier.get(s), Settings.SCENE_WIDTH * margin + 25 + i, 20 + offset + i * multiplier);
@@ -330,15 +412,15 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	{
 		setVisible(this.background, visible);
 		setVisible(this.buttonAttack, visible);
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setVisible(this.upSoldier.get(s), visible);
 			setVisible(this.downSoldier.get(s), visible);
 			setVisible(this.imageSoldier.get(s), visible);
 			setVisible(this.textSoldier.get(s), visible);
 		}
-		
+
 		resetOst();
 	}
 
@@ -361,4 +443,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
+
+	/**
+	 * @param input the input to set
+	 */
+	public void setInput(final Input input)
+	{
+		this.input = input;
+	}
 }

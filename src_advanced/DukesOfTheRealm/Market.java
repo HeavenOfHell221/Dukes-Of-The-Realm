@@ -15,30 +15,30 @@ public class Market implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void productionFinished(Castle castle, boolean cancel)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void productionStart(Caserne caserne)
+	public void productionStart(final Caserne caserne)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void setLevel(int level)
+	public void setLevel(final int level)
 	{
-		
+
 	}
 
 	@Override

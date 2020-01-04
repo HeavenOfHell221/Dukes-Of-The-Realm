@@ -202,7 +202,8 @@ public class Main extends Application implements IUpdate
 	{
 		this.root = new Group();
 		this.mainScene = new Scene(this.root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-		this.mainScene.setFill(new ImagePattern(new Image(getClass().getResource("/images/Background.jpg").toExternalForm()), 0, 0, 1, 1, true));
+		this.mainScene
+				.setFill(new ImagePattern(new Image(getClass().getResource("/images/Background.jpg").toExternalForm()), 0, 0, 1, 1, true));
 		primaryStage.setScene(this.mainScene);
 		primaryStage.setResizable(false);
 		primaryStage.setMaximized(false);
@@ -227,7 +228,7 @@ public class Main extends Application implements IUpdate
 		final Button buttonNew = new Button();
 
 		/* UI */
-		UIManager.getProductionUnitPreview().setScene(this.mainScene);
+		UIManager.getInstance().setInput(this.input);
 
 		buttonPlay.setText("Play");
 		buttonNew.setText("New Game");

@@ -1,50 +1,48 @@
 package Utility;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import Enums.SoldierEnum;
 
-import static Utility.Settings.*;
-
 /**
- * Structure de données utilisé pour stocker un nombre pour chaque type d'unité (nombre, point de vie, ..)
+ * Structure de données utilisé pour stocker un nombre pour chaque type d'unité (nombre, point de
+ * vie, ..)
  */
 public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
-{	
-	
+{
+
 	/**
 	 * Constructeur par défaut de SoldierPack.
 	 */
 	public SoldierPack()
 	{
 		super();
-		for(SoldierEnum sEnum : SoldierEnum.values())
+		for (SoldierEnum sEnum : SoldierEnum.values())
 		{
 			put(sEnum, null);
 		}
 	}
-	
+
 	/**
 	 * Constructeur par recopie.
+	 * 
 	 * @param soldierPack Le SoldierPack qu'on recopie.
 	 */
-	public SoldierPack(SoldierPack<T2> s)
+	public SoldierPack(final SoldierPack<T2> s)
 	{
 		super();
 		putAll(s.map);
 	}
-	
+
 	/**
 	 * Constructeur de SoldierPack.
-	 * @param piker Un nombre pour le Piker.
-	 * @param knight Un nombre pour le Knight.
-	 * @param onager Un nombre pour l'Onager.
-	 * @param archer Un nombre pour l'Archer.
+	 * 
+	 * @param piker     Un nombre pour le Piker.
+	 * @param knight    Un nombre pour le Knight.
+	 * @param onager    Un nombre pour l'Onager.
+	 * @param archer    Un nombre pour l'Archer.
 	 * @param berserker Un nombre pour le Berserker.
-	 * @param spy un nombre pour le Spy.
+	 * @param spy       un nombre pour le Spy.
 	 */
-	public SoldierPack(T2 piker, T2 knight, T2 onager, T2 archer, T2 berserker, T2 spy)
+	public SoldierPack(final T2 piker, final T2 knight, final T2 onager, final T2 archer, final T2 berserker, final T2 spy)
 	{
 		super();
 		put(SoldierEnum.Piker, piker);
@@ -54,13 +52,14 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 		put(SoldierEnum.Berserker, archer);
 		put(SoldierEnum.Spy, spy);
 	}
-	
-	public void replace(SoldierEnum soldierEnum, T2 value)
+
+	@Override
+	public void replace(final SoldierEnum soldierEnum, final T2 value)
 	{
 		super.replace(soldierEnum, value);
 	}
-	
-	public T2 get(SoldierEnum soldierEnum)
+
+	public T2 get(final SoldierEnum soldierEnum)
 	{
 		return super.get(soldierEnum);
 	}
@@ -68,6 +67,6 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 	@Override
 	public String toString()
 	{
-		return "SoldierPack [map=" + map + "]";
+		return "SoldierPack [map=" + this.map + "]";
 	}
 }

@@ -110,7 +110,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 		this.colors.add(Color.MAROON);
 		this.colors.add(Color.CHOCOLATE);
 		this.colors.add(Color.IVORY);
-		
+
 		if (Main.isNewGame)
 		{
 			this.player = new Player();

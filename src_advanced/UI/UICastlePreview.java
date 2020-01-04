@@ -29,7 +29,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	/**
 	 * Icone des Florin.
 	 */
@@ -54,7 +54,6 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Texte affichant le nombre de Florin par seconde.
 	 */
 	private final Text florinIncome;
-
 
 	/**
 	 * Texte affichant le nombre de Florin.
@@ -89,16 +88,16 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private boolean attackVisible = false;
-	
+
 	/**
 	 * Textes du nombre d'unité du château.
 	 */
-	private SoldierPack<Text> textSoldier;
-	
+	private final SoldierPack<Text> textSoldier;
+
 	/**
 	 * Icones des unités.
 	 */
-	private SoldierPack<ImageView> imageSoldier;
+	private final SoldierPack<ImageView> imageSoldier;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -109,9 +108,9 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 */
 	public UICastlePreview()
 	{
-		this.textSoldier = new SoldierPack<Text>();
-		this.imageSoldier = new SoldierPack<ImageView>();
-		
+		this.textSoldier = new SoldierPack<>();
+		this.imageSoldier = new SoldierPack<>();
+
 		int size = 48;
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_48.png", size, size));
 		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_48.png", size, size));
@@ -119,19 +118,19 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		this.imageSoldier.replace(SoldierEnum.Archer, newImageView("/images/ArcherPreview_48.png", size, size));
 		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/BerserkerPreview_48.png", size, size));
 		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/SpyPreview_48.png", size, size));
-		
+
 		this.imageFlorin = newImageView("/images/FlorinPreview_64.png", size, size);
 		this.imageCircle = newImageView("/images/CircleCurrentCastle_96.png", 128, 128);
-		
+
 		this.level = new Text();
 		this.owner = new Text();
 		this.nbFlorin = new Text();
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.textSoldier.replace(s, new Text());
 		}
-		
+
 		this.florinIncome = new Text();
 		this.background = new Rectangle(240, 500);
 
@@ -188,8 +187,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
 
-		
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.textSoldier.get(s).setText(this.currentCastle.getReserveOfSoldiers().getSoldierPack().get(s).toString());
 		}
@@ -209,8 +207,8 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		setText(this.level, 24);
 		setText(this.owner, 24);
 		setText(this.florinIncome, 24);
-		
-		for(Text t : this.textSoldier.values())
+
+		for (Text t : this.textSoldier.values())
 		{
 			setText(t, 28);
 		}
@@ -245,19 +243,19 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		final int i = 52;
 
 		relocate(this.owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
-		relocate(this.florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 -15);
+		relocate(this.florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 15);
 		relocate(this.level, Settings.SCENE_WIDTH * margin, offset + i * 2 - 30);
 		offset -= 20;
 		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin, offset + i * 2 + 20);
-		
+
 		int multiplier = 3;
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin, offset + i * multiplier + 20);
 			relocate(this.textSoldier.get(s), Settings.SCENE_WIDTH * margin + 40, offset + i * multiplier + 42);
 			multiplier++;
 		}
-		
+
 		relocate(this.nbFlorin, Settings.SCENE_WIDTH * margin + 40, offset + i * 2 + 50);
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 44, offset);
 	}
@@ -272,13 +270,13 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		addNode(this.florinIncome);
 		addNode(this.nbFlorin);
 		addNode(this.imageCircle);
-		
-		for(Text t : this.textSoldier.values())
+
+		for (Text t : this.textSoldier.values())
 		{
 			addNode(t);
 		}
-		
-		for(ImageView i : this.imageSoldier.values())
+
+		for (ImageView i : this.imageSoldier.values())
 		{
 			addNode(i);
 		}
@@ -308,13 +306,13 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		setVisible(this.owner, visible);
 		setVisible(this.florinIncome, visible);
 		setVisible(this.nbFlorin, visible);
-		
-		for(Text t : this.textSoldier.values())
+
+		for (Text t : this.textSoldier.values())
 		{
 			setVisible(t, visible);
 		}
-		
-		for(ImageView i : this.imageSoldier.values())
+
+		for (ImageView i : this.imageSoldier.values())
 		{
 			setVisible(i, visible);
 		}

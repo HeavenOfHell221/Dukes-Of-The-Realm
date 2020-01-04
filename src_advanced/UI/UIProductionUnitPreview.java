@@ -1,10 +1,6 @@
 package UI;
 
-import static Utility.Settings.KNIGHT_COST;
-import static Utility.Settings.CASTLE_COST;
 import static Utility.Settings.MARGIN_PERCENTAGE;
-import static Utility.Settings.ONAGER_COST;
-import static Utility.Settings.PIKER_COST;
 import static Utility.Settings.SCENE_WIDTH;
 
 import DukesOfTheRealm.Castle;
@@ -14,17 +10,12 @@ import Interface.IBuilding;
 import Interface.IProduction;
 import Interface.IUI;
 import Interface.IUpdate;
-import Soldiers.Knight;
-import Soldiers.Onager;
-import Soldiers.Piker;
-import Soldiers.Soldier;
 import Utility.BuildingPack;
 import Utility.Input;
 import Utility.SoldierPack;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.BlurType;
@@ -89,13 +80,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 * Object Input pour récupérer les touches clavier saisies par l'utilisateur.
 	 */
 	private Input input;
-	
-	
-	private SoldierPack<Text> textCostSoldier;
-	private BuildingPack<Text> textCostBuilding;
-	
-	private SoldierPack<Button> productSoldier;
-	private BuildingPack<Button> upgradeBuilding;
+
+	private final SoldierPack<Text> textCostSoldier;
+	private final BuildingPack<Text> textCostBuilding;
+
+	private final SoldierPack<Button> productSoldier;
+	private final BuildingPack<Button> upgradeBuilding;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -106,23 +96,23 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	public UIProductionUnitPreview()
 	{
-		this.productSoldier = new SoldierPack<Button>();
-		this.textCostSoldier = new SoldierPack<Text>();
-		this.textCostBuilding = new BuildingPack<Text>();
-		this.upgradeBuilding = new BuildingPack<Button>();
-		
-		for(SoldierEnum s : SoldierEnum.values())
+		this.productSoldier = new SoldierPack<>();
+		this.textCostSoldier = new SoldierPack<>();
+		this.textCostBuilding = new BuildingPack<>();
+		this.upgradeBuilding = new BuildingPack<>();
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.productSoldier.replace(s, new Button());
 			this.textCostSoldier.replace(s, new Text());
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			this.upgradeBuilding.replace(b, new Button());
 			this.textCostBuilding.replace(b, new Text());
 		}
-		
+
 		this.removeAllProduction = new Button();
 		this.removeLastProduction = new Button();
 
@@ -146,13 +136,13 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setBar();
 		setAllVisible(false);
 		setAllTexts();
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setVisible(this.textCostSoldier.get(s), false);
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			setVisible(this.textCostBuilding.get(b), false);
 		}
@@ -165,16 +155,15 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		//setFill(this.currentCastle.getRatio());
-		this.input.update(now, pause);
-		
-		for(SoldierEnum s : SoldierEnum.values())
+		// setFill(this.currentCastle.getRatio());
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
-			if(this.textCostSoldier.get(s).isVisible())
+			if (this.textCostSoldier.get(s).isVisible())
 			{
-				if(this.input.isShift())
+				if (this.input.isShift())
 				{
-					this.textCostSoldier.get(s).setText((s.cost * 10) + "");
+					this.textCostSoldier.get(s).setText(s.cost * 10 + "");
 				}
 				else
 				{
@@ -182,12 +171,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				}
 			}
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
-			if(this.textCostBuilding.get(b).isVisible())
+			if (this.textCostBuilding.get(b).isVisible())
 			{
-				if(this.input.isShift())
+				if (this.input.isShift())
 				{
 					int price = 0;
 
@@ -200,7 +189,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				}
 				else
 				{
-					this.textCostBuilding.get(b).setText(b.cost * (this.currentCastle.getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b)) + "");
+					this.textCostBuilding.get(b).setText(
+							b.cost * (this.currentCastle.getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b)) + "");
 				}
 			}
 		}
@@ -215,15 +205,15 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	private void setAllTexts()
 	{
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setText(this.textCostSoldier.get(s));
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			setText(this.textCostBuilding.get(b));
-		}	
+		}
 	}
 
 	/**
@@ -266,18 +256,18 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setVisible(this.background, visible);
 		setVisible(this.fillTime, visible);
 		setVisible(this.removeAllProduction, visible);
-		setVisible(this.removeLastProduction, visible);	
-		
-		for(SoldierEnum s : SoldierEnum.values())
+		setVisible(this.removeLastProduction, visible);
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setVisible(this.productSoldier.get(s), visible);
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			setVisible(this.upgradeBuilding.get(b), visible);
 		}
-		
+
 	}
 
 	/**
@@ -325,7 +315,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		this.fillTime.setEffect(i);
 	}
-	
+
 	/**
 	 * Initialise le style d'un bouton, sa taille et le cursor lorsque la souris passe dessus.
 	 *
@@ -353,14 +343,13 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setStyle(this.productSoldier.get(SoldierEnum.Archer), "/images/ArcherButton_64.png");
 		setStyle(this.productSoldier.get(SoldierEnum.Berserker), "/images/BerserkerButton_64.png");
 		setStyle(this.productSoldier.get(SoldierEnum.Spy), "/images/SpyButton_64.png");
-		
+
 		setStyle(this.upgradeBuilding.get(BuildingEnum.Castle), "/images/CastleButton_64.png");
 		setStyle(this.upgradeBuilding.get(BuildingEnum.Caserne), "/images/CaserneButton_64.png");
 		setStyle(this.upgradeBuilding.get(BuildingEnum.Wall), "/images/WallButton_64.png");
 		setStyle(this.upgradeBuilding.get(BuildingEnum.Market), "/images/MarketButton_64.png");
 		setStyle(this.upgradeBuilding.get(BuildingEnum.Miller), "/images/MillerButton_64.png");
 
-		
 		setStyle(this.removeAllProduction, "/images/ResetProductionButton_64.png");
 		setStyle(this.removeLastProduction, "/images/CancelLastProduction_64.png");
 
@@ -369,8 +358,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		addEventMouse(this.removeAllProduction);
 		addEventMouse(this.removeLastProduction);
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			this.productSoldier.get(s).setOnMousePressed(event ->
 			{
@@ -393,19 +382,18 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 					addProduction(this.productSoldier.get(s), s.getObject());
 				}
 			});
-			
-			
+
 			this.productSoldier.get(s).setOnMouseEntered(event -> this.textCostSoldier.get(s).setVisible(true));
 			this.productSoldier.get(s).setOnMouseExited(event -> this.textCostSoldier.get(s).setVisible(false));
 			addEventMouse(this.productSoldier.get(s));
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			this.upgradeBuilding.get(b).setOnMousePressed(event ->
 			{
 				IProduction prod = (IProduction) b.getObject();
-				((IBuilding)prod).setLevel(this.currentCastle.getBuilding(b).getLevel());
+				((IBuilding) prod).setLevel(this.currentCastle.getBuilding(b).getLevel());
 				if (this.input.isAlt())
 				{
 					while (addProduction(this.upgradeBuilding.get(b), prod))
@@ -423,8 +411,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				{
 					addProduction(this.upgradeBuilding.get(b), prod);
 				}
-			});	
-			
+			});
+
 			this.upgradeBuilding.get(b).setOnMouseEntered(event -> this.textCostBuilding.get(b).setVisible(true));
 			this.upgradeBuilding.get(b).setOnMouseExited(event -> this.textCostBuilding.get(b).setVisible(false));
 			addEventMouse(this.upgradeBuilding.get(b));
@@ -452,7 +440,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Initalise les paramètres du background.
 	 */
@@ -517,14 +505,14 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		addNode(this.fillTime);
 		addNode(this.removeAllProduction);
 		addNode(this.removeLastProduction);
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			addNode(this.productSoldier.get(s));
 			addNode(this.textCostSoldier.get(s));
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			addNode(this.upgradeBuilding.get(b));
 			addNode(this.textCostBuilding.get(b));
@@ -542,13 +530,13 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		int multiplier = 0;
 		int offset2 = 0;
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			relocate(this.productSoldier.get(s), SCENE_WIDTH * margin + width * multiplier, offset + offset2);
 			relocate(this.textCostSoldier.get(s), this.productSoldier.get(s).getLayoutX(), this.productSoldier.get(s).getLayoutY() + 20);
-			multiplier++; 
-			
-			if(multiplier == 3)
+			multiplier++;
+
+			if (multiplier == 3)
 			{
 				multiplier = 0;
 				offset2 += height;
@@ -556,12 +544,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		}
 		multiplier = 0;
 		offset2 += 10;
-		for(BuildingEnum b : BuildingEnum.values())
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			relocate(this.upgradeBuilding.get(b), SCENE_WIDTH * margin + width * multiplier, offset + offset2);
 			relocate(this.textCostBuilding.get(b), this.upgradeBuilding.get(b).getLayoutX(), this.upgradeBuilding.get(b).getLayoutY() + 20);
 			multiplier++;
-			if(multiplier == 3)
+			if (multiplier == 3)
 			{
 				multiplier = 0;
 				offset2 += height;
@@ -589,16 +577,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setAllVisible(productionVisible);
 	}
 
-	/*************************************************/
-	/*************** GETTERS / SETTERS ***************/
-	/*************************************************/
-
 	/**
-	 * @param scene the scene to set
+	 * @param input the input to set
 	 */
-	public void setScene(final Scene scene)
+	public void setInput(final Input input)
 	{
-		this.input = new Input(scene);
-		this.input.addListeners();
+		this.input = input;
 	}
 }

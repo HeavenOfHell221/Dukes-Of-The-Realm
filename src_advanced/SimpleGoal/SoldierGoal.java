@@ -31,6 +31,5 @@ public class SoldierGoal extends Goal
 	{
 		return castle.addProduction(this.type.getObject());
 	}
-	
-	
+
 }

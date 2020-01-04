@@ -8,60 +8,59 @@ import java.util.Map;
 public abstract class Pack<T1, T2> implements Serializable
 {
 
-	protected final HashMap<T1, T2> map;	
+	protected final HashMap<T1, T2> map;
 
 	public Pack()
 	{
-		map = new HashMap<>();
+		this.map = new HashMap<>();
 	}
 
 	/**
-	 * @param key La clé.
-	 * @return La valeur de get.
-	 * @see java.util.HashMap#get(java.lang.Object)
+	 * @param  key La clé.
+	 * @return     La valeur de get.
+	 * @see        java.util.HashMap#get(java.lang.Object)
 	 */
-	public T2 get(Object key)
+	public T2 get(final Object key)
 	{
-		return map.get(key);
+		return this.map.get(key);
 	}
 
 	/**
-	 * @param key La clé.
+	 * @param key   La clé.
 	 * @param value La valeur.
-	 * @see java.util.HashMap#put(java.lang.Object, java.lang.Object)
+	 * @see         java.util.HashMap#put(java.lang.Object, java.lang.Object)
 	 */
-	public void put(T1 key, T2 value)
+	public void put(final T1 key, final T2 value)
 	{
 		this.map.put(key, value);
 	}
 
 	/**
-	 * @param key La clé.
+	 * @param key   La clé.
 	 * @param value La valeur.
-	 * @see java.util.HashMap#replace(java.lang.Object, java.lang.Object)
+	 * @see         java.util.HashMap#replace(java.lang.Object, java.lang.Object)
 	 */
-	public void replace(T1 key, T2 value)
+	public void replace(final T1 key, final T2 value)
 	{
 		this.map.replace(key, value);
 	}
 
 	/**
 	 * @return
-	 * @see java.util.HashMap#values()
+	 * @see    java.util.HashMap#values()
 	 */
 	public Collection<T2> values()
 	{
-		return map.values();
+		return this.map.values();
 	}
 
 	/**
 	 * @param m
-	 * @see java.util.HashMap#putAll(java.util.Map)
+	 * @see     java.util.HashMap#putAll(java.util.Map)
 	 */
-	public void putAll(Map<? extends T1, ? extends T2> m)
+	public void putAll(final Map<? extends T1, ? extends T2> m)
 	{
-		map.putAll(m);
-	}	
-	
-	
+		this.map.putAll(m);
+	}
+
 }

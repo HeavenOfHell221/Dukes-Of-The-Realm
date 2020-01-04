@@ -1,14 +1,15 @@
 package DukesOfTheRealm;
 
+import static Utility.Settings.WALL_LEVEL_MAX;
+
 import java.io.Serializable;
+
 import Interface.IBuilding;
 import Interface.IProduction;
 
-import static Utility.Settings.*;
-
 /**
- * Représente un rempart qui protège un château.
- * Un rempart augmente le maximum de vie des unités en défense.
+ * Représente un rempart qui protège un château. Un rempart augmente le maximum de vie des unités en
+ * défense.
  */
 public class Wall implements Serializable, IBuilding, IProduction
 {
@@ -16,12 +17,12 @@ public class Wall implements Serializable, IBuilding, IProduction
 	 * Le niveau du rempart, de base à 0.
 	 */
 	private int level;
-	
+
 	/**
 	 * Le multiplicateur de point de vie du rempart, de base à 1 et à 3 au max.
 	 */
 	private float multiplicator;
-	
+
 	/**
 	 * Constructeur par défaut de Wall.
 	 */
@@ -30,26 +31,28 @@ public class Wall implements Serializable, IBuilding, IProduction
 		this.level = 0;
 		this.multiplicator = 1;
 	}
-	
+
 	/**
 	 * Augmente d'un niveau le rempart et augmente le multiplicateur en fonction du nouveau niveau.
+	 * 
 	 * @see Wall#level
 	 */
 	public void levelUp()
-	{	
+	{
 		this.level = this.level < WALL_LEVEL_MAX ? this.level++ : this.level;
 		increaseMultiplicator();
 	}
-	
+
 	/**
 	 * Incrémente le multiplicateur en fonction du niveau.
+	 * 
 	 * @see Wall#multiplicator
 	 */
 	private void increaseMultiplicator()
 	{
-		if(this.level <= 10)
+		if (this.level <= 10)
 		{
-			this.multiplicator += 0.05; 
+			this.multiplicator += 0.05;
 		}
 		else
 		{
@@ -60,9 +63,10 @@ public class Wall implements Serializable, IBuilding, IProduction
 	/**
 	 * @return the level
 	 */
+	@Override
 	public final int getLevel()
 	{
-		return level;
+		return this.level;
 	}
 
 	/**
@@ -70,7 +74,7 @@ public class Wall implements Serializable, IBuilding, IProduction
 	 */
 	public final float getMultiplicator()
 	{
-		return multiplicator;
+		return this.multiplicator;
 	}
 
 	@Override
@@ -81,30 +85,30 @@ public class Wall implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void productionFinished(Castle castle, boolean cancel)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void productionStart(Caserne caserne)
+	public void productionStart(final Caserne caserne)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void setLevel(int level)
+	public void setLevel(final int level)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

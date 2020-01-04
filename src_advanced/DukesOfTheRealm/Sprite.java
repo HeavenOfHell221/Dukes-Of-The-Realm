@@ -25,7 +25,6 @@ import static Utility.Settings.SOLDIER_STROKE_TYPE;
 import java.io.Serializable;
 
 import DukesOfTheRealm.Castle.Orientation;
-import Interface.IProduction;
 import Utility.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;

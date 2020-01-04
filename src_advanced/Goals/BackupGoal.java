@@ -33,7 +33,7 @@ public class BackupGoal extends Goal
 	 * @param nbKnights Le nombre de Knight à envoyer.
 	 * @param nbOnagers Le nombre de Onager à envoyer.
 	 */
-	public BackupGoal(final Castle origin, SoldierPack<Integer> pack)
+	public BackupGoal(final Castle origin, final SoldierPack<Integer> pack)
 	{
 		this.goals = new GenericGoal();
 		Random rand = new Random();

@@ -16,7 +16,7 @@ public class SendOstGoal extends Goal
 	/**
 	 * Contient le nombre d'unité dans l'ost;
 	 */
-	private SoldierPack soldierPack;
+	private final SoldierPack soldierPack;
 
 	/**
 	 * Constructeur de SendOStGoal.
@@ -28,7 +28,7 @@ public class SendOstGoal extends Goal
 	 * @see               Goals.AttackGoal
 	 * @see               Goals.BackupGoal
 	 */
-	public SendOstGoal(final Castle destination, SoldierPack soldierPack)
+	public SendOstGoal(final Castle destination, final SoldierPack soldierPack)
 	{
 		this.destination = destination;
 		this.soldierPack = soldierPack;

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * (Inside) Pas de collision (None)
  * </p>
  */
-public enum CollisionEnum  implements Serializable
+public enum CollisionEnum implements Serializable
 {
 	/**
 	 * Coté nord

@@ -37,7 +37,7 @@ public class Settings
 	 * Nombre d'unités qui apparaissent simultanément.
 	 */
 	public static final int SIMULTANEOUS_SPAWNS = 3;
-	
+
 	/**
 	 * Nombre d'IA.
 	 */
@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 5;
+	public static final int FLORIN_PER_SECOND = 50;
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -81,11 +81,11 @@ public class Settings
 	 * Distance minimal entre un château et une unité.
 	 */
 	public static final int GAP_WITH_SOLDIER = 10;
-	
+
 	/****************************************************/
 	/********************* STARTER **********************/
 	/****************************************************/
-	
+
 	/**
 	 * Nombre de Knight de base pour le joueur et les IA.
 	 */
@@ -100,17 +100,17 @@ public class Settings
 	 * Nombre de Onager de base pour le joueur et les IA.
 	 */
 	public static final int STARTER_ONAGER = 0;
-	
+
 	/**
 	 * Nombre de Archer de base pour le joueur et les IA.
 	 */
 	public static final int STARTER_ARCHER = 0;
-	
+
 	/**
 	 * Nombre de Berserker de base pour le joueur et les IA.
 	 */
 	public static final int STARTER_BERSERKER = 0;
-	
+
 	/**
 	 * Nombte de Spy de base pour le joueur et les IA.
 	 */
@@ -133,7 +133,7 @@ public class Settings
 	/****************************************************/
 	/******************** Buildings *********************/
 	/****************************************************/
-	
+
 	/**
 	 * Augmentation du coût d'amélioration du château (Pour chaque niveau on ajoute LEVEL_UP_COST).
 	 */
@@ -148,29 +148,29 @@ public class Settings
 	 * Augmentation du temps d'amélioration pour chaque niveau de château.
 	 */
 	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 2f;
-	
+
 	public static final int CASTLE_LEVEL_MAX = 20;
-	
+
 	public static final int WALL_COST = 0;
 	public static final float WALL_PRODUCTION_OFFSET = 0;
 	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 0;
 	public static final int WALL_LEVEL_MAX = 0;
-	
+
 	public static final int CASERNE_COST = 0;
 	public static final float CASERNE_PRODUCTION_OFFSET = 0;
 	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 0;
 	public static final int CASERNE_LEVEL_MAX = 0;
-	
+
 	public static final int MILLER_COST = 0;
 	public static final float MILLER_PRODUCTION_OFFSET = 0;
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 0;
 	public static final int MILLER_LEVEL_MAX = 0;
-	
+
 	public static final int MARKET_COST = 0;
 	public static final float MARKET_PRODUCTION_OFFSET = 0;
 	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 0;
 	public static final int MARKET_LEVEL_MAX = 0;
-	
+
 	/****************************************************/
 	/********************* SOLDIERS *********************/
 	/****************************************************/
@@ -189,17 +189,17 @@ public class Settings
 	 * Point de vie des Onager.
 	 */
 	public static final int ONAGER_HP = 19;
-	
+
 	/**
 	 * Point de vie des Spy.
 	 */
 	public static final int SPY_HP = 6;
-	
+
 	/**
 	 * Point de vie des Berserker.
 	 */
 	public static final int BERSERKER_HP = 16;
-	
+
 	/**
 	 * Point de vie des Archer
 	 */
@@ -219,17 +219,17 @@ public class Settings
 	 * Dégâts des Onager.
 	 */
 	public static final int ONAGER_DAMAGE = 36;
-	
+
 	/**
-	 * Dégâts des Psy. 
+	 * Dégâts des Psy.
 	 */
 	public static final int SPY_DAMAGE = 6;
-	
+
 	/**
 	 * Dégâts des Berserker.
 	 */
 	public static final int BERSERKER_DAMAGE = 72;
-	
+
 	/**
 	 * Dégâts des Archer.
 	 */
@@ -249,17 +249,17 @@ public class Settings
 	 * Coût d'un Onager.
 	 */
 	public static final int ONAGER_COST = 192;
-	
+
 	/**
 	 * Coût d'un Psy.
 	 */
 	public static final int SPY_COST = 80;
-	
+
 	/**
 	 * Coût d'un Berserker.
 	 */
 	public static final int BERSERKER_COST = 80;
-	
+
 	/**
 	 * Coût d'un Archer.
 	 */
@@ -279,17 +279,17 @@ public class Settings
 	 * Vitesse de déplacement d'un Onager.
 	 */
 	public static final int ONAGER_SPEED = 35;
-	
+
 	/**
 	 * Vitesse de déplacement d'un Psy.
 	 */
 	public static final int SPY_SPEED = 80;
-	
+
 	/**
 	 * Vitesse de déplacement d'un Berserker.
 	 */
 	public static final int BERSERKER_SPEED = 65;
-	
+
 	/**
 	 * Vetisse de déplacement d'un Archer.
 	 */
@@ -309,49 +309,49 @@ public class Settings
 	 * Temps de production de base d'un Onager (en seconde).
 	 */
 	public static final double ONAGER_TIME_PRODUCTION = 3d;
-	
+
 	/**
 	 * Temps de production de base d'un Psy.
 	 */
 	public static final double SPY_TIME_PRODUCTION = 0.875d;
-	
+
 	/**
 	 * Temps de production de base d'un Berserker.
 	 */
 	public static final double BERSERKER_TIME_PRODUCTION = 0.75d;
-	
+
 	/**
 	 * Temps de production de base d'un Archer.
 	 */
 	public static final double ARCHER_TIME_PRODUCTION = 1.5d;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int PIKER_VILLAGER = 1;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int KNIGHT_VILLAGER = 2;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int ONAGER_VILLAGER = 3;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int ARCHER_VILLAGER = 1;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int BERSERKER_VILLAGER = 1;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int SPY_VILLAGER = 2;
 

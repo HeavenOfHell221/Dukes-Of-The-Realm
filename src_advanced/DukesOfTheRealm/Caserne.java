@@ -8,7 +8,6 @@ import Interface.IBuilding;
 import Interface.IProduction;
 import Utility.BuildingPack;
 import Utility.SoldierPack;
-import Utility.Time;
 
 /**
  * Gère la production des unités et l'amélioration du château.
@@ -33,18 +32,16 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 * Le château à qui appartient cette caserne.
 	 */
 	private Castle castle;
-	
+
 	/**
 	 * Nombre de chaque type d'unité dans la queue.
 	 */
 	private SoldierPack<Integer> soldierPack;
 
-	
 	/**
 	 * Nombre de chaque type de bâtiment dans la queue.
 	 */
 	private BuildingPack<Integer> buildingPack;
-	
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -60,14 +57,18 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.mainProductionQueue = new ArrayDeque<>();
 		this.productionUnitList = new ArrayList<>();
 		this.castle = castle;
-		this.soldierPack = new SoldierPack<Integer>(0, 0, 0, 0, 0, 0);
-		this.buildingPack = new BuildingPack<Integer>(0, 0, 0, 0, 0);
+		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		this.buildingPack = new BuildingPack<>(0, 0, 0, 0, 0);
+		this.productionUnitList.add(new ProductionUnit(this.castle, this));
+		this.productionUnitList.add(new ProductionUnit(this.castle, this));
+		this.productionUnitList.add(new ProductionUnit(this.castle, this));
+		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 	}
-	
+
 	public Caserne()
 	{
-		
+
 	}
 
 	/*************************************************/
@@ -82,7 +83,6 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
 
 	/**
 	 * Retire la production en fin de queue.
@@ -136,9 +136,9 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			return false;
 		}
-		
+
 		p.productionStart(this);
-		
+
 		this.mainProductionQueue.addLast(p);
 		return true;
 	}
@@ -152,7 +152,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	public final ArrayDeque<IProduction> getMainProductionQueue()
 	{
-		return mainProductionQueue;
+		return this.mainProductionQueue;
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	public final SoldierPack<Integer> getSoldierPack()
 	{
-		return soldierPack;
+		return this.soldierPack;
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	public final BuildingPack<Integer> getBuildingPack()
 	{
-		return buildingPack;
+		return this.buildingPack;
 	}
 
 	@Override
@@ -179,31 +179,31 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public int getProductionCost(Castle castle)
+	public int getProductionCost(final Castle castle)
 	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void productionFinished(Castle castle, boolean cancel)
+	public void productionFinished(final Castle castle, final boolean cancel)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void productionStart(Caserne caserne)
+	public void productionStart(final Caserne caserne)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void setLevel(int level)
+	public void setLevel(final int level)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

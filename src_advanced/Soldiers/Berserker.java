@@ -1,9 +1,7 @@
 package Soldiers;
 
-import DukesOfTheRealm.Caserne;
-import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.ReserveOfSoldiers;
 import Enums.SoldierEnum;
+import javafx.scene.paint.Color;
 
 public class Berserker extends Soldier
 {
@@ -11,5 +9,12 @@ public class Berserker extends Soldier
 	{
 		super();
 		this.type = SoldierEnum.Berserker;
+	}
+
+	@Override
+	public void Awake(final Color color)
+	{
+		AddKnightRepresentation();
+		super.Awake(color);
 	}
 }

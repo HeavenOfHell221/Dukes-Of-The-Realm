@@ -4,6 +4,7 @@ import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Main;
 import Interface.IUI;
 import Interface.IUpdate;
+import Utility.Input;
 import Utility.Settings;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -90,6 +91,8 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 */
 	private final ImageView imagePause;
 
+	private Input input;
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -102,6 +105,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 		this.attackPreview = new UIAttackPreview();
 		this.castlePreview = new UICastlePreview();
 		this.productionUnitPreview = new UIProductionUnitPreview();
+
 		this.imagePause = newImageView("/images/Pause_128.png", 128, 128);
 		this.imagePause.setMouseTransparent(true);
 	}
@@ -116,6 +120,9 @@ public class UIManager extends Parent implements IUI, IUpdate
 		addAllNodes();
 		relocateAllNodes();
 		setBackground();
+
+		this.attackPreview.setInput(this.input);
+		this.productionUnitPreview.setInput(this.input);
 
 		getAttackPreview().start();
 		getCastlePreview().start();
@@ -151,6 +158,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 			this.castlePreview.update(now, pause);
 		}
 		this.imagePause.setVisible(pause);
+		this.input.update(now, pause);
 	}
 
 	/*************************************************/
@@ -312,5 +320,13 @@ public class UIManager extends Parent implements IUI, IUpdate
 	public static final UICastlePreview getCastlePreview()
 	{
 		return instance.castlePreview;
+	}
+
+	/**
+	 * @param input the input to set
+	 */
+	public final void setInput(final Input input)
+	{
+		this.input = input;
 	}
 }

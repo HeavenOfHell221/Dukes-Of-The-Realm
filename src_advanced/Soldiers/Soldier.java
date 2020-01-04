@@ -83,12 +83,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	 * le soldat et le coin d'un château.
 	 */
 	private CollisionEnum lastCollision = CollisionEnum.None;
-	
+
 	/**
 	 * Dégâts restant avant que l'unité meurt.
 	 */
 	private int remainingDamage;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -129,7 +129,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 		getShape().setFill(color);
 		getLayer().getChildren().add(getShape());
 		this.onField = true;
-		this.remainingDamage = type.damage;
+		this.remainingDamage = this.type.damage;
 	}
 
 	/**
@@ -193,8 +193,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
-	 /**
+
+	/**
 	 * Ajoute une unité en renfort dans la réserve en paramètre.
 	 *
 	 * @param reserve La réserve dans laquelle l'unité va.
@@ -218,9 +218,9 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	@Override
 	public void productionStart(final Caserne caserne)
 	{
-		caserne.getSoldierPack().replace(this.type, caserne.getSoldierPack().get(this.type) + 1); 
+		caserne.getSoldierPack().replace(this.type, caserne.getSoldierPack().get(this.type) + 1);
 	}
-	
+
 	/**
 	 * Donne un point d'attaque au soldat s'il y en a un disponible, sinon le soldat passe en attente
 	 * d'un point d'attaque
@@ -641,7 +641,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	public double getProductionTime()
 	{
 		return getType().productionTime;
-	}	
+	}
 
 	@Override
 	public int getProductionCost(final Castle castle)
