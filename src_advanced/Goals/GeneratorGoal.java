@@ -6,10 +6,12 @@ import java.util.Random;
 import Duke.Actor;
 import Duke.DukeAI;
 import DukesOfTheRealm.Castle;
+import Enums.CharacterCastleEnum;
 import Enums.GoalEnum;
 import SimpleGoal.CastleGoal;
 import SimpleGoal.Goal;
 import SimpleGoal.SaveFlorinGoal;
+import Utility.SoldierPack;
 
 /**
  * Génère des objectifs aléatoire pour les IA.
@@ -50,12 +52,13 @@ public class GeneratorGoal implements Serializable
 	 * Prend au hasard un type d'objectif et retoune un objectif de ce type.
 	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
+	 * @param character Le caractère du château qui aurra l'objectif.
 	 * @return        Un objectif pour l'IA.
 	 * @see           Enums.GoalEnum
 	 */
-	public static Goal getNewGoal(final Castle castle)
+	public static Goal getNewGoal(final Castle castle, final CharacterCastleEnum character)
 	{
-		switch (GoalEnum.getRandomType())
+		switch (GoalEnum.getRandomType(character))
 		{
 			case Backup:
 				return getNewGoalBackup(castle);
@@ -64,7 +67,7 @@ public class GeneratorGoal implements Serializable
 			case Finance:
 				return getNewGoalFinance(castle);
 			case Production:
-				return getNewGoalProduction(castle);
+				return getNewGoalProduction(castle, character);
 			case Building:
 				return getNewGoalBuilding(castle);
 			default:
@@ -166,13 +169,17 @@ public class GeneratorGoal implements Serializable
 	 * Génère un objectif visant à produire des unités.
 	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
+	 * @param character Le caractère du château qui aura cette objectif.
 	 * @return        Un objectif.
 	 */
-	private static Goal getNewGoalProduction(final Castle castle)
+	private static Goal getNewGoalProduction(final Castle castle, final CharacterCastleEnum character)
 	{
 		final int lvl = castle.getLevel();
-		switch (rand.nextInt(7))
+		final SoldierPack pack = new SoldierPack();
+		
+		/*switch (rand.nextInt(7))
 		{
+			
 			// Piker
 			case 0:
 				return new MultiSoldierGoal(castle, rand.nextInt(12 + lvl) + rand.nextInt(3) * lvl, 0, 0);
@@ -200,7 +207,22 @@ public class GeneratorGoal implements Serializable
 						rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
 			default:
 				break;
-		}
-		return null;
+				
+		}*/
+	}
+	
+	private void goalProductionOffensive()
+	{
+		
+	}
+	
+	private void goalProductionDefensive()
+	{
+		
+	}
+	
+	private void goalProductionSupport()
+	{
+		
 	}
 }

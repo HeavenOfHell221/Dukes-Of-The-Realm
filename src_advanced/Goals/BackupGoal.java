@@ -5,6 +5,7 @@ import java.util.Random;
 
 import DukesOfTheRealm.Castle;
 import SimpleGoal.Goal;
+import Utility.SoldierPack;
 
 /**
  * Objectif visant à envoyer du renfort à un château nous appartenant. Reproduit le même montant
@@ -32,7 +33,7 @@ public class BackupGoal extends Goal
 	 * @param nbKnights Le nombre de Knight à envoyer.
 	 * @param nbOnagers Le nombre de Onager à envoyer.
 	 */
-	public BackupGoal(final Castle origin, final int nbPikers, final int nbKnights, final int nbOnagers)
+	public BackupGoal(final Castle origin, SoldierPack<Integer> pack)
 	{
 		this.goals = new GenericGoal();
 		Random rand = new Random();
@@ -42,9 +43,9 @@ public class BackupGoal extends Goal
 		if (!list.isEmpty()) // Si l'acteur a au moins 2 châteaux
 		{
 			Castle destination = list.get(rand.nextInt(list.size())); // On prend un château au hasard
-			AttackGoal g = new AttackGoal(origin, destination, nbPikers, nbKnights, nbOnagers);
+			AttackGoal g = new AttackGoal(origin, destination, pack);
 			this.goals.addLast(g);
-			this.goals.addLast(new MultiSoldierGoal(origin, nbPikers, nbKnights, nbOnagers));
+			this.goals.addLast(new MultiSoldierGoal(origin, pack));
 		}
 	}
 

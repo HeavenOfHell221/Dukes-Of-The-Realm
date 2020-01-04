@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
@@ -28,7 +29,6 @@ public class Onager extends Soldier
 	{
 		super(layer, coord, itsOst);
 		this.type = SoldierEnum.Onager;
-		this.stats = new Stats(speed, Settings.ONAGER_HP, Settings.ONAGER_DAMAGE);
 	}
 
 	/**
@@ -37,6 +37,7 @@ public class Onager extends Soldier
 	public Onager()
 	{
 		super();
+		this.type = SoldierEnum.Onager;
 	}
 
 	@Override
@@ -44,39 +45,5 @@ public class Onager extends Soldier
 	{
 		AddOnagerRepresentation();
 		super.Awake(color);
-	}
-
-	@Override
-	public double getProductionTime()
-	{
-		return Settings.ONAGER_TIME_PRODUCTION;
-	}
-
-	@Override
-	public int getProductionCost(final Castle castle)
-	{
-		return Settings.ONAGER_COST;
-	}
-
-	@Override
-	public void addInReserve(final ReserveOfSoldiers reserve)
-	{
-		reserve.addOnager();
-	}
-
-	@Override
-	public void productionFinished(final Castle castle, final boolean cancel)
-	{
-		if (!cancel)
-		{
-			castle.addOnager();
-		}
-		castle.getCaserne().nbOnagersInProduction--;
-	}
-
-	@Override
-	public void productionStart(final Castle castle)
-	{
-		castle.getCaserne().nbOnagersInProduction++;
 	}
 }

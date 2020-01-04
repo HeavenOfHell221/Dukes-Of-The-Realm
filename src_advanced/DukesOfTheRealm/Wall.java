@@ -1,8 +1,8 @@
 package DukesOfTheRealm;
 
 import java.io.Serializable;
-
-import Interface.IUpdate;
+import Interface.IBuilding;
+import Interface.IProduction;
 
 import static Utility.Settings.*;
 
@@ -10,7 +10,7 @@ import static Utility.Settings.*;
  * Représente un rempart qui protège un château.
  * Un rempart augmente le maximum de vie des unités en défense.
  */
-public class Wall implements Serializable
+public class Wall implements Serializable, IBuilding, IProduction
 {
 	/**
 	 * Le niveau du rempart, de base à 0.
@@ -71,5 +71,33 @@ public class Wall implements Serializable
 	public final float getMultiplicator()
 	{
 		return multiplicator;
+	}
+
+	@Override
+	public double getProductionTime()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getProductionCost(Castle castle)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void productionFinished(Castle castle, boolean cancel)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void productionStart(Caserne caserne)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

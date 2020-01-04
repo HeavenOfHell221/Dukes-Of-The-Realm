@@ -25,7 +25,7 @@ import static Utility.Settings.SOLDIER_STROKE_TYPE;
 import java.io.Serializable;
 
 import DukesOfTheRealm.Castle.Orientation;
-import Interface.IProductionUnit;
+import Interface.IProduction;
 import Utility.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -41,7 +41,7 @@ import javafx.scene.shape.StrokeType;
 /**
  * Représente un élément graphique à l'écran
  */
-public abstract class Sprite extends Parent implements IProductionUnit, Serializable
+public abstract class Sprite extends Parent implements Serializable
 {
 
 	/*************************************************/

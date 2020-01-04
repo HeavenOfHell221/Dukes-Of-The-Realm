@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
@@ -29,7 +30,6 @@ public class Piker extends Soldier
 	{
 		super(layer, coord, itsOst);
 		this.type = SoldierEnum.Piker;
-		this.stats = new Stats(speed, Settings.PIKER_HP, Settings.PIKER_DAMAGE);
 	}
 
 	/**
@@ -38,6 +38,7 @@ public class Piker extends Soldier
 	public Piker()
 	{
 		super();
+		this.type = SoldierEnum.Piker;
 	}
 
 	@Override
@@ -45,39 +46,5 @@ public class Piker extends Soldier
 	{
 		AddPikerRepresentation();
 		super.Awake(color);
-	}
-
-	@Override
-	public double getProductionTime()
-	{
-		return Settings.PIKER_TIME_PRODUCTION;
-	}
-
-	@Override
-	public int getProductionCost(final Castle castle)
-	{
-		return Settings.PIKER_COST;
-	}
-
-	@Override
-	public void addInReserve(final ReserveOfSoldiers reserve)
-	{
-		reserve.addPiker();
-	}
-
-	@Override
-	public void productionFinished(final Castle castle, final boolean cancel)
-	{
-		if (!cancel)
-		{
-			castle.addPiker();
-		}
-		castle.getCaserne().nbPikersInProduction--;
-	}
-
-	@Override
-	public void productionStart(final Castle castle)
-	{
-		castle.getCaserne().nbPikersInProduction++;
 	}
 }

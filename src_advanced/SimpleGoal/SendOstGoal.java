@@ -1,6 +1,7 @@
 package SimpleGoal;
 
 import DukesOfTheRealm.Castle;
+import Utility.SoldierPack;
 
 /**
  * Objectif visant à envoyer une ost d'un château à un autre (attaque ou renfort).
@@ -13,19 +14,9 @@ public class SendOstGoal extends Goal
 	private Castle destination;
 
 	/**
-	 * Le nombre de Piker à envoyer dans l'ost.
+	 * Contient le nombre d'unité dans l'ost;
 	 */
-	private final int nbPikers;
-
-	/**
-	 * Le nombre de Knights à envoyer dans l'ost.
-	 */
-	private final int nbKnights;
-
-	/**
-	 * Le nombre de Onager à envoyer dans l'ost.
-	 */
-	private final int nbOnagers;
+	private SoldierPack soldierPack;
 
 	/**
 	 * Constructeur de SendOStGoal.
@@ -37,18 +28,16 @@ public class SendOstGoal extends Goal
 	 * @see               Goals.AttackGoal
 	 * @see               Goals.BackupGoal
 	 */
-	public SendOstGoal(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers)
+	public SendOstGoal(final Castle destination, SoldierPack soldierPack)
 	{
 		this.destination = destination;
-		this.nbPikers = nbPikers;
-		this.nbKnights = nbKnights;
-		this.nbOnagers = nbOnagers;
+		this.soldierPack = soldierPack;
 	}
 
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		return castle.createOst(this.destination, this.nbPikers, this.nbKnights, this.nbOnagers, false);
+		return castle.createOst(this.destination, this.soldierPack);
 	}
 
 	/**

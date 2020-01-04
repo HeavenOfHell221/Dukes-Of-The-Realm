@@ -1,44 +1,15 @@
 package Soldiers;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.ReserveOfSoldiers;
+import Enums.SoldierEnum;
 
 public class Berserker extends Soldier
 {
-
-	@Override
-	public void productionFinished(Castle castle, boolean cancel)
+	public Berserker()
 	{
-		// TODO Auto-generated method stub
-		
+		super();
+		this.type = SoldierEnum.Berserker;
 	}
-
-	@Override
-	public void productionStart(Castle castle)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addInReserve(ReserveOfSoldiers reserve)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public double getProductionTime()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getProductionCost(Castle castle)
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

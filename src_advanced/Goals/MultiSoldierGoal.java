@@ -6,6 +6,8 @@ import DukesOfTheRealm.Castle;
 import Enums.SoldierEnum;
 import SimpleGoal.Goal;
 import SimpleGoal.SoldierGoal;
+import Utility.Settings;
+import Utility.SoldierPack;
 
 /**
  * Objectif visant à produire des unités.
@@ -20,87 +22,46 @@ public class MultiSoldierGoal extends Goal
 	private final GenericGoal goals;
 
 	/**
-	 * Nombre de Piker qu'on veut créer
-	 */
-	private final int nbPikers;
-
-	/**
-	 * Nombre de Knight qu'on veut créer.
-	 */
-	private final int nbKnights;
-
-	/**
-	 * Nombre de Onager qu'on veut créer.
-	 */
-	private final int nbOnagers;
-
-	/**
 	 * Constructeur De MultiSoldierGoal.
 	 * <p>
 	 * Va remplir la queue aléatoirement entre les différents type d'unité.
 	 * </p>
 	 *
 	 * @param castle     Le château sur lequel cet ojectif est à accomplir.
-	 * @param nbPikers_  Le nombre de Piker à produire.
-	 * @param nbKnights_ Le nombre de Knight à produire.
-	 * @param nbOnagers_ Le nombre de Onager à produire.
+	 * @param soldierPack Contient le nombre d'unité de chaque type à produire.
 	 * @see              SimpleGoal.SoldierGoal
 	 */
-	public MultiSoldierGoal(final Castle castle, int nbPikers_, int nbKnights_, int nbOnagers_)
+	public MultiSoldierGoal(final Castle castle, final SoldierPack<Integer> soldierPack)
 	{
 		this.goals = new GenericGoal();
-		Random rand = new Random();
 
-		this.nbPikers = nbPikers_;
-		this.nbKnights = nbKnights_;
-		this.nbOnagers = nbOnagers_;
-
-		int count = nbPikers_ + nbKnights_ + nbOnagers_;
-
+		int count = 0;
+		
+		for(int i : soldierPack.values())
+		{
+			count += i;
+		}
+	
 		while (count > 0)
 		{
-			switch (rand.nextInt(3))
+			SoldierEnum s = SoldierEnum.getRandomType();
+			if(soldierPack.get(s) > 0)
 			{
-				case 0:
-					if (nbPikers_ > 0)
-					{
-						this.goals.addLast(new SoldierGoal(SoldierEnum.Piker));
-						nbPikers_--;
-					}
-					break;
-
-				case 1:
-					if (nbKnights_ > 0)
-					{
-						this.goals.addLast(new SoldierGoal(SoldierEnum.Knight));
-						nbKnights_--;
-					}
-					break;
-
-				case 2:
-					if (nbOnagers_ > 0)
-					{
-						this.goals.addLast(new SoldierGoal(SoldierEnum.Onager));
-						nbOnagers_--;
-					}
-					break;
-
-				default:
-					break;
+				soldierPack.replace(s, soldierPack.get(s) - 1);
+				this.goals.addLast(new SoldierGoal(s));
 			}
-			count = nbPikers_ + nbKnights_ + nbOnagers_;
+			count = 0;
+			for(int i : soldierPack.values())
+			{
+				count += i;
+			}
 		}
 	}
+
 
 	@Override
 	public boolean goal(final Castle castle)
 	{
 		return this.goals.goal(castle);
-	}
-
-	@Override
-	public String toString()
-	{
-		return "MultiSoldierGoal [nbPikers= " + this.nbPikers + ", nbKnights= " + this.nbKnights + ", nbOnagers= " + this.nbOnagers + "]";
 	}
 }

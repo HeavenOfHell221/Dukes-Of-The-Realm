@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
@@ -29,7 +30,6 @@ public class Knight extends Soldier
 	{
 		super(layer, coord, itsOst);
 		this.type = SoldierEnum.Knight;
-		this.stats = new Stats(speed, Settings.KNIGHT_HP, Settings.KNIGHT_DAMAGE);
 	}
 
 	/**
@@ -38,6 +38,7 @@ public class Knight extends Soldier
 	public Knight()
 	{
 		super();
+		this.type = SoldierEnum.Knight;
 	}
 
 	@Override
@@ -45,39 +46,5 @@ public class Knight extends Soldier
 	{
 		AddKnightRepresentation();
 		super.Awake(color);
-	}
-
-	@Override
-	public double getProductionTime()
-	{
-		return Settings.KNIGHT_TIME_PRODUCTION;
-	}
-
-	@Override
-	public int getProductionCost(final Castle castle)
-	{
-		return Settings.KNIGHT_COST;
-	}
-
-	@Override
-	public void addInReserve(final ReserveOfSoldiers reserve)
-	{
-		reserve.addKnight();
-	}
-
-	@Override
-	public void productionFinished(final Castle castle, final boolean cancel)
-	{
-		if (!cancel)
-		{
-			castle.addKnight();
-		}
-		castle.getCaserne().nbKnightsInProduction--;
-	}
-
-	@Override
-	public void productionStart(final Castle castle)
-	{
-		castle.getCaserne().nbKnightsInProduction++;
 	}
 }

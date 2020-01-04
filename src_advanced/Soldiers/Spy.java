@@ -1,43 +1,15 @@
 package Soldiers;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.ReserveOfSoldiers;
+import Enums.SoldierEnum;
 
 public class Spy extends Soldier
 {
-
-	@Override
-	public void productionFinished(Castle castle, boolean cancel)
+	public Spy()
 	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void productionStart(Castle castle)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addInReserve(ReserveOfSoldiers reserve)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public double getProductionTime()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getProductionCost(Castle castle)
-	{
-		// TODO Auto-generated method stub
-		return 0;
+		super();
+		this.type = SoldierEnum.Spy;
 	}
 }

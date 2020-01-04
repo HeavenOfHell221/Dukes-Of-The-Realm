@@ -1,20 +1,24 @@
 package UI;
 
 import static Utility.Settings.KNIGHT_COST;
-import static Utility.Settings.LEVEL_UP_COST;
+import static Utility.Settings.CASTLE_COST;
 import static Utility.Settings.MARGIN_PERCENTAGE;
 import static Utility.Settings.ONAGER_COST;
 import static Utility.Settings.PIKER_COST;
 import static Utility.Settings.SCENE_WIDTH;
 
 import DukesOfTheRealm.Castle;
-import Interface.IProductionUnit;
+import Enums.BuildingEnum;
+import Enums.SoldierEnum;
+import Interface.IProduction;
 import Interface.IUI;
 import Interface.IUpdate;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
+import Utility.BuildingPack;
 import Utility.Input;
+import Utility.SoldierPack;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -44,26 +48,6 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
-	/**
-	 * Bouton pour produire un Piker.
-	 */
-	private final Button buttonCreatePiker;
-
-	/**
-	 * Bouton pour produire un Knight.
-	 */
-	private final Button buttonCreateKnight;
-
-	/**
-	 * Bouton pour produire un Onager
-	 */
-	private final Button buttonCreateOnager;
-
-	/**
-	 * Bouton pour améliorer le château
-	 */
-	private final Button buttonUpgradeCastle;
 
 	/**
 	 * Bouton pour retirer le dernier élément de la queue de production.
@@ -100,37 +84,16 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	private Castle currentCastle;
 
 	/**
-	 * Coût de production d'un Piker affiché sur le bouton.
-	 *
-	 * @see UIProductionUnitPreview#buttonCreatePiker
-	 */
-	private final Text pikerCost;
-
-	/**
-	 * Coût de production d'un Onager affiché sur le bouton.
-	 *
-	 * @see UIProductionUnitPreview#buttonCreateOnager
-	 */
-	private final Text onagerCost;
-
-	/**
-	 * Coût de production d'un Knight affiché sur le bouton.
-	 *
-	 * @see UIProductionUnitPreview#buttonCreateKnight
-	 */
-	private final Text knightCost;
-
-	/**
-	 * Coût de production de l'amélioration du château affiché sur le bouton.
-	 *
-	 * @see UIProductionUnitPreview#buttonUpgradeCastle
-	 */
-	private final Text castleCost;
-
-	/**
 	 * Object Input pour récupérer les touches clavier saisies par l'utilisateur.
 	 */
 	private Input input;
+	
+	
+	private SoldierPack<Text> textCostSoldier;
+	private BuildingPack<Text> textCostBuilding;
+	
+	private SoldierPack<Button> productSoldier;
+	private BuildingPack<Button> upgradeBuilding;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -141,10 +104,18 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	public UIProductionUnitPreview()
 	{
-		this.buttonCreatePiker = new Button();
-		this.buttonCreateKnight = new Button();
-		this.buttonCreateOnager = new Button();
-		this.buttonUpgradeCastle = new Button();
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			this.productSoldier.replace(s, new Button());
+			this.textCostSoldier.replace(s, new Text());
+		}
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			this.upgradeBuilding.replace(b, new Button());
+			this.textCostBuilding.replace(b, new Text());
+		}
+		
 		this.removeAllProduction = new Button();
 		this.removeLastProduction = new Button();
 
@@ -152,11 +123,6 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		this.backgroundTime = new Rectangle(240, 40);
 		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
-
-		this.castleCost = new Text();
-		this.knightCost = new Text();
-		this.onagerCost = new Text();
-		this.pikerCost = new Text();
 	}
 
 	/*************************************************/
@@ -173,10 +139,16 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setBar();
 		setAllVisible(false);
 		setAllTexts();
-		this.castleCost.setVisible(false);
-		this.knightCost.setVisible(false);
-		this.onagerCost.setVisible(false);
-		this.pikerCost.setVisible(false);
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			setVisible(this.textCostSoldier.get(s), false);
+		}
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			setVisible(this.textCostBuilding.get(b), false);
+		}
 	}
 
 	/*************************************************/
@@ -186,64 +158,43 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		setFill(this.currentCastle.getRatio());
+		//setFill(this.currentCastle.getRatio());
 		this.input.update(now, pause);
-		if (this.castleCost.isVisible())
+		
+		for(SoldierEnum s : SoldierEnum.values())
 		{
-			if (this.input.isShift())
+			if(this.textCostSoldier.get(s).isVisible())
 			{
-				int price = 0;
-
-				for (int i = 0; i < 10; i++)
+				if(this.input.isShift())
 				{
-					price += LEVEL_UP_COST * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction() + i);
+					this.textCostSoldier.get(s).setText((s.cost * 10) + "");
 				}
-
-				this.castleCost.setText(price + "");
-			}
-			else
-			{
-				this.castleCost
-						.setText(LEVEL_UP_COST * (this.currentCastle.getLevel() + this.currentCastle.getNbCastleInProduction()) + "");
-			}
-
-		}
-
-		if (this.pikerCost.isVisible())
-		{
-			if (this.input.isShift())
-			{
-				this.pikerCost.setText(PIKER_COST * 10 + "");
-			}
-			else
-			{
-				this.pikerCost.setText(PIKER_COST + "");
+				else
+				{
+					this.textCostSoldier.get(s).setText(s.cost + "");
+				}
 			}
 		}
-
-		if (this.onagerCost.isVisible())
+		
+		for(BuildingEnum b : BuildingEnum.values())
 		{
+			if(this.textCostBuilding.get(b).isVisible())
+			{
+				if(this.input.isShift())
+				{
+					int price = 0;
 
-			if (this.input.isShift())
-			{
-				this.onagerCost.setText(ONAGER_COST * 10 + "");
-			}
-			else
-			{
-				this.onagerCost.setText(ONAGER_COST + "");
-			}
-		}
+					for (int i = 0; i < 10; i++)
+					{
+						price += b.cost * (this.currentCastle.getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b) + i);
+					}
 
-		if (this.knightCost.isVisible())
-		{
-
-			if (this.input.isShift())
-			{
-				this.knightCost.setText(KNIGHT_COST * 10 + "");
-			}
-			else
-			{
-				this.knightCost.setText(KNIGHT_COST + "");
+					this.textCostBuilding.get(b).setText(price + "");
+				}
+				else
+				{
+					this.textCostBuilding.get(b).setText(b.cost * (this.currentCastle.getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b)) + "");
+				}
 			}
 		}
 	}
@@ -471,8 +422,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 			}
 		});
 
-		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.resetQueue(true));
-		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.removeLastProduction(true));
+		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.getCaserne().resetQueue(true));
+		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.getCaserne().removeLastProduction(true));
 
 		this.buttonCreatePiker.setOnMouseEntered(event ->
 		{
@@ -515,7 +466,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 * @return   Retourne true si la production a bien été ajouté à la queue de production de la caserne
 	 *           du château courant.
 	 */
-	private boolean addProduction(final Button b, final IProductionUnit p)
+	private boolean addProduction(final Button b, final IProduction p)
 	{
 		if (this.currentCastle.addProduction(p))
 		{
@@ -607,7 +558,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	public void relocateAllNodes()
 	{
 		final int i = 90;
-		final int offset = 540;
+		final int offset = 560;
 
 		final float margin = (float) MARGIN_PERCENTAGE + 0.076f;
 

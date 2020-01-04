@@ -1,5 +1,12 @@
 package DukesOfTheRealm;
 
+import static Utility.Settings.ARCHER_SPEED;
+import static Utility.Settings.BERSERKER_SPEED;
+import static Utility.Settings.KNIGHT_SPEED;
+import static Utility.Settings.ONAGER_SPEED;
+import static Utility.Settings.PIKER_SPEED;
+import static Utility.Settings.SPY_SPEED;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,6 +21,7 @@ import Soldiers.Piker;
 import Soldiers.Soldier;
 import Utility.Point2D;
 import Utility.Settings;
+import Utility.SoldierPack;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -22,8 +30,6 @@ import javafx.scene.paint.Color;
  */
 public class Ost implements IUpdate, Serializable
 {
-	private static final long serialVersionUID = 1L;
-
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
@@ -55,26 +61,17 @@ public class Ost implements IUpdate, Serializable
 	 * positions d'attaque du château sont occupées.
 	 */
 	private Point2D waitingPoint = null;
-
+	
 	/**
-	 * Le nombre total de soldats qui composent l'ost, tous types confondus.
+	 * Nombre d'unité total de l'ost.
 	 */
 	private final int nbSoldiers;
 
 	/**
-	 * Le nombre de soldats de type Piquiers qui composent l'ost.
+	 * Nombre d'unité de l'ost.
+	 * @see Utility.SoldierPack
 	 */
-	private final int nbPikers;
-
-	/**
-	 * Le nombre de soldats de type Chevaliers qui composent l'ost.
-	 */
-	private final int nbKnights;
-
-	/**
-	 * Le nombre de soldats de type Catapulte qui composent l'ost.
-	 */
-	private final int nbOnagers;
+	private SoldierPack<Integer> soldierPack;
 
 	/**
 	 * La vitesse de déplacement de l'ost.
@@ -126,25 +123,24 @@ public class Ost implements IUpdate, Serializable
 	 *
 	 * @param origin      la référence vers le château d'origine.
 	 * @param destination la référence vers le château de destination.
-	 * @param nbPikers    le nombre de soldats de type Piquier.
-	 * @param nbKnights   le nombre de soldats de type Chevalier.
-	 * @param nbOnagers   le nombre de soldats de type Catapulte.
+	 * @param soldierPack Le nombre d'unité dans l'ost.
 	 * @param color       la couleur permettant de représenter l'ost à l'écran.
-	 * @param isBackup    le booléen indiquant si l'ost correspond à un transport de renforts vers un
-	 *                    château allié.
 	 */
-	public Ost(final Castle origin, final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers,
-			final Color color, final boolean isBackup)
+	public Ost(final Castle origin, final Castle destination, SoldierPack<Integer> soldierPack, final Color color)
 	{
 		this.origin = origin;
 		this.destination = destination;
-		this.nbPikers = nbPikers;
-		this.nbKnights = nbKnights;
-		this.nbOnagers = nbOnagers;
-		this.nbSoldiers = this.nbPikers + this.nbKnights + this.nbOnagers;
+		this.soldierPack = soldierPack;
 		this.soldiers = new ArrayList<>();
 		this.color = color;
-		this.isBackup = isBackup;
+		
+		int count = 0;
+		for(int i : soldierPack.values())
+		{
+			count += i;
+		}
+		
+		this.nbSoldiers = count;
 	}
 
 	/*************************************************/
@@ -183,7 +179,7 @@ public class Ost implements IUpdate, Serializable
 	public void update(final long now, final boolean pause)
 	{
 		this.isBackup = this.origin.getActor() == this.destination.getActor();
-
+		
 		if (!this.fullyDeployed && Time(now, pause))
 		{
 			DeployOneSoldiersWave();
@@ -230,9 +226,12 @@ public class Ost implements IUpdate, Serializable
 	 */
 	private int SetOstSpeed()
 	{
-		int minimalSpeed = Settings.KNIGHT_SPEED;
-		minimalSpeed = this.nbPikers > 0 ? Settings.PIKER_SPEED : minimalSpeed;
-		minimalSpeed = this.nbOnagers > 0 ? Settings.ONAGER_SPEED : minimalSpeed;
+		int minimalSpeed = Integer.MAX_VALUE;	
+
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			minimalSpeed = soldierPack.get(s) > 0 && s.speed < minimalSpeed ? s.speed : minimalSpeed;
+		}
 		return minimalSpeed;
 	}
 
@@ -316,6 +315,7 @@ public class Ost implements IUpdate, Serializable
 	{
 		final int nbSpawn = this.nbSoldiersSpawned <= this.nbSoldiers - Settings.SIMULTANEOUS_SPAWNS ? Settings.SIMULTANEOUS_SPAWNS
 				: this.nbSoldiers - this.nbSoldiersSpawned;
+		
 		Main.nbSoldier += nbSpawn;
 		switch (this.origin.getOrientation())
 		{
@@ -323,90 +323,72 @@ public class Ost implements IUpdate, Serializable
 			case South:
 				for (int i = 0; i < nbSpawn; i++)
 				{
-					SpawnSoldier(this.origin.getX() + Settings.THIRD_OF_CASTLE * i, this.origin.getY());
+					spawnSoldier(this.origin.getX() + Settings.THIRD_OF_CASTLE * i, this.origin.getY());
 				}
 				break;
 			case West:
 			case East:
 				for (int i = 0; i < nbSpawn; i++)
 				{
-					SpawnSoldier(this.origin.getX(), this.origin.getY() + Settings.THIRD_OF_CASTLE * i);
+					spawnSoldier(this.origin.getX(), this.origin.getY() + Settings.THIRD_OF_CASTLE * i);
 				}
 				break;
 			default:
 				break;
 		}
-
+		
 		if (this.nbSoldiersSpawned == this.nbSoldiers)
 		{
 			this.fullyDeployed = true;
 		}
 	}
-
+	
 	/**
 	 * Fais apparaître un soldat sur le terrain.
 	 *
 	 * @param x l'abscisse du soldat à créer.
 	 * @param y l'ordonnée du soldat à créer.
 	 */
-	private void SpawnSoldier(final int x, final int y)
+	private void spawnSoldier(final int x, final int y)
 	{
 		final SoldierEnum soldierType = getNextAvailableSoldier();
 		final Pane layer = this.origin.getLayer();
-
+		Soldier soldier = null;
 		switch (this.origin.getOrientation())
 		{
 			case North:
 				switch (soldierType)
 				{
 					case Piker:
-						final Piker piker = new Piker(layer,
+						soldier = new Piker(layer,
 								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2), this, this.speed);
-						this.soldiers.add(piker);
-						piker.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer,
+						soldier = new Knight(layer,
 								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE), this, this.speed);
-						this.soldiers.add(knight);
-						knight.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer,
+						soldier = new Onager(layer,
 								new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
-						this.soldiers.add(onager);
-						onager.Awake(this.color);
-						this.nbSoldiersSpawned++;
-						break;
 					default:
 						break;
 				}
+				
 				break;
 			case South:
 				switch (soldierType)
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+						soldier = new Piker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
 								this.speed);
-						this.soldiers.add(piker);
-						piker.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+						soldier = new Knight(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
 								this.speed);
-						this.soldiers.add(knight);
-						knight.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+						soldier = new Onager(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
 								this.speed);
-						this.soldiers.add(onager);
-						onager.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					default:
 						break;
@@ -416,25 +398,16 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType)
 				{
 					case Piker:
-						final Piker piker = new Piker(layer,
+						soldier = new Piker(layer,
 								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.PIKER_REPRESENTATION_RADIUS * 2, y), this, this.speed);
-						this.soldiers.add(piker);
-						piker.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer,
+						soldier = new Knight(layer,
 								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.KNIGHT_REPRESENTATION_SIZE, y), this, this.speed);
-						this.soldiers.add(knight);
-						knight.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer,
+						soldier = new Onager(layer,
 								new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
-						this.soldiers.add(onager);
-						onager.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					default:
 						break;
@@ -444,25 +417,16 @@ public class Ost implements IUpdate, Serializable
 				switch (soldierType)
 				{
 					case Piker:
-						final Piker piker = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+						soldier = new Piker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
 								this.speed);
-						this.soldiers.add(piker);
-						piker.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Knight:
-						final Knight knight = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+						soldier = new Knight(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
 								this.speed);
-						this.soldiers.add(knight);
-						knight.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					case Onager:
-						final Onager onager = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+						soldier = new Onager(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
 								this.speed);
-						this.soldiers.add(onager);
-						onager.Awake(this.color);
-						this.nbSoldiersSpawned++;
 						break;
 					default:
 						break;
@@ -473,33 +437,51 @@ public class Ost implements IUpdate, Serializable
 				break;
 		}
 
+		if(soldier != null)
+		{
+			this.soldiers.add(soldier);
+			soldier.Awake(this.color);
+			this.nbSoldiersSpawned++;
+			soldierPack.replace(soldierType, soldierPack.get(soldierType) - 1);
+		}
 	}
 
 	/**
-	 * Détermine le prochain type de soldat à déployer parmi ceux qui ne l'ont pas encore été. La
-	 * priorité est donnée aux unités les plus lentes.
+	 * Détermine le prochain type de soldat à déployer parmi ceux qui ne l'ont pas encore été.
+	 * La priorité est prédéfinie.
 	 *
 	 * @return le type du prochain soldat à déployer.
 	 */
 	private SoldierEnum getNextAvailableSoldier()
 	{
-		final AtomicReference<SoldierEnum> slowestType = new AtomicReference<>();
-		final long nbCreatedPikers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Piker).count();
-		final long nbCreatedOnagers = this.soldiers.stream().filter(soldier -> soldier.getType() == SoldierEnum.Onager).count();
-
-		if (nbCreatedOnagers < this.nbOnagers)
+		SoldierEnum nextType;
+		
+		if(soldierPack.get(SoldierEnum.Onager) > 0)
 		{
-			slowestType.set(SoldierEnum.Onager);
+			nextType = SoldierEnum.Onager;
 		}
-		else if (nbCreatedPikers < this.nbPikers)
+		else if(soldierPack.get(SoldierEnum.Spy) > 0)
 		{
-			slowestType.set(SoldierEnum.Piker);
+			nextType = SoldierEnum.Spy;
+		}
+		else if(soldierPack.get(SoldierEnum.Archer) > 0)
+		{
+			nextType = SoldierEnum.Archer;
+		}
+		else if(soldierPack.get(SoldierEnum.Berserker) > 0)
+		{
+			nextType = SoldierEnum.Berserker;
+		}
+		else if(soldierPack.get(SoldierEnum.Piker) > 0)
+		{
+			nextType = SoldierEnum.Piker;
 		}
 		else
 		{
-			slowestType.set(SoldierEnum.Knight);
+			nextType = SoldierEnum.Knight;
 		}
-		return slowestType.get();
+		
+		return nextType;
 	}
 
 	/**
@@ -543,8 +525,8 @@ public class Ost implements IUpdate, Serializable
 				this.destination.setActor(this.origin.getActor());
 
 				this.destination.switchColor(this.origin.getActor().getColor());
-				this.destination.resetQueue(false);
-				this.destination.reactivateAttack();
+				this.destination.getCaserne().resetQueue(false);
+				this.destination.getReserveOfSoldiers().reactivateAttack();
 			}
 		}
 	}
@@ -625,4 +607,11 @@ public class Ost implements IUpdate, Serializable
 		return this.soldiers;
 	}
 
+	/**
+	 * @return the speed
+	 */
+	public final int getSpeed()
+	{
+		return speed;
+	}
 }

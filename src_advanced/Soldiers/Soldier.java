@@ -3,16 +3,19 @@ package Soldiers;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
 import Enums.CollisionEnum;
 import Enums.SoldierEnum;
+import Interface.IProduction;
 import Interface.IUpdate;
 import Utility.Collision;
 import Utility.Point2D;
 import Utility.Settings;
+import Utility.SoldierPack;
 import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -20,7 +23,7 @@ import javafx.scene.paint.Color;
 /**
  * Classe abstraite représentant un Soldat.
  */
-public abstract class Soldier extends Sprite implements Serializable, IUpdate
+public abstract class Soldier extends Sprite implements Serializable, IUpdate, IProduction
 {
 
 	/*************************************************/
@@ -31,12 +34,6 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	 * Le type du soldat : Piquier / Chevalier / Catapulte.
 	 */
 	protected SoldierEnum type;
-
-	/**
-	 * Une structure contenant les données d'un soldat : vitesse de déplacement, point de vie et dégâts
-	 * à infliger.
-	 */
-	protected Stats stats;
 
 	/**
 	 * Référence vers l'ost à laquelle le soldat appartient.
@@ -86,7 +83,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	 * le soldat et le coin d'un château.
 	 */
 	private CollisionEnum lastCollision = CollisionEnum.None;
-
+	
+	/**
+	 * Dégâts restant avant que l'unité meurt.
+	 */
+	private int remainingDamage;
+	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -127,6 +129,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 		getShape().setFill(color);
 		getLayer().getChildren().add(getShape());
 		this.onField = true;
+		this.remainingDamage = type.damage;
 	}
 
 	/**
@@ -190,14 +193,34 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
-	/**
+	
+	 /**
 	 * Ajoute une unité en renfort dans la réserve en paramètre.
 	 *
 	 * @param reserve La réserve dans laquelle l'unité va.
 	 */
-	public abstract void addInReserve(ReserveOfSoldiers reserve);
+	public void addInReserve(final ReserveOfSoldiers reserve)
+	{
+		reserve.getSoldierPack().replace(this.type, reserve.getSoldierPack().get(this.type) + 1);
+	}
 
+	@Override
+	public void productionFinished(final Castle castle, final boolean cancel)
+	{
+		if (!cancel)
+		{
+			SoldierPack<Integer> s = castle.getReserveOfSoldiers().getSoldierPack();
+			s.replace(this.type, s.get(this.type) + 1);
+		}
+		castle.getCaserne().getSoldierPack().replace(this.type, castle.getCaserne().getSoldierPack().get(this.type) - 1);
+	}
+
+	@Override
+	public void productionStart(final Caserne caserne)
+	{
+		caserne.getSoldierPack().replace(this.type, caserne.getSoldierPack().get(this.type) + 1); 
+	}
+	
 	/**
 	 * Donne un point d'attaque au soldat s'il y en a un disponible, sinon le soldat passe en attente
 	 * d'un point d'attaque
@@ -466,7 +489,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	 */
 	private double getMotion(final int direction)
 	{
-		return this.stats.speed * Time.deltaTime * direction;
+		return this.itsOst.getSpeed() * Time.deltaTime * direction;
 	}
 
 	/**
@@ -527,7 +550,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 			// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
 			if (!getDestination().isStopAttack())
 			{
-				this.isDead = --this.stats.damage <= 0 ? true : false;
+				this.isDead = --this.remainingDamage <= 0 ? true : false;
 			}
 			else
 			{
@@ -615,10 +638,16 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate
 	/*************************************************/
 
 	@Override
-	public abstract double getProductionTime();
+	public double getProductionTime()
+	{
+		return getType().productionTime;
+	}	
 
 	@Override
-	public abstract int getProductionCost(Castle castle);
+	public int getProductionCost(final Castle castle)
+	{
+		return getType().cost;
+	}
 
 	/**
 	 * @return the type

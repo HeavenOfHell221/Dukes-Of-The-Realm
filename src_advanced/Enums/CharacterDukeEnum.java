@@ -1,6 +1,7 @@
 package Enums;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Liste des points de caractère possible pour les IA.
@@ -21,10 +22,21 @@ public enum CharacterDukeEnum implements Serializable
 	/**
 	 * Duke n'ayant pas de caractère précis.
 	 */
-	Neural,
+	Neutral;
 	
 	/**
-	 * Duke n'attaquant pas.
+	 * Génère aléatoirement un caractère.
+	 * @return Un caractère.
 	 */
-	Peaceful;
+	public static CharacterDukeEnum getRandomType()
+	{
+		Random rand = new Random();
+		switch(rand.nextInt(3))
+		{
+			case 0: return Neutral;
+			case 1: return Offensive;
+			case 2: return Defensive;
+			default: return Neutral;
+		}
+	}
 }

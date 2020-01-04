@@ -1,28 +1,21 @@
 package DukesOfTheRealm;
 
-import static Utility.Settings.ATTACK_LOCATIONS_PER_SIDE;
-import static Utility.Settings.CASTLE_SIZE;
-import static Utility.Settings.GAP_WITH_SOLDIER;
-import static Utility.Settings.LEVEL_UP_COST;
-import static Utility.Settings.LEVEL_UP_DURATION_FACTOR;
-import static Utility.Settings.LEVEL_UP_DURATION_OFFSET;
-import static Utility.Settings.NB_ATTACK_LOCATIONS;
-import static Utility.Settings.SOLDIER_SIZE;
-import static Utility.Settings.STARTER_KNIGHT;
-import static Utility.Settings.STARTER_ONAGER;
-import static Utility.Settings.STARTER_PIKER;
-import static Utility.Settings.THIRD_OF_CASTLE;
+import static Utility.Settings.*;
 
 import java.io.Serializable;
 import java.util.Random;
 import java.util.Stack;
 
 import Duke.Actor;
+import Enums.BuildingEnum;
 import Enums.CharacterCastleEnum;
 import Enums.SoldierEnum;
-import Interface.IProductionUnit;
+import Interface.IBuilding;
+import Interface.IProduction;
+import Utility.BuildingPack;
 import Utility.Point2D;
 import Utility.Settings;
+import Utility.SoldierPack;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -35,7 +28,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @see Sprite
  */
-public class Castle extends Sprite implements Serializable
+public class Castle extends Sprite implements Serializable, IBuilding, IProduction
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -62,20 +55,6 @@ public class Castle extends Sprite implements Serializable
 	 * Le niveau du château.
 	 */
 	private int level = 1;
-
-	/**
-	 * La réserve d'unité du château.
-	 *
-	 * @see ReserveOfSoldiers
-	 */
-	private ReserveOfSoldiers reserveOfSoldiers;
-
-	/**
-	 * La caserne du château.
-	 *
-	 * @see Caserne
-	 */
-	private Caserne caserne;
 
 	/**
 	 * L'ost du château.
@@ -118,28 +97,17 @@ public class Castle extends Sprite implements Serializable
 	private Actor actor;
 	
 	/**
-	 * Rempart de ce château.
-	 * @see Wall
+	 * Contient tout les bâtiments de ce château.
 	 */
-	private Wall wall;
-	
-	/**
-	 * Marché de ce château
-	 * @see Market
-	 */
-	private Market market;
-	
-	/**
-	 * Moulin de ce château.
-	 * @see Miller
-	 */
-	private Miller miller;
+	private BuildingPack<IBuilding> buildingPack;
 	
 	/**
 	 * Caractère de ce château.
 	 * @see Enums.CharacterCastleEnum
 	 */
 	private CharacterCastleEnum character;
+	
+	private ReserveOfSoldiers reserveOfSoldiers;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -183,11 +151,8 @@ public class Castle extends Sprite implements Serializable
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
-		this.miller = new Miller();
-		this.market = new Market();
-		this.wall= new Wall();
+		this.buildingPack = new BuildingPack<IBuilding>(this, new Caserne(this), new Market(), new Miller(), new Wall());
 		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
-		this.caserne = new Caserne(this);
 		this.ost = null;
 		
 		this.attackLocations = new Stack<>();
@@ -223,7 +188,7 @@ public class Castle extends Sprite implements Serializable
 	 */
 	public void updateProduction()
 	{
-		this.caserne.updateProduction();
+		getCaserne().updateProduction();
 	}
 
 	/**
@@ -252,13 +217,13 @@ public class Castle extends Sprite implements Serializable
 		{
 			castle.levelUp();
 		}
-		castle.getCaserne().nbCastleInProduction--;
+		getCaserne().getBuildingPack().replace(BuildingEnum.Castle, getCaserne().getBuildingPack().get(BuildingEnum.Castle) - 1);
 	}
 
 	@Override
-	public void productionStart(final Castle castle)
+	public void productionStart(final Caserne caserne)
 	{
-		castle.getCaserne().nbCastleInProduction++;
+		caserne.getBuildingPack().replace(BuildingEnum.Castle, caserne.getBuildingPack().get(BuildingEnum.Castle) + 1);
 	}
 
 	/**
@@ -294,24 +259,24 @@ public class Castle extends Sprite implements Serializable
 	{
 		final Random rand = new Random();
 		final int levelSq = this.level * (this.level / 6) + 1;
-		this.reserveOfSoldiers.setNbKnights(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
-		this.reserveOfSoldiers.setNbPikers(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
-		this.reserveOfSoldiers.setNbOnagers(rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
+		}
 	}
 
 	/**
 	 * Donne un nombre fini d'unités pour le joueur et les IA.
 	 *
 	 * @see ReserveOfSoldiers
-	 * @see Utility.Settings#STARTER_KNIGHT
-	 * @see Utility.Settings#STARTER_ONAGER
-	 * @see Utility.Settings#STARTER_PIKER
 	 */
 	public void startSoldier()
 	{
-		this.reserveOfSoldiers.setNbPikers(STARTER_PIKER);
-		this.reserveOfSoldiers.setNbKnights(STARTER_KNIGHT);
-		this.reserveOfSoldiers.setNbOnagers(STARTER_ONAGER);
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			getReserveOfSoldiers().getSoldierPack().replace(s, s.starter);
+		}
 	}
 
 	/**
@@ -386,22 +351,19 @@ public class Castle extends Sprite implements Serializable
 	 * </p>
 	 *
 	 * @param  destination Le château destination de l'ost.
-	 * @param  nbPikers    Le nombre de Piker de l'ost.
-	 * @param  nbKnights   Le nombre de Knight de l'ost.
-	 * @param  nbOnagers   Le nombre d'Onager de l'ost.
-	 * @param  isBackup    Est ce que c'est une attaque ou des renforts.
+	 * @param  soldierPack Le nombre d'unité de l'ost.
 	 * @return             Retourne true si l'ost a été crée, false sinon.
 	 * @see                Ost
 	 * @see                Ost#start()
 	 * @see                ReserveOfSoldiers#removeSoldiers(int, int, int)
 	 */
-	public boolean createOst(final Castle destination, final int nbPikers, final int nbKnights, final int nbOnagers, final boolean isBackup)
+	public boolean createOst(final Castle destination, SoldierPack<Integer> soldierPack)
 	{
 		if (this.ost == null)
 		{
-			if (removeSoldiers(nbPikers, nbKnights, nbOnagers) && this != destination)
+			if (removeSoldiers(new SoldierPack<Integer>(soldierPack)) && this != destination)
 			{
-				this.ost = new Ost(this, destination, nbPikers, nbKnights, nbOnagers, this.myColor, isBackup);
+				this.ost = new Ost(this, destination, new SoldierPack<Integer>(soldierPack), this.myColor);
 				this.ost.start();
 				return true;
 			}
@@ -502,193 +464,78 @@ public class Castle extends Sprite implements Serializable
 	/************** DELEGATES METHODS ****************/
 	/*************************************************/
 
-	/**
-	 * @return Retourne le nombre de Piker en production.
-	 * @see    DukesOfTheRealm.Caserne#getNbPikersInProduction()
-	 */
-	public final int getNbPikersInProduction()
+	public boolean removeSoldiers(SoldierPack<Integer> soldierPack)
 	{
-		return this.caserne.getNbPikersInProduction();
+		return getReserveOfSoldiers().removeSoldiers(soldierPack);
 	}
-
-	/**
-	 * @return Retourne le nombre d'amélioration du château en production.
-	 * @see    DukesOfTheRealm.Caserne#getNbCastleInProduction()
-	 */
-	public final int getNbCastleInProduction()
-	{
-		return this.caserne.getNbCastleInProduction();
-	}
-
-	/**
-	 * @return Retourne le nombre de Onager en production.
-	 * @see    DukesOfTheRealm.Caserne#getNbOnagersInProduction()
-	 */
-	public final int getNbOnagersInProduction()
-	{
-		return this.caserne.getNbOnagersInProduction();
-	}
-
-	/**
-	 * @return Retourne le nombre de Knight en production.
-	 * @see    DukesOfTheRealm.Caserne#getNbKnightsInProduction()
-	 */
-	public final int getNbKnightsInProduction()
-	{
-		return this.caserne.getNbKnightsInProduction();
-	}
-
-	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#addPiker()
-	 */
-	public void addPiker()
-	{
-		this.reserveOfSoldiers.addPiker();
-	}
-
-	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#addKnight()
-	 */
-	public void addKnight()
-	{
-		this.reserveOfSoldiers.addKnight();
-	}
-
-	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#addOnager()
-	 */
-	public void addOnager()
-	{
-		this.reserveOfSoldiers.addOnager();
-	}
-
-	/**
-	 * @return retourne la valeur de retour de getNbPikers.
-	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbPikers()
-	 */
-	public int getNbPikers()
-	{
-		return this.reserveOfSoldiers.getNbPikers();
-	}
-
-	/**
-	 * @return Retourne la valeur de retour de getNbKnights.
-	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbKnights()
-	 */
-	public int getNbKnights()
-	{
-		return this.reserveOfSoldiers.getNbKnights();
-	}
-
-	/**
-	 * @return Retourne la valeur de retour de getNbOnagers.
-	 * @see    DukesOfTheRealm.ReserveOfSoldiers#getNbOnagers()
-	 */
-	public int getNbOnagers()
-	{
-		return this.reserveOfSoldiers.getNbOnagers();
-	}
-
-	/**
-	 * @param refoundFlorin Spécifie si on redonne les Florin ou non.
-	 * @see                 DukesOfTheRealm.Caserne#removeLastProduction(boolean)
-	 */
-	public void removeLastProduction(final boolean refoundFlorin)
-	{
-		this.caserne.removeLastProduction(refoundFlorin);
-	}
-
-	/**
-	 * @param refoundFlorin Spécifie si on redonne les Florin ou non.
-	 * @see                 DukesOfTheRealm.Caserne#resetQueue(boolean)
-	 */
-	public void resetQueue(final boolean refoundFlorin)
-	{
-		this.caserne.resetQueue(refoundFlorin);
-	}
-
-	/**
-	 * @param  newProduction La nouvelle production.
-	 * @return               Retourne la valeur de retour de addProduction.
-	 * @see                  DukesOfTheRealm.Caserne#addProduction(Interface.IProductionUnit)
-	 */
-	public boolean addProduction(final IProductionUnit newProduction)
-	{
-		return this.caserne.addProduction(newProduction);
-	}
-
-	/**
-	 * @return Retourne la valeur de retour de getRatio.
-	 * @see    DukesOfTheRealm.Caserne#getRatio()
-	 */
-	public final double getRatio()
-	{
-		return this.caserne.getRatio();
-	}
-
-	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#randomRemoveHP(SoldierEnum)
-	 */
-	public void randomRemoveHP()
-	{
-		this.reserveOfSoldiers.randomRemoveHP(SoldierEnum.getRandomType());
-	}
-
-	/**
-	 * @param  nbPikers  Le nombre de Piker à retirer.
-	 * @param  nbKnights Le nombre de Knight à retirer.
-	 * @param  nbOnagers Le nombre de Onager à retirer.
-	 * @return           Retourne la valeur de retour de removeSoldiers.
-	 * @see              DukesOfTheRealm.ReserveOfSoldiers#removeSoldiers(int, int, int)
-	 */
-	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
-	{
-		return this.reserveOfSoldiers.removeSoldiers(nbPikers, nbKnights, nbOnagers);
-	}
-
-	/**
-	 * @see DukesOfTheRealm.ReserveOfSoldiers#reactivateAttack()
-	 */
-	public void reactivateAttack()
-	{
-		this.reserveOfSoldiers.reactivateAttack();
-	}
-
-	/**
-	 * @return Retourne la valeur de retour de isStopAttack.
-	 * @see    DukesOfTheRealm.ReserveOfSoldiers#isStopAttack()
-	 */
-	public boolean isStopAttack()
-	{
-		return this.reserveOfSoldiers.isStopAttack();
-	}
-	
 	
 	/**
 	 * @return Retourne le multiplicateur du rempart.
-	 * @see DukesOfTheRealm.Wall#getMultiplicator()
+	 * @see Wall#getMultiplicator()
 	 */
-	public final float getWallMultiplicator()
+	public float getWallMultiplicator()
 	{
-		return wall.getMultiplicator();
+		return ((Wall)getBuilding(BuildingEnum.Wall)).getMultiplicator();
 	}
-
+	
+	/**
+	 * @return Retourne la valeur de retour isStopAttack.
+	 * @see ReserveOfSoldiers#isStopAttack()
+	 */
+	public boolean isStopAttack()
+	{
+		return getReserveOfSoldiers().isStopAttack();
+	}
+	
+	/**
+	 * @see ReserveOfSoldiers#randomRemoveHP(SoldierEnum)
+	 */
+	public void randomRemoveHP()
+	{
+		getReserveOfSoldiers().randomRemoveHP(SoldierEnum.getRandomType());
+	}
+	
+	/**
+	 * Ajoute une production dans la caserne.
+	 * @param p La production ajouté dans la caserne.
+	 * @return Retourne si la production a bien été rajouté.
+	 */
+	public boolean addProduction(IProduction p)
+	{
+		return getCaserne().addProduction(p);
+	}
+	
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
 	/*************************************************/
 
+	/**
+	 * @param key La clé.
+	 * @return Retourne le bâtiment souhaité.
+	 * @see Utility.BuildingPack#get(Enums.BuildingEnum)
+	 */
+	public IBuilding getBuilding(BuildingEnum key)
+	{
+		return buildingPack.get(key);
+	}
+	
+	/**
+	 * @return La réserve de ce château.
+	 */
+	public ReserveOfSoldiers getReserveOfSoldiers()
+	{
+		return this.reserveOfSoldiers;
+	}
+	
+	public Caserne getCaserne()
+	{
+		return (Caserne) getBuilding(BuildingEnum.Caserne);
+	}
+	
 	@Override
 	public int getProductionCost(final Castle castle)
 	{
-		return LEVEL_UP_COST * castle.level + castle.getCaserne().getNbCastleInProduction() * Settings.LEVEL_UP_COST;
-	}
-
-	/**
-	 * @return the caserne
-	 */
-	public final Caserne getCaserne()
-	{
-		return this.caserne;
+		return CASTLE_COST * castle.level + /*castle.getCaserne().getNbCastleInProduction() **/ Settings.CASTLE_COST;
 	}
 
 	/**
@@ -707,7 +554,7 @@ public class Castle extends Sprite implements Serializable
 	@Override
 	public double getProductionTime()
 	{
-		return LEVEL_UP_DURATION_OFFSET + LEVEL_UP_DURATION_FACTOR * this.level;
+		return CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * this.level;
 	}
 
 	/**
@@ -761,14 +608,6 @@ public class Castle extends Sprite implements Serializable
 	}
 
 	/**
-	 * @return the reserveOfSoldiers
-	 */
-	public final ReserveOfSoldiers getReserveOfSoldiers()
-	{
-		return this.reserveOfSoldiers;
-	}
-
-	/**
 	 * @return the actor
 	 */
 	public final Actor getActor()
@@ -790,5 +629,21 @@ public class Castle extends Sprite implements Serializable
 	public final Ost getOst()
 	{
 		return this.ost;
+	}
+
+	/**
+	 * @return the character
+	 */
+	public final CharacterCastleEnum getCharacter()
+	{
+		return character;
+	}
+
+	/**
+	 * @param character the character to set
+	 */
+	public final void setCharacter(CharacterCastleEnum character)
+	{
+		this.character = character;
 	}
 }

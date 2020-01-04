@@ -162,8 +162,7 @@ public class Main extends Application implements IUpdate
 			@Override
 			public void handle(final long now)
 			{
-				if(!Main.pause)
-					processInput(Main.this.input, now);
+				processInput(Main.this.input, now);
 				update(now, Main.pause || Main.this.pauseForce);
 
 			}
@@ -176,7 +175,7 @@ public class Main extends Application implements IUpdate
 					Platform.exit();
 					System.exit(0);
 				}
-				if (input.isSpace() && Time(now))
+				if (input.isSpace() && Time(now) && !Main.pause)
 				{
 					Main.this.pauseForce = !Main.this.pauseForce;
 				}

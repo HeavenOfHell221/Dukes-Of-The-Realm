@@ -29,6 +29,8 @@ public class SoldierGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		return castle.addProduction(this.type.getProduction(castle));
+		return castle.addProduction(this.type.soldier);
 	}
+	
+	
 }

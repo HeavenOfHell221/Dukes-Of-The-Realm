@@ -1,18 +1,19 @@
 package DukesOfTheRealm;
 
-import static Utility.Settings.KNIGHT_HP;
-import static Utility.Settings.ONAGER_HP;
-import static Utility.Settings.PIKER_HP;
+import static Utility.Settings.*;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Random;
 
 import Enums.SoldierEnum;
+import Interface.IBuilding;
+import Utility.SoldierPack;
 
 /**
  * Réserve qui contient le nombre de chaque unité pour un château.
  */
-public class ReserveOfSoldiers implements Serializable
+public class ReserveOfSoldiers implements Serializable, IBuilding
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -30,39 +31,14 @@ public class ReserveOfSoldiers implements Serializable
 	private boolean stopAttack = false;
 
 	/**
-	 * Nombre de Piker dans la réserve.
+	 * Nombre d'unité, pour chaque type d'unité, présente dans cette réserve.
 	 */
-	private int nbPikers = 0;
-
+	private SoldierPack<Integer> soldierPack;
+	
 	/**
-	 * Nombre de Knight dans la réserve.
+	 * Nombre de point de vie restant pour chaque type d'unité.
 	 */
-	private int nbKnights = 0;
-
-	/**
-	 * Nombre de Onager dans la réserve.
-	 */
-	private int nbOnagers = 0;
-
-	/**
-	 * Nombre point de vie courant des Piker. Si égale à 0, le château perd 1 Piker.
-	 */
-	private int pikersHPRemaining;
-
-	/**
-	 * Nombre point de vie courant des Knight. Si égale à 0, le château perd 1 Knight.
-	 */
-	private int knigtHPRemaining;
-
-	/**
-	 * Nombre de point de vie courant des Onager. si égale à 0, le château perd 1 Onager.
-	 */
-	private int onagerHPremaining;
-
-	/**
-	 * Object Random pour gérer l'aléatoire.
-	 */
-	private final Random rand = new Random();
+	private SoldierPack<Integer> HPPack;
 	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -75,15 +51,25 @@ public class ReserveOfSoldiers implements Serializable
 	public ReserveOfSoldiers(Castle castle)
 	{
 		this.castle = castle;
-		this.knigtHPRemaining = (int) (KNIGHT_HP * this.castle.getWallMultiplicator());
-		this.pikersHPRemaining = (int) (PIKER_HP * this.castle.getWallMultiplicator());
-		this.knigtHPRemaining = (int) (ONAGER_HP * this.castle.getWallMultiplicator());
+		this.soldierPack = new SoldierPack<Integer>(0, 0, 0, 0, 0, 0);
+		this.HPPack = new SoldierPack<Integer>(
+				(int) (PIKER_HP * this.castle.getWallMultiplicator()), 
+				(int) (KNIGHT_HP * this.castle.getWallMultiplicator()), 
+				(int) (ONAGER_HP * this.castle.getWallMultiplicator()), 
+				(int) (ARCHER_HP * this.castle.getWallMultiplicator()), 
+				(int) (BERSERKER_HP * this.castle.getWallMultiplicator()), 
+				(int) (SPY_HP * this.castle.getWallMultiplicator()));
 	}
 	
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
 
+	public void start()
+	{
+		
+	}
+	
 	/**
 	 * Retire aléatoirement un point de vie à un type d'unité.
 	 *
@@ -98,111 +84,68 @@ public class ReserveOfSoldiers implements Serializable
 		{
 			return;
 		}
-
-		switch (typeForce)
+		
+		if(this.soldierPack.get(typeForce) > 0)
 		{
-			case Knight:
-				if (this.nbKnights > 0)
-				{
-					if (--this.knigtHPRemaining == 0)
-					{
-						this.nbKnights--;
-						this.knigtHPRemaining = (int) (KNIGHT_HP * this.castle.getWallMultiplicator());
-					}
-				}
-				else
-				{
-					randomRemoveHP(SoldierEnum.Onager);
-				}
-				break;
-			case Onager:
-				if (this.nbOnagers > 0)
-				{
-					if (--this.onagerHPremaining == 0)
-					{
-						this.nbOnagers--;
-						this.onagerHPremaining = (int) (ONAGER_HP * this.castle.getWallMultiplicator());
-					}
-				}
-				else
-				{
-					randomRemoveHP(SoldierEnum.Piker);
-				}
-				break;
-			case Piker:
-				if (this.nbPikers > 0)
-				{
-					if (--this.pikersHPRemaining == 0)
-					{
-						this.nbPikers--;
-						this.pikersHPRemaining = (int) (PIKER_HP * this.castle.getWallMultiplicator());
-					}
-				}
-				else
-				{
-					randomRemoveHP(SoldierEnum.Knight);
-				}
-				break;
-			default:
-				break;
-
+			int HPRemaining = this.HPPack.get(typeForce);
+			if(--HPRemaining == 0)
+			{
+				this.soldierPack.replace(typeForce, this.soldierPack.get(typeForce) - 1);
+				this.HPPack.replace(typeForce, (int)(typeForce.HP * this.castle.getWallMultiplicator()));
+			}
+			else
+			{
+				this.HPPack.replace(typeForce, HPRemaining);
+			}
+		}
+		else
+		{
+			randomRemoveHP(SoldierEnum.getRandomType());
 		}
 	}
-
+	
 	/**
 	 * Teste si on peut encore retirer des points de vie (si il reste des unités dans la réserve).
 	 */
 	private void testRemoveHP()
 	{
-		if (this.nbPikers <= 0 && this.nbKnights <= 0 && this.nbOnagers <= 0)
+		if (getTotal() <= 0)
 		{
 			this.stopAttack = true;
 		}
 	}
-
-	/**
-	 * Ajoute un Piker à la réserve.
-	 */
-	public void addPiker()
+	
+	private int getTotal()
 	{
-		this.nbPikers++;
-	}
-
-	/**
-	 * Ajoute un Knight à la réserve.
-	 */
-	public void addKnight()
-	{
-		this.nbKnights++;
-	}
-
-	/**
-	 * Ajoute un Onager à la réserve.
-	 */
-	public void addOnager()
-	{
-		this.nbOnagers++;
+		int count = 0;
+		for(int i : soldierPack.values())
+		{
+			count += i;
+		}
+		return count;
 	}
 
 	/**
 	 * Retire, après avoir lancé une ost par exemple, un certain nombre d'unité dans la réserve.
 	 *
-	 * @param  nbPikers  Le nombre de Piker à retirer.
-	 * @param  nbKnights Le nombre de Knight à retirer.
-	 * @param  nbOnagers Le nombre de Onager à retirer.
+	 * @param  soldierPack Le nombre d'unité à retirer pour chaque type.
 	 * @return           Retourne true si tout c'est bien passé, retourne false si on ne peut pas
 	 *                   retirer toutes les unités désirées.
 	 */
-	public boolean removeSoldiers(final int nbPikers, final int nbKnights, final int nbOnagers)
+	public boolean removeSoldiers(SoldierPack<Integer> s)
 	{
-		if (this.nbPikers < nbPikers || this.nbKnights < nbKnights || this.nbOnagers < nbOnagers)
+		for(SoldierEnum sEnum : SoldierEnum.values())
 		{
-			return false;
+			if(soldierPack.get(sEnum) < s.get(sEnum))
+			{
+				return false;
+			}
 		}
-
-		this.nbKnights -= nbKnights;
-		this.nbPikers -= nbPikers;
-		this.nbOnagers -= nbOnagers;
+		
+		for(SoldierEnum sEnum : SoldierEnum.values())
+		{
+			replace(sEnum, soldierPack.get(sEnum) - s.get(sEnum));
+		}
 
 		return true;
 	}
@@ -220,14 +163,6 @@ public class ReserveOfSoldiers implements Serializable
 	/*************************************************/
 
 	/**
-	 * @return the nbPikers
-	 */
-	public final int getNbPikers()
-	{
-		return this.nbPikers;
-	}
-
-	/**
 	 * @return the stopAttack
 	 */
 	public final boolean isStopAttack()
@@ -236,42 +171,20 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * @return the nbKnights
+	 * @param key La clé.
+	 * @param value La valeur.
+	 * @see Utility.Pack#replace(java.lang.Object, java.lang.Object)
 	 */
-	public final int getNbKnights()
+	public void replace(SoldierEnum key, Integer value)
 	{
-		return this.nbKnights;
+		soldierPack.replace(key, value);
 	}
 
 	/**
-	 * @return the nbOnagers
+	 * @return the soldierPack
 	 */
-	public final int getNbOnagers()
+	public final SoldierPack<Integer> getSoldierPack()
 	{
-		return this.nbOnagers;
-	}
-
-	/**
-	 * @param nbPikers the nbPikers to set
-	 */
-	public final void setNbPikers(final int nbPikers)
-	{
-		this.nbPikers = nbPikers;
-	}
-
-	/**
-	 * @param nbKnights the nbKnights to set
-	 */
-	public final void setNbKnights(final int nbKnights)
-	{
-		this.nbKnights = nbKnights;
-	}
-
-	/**
-	 * @param nbOnagers the nbOnagers to set
-	 */
-	public final void setNbOnagers(final int nbOnagers)
-	{
-		this.nbOnagers = nbOnagers;
+		return soldierPack;
 	}
 }

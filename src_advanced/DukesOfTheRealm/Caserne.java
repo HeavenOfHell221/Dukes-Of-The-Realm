@@ -2,58 +2,49 @@ package DukesOfTheRealm;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
-import Interface.IProductionUnit;
+import Interface.IBuilding;
+import Interface.IProduction;
+import Utility.BuildingPack;
+import Utility.SoldierPack;
 import Utility.Time;
 
 /**
  * Gère la production des unités et l'amélioration du château.
  */
-public class Caserne implements Serializable
+public class Caserne implements Serializable, IBuilding, IProduction
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
 	/**
-	 * Queue des productions. Celle en cours est la première de cette queue.
+	 * Queue des productions en attente d'être prise par les unités de production.
 	 */
-	private final ArrayDeque<IProductionUnit> productionUnit;
+	private final ArrayDeque<IProduction> mainProductionQueue;
 
 	/**
-	 * Le temps qu'il reste avant la fin de la production en cours.
+	 * Liste des unités de production.
 	 */
-	private double productionTime;
+	private ArrayList<ProductionUnit> productionUnitList;
 
 	/**
 	 * Le château à qui appartient cette caserne.
 	 */
 	private final Castle castle;
-
+	
 	/**
-	 * Le ratio entre le temps restant et le temps total du production.
+	 * Nombre de chaque type d'unité dans la queue.
 	 */
-	private double ratio;
+	private SoldierPack<Integer> soldierPack;
 
+	
 	/**
-	 * Nombre de Piker dans la queue en attente.
+	 * Nombre de chaque type de bâtiment dans la queue.
 	 */
-	public int nbPikersInProduction;
-
-	/**
-	 * Nombre de Onager dans la queue en attente.
-	 */
-	public int nbOnagersInProduction;
-
-	/**
-	 * Nombre de Knight dans la queue en attente.
-	 */
-	public int nbKnightsInProduction;
-
-	/**
-	 * Nombre de Castle dans la queue en attente.
-	 */
-	public int nbCastleInProduction;
+	private BuildingPack<Integer> buildingPack;
+	
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -66,58 +57,27 @@ public class Caserne implements Serializable
 	 */
 	public Caserne(final Castle castle)
 	{
-		this.productionTime = 0;
-		this.productionUnit = new ArrayDeque<>();
+		this.mainProductionQueue = new ArrayDeque<>();
+		this.productionUnitList = new ArrayList<>();
 		this.castle = castle;
-		this.nbPikersInProduction = 0;
-		this.nbKnightsInProduction = 0;
-		this.nbOnagersInProduction = 0;
-		this.nbCastleInProduction = 0;
+		this.soldierPack = new SoldierPack<Integer>(0, 0, 0, 0, 0, 0);
+		this.buildingPack = new BuildingPack<Integer>(0, 0, 0, 0, 0);
+		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 	}
 
 	/*************************************************/
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-	/**
-	 * Met à jour à chaque image le temps qu'il reste pour la production en cours (si elle existe). Une
-	 * fois la production terminé, si c'est une unité elle serra ajouté à la réserve, si c'est un
-	 * bâtiment il serra amélioré.
-	 */
 	public void updateProduction()
 	{
-		// System.out.println(this.castle.getActor().getName() + " -> " + this.nbPikersInProduction + " " +
-		// this.nbKnightsInProduction + " " + this.nbOnagersInProduction);
-		if (this.productionUnit.size() > 0)
-		{
-			// On retire du temps
-			this.productionTime -= 1 * Time.deltaTime;
-
-			// On calcul le ration pour le UI
-			this.ratio = 1 - this.productionTime / this.productionUnit.getFirst().getProductionTime();
-
-			// Si la production est terminé
-			if (this.productionTime <= 0)
-			{
-				final IProductionUnit p = this.productionUnit.pollFirst();
-
-				p.productionFinished(this.castle, false);
-
-				if (this.productionUnit.size() > 0)
-				{
-					this.productionTime = this.productionUnit.getFirst().getProductionTime();
-				}
-			}
-		}
-		else
-		{
-			this.ratio = 0;
-		}
+		this.productionUnitList.forEach(unit -> unit.updateProduction());
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
+
 
 	/**
 	 * Retire la production en fin de queue.
@@ -126,7 +86,7 @@ public class Caserne implements Serializable
 	 */
 	public void removeLastProduction(final boolean refoundFlorin)
 	{
-		IProductionUnit i = this.productionUnit.pollLast();
+		IProduction i = this.mainProductionQueue.pollLast();
 		if (i != null)
 		{
 			if (refoundFlorin)
@@ -146,21 +106,17 @@ public class Caserne implements Serializable
 	{
 		if (refundFlorin)
 		{
-			while (!this.productionUnit.isEmpty())
+			while (!this.mainProductionQueue.isEmpty())
 			{
-				IProductionUnit i = this.productionUnit.pollFirst();
+				IProduction i = this.mainProductionQueue.pollFirst();
 				this.castle.addFlorin(i.getProductionCost(this.castle));
 				i.productionFinished(this.castle, true);
 			}
 		}
 		else
 		{
-			this.productionUnit.clear();
+			this.mainProductionQueue.clear();
 		}
-		this.nbCastleInProduction = 0;
-		this.nbKnightsInProduction = 0;
-		this.nbPikersInProduction = 0;
-		this.nbOnagersInProduction = 0;
 	}
 
 	/**
@@ -169,22 +125,16 @@ public class Caserne implements Serializable
 	 * @param  p La nouvelle production.
 	 * @return   Retourne true si le production a bien été ajouté, false sinon.
 	 */
-	public boolean addProduction(final IProductionUnit p)
+	public boolean addProduction(final IProduction p)
 	{
 		if (!this.castle.removeFlorin(p.getProductionCost(this.castle)))
 		{
 			return false;
 		}
-
-		p.productionStart(this.castle);
-
-		this.productionUnit.addLast(p);
-
-		if (this.productionUnit.size() == 1)
-		{
-			this.productionTime = p.getProductionTime();
-		}
-
+		
+		p.productionStart(this);
+		
+		this.mainProductionQueue.addLast(p);
 		return true;
 	}
 
@@ -193,67 +143,54 @@ public class Caserne implements Serializable
 	/*************************************************/
 
 	/**
-	 * @return the productionUnit
+	 * @return the mainProductionQueue
 	 */
-	public final ArrayDeque<IProductionUnit> getProductionUnit()
+	public final ArrayDeque<IProduction> getMainProductionQueue()
 	{
-		return this.productionUnit;
+		return mainProductionQueue;
 	}
 
 	/**
-	 * @return the productionTime
+	 * @return the soldierPack
 	 */
-	public final double getProductionTime()
+	public final SoldierPack<Integer> getSoldierPack()
 	{
-		return this.productionTime;
+		return soldierPack;
 	}
 
 	/**
-	 * @return the ratio
+	 * @return the buildingPack
 	 */
-	public final double getRatio()
+	public final BuildingPack<Integer> getBuildingPack()
 	{
-		return this.ratio;
+		return buildingPack;
 	}
 
-	/**
-	 * @return the nbPikersInProduction
-	 */
-	public final int getNbPikersInProduction()
+	@Override
+	public double getProductionTime()
 	{
-		return this.nbPikersInProduction;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	/**
-	 * @return the nbOnagersInProduction
-	 */
-	public final int getNbOnagersInProduction()
+	@Override
+	public int getProductionCost(Castle castle)
 	{
-		return this.nbOnagersInProduction;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	/**
-	 * @return the nbKnightsInProduction
-	 */
-	public final int getNbKnightsInProduction()
+	@Override
+	public void productionFinished(Castle castle, boolean cancel)
 	{
-		return this.nbKnightsInProduction;
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * @return the nbCastleInProduction
-	 */
-	public final int getNbCastleInProduction()
+	@Override
+	public void productionStart(Caserne caserne)
 	{
-		return this.nbCastleInProduction;
+		// TODO Auto-generated method stub
+		
 	}
-
-	/**
-	 * @param nbCastleInProduction the nbCastleInProduction to set
-	 */
-	public final void setNbCastleInProduction(final int nbCastleInProduction)
-	{
-		this.nbCastleInProduction = nbCastleInProduction;
-	}
-
 }
