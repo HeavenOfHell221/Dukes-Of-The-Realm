@@ -101,8 +101,8 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	public void startTransient(final Pane pane)
 	{
 		this.playfieldLayer = pane;
-		UIManager.getInstance().awake(this.playfieldLayer);
 		this.colors = new ArrayList<>();
+		UIManager.getInstance().awake(this.playfieldLayer);
 		this.colors.add(Color.AQUA);
 		this.colors.add(Color.MEDIUMORCHID);
 		this.colors.add(Color.GOLDENROD);
@@ -110,7 +110,7 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 		this.colors.add(Color.MAROON);
 		this.colors.add(Color.CHOCOLATE);
 		this.colors.add(Color.IVORY);
-
+		
 		if (Main.isNewGame)
 		{
 			this.player = new Player();
@@ -152,7 +152,6 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 
 			this.canUpdate = true;
 		}
-
 	}
 
 	/*************************************************/

@@ -16,32 +16,32 @@ public enum SoldierEnum implements Serializable
 	/**
 	 * 
 	 */
-	Piker(PIKER_HP, PIKER_DAMAGE, PIKER_COST, PIKER_TIME_PRODUCTION, PIKER_SPEED, PIKER_VILLAGER, STARTER_PIKER, 10, new Piker()), 
+	Piker(PIKER_HP, PIKER_DAMAGE, PIKER_COST, PIKER_TIME_PRODUCTION, PIKER_SPEED, PIKER_VILLAGER, STARTER_PIKER, 10), 
 	
 	/**
 	 * 
 	 */
-	Knight(KNIGHT_HP, KNIGHT_DAMAGE, KNIGHT_COST, KNIGHT_TIME_PRODUCTION, KNIGHT_SPEED, KNIGHT_VILLAGER, STARTER_KNIGHT, 9, new Knight()), 
+	Knight(KNIGHT_HP, KNIGHT_DAMAGE, KNIGHT_COST, KNIGHT_TIME_PRODUCTION, KNIGHT_SPEED, KNIGHT_VILLAGER, STARTER_KNIGHT, 9), 
 	
 	/**
 	 * 
 	 */
-	Onager(ONAGER_HP, ONAGER_DAMAGE, ONAGER_COST, ONAGER_TIME_PRODUCTION, ONAGER_SPEED, ONAGER_VILLAGER, STARTER_ONAGER, 7, new Onager()), 
+	Onager(ONAGER_HP, ONAGER_DAMAGE, ONAGER_COST, ONAGER_TIME_PRODUCTION, ONAGER_SPEED, ONAGER_VILLAGER, STARTER_ONAGER, 7), 
 	
 	/**
 	 * 
 	 */
-	Archer(ARCHER_HP, ARCHER_DAMAGE, ARCHER_COST, ARCHER_TIME_PRODUCTION, ARCHER_SPEED, ARCHER_VILLAGER, STARTER_ARCHER, 10, new Archer()), 
+	Archer(ARCHER_HP, ARCHER_DAMAGE, ARCHER_COST, ARCHER_TIME_PRODUCTION, ARCHER_SPEED, ARCHER_VILLAGER, STARTER_ARCHER, 10), 
 	
 	/**
 	 * 
 	 */
-	Berserker(BERSERKER_HP, BERSERKER_DAMAGE, BERSERKER_COST, BERSERKER_TIME_PRODUCTION, BERSERKER_SPEED, BERSERKER_VILLAGER, STARTER_BERSERKER, 8, new Berserker()),
+	Berserker(BERSERKER_HP, BERSERKER_DAMAGE, BERSERKER_COST, BERSERKER_TIME_PRODUCTION, BERSERKER_SPEED, BERSERKER_VILLAGER, STARTER_BERSERKER, 8),
 	
 	/**
 	 * 
 	 */
-	Spy(SPY_HP, SPY_DAMAGE, SPY_COST, SPY_TIME_PRODUCTION, SPY_SPEED, SPY_VILLAGER, STARTER_SPY, 5, new Spy());
+	Spy(SPY_HP, SPY_DAMAGE, SPY_COST, SPY_TIME_PRODUCTION, SPY_SPEED, SPY_VILLAGER, STARTER_SPY, 5);
 
 	/**
 	 * 
@@ -81,11 +81,6 @@ public enum SoldierEnum implements Serializable
 	/**
 	 * 
 	 */
-	public final Soldier soldier;
-	
-	/**
-	 * 
-	 */
 	public final int starter;
 	
 	/**
@@ -97,9 +92,8 @@ public enum SoldierEnum implements Serializable
 	 * @param speed
 	 * @param villager
 	 * @param priorityDefense
-	 * @param soldier
 	 */
-	private SoldierEnum(int HP, int damage, int cost, double productionTime, int speed, int villager, int starter, int priorityDefense, Soldier soldier)
+	private SoldierEnum(int HP, int damage, int cost, double productionTime, int speed, int villager, int starter, int priorityDefense)
 	{
 		this.HP = HP;
 		this.damage = damage;
@@ -108,7 +102,6 @@ public enum SoldierEnum implements Serializable
 		this.speed = speed;
 		this.villager = villager;
 		this.priorityDefense = priorityDefense;
-		this.soldier = soldier;
 		this.starter = starter;
 	}
 
@@ -137,6 +130,20 @@ public enum SoldierEnum implements Serializable
 			default:
 				return null;
 
+		}
+	}
+	
+	public Soldier getObject()
+	{
+		switch(this)
+		{
+			case Piker: return new Piker();
+			case Knight: return new Knight();
+			case Onager: return new Onager();
+			case Archer: return new Archer();
+			case Berserker: return new Berserker();
+			case Spy: return new Spy();
+			default : return null;
 		}
 	}
 }

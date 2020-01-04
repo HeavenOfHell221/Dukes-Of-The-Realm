@@ -22,7 +22,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	/**
 	 * Queue des productions en attente d'être prise par les unités de production.
 	 */
-	private final ArrayDeque<IProduction> mainProductionQueue;
+	private ArrayDeque<IProduction> mainProductionQueue;
 
 	/**
 	 * Liste des unités de production.
@@ -32,7 +32,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	/**
 	 * Le château à qui appartient cette caserne.
 	 */
-	private final Castle castle;
+	private Castle castle;
 	
 	/**
 	 * Nombre de chaque type d'unité dans la queue.
@@ -63,6 +63,11 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.soldierPack = new SoldierPack<Integer>(0, 0, 0, 0, 0, 0);
 		this.buildingPack = new BuildingPack<Integer>(0, 0, 0, 0, 0);
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
+	}
+	
+	public Caserne()
+	{
+		
 	}
 
 	/*************************************************/
@@ -192,5 +197,19 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setLevel(int level)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getLevel()
+	{
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

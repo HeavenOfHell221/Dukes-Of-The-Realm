@@ -10,12 +10,14 @@ import static Utility.Settings.SCENE_WIDTH;
 import DukesOfTheRealm.Castle;
 import Enums.BuildingEnum;
 import Enums.SoldierEnum;
+import Interface.IBuilding;
 import Interface.IProduction;
 import Interface.IUI;
 import Interface.IUpdate;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
+import Soldiers.Soldier;
 import Utility.BuildingPack;
 import Utility.Input;
 import Utility.SoldierPack;
@@ -104,6 +106,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	public UIProductionUnitPreview()
 	{
+		this.productSoldier = new SoldierPack<Button>();
+		this.textCostSoldier = new SoldierPack<Text>();
+		this.textCostBuilding = new BuildingPack<Text>();
+		this.upgradeBuilding = new BuildingPack<Button>();
+		
 		for(SoldierEnum s : SoldierEnum.values())
 		{
 			this.productSoldier.replace(s, new Button());
@@ -119,7 +126,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		this.removeAllProduction = new Button();
 		this.removeLastProduction = new Button();
 
-		this.background = new Rectangle(280, 450); // 280 / 300
+		this.background = new Rectangle(280, 490);
 
 		this.backgroundTime = new Rectangle(240, 40);
 		this.fillTime = new Rectangle(0, 40); // entre +00 et +210
@@ -208,10 +215,15 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	private void setAllTexts()
 	{
-		setText(this.castleCost);
-		setText(this.knightCost);
-		setText(this.onagerCost);
-		setText(this.pikerCost);
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			setText(this.textCostSoldier.get(s));
+		}
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			setText(this.textCostBuilding.get(b));
+		}	
 	}
 
 	/**
@@ -253,12 +265,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setVisible(this.backgroundTime, visible);
 		setVisible(this.background, visible);
 		setVisible(this.fillTime, visible);
-		setVisible(this.buttonCreateKnight, visible);
-		setVisible(this.buttonCreateOnager, visible);
-		setVisible(this.buttonCreatePiker, visible);
-		setVisible(this.buttonUpgradeCastle, visible);
 		setVisible(this.removeAllProduction, visible);
-		setVisible(this.removeLastProduction, visible);
+		setVisible(this.removeLastProduction, visible);	
 	}
 
 	/**
@@ -306,6 +314,21 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		this.fillTime.setEffect(i);
 	}
+	
+	/**
+	 * Initialise le style d'un bouton, sa taille et le cursor lorsque la souris passe dessus.
+	 *
+	 * @param b   Le bouton à initialiser.
+	 * @param url Le chemin pour accéder à l'image du bouton.
+	 */
+	private void setStyle(final Button b, final String url)
+	{
+		b.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('" + url + "'); "
+				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
+		b.setMinSize(64, 64);
+		b.setMaxSize(64, 64);
+		b.setCursor(Cursor.HAND);
+	}
 
 	/**
 	 * Initialise tout les boutons en leur affectant un style, une image , des effets ainsi que des
@@ -313,149 +336,88 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	private void setAllButtons()
 	{
-		this.buttonCreateKnight
-				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/mounted-knight2.png'); "
-						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
+		setStyle(this.productSoldier.get(SoldierEnum.Piker), "/images/PikerButton_64.png");
+		setStyle(this.productSoldier.get(SoldierEnum.Knight), "/images/KnightButton_64.png");
+		setStyle(this.productSoldier.get(SoldierEnum.Onager), "/images/OnagerButton_64.png");
+		setStyle(this.productSoldier.get(SoldierEnum.Archer), "/images/ArcherButton_64.png");
+		setStyle(this.productSoldier.get(SoldierEnum.Berserker), "/images/BerserkerButton_64.png");
+		setStyle(this.productSoldier.get(SoldierEnum.Spy), "/images/SpyButton_64.png");
+		
+		setStyle(this.upgradeBuilding.get(BuildingEnum.Castle), "/images/CastleButton_64.png");
+		setStyle(this.upgradeBuilding.get(BuildingEnum.Caserne), "/images/CaserneButton_64.png");
+		setStyle(this.upgradeBuilding.get(BuildingEnum.Wall), "/images/WallButton_64.png");
+		setStyle(this.upgradeBuilding.get(BuildingEnum.Market), "/images/MarketButton_64.png");
+		setStyle(this.upgradeBuilding.get(BuildingEnum.Miller), "/images/MillerButton_64.png");
 
-		this.buttonCreatePiker.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/spartan2.png'); "
-				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-
-		this.buttonCreateOnager.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/catapult2.png'); "
-				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-
-		this.buttonUpgradeCastle
-				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/egyptian-temple-b.png'); "
-						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-
-		this.removeAllProduction.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/cancel.png'); "
-				+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-
-		this.removeLastProduction
-				.setStyle("" + "-fx-background-color: transparent;" + "-fx-background-image: url('/images/anticlockwise-rotation.png'); "
-						+ "-fx-background-size: 64px 64px; " + "-fx-background-repeat: no-repeat; ");
-
-		this.buttonCreateOnager.setOnMousePressed(event ->
-		{
-			if (this.input.isAlt())
-			{
-				while (addProduction(this.buttonCreateOnager, new Onager()))
-				{
-				}
-			}
-			else if (this.input.isShift())
-			{
-				for (int i = 0; i < 10; i++)
-				{
-					addProduction(this.buttonCreateOnager, new Onager());
-				}
-
-			}
-			else
-			{
-				addProduction(this.buttonCreateOnager, new Onager());
-			}
-
-		});
-
-		this.buttonCreatePiker.setOnMousePressed(event ->
-		{
-			if (this.input.isAlt())
-			{
-				while (addProduction(this.buttonCreatePiker, new Piker()))
-				{
-				}
-			}
-			else if (this.input.isShift())
-			{
-				for (int i = 0; i < 10; i++)
-				{
-					addProduction(this.buttonCreatePiker, new Piker());
-				}
-			}
-			else
-			{
-				addProduction(this.buttonCreatePiker, new Piker());
-			}
-
-		});
-
-		this.buttonCreateKnight.setOnMousePressed(event ->
-		{
-			if (this.input.isAlt())
-			{
-				while (addProduction(this.buttonCreateKnight, new Knight()))
-				{
-				}
-			}
-			else if (this.input.isShift())
-			{
-				for (int i = 0; i < 10; i++)
-				{
-					addProduction(this.buttonCreateKnight, new Knight());
-				}
-			}
-			else
-			{
-				addProduction(this.buttonCreateKnight, new Knight());
-			}
-
-		});
-
-		this.buttonUpgradeCastle.setOnMousePressed(event ->
-		{
-			if (this.input.isAlt())
-			{
-				while (addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel())))
-				{
-				}
-			}
-			else if (this.input.isShift())
-			{
-				for (int i = 0; i < 10; i++)
-				{
-					addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel()));
-				}
-			}
-			else
-			{
-				addProduction(this.buttonUpgradeCastle, new Castle(this.currentCastle.getLevel()));
-			}
-		});
+		
+		setStyle(this.removeAllProduction, "/images/ResetProductionButton_64.png");
+		setStyle(this.removeLastProduction, "/images/CancelLastProduction_64.png");
 
 		this.removeAllProduction.setOnMousePressed(event -> this.currentCastle.getCaserne().resetQueue(true));
 		this.removeLastProduction.setOnMousePressed(event -> this.currentCastle.getCaserne().removeLastProduction(true));
 
-		this.buttonCreatePiker.setOnMouseEntered(event ->
-		{
-			this.pikerCost.setVisible(true);
-		});
-
-		this.buttonCreateKnight.setOnMouseEntered(event ->
-		{
-			this.knightCost.setVisible(true);
-		});
-
-		this.buttonCreateOnager.setOnMouseEntered(event ->
-		{
-			this.onagerCost.setVisible(true);
-		});
-
-		this.buttonUpgradeCastle.setOnMouseEntered(event ->
-		{
-			this.castleCost.setVisible(true);
-		});
-
-		this.buttonCreateKnight.setOnMouseExited(event -> this.knightCost.setVisible(false));
-		this.buttonCreatePiker.setOnMouseExited(event -> this.pikerCost.setVisible(false));
-		this.buttonCreateOnager.setOnMouseExited(event -> this.onagerCost.setVisible(false));
-		this.buttonUpgradeCastle.setOnMouseExited(event -> this.castleCost.setVisible(false));
-
-		addEventMouse(this.buttonCreateKnight);
-		addEventMouse(this.buttonCreateOnager);
-		addEventMouse(this.buttonCreatePiker);
-		addEventMouse(this.buttonUpgradeCastle);
 		addEventMouse(this.removeAllProduction);
 		addEventMouse(this.removeLastProduction);
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			this.productSoldier.get(s).setOnMousePressed(event ->
+			{
+				if (this.input.isAlt())
+				{
+					while (addProduction(this.productSoldier.get(s), s.getObject()))
+					{
+					}
+				}
+				else if (this.input.isShift())
+				{
+					for (int i = 0; i < 10; i++)
+					{
+						addProduction(this.productSoldier.get(s), s.getObject());
+					}
+
+				}
+				else
+				{
+					addProduction(this.productSoldier.get(s), s.getObject());
+				}
+			});
+			
+			
+			this.productSoldier.get(s).setOnMouseEntered(event -> this.textCostSoldier.get(s).setVisible(true));
+			this.productSoldier.get(s).setOnMouseExited(event -> this.textCostSoldier.get(s).setVisible(false));
+			addEventMouse(this.productSoldier.get(s));
+		}
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			this.upgradeBuilding.get(b).setOnMousePressed(event ->
+			{
+				IProduction prod = (IProduction) b.getObject();
+				((IBuilding)prod).setLevel(this.currentCastle.getBuilding(b).getLevel());
+				if (this.input.isAlt())
+				{
+					while (addProduction(this.upgradeBuilding.get(b), prod))
+					{
+					}
+				}
+				else if (this.input.isShift())
+				{
+					for (int i = 0; i < 10; i++)
+					{
+						addProduction(this.upgradeBuilding.get(b), prod);
+					}
+				}
+				else
+				{
+					addProduction(this.upgradeBuilding.get(b), prod);
+				}
+			});	
+			
+			this.upgradeBuilding.get(b).setOnMouseEntered(event -> this.textCostBuilding.get(b).setVisible(true));
+			this.upgradeBuilding.get(b).setOnMouseExited(event -> this.textCostBuilding.get(b).setVisible(false));
+			addEventMouse(this.upgradeBuilding.get(b));
+		}
 	}
 
 	/**
@@ -479,7 +441,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Initalise les paramètres du background.
 	 */
@@ -541,41 +503,65 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	{
 		addNode(this.background);
 		addNode(this.backgroundTime);
-		addNode(this.buttonCreateKnight);
-		addNode(this.buttonCreateOnager);
-		addNode(this.buttonCreatePiker);
-		addNode(this.buttonUpgradeCastle);
 		addNode(this.fillTime);
 		addNode(this.removeAllProduction);
 		addNode(this.removeLastProduction);
-		addNode(this.castleCost);
-		addNode(this.knightCost);
-		addNode(this.onagerCost);
-		addNode(this.pikerCost);
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			addNode(this.productSoldier.get(s));
+			addNode(this.textCostSoldier.get(s));
+		}
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			addNode(this.upgradeBuilding.get(b));
+			addNode(this.textCostBuilding.get(b));
+		}
 	}
 
 	@Override
 	public void relocateAllNodes()
 	{
-		final int i = 90;
+		final int width = 90;
+		final int height = 80;
 		final int offset = 560;
 
 		final float margin = (float) MARGIN_PERCENTAGE + 0.076f;
 
-		relocate(this.buttonCreatePiker, SCENE_WIDTH * margin + i * 0, offset);
-		relocate(this.buttonCreateKnight, SCENE_WIDTH * margin + i * 1, offset);
-		relocate(this.buttonCreateOnager, SCENE_WIDTH * margin + i * 2, offset);
-		relocate(this.buttonUpgradeCastle, SCENE_WIDTH * margin + i * 1, offset + i * 1);
-		relocate(this.castleCost, this.buttonUpgradeCastle.getLayoutX(), this.buttonUpgradeCastle.getLayoutY() + 20);
-		relocate(this.knightCost, this.buttonCreateKnight.getLayoutX(), this.buttonCreateKnight.getLayoutY() + 20);
-		relocate(this.pikerCost, this.buttonCreatePiker.getLayoutX(), this.buttonCreatePiker.getLayoutY() + 20);
-		relocate(this.onagerCost, this.buttonCreateOnager.getLayoutX(), this.buttonCreateOnager.getLayoutY() + 20);
+		int multiplier = 0;
+		int offset2 = 0;
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			relocate(this.productSoldier.get(s), SCENE_WIDTH * margin + width * multiplier, offset + offset2);
+			relocate(this.textCostSoldier.get(s), this.productSoldier.get(s).getLayoutX(), this.productSoldier.get(s).getLayoutY() + 20);
+			multiplier++; 
+			
+			if(multiplier == 3)
+			{
+				multiplier = 0;
+				offset2 += height;
+			}
+		}
+		multiplier = 0;
+		offset2 += 10;
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			relocate(this.upgradeBuilding.get(b), SCENE_WIDTH * margin + width * multiplier, offset + offset2);
+			relocate(this.textCostBuilding.get(b), this.upgradeBuilding.get(b).getLayoutX(), this.upgradeBuilding.get(b).getLayoutY() + 20);
+			multiplier++;
+			if(multiplier == 3)
+			{
+				multiplier = 0;
+				offset2 += height;
+			}
+		}
 
-		relocate(this.removeAllProduction, SCENE_WIDTH * margin + i * 2 - i * 0.5f, offset + i * 3);
-		relocate(this.removeLastProduction, SCENE_WIDTH * margin + i * 1 - i * 0.5f, offset + i * 3);
+		relocate(this.removeAllProduction, SCENE_WIDTH * margin + width * 2 - width * 0.5f, offset + height * 4.95);
+		relocate(this.removeLastProduction, SCENE_WIDTH * margin + width * 1 - width * 0.5f, offset + height * 4.95);
 
-		relocate(this.fillTime, SCENE_WIDTH * margin + 1, offset + i * 4);
-		relocate(this.backgroundTime, SCENE_WIDTH * margin + 1, offset + i * 4);
+		relocate(this.fillTime, SCENE_WIDTH * margin + 1, offset + height * 4.3);
+		relocate(this.backgroundTime, SCENE_WIDTH * margin + 1, offset + height * 4.3);
 
 		relocate(this.background, SCENE_WIDTH * margin - 17, offset - 22);
 	}

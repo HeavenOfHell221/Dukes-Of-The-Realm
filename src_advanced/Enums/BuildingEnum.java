@@ -1,6 +1,8 @@
 package Enums;
 
 import static Utility.Settings.*;
+import DukesOfTheRealm.*;
+import Interface.IBuilding;
 
 /**
  * 
@@ -44,5 +46,19 @@ public enum BuildingEnum
 		this.maxLevel = maxLevel;
 		this.productionTimeOffset = productionTimeOffset;
 		this.productionTimePerLevel = productionTimePerLevel;
+	}
+	
+	public IBuilding getObject()
+	{
+		switch(this)
+		{
+			case Caserne: return new Caserne();
+			case Castle: return new Castle();
+			case Market: return new Market();
+			case Miller: return new Miller();
+			case Wall: return new Wall();
+			default: return null;
+			
+		}
 	}
 }

@@ -36,4 +36,18 @@ public class Miller implements Serializable, IBuilding, IProduction
 		
 	}
 
+	@Override
+	public void setLevel(int level)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getLevel()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -113,15 +113,15 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		this.imageSoldier = new SoldierPack<ImageView>();
 		
 		int size = 48;
-		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/spartan-white.png", size, size));
-		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/mounted-knight-white.png", size, size));
-		this.imageSoldier.replace(SoldierEnum.Onager, newImageView("/images/catapult-white.png", size, size));
-		this.imageSoldier.replace(SoldierEnum.Archer, newImageView("/images/spartan-white.png", size, size));
-		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/mounted-knight-white.png", size, size));
-		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/catapult-white.png", size, size));
+		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_48.png", size, size));
+		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_48.png", size, size));
+		this.imageSoldier.replace(SoldierEnum.Onager, newImageView("/images/OnagerPreview_48.png", size, size));
+		this.imageSoldier.replace(SoldierEnum.Archer, newImageView("/images/ArcherPreview_48.png", size, size));
+		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/BerserkerPreview_48.png", size, size));
+		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/SpyPreview_48.png", size, size));
 		
-		this.imageFlorin = newImageView("/images/coins.png", size, size);
-		this.imageCircle = newImageView("/images/circle.png", 128, 128);
+		this.imageFlorin = newImageView("/images/FlorinPreview_64.png", size, size);
+		this.imageCircle = newImageView("/images/CircleCurrentCastle_96.png", 128, 128);
 		
 		this.level = new Text();
 		this.owner = new Text();

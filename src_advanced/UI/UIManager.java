@@ -102,7 +102,7 @@ public class UIManager extends Parent implements IUI, IUpdate
 		this.attackPreview = new UIAttackPreview();
 		this.castlePreview = new UICastlePreview();
 		this.productionUnitPreview = new UIProductionUnitPreview();
-		this.imagePause = newImageView("/images/pause.png", 128, 128);
+		this.imagePause = newImageView("/images/Pause_128.png", 128, 128);
 		this.imagePause.setMouseTransparent(true);
 	}
 

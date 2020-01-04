@@ -7,7 +7,6 @@ import Interface.IProduction;
 
 public class Market implements Serializable, IBuilding, IProduction
 {
-
 	@Override
 	public double getProductionTime()
 	{
@@ -36,4 +35,16 @@ public class Market implements Serializable, IBuilding, IProduction
 		
 	}
 
+	@Override
+	public void setLevel(int level)
+	{
+		
+	}
+
+	@Override
+	public int getLevel()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

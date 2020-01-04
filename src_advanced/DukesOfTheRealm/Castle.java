@@ -217,7 +217,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		{
 			castle.levelUp();
 		}
-		getCaserne().getBuildingPack().replace(BuildingEnum.Castle, getCaserne().getBuildingPack().get(BuildingEnum.Castle) - 1);
+		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Castle, castle.getCaserne().getBuildingPack().get(BuildingEnum.Castle) - 1);
 	}
 
 	@Override
@@ -535,7 +535,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	@Override
 	public int getProductionCost(final Castle castle)
 	{
-		return CASTLE_COST * castle.level + /*castle.getCaserne().getNbCastleInProduction() **/ Settings.CASTLE_COST;
+		return CASTLE_COST * castle.level + castle.getCaserne().getBuildingPack().get(BuildingEnum.Castle) * Settings.CASTLE_COST;
 	}
 
 	/**

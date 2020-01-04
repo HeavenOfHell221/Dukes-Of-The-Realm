@@ -13,7 +13,7 @@ import Utility.SoldierPack;
 /**
  * Réserve qui contient le nombre de chaque unité pour un château.
  */
-public class ReserveOfSoldiers implements Serializable, IBuilding
+public class ReserveOfSoldiers implements Serializable
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/

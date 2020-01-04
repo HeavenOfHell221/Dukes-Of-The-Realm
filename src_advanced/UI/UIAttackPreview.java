@@ -98,12 +98,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		this.imageSoldier = new SoldierPack<ImageView>();
 		this.textSoldier = new SoldierPack<Text>();
 		
-		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/spartan-white.png", 64, 64));
-		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/mounted-knight-white.png", 64, 64));
-		this.imageSoldier.replace(SoldierEnum.Onager, newImageView("/images/catapult-white.png", 64, 64));
-		this.imageSoldier.replace(SoldierEnum.Archer, newImageView("/images/spartan-white.png", 64, 64));
-		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/mounted-knight-white.png", 64, 64));
-		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/catapult-white.png", 64, 64));
+		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_64.png", 64, 64));
+		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_64.png", 64, 64));
+		this.imageSoldier.replace(SoldierEnum.Onager, newImageView("/images/OnagerPreview_64.png", 64, 64));
+		this.imageSoldier.replace(SoldierEnum.Archer, newImageView("/images/ArcherPreview_64.png", 64, 64));
+		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/BerserkerPreview_64.png", 64, 64));
+		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/SpyPreview_64.png", 64, 64));
 
 		this.background = new Rectangle(340, 530);
 		
@@ -211,12 +211,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	private void setAllButtons()
 	{
 
-		setStyle(this.buttonAttack, "images/wide.png");
+		setStyle(this.buttonAttack, "images/Attack_64.png");
 
 		for(SoldierEnum s : SoldierEnum.values())
 		{
-			setStyle(this.downSoldier.get(s), "images/downgrade.png");
-			setStyle(this.upSoldier.get(s), "images/upgrade.png");
+			setStyle(this.downSoldier.get(s), "images/RemoveSoldierOst_64.png");
+			setStyle(this.upSoldier.get(s), "images/AddSoldierOst_64.png");
 			
 			this.upSoldier.get(s).setOnMousePressed(event ->
 			{
