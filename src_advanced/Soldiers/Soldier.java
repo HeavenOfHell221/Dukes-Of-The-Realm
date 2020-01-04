@@ -178,7 +178,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 
 		if (this.isInPosition && !this.isWaitingForAttackLocation)
 		{
-			if (!this.itsOst.isBackup() || isStopAttack())
+			if (!this.itsOst.isBackup())
 			{
 				attack();
 			}

@@ -267,6 +267,17 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		setVisible(this.fillTime, visible);
 		setVisible(this.removeAllProduction, visible);
 		setVisible(this.removeLastProduction, visible);	
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			setVisible(this.productSoldier.get(s), visible);
+		}
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			setVisible(this.upgradeBuilding.get(b), visible);
+		}
+		
 	}
 
 	/**

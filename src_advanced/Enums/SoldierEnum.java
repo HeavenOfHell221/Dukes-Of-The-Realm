@@ -133,6 +133,29 @@ public enum SoldierEnum implements Serializable
 		}
 	}
 	
+	/**
+	 * Générateur d'énumération aléatoire où les probabilités sont modifié pour prendre plus souvent des unités défensives.
+	 * @return Une type d'unité.
+	 */
+	public static SoldierEnum getRandomTypeWithDefense()
+	{
+		Random rand = new Random();
+		final int i = rand.nextInt(100);
+		
+		if(i >= 0 && i < 25)
+			return Piker;
+		else if(i >= 25 && i < 50)
+			return Archer;
+		else if(i >= 50 && i < 70)
+			return Knight;
+		else if(i >= 70 && i < 85)	
+			return Berserker;
+		else if(i >= 85 && i < 95)
+			return Onager;
+		else
+			return Spy;
+	}
+	
 	public Soldier getObject()
 	{
 		switch(this)

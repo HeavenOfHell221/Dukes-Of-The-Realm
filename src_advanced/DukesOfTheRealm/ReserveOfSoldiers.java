@@ -100,7 +100,7 @@ public class ReserveOfSoldiers implements Serializable
 		}
 		else
 		{
-			randomRemoveHP(SoldierEnum.getRandomType());
+			randomRemoveHP(SoldierEnum.getRandomTypeWithDefense());
 		}
 	}
 	

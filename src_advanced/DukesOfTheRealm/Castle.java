@@ -492,7 +492,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public void randomRemoveHP()
 	{
-		getReserveOfSoldiers().randomRemoveHP(SoldierEnum.getRandomType());
+		getReserveOfSoldiers().randomRemoveHP(SoldierEnum.getRandomTypeWithDefense());
 	}
 	
 	/**
