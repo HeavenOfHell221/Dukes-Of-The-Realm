@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import Interface.IBuilding;
 import Interface.IProduction;
+import Utility.Settings;
 
 /**
  * Représente un rempart qui protège un château. Un rempart augmente le maximum de vie des unités en
@@ -78,17 +79,15 @@ public class Wall implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public double getProductionTime()
+	public double getProductionTime(int level)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Settings.WALL_PRODUCTION_OFFSET + level * Settings.WALL_PRODUCTION_TIME_PER_LEVEL;
 	}
 
 	@Override
-	public int getProductionCost(final Castle castle)
+	public int getProductionCost(final int level)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return Settings.WALL_COST * (level + 1) + level * level * (level / 2);
 	}
 
 	@Override

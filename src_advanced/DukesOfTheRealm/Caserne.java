@@ -60,10 +60,6 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
 		this.buildingPack = new BuildingPack<>(0, 0, 0, 0, 0);
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
-		this.productionUnitList.add(new ProductionUnit(this.castle, this));
-		this.productionUnitList.add(new ProductionUnit(this.castle, this));
-		this.productionUnitList.add(new ProductionUnit(this.castle, this));
-		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 	}
 
 	public Caserne()
@@ -96,7 +92,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			if (refoundFlorin)
 			{
-				this.castle.addFlorin(i.getProductionCost(this.castle));
+				this.castle.addFlorin(i.getProductionCost(i.getLevel()));
 			}
 			i.productionFinished(this.castle, true);
 		}
@@ -114,7 +110,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			while (!this.mainProductionQueue.isEmpty())
 			{
 				IProduction i = this.mainProductionQueue.pollFirst();
-				this.castle.addFlorin(i.getProductionCost(this.castle));
+				this.castle.addFlorin(i.getProductionCost(i.getLevel()));
 				i.productionFinished(this.castle, true);
 			}
 		}
@@ -132,7 +128,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	public boolean addProduction(final IProduction p)
 	{
-		if (!this.castle.removeFlorin(p.getProductionCost(this.castle)))
+		if (!this.castle.removeFlorin(p.getProductionCost(p.getLevel())))
 		{
 			return false;
 		}
@@ -172,14 +168,14 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public double getProductionTime()
+	public double getProductionTime(int level)
 	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getProductionCost(final Castle castle)
+	public int getProductionCost(int level)
 	{
 		// TODO Auto-generated method stub
 		return 0;

@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Castle;
 import Enums.SoldierEnum;
 import javafx.scene.paint.Color;
 

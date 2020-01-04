@@ -176,21 +176,21 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			if (this.textCostBuilding.get(b).isVisible())
 			{
+				int price = 0;
 				if (this.input.isShift())
 				{
-					int price = 0;
-
+					int level = this.currentCastle.getBuilding(b).getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b);
 					for (int i = 0; i < 10; i++)
 					{
-						price += b.cost * (this.currentCastle.getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b) + i);
+						price += ((IProduction) this.currentCastle.getBuilding(b)).getProductionCost(level + i);
 					}
 
 					this.textCostBuilding.get(b).setText(price + "");
 				}
 				else
 				{
-					this.textCostBuilding.get(b).setText(
-							b.cost * (this.currentCastle.getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b)) + "");
+					price = ((IProduction)this.currentCastle.getBuilding(b)).getProductionCost(this.currentCastle.getBuilding(b).getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b));
+					this.textCostBuilding.get(b).setText(price + "");
 				}
 			}
 		}
@@ -393,7 +393,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 			this.upgradeBuilding.get(b).setOnMousePressed(event ->
 			{
 				IProduction prod = (IProduction) b.getObject();
-				((IBuilding) prod).setLevel(this.currentCastle.getBuilding(b).getLevel());
+				((IBuilding) prod).setLevel(this.currentCastle.getBuilding(b).getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b));
 				if (this.input.isAlt())
 				{
 					while (addProduction(this.upgradeBuilding.get(b), prod))

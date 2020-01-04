@@ -544,9 +544,9 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	}
 
 	@Override
-	public int getProductionCost(final Castle castle)
+	public int getProductionCost(int level)
 	{
-		return CASTLE_COST * castle.level + castle.getCaserne().getBuildingPack().get(BuildingEnum.Castle) * Settings.CASTLE_COST;
+		return CASTLE_COST * level + level * level * level;
 	}
 
 	/**
@@ -563,9 +563,9 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * @return Retourne son temps de production.
 	 */
 	@Override
-	public double getProductionTime()
+	public double getProductionTime(int level)
 	{
-		return CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * this.level;
+		return CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * level;
 	}
 
 	/**

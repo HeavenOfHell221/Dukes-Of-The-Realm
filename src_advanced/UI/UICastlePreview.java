@@ -1,9 +1,11 @@
 package UI;
 
 import DukesOfTheRealm.Castle;
+import Enums.BuildingEnum;
 import Enums.SoldierEnum;
 import Interface.IUI;
 import Interface.IUpdate;
+import Utility.BuildingPack;
 import Utility.Settings;
 import Utility.SoldierPack;
 import javafx.scene.Node;
@@ -39,11 +41,6 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Icone de selection du château.
 	 */
 	private final ImageView imageCircle;
-
-	/**
-	 * Texte affichant le niveau du château selectionné.
-	 */
-	private final Text level;
 
 	/**
 	 * Texte affichant le nom de l'acteur à qui appartient le château selectionné.
@@ -98,6 +95,11 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Icones des unités.
 	 */
 	private final SoldierPack<ImageView> imageSoldier;
+	
+	/**
+	 * Textes des niveaux des bâtiments 
+	 */
+	private final BuildingPack<Text> textBuildingLevel;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -110,6 +112,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	{
 		this.textSoldier = new SoldierPack<>();
 		this.imageSoldier = new SoldierPack<>();
+		this.textBuildingLevel = new BuildingPack<>();
 
 		int size = 48;
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_48.png", size, size));
@@ -121,8 +124,12 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 		this.imageFlorin = newImageView("/images/FlorinPreview_64.png", size, size);
 		this.imageCircle = newImageView("/images/CircleCurrentCastle_96.png", 128, 128);
+		
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			this.textBuildingLevel.replace(b, new Text());
+		}
 
-		this.level = new Text();
 		this.owner = new Text();
 		this.nbFlorin = new Text();
 

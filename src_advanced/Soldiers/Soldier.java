@@ -638,13 +638,13 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	/*************************************************/
 
 	@Override
-	public double getProductionTime()
+	public double getProductionTime(int level)
 	{
 		return getType().productionTime;
 	}
 
 	@Override
-	public int getProductionCost(final Castle castle)
+	public int getProductionCost(int level)
 	{
 		return getType().cost;
 	}
@@ -671,5 +671,12 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	public final Point2D getAttackLocation()
 	{
 		return this.attackLocation;
+	}
+
+	@Override
+	public int getLevel()
+	{
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
