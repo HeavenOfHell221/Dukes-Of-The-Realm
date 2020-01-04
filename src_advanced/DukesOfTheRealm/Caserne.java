@@ -3,10 +3,13 @@ package DukesOfTheRealm;
 import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import Enums.BuildingEnum;
 import Interface.IBuilding;
 import Interface.IProduction;
 import Utility.BuildingPack;
+import Utility.Settings;
 import Utility.SoldierPack;
 
 /**
@@ -42,6 +45,10 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 * Nombre de chaque type de bâtiment dans la queue.
 	 */
 	private BuildingPack<Integer> buildingPack;
+	
+	private int level;
+	
+	public int numberProductionUnitAdding = 0;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -60,6 +67,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
 		this.buildingPack = new BuildingPack<>(0, 0, 0, 0, 0);
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
+		this.level = 1;
 	}
 
 	public Caserne()
@@ -73,7 +81,18 @@ public class Caserne implements Serializable, IBuilding, IProduction
 
 	public void updateProduction()
 	{
-		this.productionUnitList.forEach(unit -> unit.updateProduction());
+		Iterator<ProductionUnit> it = this.productionUnitList.iterator();
+		
+		while(it.hasNext())
+		{
+			it.next().updateProduction();
+		}
+		
+		while(this.numberProductionUnitAdding > 0)
+		{
+			this.productionUnitList.add(new ProductionUnit(this.castle, this));
+			this.numberProductionUnitAdding--;
+		}
 	}
 
 	/*************************************************/
@@ -168,44 +187,66 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public double getProductionTime(int level)
+	public double getProductionTime(Castle castle, int level)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (Settings.CASERNE_PRODUCTION_OFFSET + Settings.CASERNE_PRODUCTION_TIME_PER_LEVEL * level) * castle.getProductionTimeMultiplier();
 	}
 
 	@Override
 	public int getProductionCost(int level)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		level += 2;
+		return Settings.CASERNE_COST * level + (level * level * level * level) / 7;
+	}
+	
+	private void levelUp()
+	{
+		if(this.level < Settings.CASERNE_LEVEL_MAX)
+		{
+			this.level += 1;
+		
+			if(this.level % 2 != 0 || this.level == Settings.CASERNE_LEVEL_MAX)
+			{
+				this.numberProductionUnitAdding++;
+			}
+		}
 	}
 
 	@Override
 	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		// TODO Auto-generated method stub
-
+		if(!cancel)
+		{
+			((Caserne)castle.getBuilding(BuildingEnum.Caserne)).levelUp();
+		}
+		
+		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Caserne,
+				castle.getCaserne().getBuildingPack().get(BuildingEnum.Caserne) - 1);
 	}
 
 	@Override
 	public void productionStart(final Caserne caserne)
 	{
-		// TODO Auto-generated method stub
-
+		caserne.getBuildingPack().replace(BuildingEnum.Caserne, caserne.getBuildingPack().get(BuildingEnum.Caserne) + 1);
 	}
 
 	@Override
 	public void setLevel(final int level)
 	{
-		// TODO Auto-generated method stub
-
+		this.level = level;
 	}
 
 	@Override
 	public int getLevel()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return this.level;
+	}
+
+	/**
+	 * @return the castle
+	 */
+	public final Castle getCastle()
+	{
+		return castle;
 	}
 }

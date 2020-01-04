@@ -56,7 +56,7 @@ public class ProductionUnit implements Serializable
 			this.currentProductionTime -= 1 * Time.deltaTime;
 
 			// On calcul le ration pour le UI
-			this.ratio = 1 - this.currentProductionTime / this.currentProduction.getProductionTime(this.currentProduction.getLevel());
+			//this.ratio = 1 - this.currentProductionTime / this.currentProduction.getProductionTime(this.castle, this.currentProduction.getLevel());
 
 			// Si la production est terminé
 			if (this.currentProductionTime <= 0)
@@ -71,7 +71,7 @@ public class ProductionUnit implements Serializable
 			if (this.caserne.getMainProductionQueue().size() > 0)
 			{
 				this.currentProduction = this.caserne.getMainProductionQueue().pollFirst();
-				this.currentProductionTime = this.currentProduction.getProductionTime(this.currentProduction.getLevel());
+				this.currentProductionTime = this.currentProduction.getProductionTime(this.castle, this.currentProduction.getLevel());
 			}
 		}
 	}

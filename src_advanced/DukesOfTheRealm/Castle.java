@@ -16,7 +16,6 @@ import java.util.Stack;
 
 import Duke.Actor;
 import Enums.BuildingEnum;
-import Enums.CharacterCastleEnum;
 import Enums.SoldierEnum;
 import Interface.IBuilding;
 import Interface.IProduction;
@@ -110,13 +109,15 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	private BuildingPack<IBuilding> buildingPack;
 
 	/**
-	 * Caractère de ce château.
-	 * 
-	 * @see Enums.CharacterCastleEnum
+	 * Contient les unités de ce château.
+	 * @see ReserveOfSoldiers
 	 */
-	private CharacterCastleEnum character;
-
 	private ReserveOfSoldiers reserveOfSoldiers;
+	
+	/**
+	 * Multiplicateur de durée pour toute production lié à ce château.
+	 */
+	private float productionTimeMultiplier = 1f;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -168,6 +169,8 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.orientation = setOrientation();
 		startTransient(pane);
 		setAttackLocations();
+		
+		this.productionTimeMultiplier = (float) ((100f - Math.exp(this.level / 6) - this.level) / 100);
 	}
 
 	/**
@@ -309,7 +312,16 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public void levelUp()
 	{
-		this.level++;
+		if(this.level < Settings.CASTLE_LEVEL_MAX)
+		{
+			this.level += 1;
+			decreaseMultiplier();
+		}
+	}
+	
+	private void decreaseMultiplier()
+	{
+		this.productionTimeMultiplier = (float) ((100f - Math.exp(this.level / 6) - this.level) / 100);
 	}
 
 	/**
@@ -563,9 +575,9 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * @return Retourne son temps de production.
 	 */
 	@Override
-	public double getProductionTime(int level)
+	public double getProductionTime(Castle castle, int level)
 	{
-		return CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * level;
+		return (CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * level) * castle.getProductionTimeMultiplier();
 	}
 
 	/**
@@ -645,18 +657,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	}
 
 	/**
-	 * @return the character
+	 * @return the productionTimeMultiplier
 	 */
-	public final CharacterCastleEnum getCharacter()
+	public final float getProductionTimeMultiplier()
 	{
-		return this.character;
-	}
-
-	/**
-	 * @param character the character to set
-	 */
-	public final void setCharacter(final CharacterCastleEnum character)
-	{
-		this.character = character;
+		return productionTimeMultiplier;
 	}
 }

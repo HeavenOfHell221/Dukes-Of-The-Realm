@@ -6,8 +6,6 @@ import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Kingdom;
-import Enums.CharacterCastleEnum;
-import Enums.CharacterDukeEnum;
 import SimpleGoal.Goal;
 import Utility.Settings;
 
@@ -25,13 +23,6 @@ public class DukeAI extends Actor implements Serializable
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
-	/**
-	 * Le caractère de ce Duke.
-	 * 
-	 * @see Enums.CharacterDukeEnum
-	 */
-	private CharacterDukeEnum character;
 
 	/**
 	 * Dernière fois que ce Duke à vérifié ses objectifs.
@@ -116,7 +107,6 @@ public class DukeAI extends Actor implements Serializable
 	{
 		super.addFirstCastle(castle);
 		castle.startSoldier();
-		addNewCharacterInThisNewCastle(castle);
 	}
 
 	/**
@@ -135,7 +125,6 @@ public class DukeAI extends Actor implements Serializable
 	@Override
 	protected void addOrRemoveCastleList()
 	{
-		this.castlesWaitForAdding.forEach(castle -> addNewCharacterInThisNewCastle(castle));
 		this.castlesWaitForDelete.forEach(castle -> this.goalMap.remove(castle));
 
 		super.addOrRemoveCastleList();
@@ -181,24 +170,5 @@ public class DukeAI extends Actor implements Serializable
 	public final void setKingdom(final Kingdom kingdom)
 	{
 		this.kingdom = kingdom;
-	}
-
-	/**
-	 * @param character the character to set
-	 */
-	public final void setCharacter(final CharacterDukeEnum character)
-	{
-		this.character = character;
-	}
-
-	/**
-	 * Change le caractère de ce nouveau château.
-	 * 
-	 * @param castle Le château que ce Duke vient d'acquérir.
-	 */
-	private void addNewCharacterInThisNewCastle(final Castle castle)
-	{
-		CharacterCastleEnum character = CharacterCastleEnum.getRandomType(this.character);
-		castle.setCharacter(character);
 	}
 }

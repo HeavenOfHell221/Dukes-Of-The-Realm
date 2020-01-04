@@ -2,11 +2,9 @@ package Goals;
 
 import java.io.Serializable;
 import java.util.Random;
-
 import Duke.Actor;
 import Duke.DukeAI;
 import DukesOfTheRealm.Castle;
-import Enums.CharacterCastleEnum;
 import Enums.GoalEnum;
 import SimpleGoal.CastleGoal;
 import SimpleGoal.Goal;
@@ -56,9 +54,9 @@ public class GeneratorGoal implements Serializable
 	 * @return           Un objectif pour l'IA.
 	 * @see              Enums.GoalEnum
 	 */
-	public static Goal getNewGoal(final Castle castle, final CharacterCastleEnum character)
+	public static Goal getNewGoal(final Castle castle)
 	{
-		switch (GoalEnum.getRandomType(character))
+		switch (GoalEnum.getRandomType())
 		{
 			case Backup:
 				return getNewGoalBackup(castle);
@@ -67,7 +65,7 @@ public class GeneratorGoal implements Serializable
 			case Finance:
 				return getNewGoalFinance(castle);
 			case Production:
-				return getNewGoalProduction(castle, character);
+				return getNewGoalProduction(castle);
 			case Building:
 				return getNewGoalBuilding(castle);
 			default:
@@ -172,10 +170,8 @@ public class GeneratorGoal implements Serializable
 	 * @param  character Le caractère du château qui aura cette objectif.
 	 * @return           Un objectif.
 	 */
-	private static Goal getNewGoalProduction(final Castle castle, final CharacterCastleEnum character)
+	private static Goal getNewGoalProduction(final Castle castle)
 	{
-		castle.getLevel();
-		new SoldierPack();
 
 		/*
 		 * switch (rand.nextInt(7)) {

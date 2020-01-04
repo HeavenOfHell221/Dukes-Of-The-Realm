@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
+import DukesOfTheRealm.Miller;
 import DukesOfTheRealm.Ost;
 import DukesOfTheRealm.ReserveOfSoldiers;
 import DukesOfTheRealm.Sprite;
+import Enums.BuildingEnum;
 import Enums.CollisionEnum;
 import Enums.SoldierEnum;
 import Interface.IProduction;
@@ -219,6 +221,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	public void productionStart(final Caserne caserne)
 	{
 		caserne.getSoldierPack().replace(this.type, caserne.getSoldierPack().get(this.type) + 1);
+		((Miller)caserne.getCastle().getBuilding(BuildingEnum.Miller)).removeVillager(this.type.villager);
 	}
 
 	/**
@@ -638,7 +641,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	/*************************************************/
 
 	@Override
-	public double getProductionTime(int level)
+	public double getProductionTime(Castle castle,int level)
 	{
 		return getType().productionTime;
 	}

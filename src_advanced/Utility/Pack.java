@@ -63,4 +63,9 @@ public abstract class Pack<T1, T2> implements Serializable
 		this.map.putAll(m);
 	}
 
+	@Override
+	public String toString()
+	{
+		return "Pack [map=" + map + "]";
+	}
 }

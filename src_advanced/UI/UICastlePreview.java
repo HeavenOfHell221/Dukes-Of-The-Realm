@@ -183,13 +183,20 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		{
 			this.florinIncome.setText(this.lastCastle.getActor().florinIncome(this.lastCastle));
 			this.owner.setText(this.lastCastle.getActor().getName());
-			this.level.setText("Level: " + this.lastCastle.getLevel());
+
+			for(BuildingEnum b : BuildingEnum.values())
+			{
+				this.textBuildingLevel.get(b).setText(this.lastCastle.getBuilding(b).getLevel() + "");
+			}
 		}
 		else
 		{
 			this.florinIncome.setText(this.currentCastle.getActor().florinIncome(this.currentCastle));
 			this.owner.setText(this.currentCastle.getActor().getName());
-			this.level.setText("Level: " + this.currentCastle.getLevel());
+			for(BuildingEnum b : BuildingEnum.values())
+			{
+				this.textBuildingLevel.get(b).setText(this.currentCastle.getBuilding(b).getLevel() + "");
+			}
 		}
 
 		this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
@@ -211,7 +218,11 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 */
 	private void setAllTexts()
 	{
-		setText(this.level, 24);
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			setText(this.textBuildingLevel.get(b), 24);
+		}
+		
 		setText(this.owner, 24);
 		setText(this.florinIncome, 24);
 
@@ -251,11 +262,18 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 		relocate(this.owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
 		relocate(this.florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 15);
-		relocate(this.level, Settings.SCENE_WIDTH * margin, offset + i * 2 - 30);
+		
+		int multiplier = 2;
+		for(BuildingEnum b : BuildingEnum.values())
+		{
+			relocate(this.textBuildingLevel.get(b), Settings.SCENE_WIDTH * margin, offset + i * multiplier - 30);
+			multiplier++;
+		}
+
 		offset -= 20;
 		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin, offset + i * 2 + 20);
 
-		int multiplier = 3;
+		multiplier = 3;
 		for (SoldierEnum s : SoldierEnum.values())
 		{
 			relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin, offset + i * multiplier + 20);
@@ -271,21 +289,21 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	public void addAllNodes()
 	{
 		addNode(this.background);
-		addNode(this.level);
 		addNode(this.imageFlorin);
 		addNode(this.owner);
 		addNode(this.florinIncome);
 		addNode(this.nbFlorin);
 		addNode(this.imageCircle);
 
-		for (Text t : this.textSoldier.values())
+		for(BuildingEnum b : BuildingEnum.values())
 		{
-			addNode(t);
+			addNode(this.textBuildingLevel.get(b));
 		}
-
-		for (ImageView i : this.imageSoldier.values())
+		
+		for(SoldierEnum s : SoldierEnum.values())
 		{
-			addNode(i);
+			addNode(this.textSoldier.get(s));
+			addNode(this.imageSoldier.get(s));
 		}
 	}
 
@@ -308,20 +326,20 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	public void setAllVisible(final boolean visible)
 	{
 		setVisible(this.background, visible);
-		setVisible(this.level, visible);
 		setVisible(this.imageFlorin, visible);
 		setVisible(this.owner, visible);
 		setVisible(this.florinIncome, visible);
 		setVisible(this.nbFlorin, visible);
 
-		for (Text t : this.textSoldier.values())
+		for(SoldierEnum s : SoldierEnum.values())
 		{
-			setVisible(t, visible);
+			setVisible(this.imageSoldier.get(s), visible);
+			setVisible(this.textBuildingLevel.get(s), visible);
 		}
-
-		for (ImageView i : this.imageSoldier.values())
+		
+		for(BuildingEnum b : BuildingEnum.values())
 		{
-			setVisible(i, visible);
+			setVisible(this.textBuildingLevel.get(b), visible);
 		}
 	}
 

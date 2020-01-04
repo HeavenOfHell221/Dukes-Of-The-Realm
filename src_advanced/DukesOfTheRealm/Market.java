@@ -8,7 +8,7 @@ import Interface.IProduction;
 public class Market implements Serializable, IBuilding, IProduction
 {
 	@Override
-	public double getProductionTime(int level)
+	public double getProductionTime(final Castle castle, int level)
 	{
 		// TODO Auto-generated method stub
 		return 0;

@@ -63,10 +63,4 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 	{
 		return super.get(soldierEnum);
 	}
-
-	@Override
-	public String toString()
-	{
-		return "SoldierPack [map=" + this.map + "]";
-	}
 }

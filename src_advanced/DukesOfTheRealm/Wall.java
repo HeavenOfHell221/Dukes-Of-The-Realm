@@ -4,6 +4,7 @@ import static Utility.Settings.WALL_LEVEL_MAX;
 
 import java.io.Serializable;
 
+import Enums.BuildingEnum;
 import Interface.IBuilding;
 import Interface.IProduction;
 import Utility.Settings;
@@ -20,7 +21,7 @@ public class Wall implements Serializable, IBuilding, IProduction
 	private int level;
 
 	/**
-	 * Le multiplicateur de point de vie du rempart, de base à 1 et à 3 au max.
+	 * Le multiplicateur de point de vie du rempart.
 	 */
 	private float multiplicator;
 
@@ -40,8 +41,11 @@ public class Wall implements Serializable, IBuilding, IProduction
 	 */
 	public void levelUp()
 	{
-		this.level = this.level < WALL_LEVEL_MAX ? this.level++ : this.level;
-		increaseMultiplicator();
+		if(this.level < WALL_LEVEL_MAX)
+		{
+			this.level += 1;
+			increaseMultiplicator();
+		}	
 	}
 
 	/**
@@ -79,9 +83,9 @@ public class Wall implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public double getProductionTime(int level)
+	public double getProductionTime(final Castle castle, int level)
 	{
-		return Settings.WALL_PRODUCTION_OFFSET + level * Settings.WALL_PRODUCTION_TIME_PER_LEVEL;
+		return (Settings.WALL_PRODUCTION_OFFSET + level * Settings.WALL_PRODUCTION_TIME_PER_LEVEL) * castle.getProductionTimeMultiplier();
 	}
 
 	@Override
@@ -89,25 +93,34 @@ public class Wall implements Serializable, IBuilding, IProduction
 	{
 		return Settings.WALL_COST * (level + 1) + level * level * (level / 2);
 	}
-
+		
 	@Override
 	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		// TODO Auto-generated method stub
-
+		if(!cancel)
+		{
+			((Wall)castle.getBuilding(BuildingEnum.Wall)).levelUp();
+		}
+	
+		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Wall,
+				castle.getCaserne().getBuildingPack().get(BuildingEnum.Wall) - 1);
 	}
 
 	@Override
 	public void productionStart(final Caserne caserne)
 	{
-		// TODO Auto-generated method stub
-
+		caserne.getBuildingPack().replace(BuildingEnum.Wall, caserne.getBuildingPack().get(BuildingEnum.Wall) + 1);
 	}
 
 	@Override
 	public void setLevel(final int level)
 	{
-		// TODO Auto-generated method stub
-
+		this.level = level;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Wall [level=" + level + ", multiplicator=" + multiplicator + "]";
+	}	
 }

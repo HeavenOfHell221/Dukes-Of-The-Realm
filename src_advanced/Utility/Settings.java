@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 50;
+	public static final int FLORIN_PER_SECOND = 5000;
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -89,7 +89,7 @@ public class Settings
 	/**
 	 * Nombre de Knight de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_KNIGHT = 100;
+	public static final int STARTER_KNIGHT = 10;
 
 	/**
 	 * Nombre de Piker de base pour le joueur et les IA.
@@ -104,12 +104,12 @@ public class Settings
 	/**
 	 * Nombre de Archer de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_ARCHER = 0;
+	public static final int STARTER_ARCHER = 10;
 
 	/**
 	 * Nombre de Berserker de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_BERSERKER = 0;
+	public static final int STARTER_BERSERKER = 20;
 
 	/**
 	 * Nombte de Spy de base pour le joueur et les IA.
@@ -165,6 +165,7 @@ public class Settings
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
 	public static final int MILLER_LEVEL_MAX = 20;
+	public static final int MILLER_VILLAGER_BASE = 80;
 
 	public static final int MARKET_COST = 100;
 	public static final float MARKET_PRODUCTION_OFFSET = 2f;

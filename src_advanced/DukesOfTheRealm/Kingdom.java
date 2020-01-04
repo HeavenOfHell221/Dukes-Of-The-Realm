@@ -17,7 +17,6 @@ import Duke.Actor;
 import Duke.Baron;
 import Duke.DukeAI;
 import Duke.Player;
-import Enums.CharacterDukeEnum;
 import Interface.IUpdate;
 import UI.UIManager;
 import Utility.Collision;
@@ -250,7 +249,6 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 			a.setName("Duke " + (i + 1));
 			this.actors.add(a);
 			a.setColor(randomColor(rand));
-			a.setCharacter(CharacterDukeEnum.getRandomType());
 		}
 
 		Color colorBaron = Color.DARKGRAY;
