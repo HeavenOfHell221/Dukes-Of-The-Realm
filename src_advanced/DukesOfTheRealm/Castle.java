@@ -162,6 +162,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.level = level;
 		this.totalFlorin = 0;
 		this.buildingPack = new BuildingPack<>(this, new Caserne(this), new Market(), new Miller(), new Wall());
+		for(int i = 0; i < 20; i++)
+		{
+			this.getWall().levelUp();
+		}
 		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
 		this.ost = null;
 
@@ -171,6 +175,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		setAttackLocations();
 		
 		this.productionTimeMultiplier = (float) ((100f - Math.exp(this.level / 6) - this.level) / 100);
+		
 	}
 
 	/**
@@ -216,6 +221,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		{
 			this.ost.update(now, pause);
 		}
+		
+		/*if(this.actor.isPlayer())
+		{
+			System.out.println(getMiller().getVillagerFree());
+		}*/
 	}
 
 	/*************************************************/
@@ -495,7 +505,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * @return Retourne le multiplicateur du rempart.
 	 * @see    Wall#getMultiplicator()
 	 */
-	public float getWallMultiplicator()
+	public double getWallMultiplicator()
 	{
 		return ((Wall) getBuilding(BuildingEnum.Wall)).getMultiplicator();
 	}
@@ -549,12 +559,22 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		return this.reserveOfSoldiers;
 	}
+	
+	public Miller getMiller()
+	{
+		return (Miller) getBuilding(BuildingEnum.Miller);
+	}
 
 	public Caserne getCaserne()
 	{
 		return (Caserne) getBuilding(BuildingEnum.Caserne);
 	}
 
+	public Wall getWall()
+	{
+		return (Wall) getBuilding(BuildingEnum.Wall);
+	}
+	
 	@Override
 	public int getProductionCost(int level)
 	{

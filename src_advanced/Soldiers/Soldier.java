@@ -547,10 +547,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	{
 		if (!isStopAttack())
 		{
-			// Il va vouloir faire 1 point de dégâts
-			getDestination().randomRemoveHP();
-
-			// Si le point de damage n'a pas reussi, la reserve bloque et stop l'attaque
+			applyDamage(getDestination());
+			
 			if (!getDestination().isStopAttack())
 			{
 				this.isDead = --this.remainingDamage <= 0 ? true : false;
@@ -565,6 +563,11 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 		{
 			this.isDead = true;
 		}
+	}
+	
+	protected void applyDamage(Castle destination)
+	{
+		destination.randomRemoveHP();
 	}
 
 	/*************************************************/

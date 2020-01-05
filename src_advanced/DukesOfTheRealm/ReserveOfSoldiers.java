@@ -9,6 +9,7 @@ import static Utility.Settings.SPY_HP;
 
 import java.io.Serializable;
 
+import Enums.BuildingEnum;
 import Enums.SoldierEnum;
 import Utility.SoldierPack;
 
@@ -21,6 +22,8 @@ public class ReserveOfSoldiers implements Serializable
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
 
+	int tmp = 0;
+	
 	/**
 	 * Référence sur le château qui contient cette réserve.
 	 */
@@ -40,7 +43,7 @@ public class ReserveOfSoldiers implements Serializable
 	/**
 	 * Nombre de point de vie restant pour chaque type d'unité.
 	 */
-	private final SoldierPack<Integer> HPPack;
+	private final SoldierPack<Double> HPPack;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -55,21 +58,16 @@ public class ReserveOfSoldiers implements Serializable
 	{
 		this.castle = castle;
 		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
-		this.HPPack = new SoldierPack<>((int) (PIKER_HP * this.castle.getWallMultiplicator()),
-				(int) (KNIGHT_HP * this.castle.getWallMultiplicator()), (int) (ONAGER_HP * this.castle.getWallMultiplicator()),
-				(int) (ARCHER_HP * this.castle.getWallMultiplicator()), (int) (BERSERKER_HP * this.castle.getWallMultiplicator()),
-				(int) (SPY_HP * this.castle.getWallMultiplicator()));
+		this.HPPack = new SoldierPack<>((PIKER_HP * this.castle.getWallMultiplicator()),
+				(KNIGHT_HP * this.castle.getWallMultiplicator()), (ONAGER_HP * this.castle.getWallMultiplicator()),
+				(ARCHER_HP * this.castle.getWallMultiplicator()), (BERSERKER_HP * this.castle.getWallMultiplicator()),
+				(SPY_HP * this.castle.getWallMultiplicator()));
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-
-	public void start()
-	{
-
-	}
-
+	
 	/**
 	 * Retire aléatoirement un point de vie à un type d'unité.
 	 *
@@ -79,6 +77,12 @@ public class ReserveOfSoldiers implements Serializable
 	public void randomRemoveHP(final SoldierEnum typeForce)
 	{
 		testRemoveHP();
+		
+		if(typeForce == SoldierEnum.Piker)
+		{
+			tmp++;
+			System.out.println(tmp);
+		}
 
 		if (this.stopAttack)
 		{
@@ -87,11 +91,10 @@ public class ReserveOfSoldiers implements Serializable
 
 		if (this.soldierPack.get(typeForce) > 0)
 		{
-			int HPRemaining = this.HPPack.get(typeForce);
-			if (--HPRemaining == 0)
+			double HPRemaining = this.HPPack.get(typeForce);
+			if (--HPRemaining <= 0)
 			{
-				this.soldierPack.replace(typeForce, this.soldierPack.get(typeForce) - 1);
-				this.HPPack.replace(typeForce, (int) (typeForce.HP * this.castle.getWallMultiplicator()));
+				soldierDeath(typeForce);
 			}
 			else
 			{
@@ -113,6 +116,13 @@ public class ReserveOfSoldiers implements Serializable
 		{
 			this.stopAttack = true;
 		}
+	}
+	
+	private void soldierDeath(SoldierEnum s)
+	{
+		this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
+		this.castle.getMiller().addVillager(s.villager);
+		this.HPPack.replace(s, s.HP * this.castle.getWallMultiplicator());
 	}
 
 	private int getTotal()
@@ -156,6 +166,34 @@ public class ReserveOfSoldiers implements Serializable
 	public void reactivateAttack()
 	{
 		this.stopAttack = false;
+	}
+	
+	public void wallMultiplierReduction(double reduction)
+	{
+		for (SoldierEnum s : SoldierEnum.values())
+		{		
+			final double currentHP = s.HP * this.castle.getWallMultiplicator();
+			
+			final double oldHP = s.HP * (this.castle.getWallMultiplicator() + reduction);
+			
+			if(s == SoldierEnum.Piker)
+			{
+				System.out.println("old hp: " + this.HPPack.get(s) + " " + (this.castle.getWallMultiplicator() + reduction));
+			}
+
+			this.HPPack.replace(s, this.HPPack.get(s) - (oldHP - currentHP));
+			
+			if(this.HPPack.get(s) <= 0)
+			{
+				soldierDeath(s);	
+			}
+			
+			if(s == SoldierEnum.Piker)
+			{
+				System.out.println("new hp: " + this.HPPack.get(s) + "\n");
+			}
+		}
+
 	}
 
 	/*************************************************/

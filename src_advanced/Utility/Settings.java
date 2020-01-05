@@ -99,7 +99,7 @@ public class Settings
 	/**
 	 * Nombre de Onager de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_ONAGER = 0;
+	public static final int STARTER_ONAGER = 100;
 
 	/**
 	 * Nombre de Archer de base pour le joueur et les IA.
@@ -165,7 +165,8 @@ public class Settings
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
 	public static final int MILLER_LEVEL_MAX = 20;
-	public static final int MILLER_VILLAGER_BASE = 80;
+	public static final int MILLER_VILLAGER_BASE = 80; // 80
+	public static final int MILLER_VILLAGER_PER_LEVEL = 6;
 
 	public static final int MARKET_COST = 100;
 	public static final float MARKET_PRODUCTION_OFFSET = 2f;
@@ -219,7 +220,7 @@ public class Settings
 	/**
 	 * Dégâts des Onager.
 	 */
-	public static final int ONAGER_DAMAGE = 36;
+	public static final int ONAGER_DAMAGE = 1;
 
 	/**
 	 * Dégâts des Psy.
@@ -250,6 +251,11 @@ public class Settings
 	 * Coût d'un Onager.
 	 */
 	public static final int ONAGER_COST = 192;
+	
+	/**
+	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart à chaque attaque.
+	 */
+	public static final float ONAGER_WALL = 0.6f; // 60%	
 
 	/**
 	 * Coût d'un Psy.
@@ -279,7 +285,7 @@ public class Settings
 	/**
 	 * Vitesse de déplacement d'un Onager.
 	 */
-	public static final int ONAGER_SPEED = 35;
+	public static final int ONAGER_SPEED = 95; // 35
 
 	/**
 	 * Vitesse de déplacement d'un Psy.
@@ -299,32 +305,32 @@ public class Settings
 	/**
 	 * Temps de production de base d'un Piker (en seconde).
 	 */
-	public static final double PIKER_TIME_PRODUCTION = 0.45d;
+	public static final double PIKER_TIME_PRODUCTION = 0.68d;
 
 	/**
 	 * Temps de production de base d'un Knight (en seconde).
 	 */
-	public static final double KNIGHT_TIME_PRODUCTION = 2.05d;
+	public static final double KNIGHT_TIME_PRODUCTION = 3.08d;
 
 	/**
 	 * Temps de production de base d'un Onager (en seconde).
 	 */
-	public static final double ONAGER_TIME_PRODUCTION = 3d;
+	public static final double ONAGER_TIME_PRODUCTION = 4.5d;
 
 	/**
 	 * Temps de production de base d'un Psy.
 	 */
-	public static final double SPY_TIME_PRODUCTION = 0.875d;
+	public static final double SPY_TIME_PRODUCTION = 1.31d;
 
 	/**
 	 * Temps de production de base d'un Berserker.
 	 */
-	public static final double BERSERKER_TIME_PRODUCTION = 0.75d;
+	public static final double BERSERKER_TIME_PRODUCTION = 1.13d;
 
 	/**
 	 * Temps de production de base d'un Archer.
 	 */
-	public static final double ARCHER_TIME_PRODUCTION = 1.5d;
+	public static final double ARCHER_TIME_PRODUCTION = 2.25d;
 
 	/**
 	 *

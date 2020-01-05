@@ -1,5 +1,6 @@
 package Soldiers;
 
+import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import Enums.SoldierEnum;
 import Utility.Point2D;

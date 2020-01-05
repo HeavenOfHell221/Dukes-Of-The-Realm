@@ -3,7 +3,16 @@ package Utility;
 import Enums.BuildingEnum;
 
 /**
- *
+ * Structure de données utilisé pour stocker un nombre, un bouton, du texte... Tout type d'objet qui
+ * est lié à un type de bâtiment.
+ * <p>
+ * Clé : Le type du bâtiment sous la forme de BuildingEnum. <br>
+ * Valeur: Un objet de type T2 (générique). <br>
+ * Cette structure de donnée permet de ne plus prendre en compte le nombre de type de bâtiment. <br>
+ * En itérant sur toutes énumérations de BuildingEnum, on est sûr de parcourir la HashMap entière.
+ * </p>
+ * 
+ * @see Enums.BuildingEnum
  */
 public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 {
@@ -13,15 +22,15 @@ public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 	public BuildingPack()
 	{
 		super();
-		put(BuildingEnum.Castle, null);
-		put(BuildingEnum.Wall, null);
-		put(BuildingEnum.Caserne, null);
-		put(BuildingEnum.Market, null);
-		put(BuildingEnum.Miller, null);
+		for (BuildingEnum b : BuildingEnum.values())
+		{
+			put(b, null);
+		}
 	}
 
 	/**
-	 *
+	 * Constructeur de BuildingPack.
+	 * 
 	 * @param castle
 	 * @param caserne
 	 * @param market
@@ -39,23 +48,19 @@ public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 	}
 
 	/**
-	 *
-	 * @param  key
-	 * @return
+	 * @param  key La clé avec laquelle on obtient la valeur recherché.
+	 * @return     Retourne la valeur lié à la clé en paramètre.
 	 */
+
 	public T2 get(final BuildingEnum key)
 	{
 		return super.get(key);
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public void replace(final BuildingEnum key, final T2 value)
 	{
 		super.replace(key, value);
 	}
-	
-	
+
 }

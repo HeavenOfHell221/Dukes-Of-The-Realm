@@ -23,7 +23,10 @@ public class Wall implements Serializable, IBuilding, IProduction
 	/**
 	 * Le multiplicateur de point de vie du rempart.
 	 */
-	private float multiplicator;
+	private double multiplier;
+	
+	private final double const1 = 0.05d;
+	private final double const2 = 0.15d;
 
 	/**
 	 * Constructeur par défaut de Wall.
@@ -31,7 +34,7 @@ public class Wall implements Serializable, IBuilding, IProduction
 	public Wall()
 	{
 		this.level = 0;
-		this.multiplicator = 1;
+		this.multiplier = 1;
 	}
 
 	/**
@@ -51,18 +54,41 @@ public class Wall implements Serializable, IBuilding, IProduction
 	/**
 	 * Incrémente le multiplicateur en fonction du niveau.
 	 * 
-	 * @see Wall#multiplicator
+	 * @see Wall#multiplier
 	 */
 	private void increaseMultiplicator()
 	{
 		if (this.level <= 10)
 		{
-			this.multiplicator += 0.05;
+			this.multiplier += const1;
 		}
 		else
 		{
-			this.multiplicator += 0.15;
+			this.multiplier += const2;
 		}
+	}
+	
+	public double decreaseLevel()
+	{	
+		double oldMultiplier = this.multiplier;
+		if(this.level > 0)
+		{
+			if (this.level <= 10)
+			{
+				this.multiplier -= const1;
+			}
+			else
+			{
+				this.multiplier -= const2;
+			}
+			this.level -= 1;
+		}
+		else
+		{
+			this.multiplier = 1f;
+			return 0;
+		}
+		return (oldMultiplier - this.multiplier);
 	}
 
 	/**
@@ -77,9 +103,9 @@ public class Wall implements Serializable, IBuilding, IProduction
 	/**
 	 * @return the multiplicator
 	 */
-	public final float getMultiplicator()
+	public final double getMultiplicator()
 	{
-		return this.multiplicator;
+		return this.multiplier;
 	}
 
 	@Override
@@ -121,6 +147,6 @@ public class Wall implements Serializable, IBuilding, IProduction
 	@Override
 	public String toString()
 	{
-		return "Wall [level=" + level + ", multiplicator=" + multiplicator + "]";
+		return "Wall [level=" + level + ", multiplicator=" + multiplier + "]";
 	}	
 }

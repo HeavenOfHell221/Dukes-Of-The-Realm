@@ -14,17 +14,18 @@ public class Miller implements Serializable, IBuilding, IProduction
 	private int villagerFree;
 	private int level;
 	
-	public Miller()
+	public Miller()	
 	{
 		this.level = 1;
-		this.villagerFree = Settings.MILLER_VILLAGER_BASE 
+		this.villagerMax = Settings.MILLER_VILLAGER_BASE + this.level * Settings.MILLER_VILLAGER_PER_LEVEL;
+		this.villagerFree = this.villagerMax
 				- Settings.PIKER_VILLAGER * Settings.STARTER_PIKER
 				- Settings.KNIGHT_VILLAGER * Settings.STARTER_KNIGHT
 				- Settings.ONAGER_VILLAGER * Settings.STARTER_ONAGER
 				- Settings.ARCHER_VILLAGER * Settings.STARTER_ARCHER
 				- Settings.BERSERKER_VILLAGER * Settings.STARTER_BERSERKER
 				- Settings.SPY_VILLAGER * Settings.STARTER_SPY;
-		setVillagerMax();
+
 	}
 	
 	@Override
@@ -45,13 +46,15 @@ public class Miller implements Serializable, IBuilding, IProduction
 		{
 			this.level += 1;
 			setVillagerMax();
+			
 		}
 	}
 	
 	private void setVillagerMax()
 	{
-		this.villagerMax = Settings.MILLER_VILLAGER_BASE + this.level * 7;
-		
+		int oldVillagerMax = this.villagerMax;
+		this.villagerMax = Settings.MILLER_VILLAGER_BASE + this.level * Settings.MILLER_VILLAGER_PER_LEVEL;
+		this.villagerFree += (this.villagerMax - oldVillagerMax);		
 	}
 
 	@Override

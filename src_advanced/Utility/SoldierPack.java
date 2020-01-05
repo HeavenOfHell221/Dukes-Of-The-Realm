@@ -3,8 +3,14 @@ package Utility;
 import Enums.SoldierEnum;
 
 /**
- * Structure de données utilisé pour stocker un nombre pour chaque type d'unité (nombre, point de
- * vie, ..)
+ * Structure de données utilisé pour stocker un nombre, un bouton, du texte... Tout type d'objet qui est lié à un type d'unité.
+ * <p>
+ * Clé : Le type d'une unité sous la forme de SoldierEnum.
+ * Valeur: Un objet de type T2 (générique).
+ * Cette structure de donnée permet de ne plus prendre en compte le nombre de type d'unité. <br>
+ * En itérant sur toutes énumérations de SoldierEnum, on est sûr de parcourir la HashMap entière.
+ * </p>
+ * @see Enums.SoldierEnum
  */
 public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 {

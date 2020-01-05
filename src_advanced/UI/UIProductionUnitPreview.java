@@ -162,11 +162,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			if (this.textCostSoldier.get(s).isVisible())
 			{
-				//setText(this.textCostSoldier.get(s), 30);
 				if(((Miller)this.currentCastle.getBuilding(BuildingEnum.Miller)).getVillagerFree() < s.villager)
 				{
-					//this.textCostSoldier.get(s).setFont(new Font(20));
-					//this.textCostSoldier.get(s).setStrokeWidth(0);
 					this.textCostSoldier.get(s).setText("Miller");
 				}
 				else if (this.input.isShift())
@@ -196,7 +193,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				{
 					for (int i = 0; i < 10; i++)
 					{
-						price += ((IProduction) this.currentCastle.getBuilding(b)).getProductionCost(level + i);
+						if(level + i < b.maxLevel)
+						{
+							price += ((IProduction) this.currentCastle.getBuilding(b)).getProductionCost(level + i);
+						}
 					}
 
 					this.textCostBuilding.get(b).setText(price + "");
@@ -419,15 +419,21 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				((IBuilding) prod).setLevel(level);
 				if (this.input.isAlt())
 				{
-					while (addProduction(this.upgradeBuilding.get(b), prod))
+					int i = 0;
+					while ((level + i) < b.maxLevel && addProduction(this.upgradeBuilding.get(b), prod))
 					{
+						i++;
+						((IBuilding) prod).setLevel(level + i);
 					}
 				}
 				else if (this.input.isShift())
 				{
 					for (int i = 0; i < 10; i++)
 					{
-						addProduction(this.upgradeBuilding.get(b), prod);
+						if((level + i) < b.maxLevel)
+						{
+							addProduction(this.upgradeBuilding.get(b), prod);
+						}
 					}
 				}
 				else

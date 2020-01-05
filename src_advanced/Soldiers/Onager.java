@@ -1,8 +1,12 @@
 package Soldiers;
 
+import java.util.Random;
+
+import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import Enums.SoldierEnum;
 import Utility.Point2D;
+import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -41,5 +45,18 @@ public class Onager extends Soldier
 	{
 		AddOnagerRepresentation();
 		super.Awake(color);
+	}
+	
+	@Override
+	protected void applyDamage(Castle destination)
+	{
+		Random rand = new Random();
+		
+		if(rand.nextFloat() <= Settings.ONAGER_WALL)
+		{
+			destination.getReserveOfSoldiers().wallMultiplierReduction(destination.getWall().decreaseLevel());
+		}
+		
+		super.applyDamage(destination);
 	}
 }
