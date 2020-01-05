@@ -537,8 +537,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			addNode(this.productSoldier.get(s));
-			addNode(this.textCostSoldier.get(s));
+			if(s != SoldierEnum.Conveyors)
+			{
+				addNode(this.productSoldier.get(s));
+				addNode(this.textCostSoldier.get(s));
+			}
 		}
 
 		for (BuildingEnum b : BuildingEnum.values())

@@ -9,6 +9,7 @@ import Enums.SoldierEnum;
 import Interface.IUpdate;
 import Soldiers.Archer;
 import Soldiers.Berserker;
+import Soldiers.Conveyors;
 import Soldiers.Knight;
 import Soldiers.Onager;
 import Soldiers.Piker;
@@ -377,6 +378,9 @@ public class Ost implements IUpdate, Serializable
 					case Spy:
 						soldier = new Spy(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
 						break;
+					case Conveyors:
+						soldier = new Conveyors(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
+						break;
 					default:
 						break;
 				}
@@ -402,6 +406,9 @@ public class Ost implements IUpdate, Serializable
 						break;
 					case Spy:
 						soldier = new Spy(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
+						break;
+					case Conveyors:
+						soldier = new Conveyors(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
 						break;
 					default:
 						break;
@@ -431,6 +438,9 @@ public class Ost implements IUpdate, Serializable
 					case Spy:
 						soldier = new Spy(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
 						break;
+					case Conveyors:
+						soldier = new Conveyors(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
+						break;
 					default:
 						break;
 				}
@@ -455,6 +465,9 @@ public class Ost implements IUpdate, Serializable
 						break;
 					case Spy:
 						soldier = new Spy(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
+						break;
+					case Conveyors:
+						soldier = new Conveyors(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
 						break;
 					default:
 						break;

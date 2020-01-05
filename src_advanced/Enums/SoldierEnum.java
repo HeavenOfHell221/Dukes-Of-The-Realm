@@ -1,59 +1,11 @@
 package Enums;
 
-import static Utility.Settings.ARCHER_COST;
-import static Utility.Settings.ARCHER_DAMAGE;
-import static Utility.Settings.ARCHER_HP;
-import static Utility.Settings.ARCHER_SPEED;
-import static Utility.Settings.ARCHER_TIME_PRODUCTION;
-import static Utility.Settings.ARCHER_VILLAGER;
-import static Utility.Settings.BERSERKER_COST;
-import static Utility.Settings.BERSERKER_DAMAGE;
-import static Utility.Settings.BERSERKER_HP;
-import static Utility.Settings.BERSERKER_SPEED;
-import static Utility.Settings.BERSERKER_TIME_PRODUCTION;
-import static Utility.Settings.BERSERKER_VILLAGER;
-import static Utility.Settings.KNIGHT_COST;
-import static Utility.Settings.KNIGHT_DAMAGE;
-import static Utility.Settings.KNIGHT_HP;
-import static Utility.Settings.KNIGHT_SPEED;
-import static Utility.Settings.KNIGHT_TIME_PRODUCTION;
-import static Utility.Settings.KNIGHT_VILLAGER;
-import static Utility.Settings.ONAGER_COST;
-import static Utility.Settings.ONAGER_DAMAGE;
-import static Utility.Settings.ONAGER_HP;
-import static Utility.Settings.ONAGER_SPEED;
-import static Utility.Settings.ONAGER_TIME_PRODUCTION;
-import static Utility.Settings.ONAGER_VILLAGER;
-import static Utility.Settings.PIKER_COST;
-import static Utility.Settings.PIKER_DAMAGE;
-import static Utility.Settings.PIKER_HP;
-import static Utility.Settings.PIKER_SPEED;
-import static Utility.Settings.PIKER_TIME_PRODUCTION;
-import static Utility.Settings.PIKER_VILLAGER;
-import static Utility.Settings.SPY_COST;
-import static Utility.Settings.SPY_DAMAGE;
-import static Utility.Settings.SPY_HP;
-import static Utility.Settings.SPY_SPEED;
-import static Utility.Settings.SPY_TIME_PRODUCTION;
-import static Utility.Settings.SPY_VILLAGER;
-import static Utility.Settings.STARTER_ARCHER;
-import static Utility.Settings.STARTER_BERSERKER;
-import static Utility.Settings.STARTER_KNIGHT;
-import static Utility.Settings.STARTER_ONAGER;
-import static Utility.Settings.STARTER_PIKER;
-import static Utility.Settings.STARTER_SPY;
+import static Utility.Settings.*;
 
 import java.io.Serializable;
 import java.util.Random;
 
-import Soldiers.Archer;
-import Soldiers.Berserker;
-import Soldiers.Knight;
-import Soldiers.Onager;
-import Soldiers.Piker;
-import Soldiers.Soldier;
-import Soldiers.Spy;
-
+import Soldiers.*;
 /**
  * Enumération des différents type d'unités.
  */
@@ -88,8 +40,10 @@ public enum SoldierEnum implements Serializable
 	/**
 	 *
 	 */
-	Spy(SPY_HP, SPY_DAMAGE, SPY_COST, SPY_TIME_PRODUCTION, SPY_SPEED, SPY_VILLAGER, STARTER_SPY);
+	Spy(SPY_HP, SPY_DAMAGE, SPY_COST, SPY_TIME_PRODUCTION, SPY_SPEED, SPY_VILLAGER, STARTER_SPY),
 
+	
+	Conveyors(0, 0, 0, CONVEYORS_TIME_PRODUCTION, CONVEYORS_SPEED, 0, 0);
 	/**
 	 *
 	 */
@@ -133,7 +87,6 @@ public enum SoldierEnum implements Serializable
 	 * @param productionTime
 	 * @param speed
 	 * @param villager
-	 * @param priorityDefense
 	 */
 	private SoldierEnum(final int HP, final int damage, final int cost, final double productionTime, final int speed, final int villager,
 			final int starter)
@@ -228,6 +181,8 @@ public enum SoldierEnum implements Serializable
 				return new Berserker();
 			case Spy:
 				return new Spy();
+			case Conveyors:
+				return new Conveyors();
 			default:
 				return null;
 		}

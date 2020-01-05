@@ -46,7 +46,7 @@ public class BackupGoal extends Goal
 			Castle destination = list.get(rand.nextInt(list.size())); // On prend un château au hasard
 			AttackGoal g = new AttackGoal(origin, destination, pack);
 			this.goals.addLast(g);
-			SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+			SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 			for(SoldierEnum s : SoldierEnum.values())
 			{
 				if(pack.get(s) > 0)

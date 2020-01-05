@@ -3,11 +3,14 @@ package DukesOfTheRealm;
 import java.io.Serializable;
 
 import Enums.BuildingEnum;
+import Enums.SoldierEnum;
 import Interface.IBuilding;
 import Interface.IProduction;
+import Interface.IUpdate;
+import Soldiers.Conveyors;
 import Utility.Settings;
 
-public class Market implements Serializable, IBuilding, IProduction
+public class Market implements Serializable, IBuilding, IProduction, IUpdate
 {
 	/**
 	 * Le niveau de ce bâtiment.
@@ -19,11 +22,27 @@ public class Market implements Serializable, IBuilding, IProduction
 	 */
 	private int conveyorsMax;
 	
-	/**
-	 * Nombre de convoyeur libre.
-	 */
-	private int conveyorsFree;
+	private Castle castle;
 	
+	public Market(Castle castle)
+	{
+		this.castle = castle;
+	}
+	
+	public Market()
+	{
+		
+	}
+	
+	@Override
+	public void update(long now, boolean pause)
+	{
+		if(this.castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Conveyors) 
+				+ this.castle.getCaserne().getSoldierPack().get(SoldierEnum.Conveyors) < conveyorsMax)
+		{
+			this.castle.addProduction(new Conveyors());
+		}
+	}
 	
 	@Override
 	public double getProductionTime(final Castle castle, int level)
@@ -71,8 +90,13 @@ public class Market implements Serializable, IBuilding, IProduction
 	private void increaseConveyors()
 	{
 		int oldConveyorsMax = this.conveyorsMax;
+		
 		this.conveyorsMax = (this.level * this.level) / 2 + this.level;
-		this.conveyorsFree += (this.conveyorsMax - oldConveyorsMax);
+
+		for(int i = 0; i < (this.conveyorsMax - oldConveyorsMax); i++)
+		{
+			this.castle.addProduction(new Conveyors());
+		}
 	}
 
 	@Override
@@ -87,18 +111,5 @@ public class Market implements Serializable, IBuilding, IProduction
 	public final int getConveyorsMax()
 	{
 		return conveyorsMax;
-	}
-
-	/**
-	 * @return the conveyorsFree
-	 */
-	public final int getConveyorsFree()
-	{
-		return conveyorsFree;
-	}
-
-	public final void removeConveyors(int value)
-	{
-		this.conveyorsFree -= value;
 	}
 }

@@ -69,7 +69,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.mainProductionQueue = new ArrayDeque<>();
 		this.productionUnitList = new ArrayList<>();
 		this.castle = castle;
-		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 		this.buildingPack = new BuildingPack<>(0, 0, 0, 0, 0);
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 		this.level = 1;

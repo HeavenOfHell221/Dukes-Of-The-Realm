@@ -173,7 +173,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.coordinate = coord;
 		this.level = level;
 		this.totalFlorin = 0;
-		this.buildingPack = new BuildingPack<>(this, new Caserne(this), new Market(), new Miller(), new Wall());
+		this.buildingPack = new BuildingPack<>(this, new Caserne(this), new Market(this), new Miller(), new Wall());
 		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
 		this.ost = null;
 
@@ -212,6 +212,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		updateProduction();
 		updateOst(now, pause);
+		getMarket().update(now, pause);
 		
 		if(this.isSpiedOn)
 		{

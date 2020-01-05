@@ -89,7 +89,7 @@ public class AttackGoal extends Goal
 
 		this.goals.addLast(new SendOstGoal(castleDestination, soldierPack));
 		
-		SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 		for(SoldierEnum s : SoldierEnum.values())
 		{
 			if(soldierPack.get(s) > 0)

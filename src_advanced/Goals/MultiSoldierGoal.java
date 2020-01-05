@@ -38,11 +38,12 @@ public class MultiSoldierGoal extends Goal
 
 		for (int i : soldierPack.values())
 		{
+
 			count += i;
 		}
 
 		while (count > 0)
-		{
+		{	
 			SoldierEnum s = SoldierEnum.getRandomType();
 			if (soldierPack.get(s) > 0)
 			{

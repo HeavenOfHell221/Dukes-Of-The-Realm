@@ -55,11 +55,15 @@ public class ReserveOfSoldiers implements Serializable
 	public ReserveOfSoldiers(final Castle castle)
 	{
 		this.castle = castle;
-		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
-		this.HPPack = new SoldierPack<>((PIKER_HP * this.castle.getWallMultiplicator()),
-				(KNIGHT_HP * this.castle.getWallMultiplicator()), (ONAGER_HP * this.castle.getWallMultiplicator()),
-				(ARCHER_HP * this.castle.getWallMultiplicator()), (BERSERKER_HP * this.castle.getWallMultiplicator()),
-				(SPY_HP * this.castle.getWallMultiplicator()));
+		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
+		this.HPPack = new SoldierPack<>(
+				(PIKER_HP * this.castle.getWallMultiplicator()),
+				(KNIGHT_HP * this.castle.getWallMultiplicator()), 
+				(ONAGER_HP * this.castle.getWallMultiplicator()),
+				(ARCHER_HP * this.castle.getWallMultiplicator()), 
+				(BERSERKER_HP * this.castle.getWallMultiplicator()),
+				(SPY_HP * this.castle.getWallMultiplicator()), 
+				0d);
 	}
 
 	/*************************************************/

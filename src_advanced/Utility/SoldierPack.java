@@ -46,9 +46,10 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 	 * @param onager    Un nombre pour l'Onager.
 	 * @param archer    Un nombre pour l'Archer.
 	 * @param berserker Un nombre pour le Berserker.
-	 * @param spy       un nombre pour le Spy.
+	 * @param spy       Un nombre pour le Spy.
+	 * @param conveyors Un nombee pour le Conveyors.
 	 */
-	public SoldierPack(final T2 piker, final T2 knight, final T2 onager, final T2 archer, final T2 berserker, final T2 spy)
+	public SoldierPack(final T2 piker, final T2 knight, final T2 onager, final T2 archer, final T2 berserker, final T2 spy, final T2 conveyors)
 	{
 		super();
 		put(SoldierEnum.Piker, piker);
@@ -57,6 +58,7 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 		put(SoldierEnum.Archer, archer);
 		put(SoldierEnum.Berserker, archer);
 		put(SoldierEnum.Spy, spy);
+		put(SoldierEnum.Conveyors, conveyors);
 	}
 
 	@Override

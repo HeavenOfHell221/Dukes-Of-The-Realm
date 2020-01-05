@@ -60,16 +60,16 @@ public class GeneratorGoal implements Serializable
 	{
 		switch (GoalEnum.getRandomType())
 		{
-			case Backup:
+			/*case Backup:
 				return getNewGoalBackup(castle);
 			case Battle:
-				return getNewGoalBattle(castle);
-			case Finance:
-				return getNewGoalFinance(castle);
+				return getNewGoalBattle(castle);*/
+			/*case Finance:
+				return getNewGoalFinance(castle);*/
 			case Production:
-				return getNewGoalProduction(castle);	
-			case Building:
-				return getNewGoalBuilding(castle);
+				return getNewGoalProduction(castle);
+			/*case Building:
+				return getNewGoalBuilding(castle);*/
 			default:
 				break;
 		}
@@ -123,7 +123,7 @@ public class GeneratorGoal implements Serializable
 		Castle destination = actorTarget.getCastles().get(rand.nextInt(actorTarget.getCastles().size()));
 		AttackGoal g = null;
 		
-		final SoldierPack<Integer> soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		final SoldierPack<Integer> soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 		
 		switch (rand.nextInt(6))
 		{
@@ -168,7 +168,7 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalBackup(final Castle castle)
 	{
-		final SoldierPack<Integer> soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		final SoldierPack<Integer> soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 		
 		switch (rand.nextInt(2))
 		{
@@ -204,6 +204,7 @@ public class GeneratorGoal implements Serializable
 			soldierSelection.replace(s, rand.nextBoolean());
 		}
 		soldierSelection.replace(SoldierEnum.Spy, false);
+		soldierSelection.replace(SoldierEnum.Conveyors, false);
 		
 		for(SoldierEnum s : SoldierEnum.values())
 		{
