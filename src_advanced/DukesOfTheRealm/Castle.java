@@ -162,10 +162,6 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.level = level;
 		this.totalFlorin = 0;
 		this.buildingPack = new BuildingPack<>(this, new Caserne(this), new Market(), new Miller(), new Wall());
-		for(int i = 0; i < 20; i++)
-		{
-			this.getWall().levelUp();
-		}
 		this.reserveOfSoldiers = new ReserveOfSoldiers(this);
 		this.ost = null;
 

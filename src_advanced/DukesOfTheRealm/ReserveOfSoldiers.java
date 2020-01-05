@@ -21,8 +21,6 @@ public class ReserveOfSoldiers implements Serializable
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-
-	int tmp = 0;
 	
 	/**
 	 * Référence sur le château qui contient cette réserve.
@@ -78,12 +76,6 @@ public class ReserveOfSoldiers implements Serializable
 	{
 		testRemoveHP();
 		
-		if(typeForce == SoldierEnum.Piker)
-		{
-			tmp++;
-			System.out.println(tmp);
-		}
-
 		if (this.stopAttack)
 		{
 			return;
@@ -118,6 +110,10 @@ public class ReserveOfSoldiers implements Serializable
 		}
 	}
 	
+	/**
+	 * 
+	 * @param s
+	 */
 	private void soldierDeath(SoldierEnum s)
 	{
 		this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
@@ -125,6 +121,10 @@ public class ReserveOfSoldiers implements Serializable
 		this.HPPack.replace(s, s.HP * this.castle.getWallMultiplicator());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private int getTotal()
 	{
 		int count = 0;
@@ -168,29 +168,22 @@ public class ReserveOfSoldiers implements Serializable
 		this.stopAttack = false;
 	}
 	
-	public void wallMultiplierReduction(double reduction)
+	/**
+	 * 
+	 * @param reduction
+	 */
+	public void wallMultiplierReduction(final double reduction)
 	{
 		for (SoldierEnum s : SoldierEnum.values())
 		{		
 			final double currentHP = s.HP * this.castle.getWallMultiplicator();
-			
 			final double oldHP = s.HP * (this.castle.getWallMultiplicator() + reduction);
-			
-			if(s == SoldierEnum.Piker)
-			{
-				System.out.println("old hp: " + this.HPPack.get(s) + " " + (this.castle.getWallMultiplicator() + reduction));
-			}
 
 			this.HPPack.replace(s, this.HPPack.get(s) - (oldHP - currentHP));
 			
 			if(this.HPPack.get(s) <= 0)
 			{
 				soldierDeath(s);	
-			}
-			
-			if(s == SoldierEnum.Piker)
-			{
-				System.out.println("new hp: " + this.HPPack.get(s) + "\n");
 			}
 		}
 

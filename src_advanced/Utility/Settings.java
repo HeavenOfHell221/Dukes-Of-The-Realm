@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 5000;
+	public static final int FLORIN_PER_SECOND = 5;
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -99,7 +99,7 @@ public class Settings
 	/**
 	 * Nombre de Onager de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_ONAGER = 100;
+	public static final int STARTER_ONAGER = 0;
 
 	/**
 	 * Nombre de Archer de base pour le joueur et les IA.

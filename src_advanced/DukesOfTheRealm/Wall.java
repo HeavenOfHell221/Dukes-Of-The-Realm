@@ -25,7 +25,14 @@ public class Wall implements Serializable, IBuilding, IProduction
 	 */
 	private double multiplier;
 	
+	/**
+	 * 
+	 */
 	private final double const1 = 0.05d;
+	
+	/**
+	 * 
+	 */
 	private final double const2 = 0.15d;
 
 	/**
@@ -109,7 +116,7 @@ public class Wall implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public double getProductionTime(final Castle castle, int level)
+	public double getProductionTime(final Castle castle, final int level)
 	{
 		return (Settings.WALL_PRODUCTION_OFFSET + level * Settings.WALL_PRODUCTION_TIME_PER_LEVEL) * castle.getProductionTimeMultiplier();
 	}
