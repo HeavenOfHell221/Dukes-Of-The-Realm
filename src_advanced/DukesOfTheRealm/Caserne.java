@@ -87,7 +87,6 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	public void updateProduction()
 	{
 		final Iterator<ProductionUnit> itUnit = this.productionUnitList.iterator();
-		final Iterator<IProduction> itProd = this.mainProductionQueue.iterator();
 
 		while(itUnit.hasNext())
 		{
@@ -101,9 +100,16 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			this.numberProductionUnitAdding--;
 		}
 		
-		if(sumCurrentTime <= 0)
+		int count = 0;
+		for(int i :this.buildingPack.values())
+		{
+			count += i;
+		}
+		
+		if(sumCurrentTime <= 0 || count == 0)
 		{
 			sumTotalTime = 0;
+			sumCurrentTime = 0;
 		}
 		
 		if(sumTotalTime > 0)
@@ -115,8 +121,8 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			this.ratio = 0;
 		}
 		
-		if(this.castle.getActor().isPlayer())
-			System.out.println(this.sumCurrentTime + " " + this.sumTotalTime);
+		//if(this.castle.getActor().isPlayer())
+			//System.out.println(this.sumCurrentTime + " " + this.sumTotalTime);
 	}
 
 	/*************************************************/

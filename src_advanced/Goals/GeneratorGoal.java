@@ -5,8 +5,10 @@ import java.util.Random;
 import Duke.Actor;
 import Duke.DukeAI;
 import DukesOfTheRealm.Castle;
+import Enums.BuildingEnum;
 import Enums.GoalEnum;
-import SimpleGoal.CastleGoal;
+import Enums.SoldierEnum;
+import SimpleGoal.BuildingGoal;
 import SimpleGoal.Goal;
 import SimpleGoal.SaveFlorinGoal;
 import Utility.SoldierPack;
@@ -65,7 +67,7 @@ public class GeneratorGoal implements Serializable
 			case Finance:
 				return getNewGoalFinance(castle);
 			case Production:
-				return getNewGoalProduction(castle);
+				return getNewGoalProduction(castle);	
 			case Building:
 				return getNewGoalBuilding(castle);
 			default:
@@ -82,9 +84,9 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalBuilding(final Castle castle)
 	{
-		return new CastleGoal(castle);
+		return new BuildingGoal(BuildingEnum.getRandomTypeForAI());
 	}
-
+		
 	/**
 	 * Génère un objectif lié au Florin.
 	 *
@@ -93,16 +95,14 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalFinance(final Castle castle)
 	{
-		// lvl.1 -> entre 100 et 300
-		// lvl.10 -> entre 100 et 2100
-		return new SaveFlorinGoal(rand.nextInt(201) * castle.getLevel() + 100);
+		return new SaveFlorinGoal(rand.nextInt(1001) * castle.getLevel() + 200);
 	}
 
 	/**
 	 * Génère un objectif lié aux attaques avec une ost.
 	 * <p>
 	 * Récupère la liste des acteurs en supprimant l'acteur qui demande la liste. <br>
-	 * Les attaques ne contiennent pas de Piker.
+	 * Les attaques ne contiennent pas d'unité défensive.
 	 * </p>
 	 *
 	 * @param  castle Le château qui aurra l'objectif à accomplir.
@@ -110,7 +110,8 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalBattle(final Castle castle)
 	{
-		castle.getLevel();
+		final int levelCastle = castle.getLevel();
+		final int levelCaserne = castle.getCaserne().getLevel();
 		final DukeAI actor = (DukeAI) castle.getActor();
 		final Actor actorTarget = actor.getKingdom().getRandomActor(actor);
 
@@ -119,24 +120,42 @@ public class GeneratorGoal implements Serializable
 			return null;
 		}
 
-		actorTarget.getCastles().get(rand.nextInt(actorTarget.getCastles().size()));
+		Castle destination = actorTarget.getCastles().get(rand.nextInt(actorTarget.getCastles().size()));
 		AttackGoal g = null;
-
-		switch (rand.nextInt(2))
+		
+		final SoldierPack<Integer> soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		
+		switch (rand.nextInt(6))
 		{
+			// Full Berserker
 			case 0:
-				// Lvl.1 -> entre [0, 0, 0] et [0, 13, 0]
-				// Lvl.10 -> entre [0, 0, 0] et [0, 49, 0]
-				// g = new AttackGoal(castle, castleTarget, 0, rand.nextInt(10 + lvl) + rand.nextInt(4) * lvl, 0);
-				break;
+				soldierPack.replace(SoldierEnum.Berserker, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Berserker));
+				return new AttackGoal(castle, destination, soldierPack);
+			// Full Knight
 			case 1:
-				// Lvl.1 -> entre [0, 0, 0] et [0, 8, 5]
-				// Lvl.10 -> entre [0, 0, 0] et [0, 35, 23]
-				// g = new AttackGoal(castle, castleTarget, 0, rand.nextInt(6 + lvl) + rand.nextInt(3) * lvl,
-				// rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
-				break;
-			default:
-				break;
+				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
+				return new AttackGoal(castle, destination, soldierPack);
+			// Berserker / Knight
+			case 2:
+				soldierPack.replace(SoldierEnum.Berserker, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Berserker));
+				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
+				return new AttackGoal(castle, destination, soldierPack);
+			// Berserker / Onager
+			case 3:
+				soldierPack.replace(SoldierEnum.Onager, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Onager));
+				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
+				return new AttackGoal(castle, destination, soldierPack);
+			// Knight / Onager
+			case 4:
+				soldierPack.replace(SoldierEnum.Onager, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Onager));
+				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
+				return new AttackGoal(castle, destination, soldierPack);
+			// Berserker / Knight / Onager
+			case 5:
+				soldierPack.replace(SoldierEnum.Berserker, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Berserker));
+				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
+				soldierPack.replace(SoldierEnum.Onager, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Onager));
+				return new AttackGoal(castle, destination, soldierPack);
 		}
 		return g;
 	}
@@ -149,14 +168,17 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalBackup(final Castle castle)
 	{
+		final SoldierPack<Integer> soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		
 		switch (rand.nextInt(2))
 		{
+			// Piker / Archer
 			case 0:
-				// La moitié des Pikers et des Knights
-				// return new BackupGoal(castle, castle.getNbPikers() / 2, castle.getNbKnights() / 2, 0);
+				soldierPack.replace(SoldierEnum.Piker, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Piker));
+				soldierPack.replace(SoldierEnum.Archer, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Archer));
+			// Full Knight	
 			case 1:
-				// Tout les Knights
-				// return new BackupGoal(castle, 0, castle.getNbKnights(), 0);
+				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
 			default:
 				break;
 		}
@@ -172,25 +194,44 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalProduction(final Castle castle)
 	{
-
-		/*
-		 * switch (rand.nextInt(7)) {
-		 * 
-		 * // Piker case 0: return new MultiSoldierGoal(castle, rand.nextInt(12 + lvl) + rand.nextInt(3) *
-		 * lvl, 0, 0); // Knight case 1: return new MultiSoldierGoal(castle, 0, rand.nextInt(8 + lvl) +
-		 * rand.nextInt(3) * lvl, 0); // Onager case 2: return new MultiSoldierGoal(castle, 0, 0,
-		 * rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl); // Piker + Knight case 3: return new
-		 * MultiSoldierGoal(castle, rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(6 + lvl) +
-		 * rand.nextInt(2) * lvl, 0); // Piker + Onager case 4: return new MultiSoldierGoal(castle,
-		 * rand.nextInt(8 + lvl) + rand.nextInt(2) * lvl, 0, rand.nextInt(5 + lvl) + rand.nextInt(2) * lvl);
-		 * // Knight + Onager case 5: return new MultiSoldierGoal(castle, 0, rand.nextInt(8 + lvl) +
-		 * rand.nextInt(2) * lvl, rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl); // Piker + Knight + Onager
-		 * case 6: return new MultiSoldierGoal(castle, rand.nextInt(6 + lvl) + rand.nextInt(2) * lvl,
-		 * rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl, rand.nextInt(4 + lvl) + rand.nextInt(2) * lvl);
-		 * default: break;
-		 * 
-		 * }
-		 */
-		return null;
+		final SoldierPack<Boolean> soldierSelection = new SoldierPack<>();
+		final SoldierPack<Integer> soldierProduction = new SoldierPack<>();
+		final int levelCastle = castle.getLevel();
+		final int levelCaserne = castle.getCaserne().getLevel();
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			soldierSelection.replace(s, rand.nextBoolean());
+		}
+		soldierSelection.replace(SoldierEnum.Spy, false);
+		
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			if(soldierSelection.get(s))
+			{
+				if(s.cost > 100)
+				{
+					soldierProduction.replace(s, 
+							rand.nextInt(levelCastle * 2) 
+							+ rand.nextInt(levelCaserne * 4)
+							+ rand.nextInt(6) * levelCaserne
+							+ rand.nextInt(2) * levelCastle);
+				}
+				else
+				{
+					soldierProduction.replace(s, 
+						rand.nextInt(levelCastle * 4) 
+						+ rand.nextInt(levelCaserne * 4)
+						+ rand.nextInt(8) * levelCaserne
+						+ rand.nextInt(4) * levelCastle);
+				}
+				
+			}
+			else
+			{
+				soldierProduction.replace(s, 0);
+			}
+		}
+		return new MultiSoldierGoal(castle, soldierProduction);
 	}
 }

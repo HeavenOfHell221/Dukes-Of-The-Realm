@@ -53,7 +53,7 @@ public class AttackGoal extends Goal
 		this.castleOrigin = castleOrigin;
 		this.soldierPack = soldierPack;
 		this.castleDestination = castleDestination;
-
+		
 		if (castleOrigin.getOst() != null)
 		{
 			return;
@@ -62,28 +62,42 @@ public class AttackGoal extends Goal
 		SoldierPack<Integer> nbSoldier = new SoldierPack<>();
 		SoldierPack<Integer> realNbSoldier = new SoldierPack<>();
 
+		// Nombre d'unité dans la caserne + dans la réserve
 		for (SoldierEnum s : SoldierEnum.values())
 		{
 			nbSoldier.replace(s, getReserveSoldier(s) + getCaserneSoldier(s));
 		}
 
+		// Nombre d'unité à produire s'il y en a pas assez
 		for (SoldierEnum s : SoldierEnum.values())
 		{
 			realNbSoldier.replace(s, nbSoldier.get(s) < soldierPack.get(s) ? soldierPack.get(s) - nbSoldier.get(s) : 0);
 		}
 
+		// On compte le nombre d'unité à produire
 		int count = 0;
 		for (int i : realNbSoldier.values())
 		{
 			count += i;
 		}
-
+		
+		// Si y'a des unités à produire avant d'envoyer l'ost
 		if (count > 0)
 		{
 			this.goals.addLast(new MultiSoldierGoal(this.castleOrigin, realNbSoldier));
 		}
 
 		this.goals.addLast(new SendOstGoal(castleDestination, soldierPack));
+		
+		SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+		for(SoldierEnum s : SoldierEnum.values())
+		{
+			if(soldierPack.get(s) > 0)
+			{
+				production.replace(s, soldierPack.get(s) / 2);
+			}
+		}
+		this.goals.addLast(new MultiSoldierGoal(this.castleOrigin, production));
 	}
 
 	@Override
@@ -108,6 +122,7 @@ public class AttackGoal extends Goal
 
 			boolean canSendOst = true;
 
+			// Si l'un des unités n'est plus suffisante
 			for (SoldierEnum s : SoldierEnum.values())
 			{
 				if (nbSoldier.get(s) < this.soldierPack.get(s))

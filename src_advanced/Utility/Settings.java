@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 500;
+	public static final int FLORIN_PER_SECOND = 50; // 5
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -99,12 +99,12 @@ public class Settings
 	/**
 	 * Nombre de Onager de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_ONAGER = 0;
+	public static final int STARTER_ONAGER = 0; // 0
 
 	/**
 	 * Nombre de Archer de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_ARCHER = 10;
+	public static final int STARTER_ARCHER = 10; 
 
 	/**
 	 * Nombre de Berserker de base pour le joueur et les IA.
@@ -163,10 +163,10 @@ public class Settings
 
 	public static final int MILLER_COST = 300;
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
-	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
-	public static final int MILLER_LEVEL_MAX = 20;
-	public static final int MILLER_VILLAGER_BASE = 800; // 80
-	public static final int MILLER_VILLAGER_PER_LEVEL = 6;
+	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 4f;
+	public static final int MILLER_LEVEL_MAX = 10;
+	public static final int MILLER_VILLAGER_BASE = 80; // 80
+	public static final int MILLER_VILLAGER_PER_LEVEL = 12;
 
 	public static final int MARKET_COST = 100;
 	public static final float MARKET_PRODUCTION_OFFSET = 2f;
@@ -255,7 +255,7 @@ public class Settings
 	/**
 	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart à chaque attaque.
 	 */
-	public static final float ONAGER_WALL = 0.6f; // 60%	
+	public static final float ONAGER_WALL = 0.5f; 
 
 	/**
 	 * Coût d'un Psy.

@@ -1,7 +1,9 @@
 package Goals;
 
 import DukesOfTheRealm.Castle;
+import Enums.BuildingEnum;
 import Enums.SoldierEnum;
+import SimpleGoal.BuildingGoal;
 import SimpleGoal.Goal;
 import SimpleGoal.SoldierGoal;
 import Utility.SoldierPack;
@@ -58,6 +60,24 @@ public class MultiSoldierGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		return this.goals.goal(castle);
+		if(this.goals.goal(castle) == false)
+		{
+			if(castle.getMiller().getVillagerFree() < ((SoldierGoal)goals.peekFirst()).type.villager)
+			{
+				if(castle.getMiller().getLevel() < BuildingEnum.Miller.maxLevel)
+				{
+					goals.addFirst(new BuildingGoal(BuildingEnum.Miller));
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }

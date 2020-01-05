@@ -19,10 +19,12 @@ import Enums.BuildingEnum;
 import Enums.SoldierEnum;
 import Interface.IBuilding;
 import Interface.IProduction;
+import Interface.IUpdate;
 import Utility.BuildingPack;
 import Utility.Point2D;
 import Utility.Settings;
 import Utility.SoldierPack;
+import Utility.Time;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -35,7 +37,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @see Sprite
  */
-public class Castle extends Sprite implements Serializable, IBuilding, IProduction
+public class Castle extends Sprite implements Serializable, IBuilding, IProduction, IUpdate
 {
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
@@ -118,6 +120,16 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * Multiplicateur de durée pour toute production lié à ce château.
 	 */
 	private float productionTimeMultiplier = 1f;
+	
+	/**
+	 * Boolean spécifiant si ce château est acctuellement espionné par le joueur.
+	 */
+	private boolean isSpiedOn = false;
+	
+	/**
+	 * Temps avant que ce château ne soit plus considéré comme espionné.
+	 */
+	private long spiedOnTime = 0;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -194,6 +206,25 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+
+	@Override
+	public void update(long now, boolean pause)
+	{
+		updateProduction();
+		updateOst(now, pause);
+		
+		if(this.isSpiedOn)
+		{
+			System.out.println(this.spiedOnTime);
+			this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
+			System.out.println(this.spiedOnTime);
+			if(this.spiedOnTime <= 0)
+			{
+				this.isSpiedOn = false;
+			}
+		}
+	}
+	
 	/**
 	 * Met à jour la caserne.
 	 *
@@ -217,11 +248,6 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		{
 			this.ost.update(now, pause);
 		}
-		
-		/*if(this.actor.isPlayer())
-		{
-			System.out.println(getMiller().getVillagerFree());
-		}*/
 	}
 
 	/*************************************************/
@@ -533,6 +559,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		return getCaserne().addProduction(p);
 	}
+	
+	public void spiedOn()
+	{
+		this.isSpiedOn = true;
+		this.spiedOnTime = Settings.GAME_FREQUENCY;
+		this.spiedOnTime *= 60;
+	}
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
@@ -678,5 +711,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	public final float getProductionTimeMultiplier()
 	{
 		return productionTimeMultiplier;
+	}
+
+	/**
+	 * @return the isSpiedOn
+	 */
+	public final boolean isSpiedOn()
+	{
+		return isSpiedOn;
 	}
 }

@@ -35,9 +35,10 @@ public class Miller implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public int getProductionCost(final int level)
+	public int getProductionCost(int level)
 	{
-		return Settings.MILLER_COST * level + level * (level + 1) * (level + 2);
+		level += 1;
+		return Settings.MILLER_COST * (level-1) + level * level  * (level + 1) ;
 	}
 	
 	private void levelUp()
