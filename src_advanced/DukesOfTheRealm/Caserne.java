@@ -114,6 +114,9 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			this.ratio = 0;
 		}
+		
+		if(this.castle.getActor().isPlayer())
+			System.out.println(this.sumCurrentTime + " " + this.sumTotalTime);
 	}
 
 	/*************************************************/
@@ -134,6 +137,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			{
 				this.castle.addFlorin(i.getProductionCost(i.getLevel()));
 			}
+			this.sumCurrentTime -= i.getProductionTime(getCastle(), i.getLevel());
 			i.productionFinished(this.castle, true);
 		}
 	}
@@ -151,6 +155,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			{
 				IProduction i = this.mainProductionQueue.pollFirst();
 				this.castle.addFlorin(i.getProductionCost(i.getLevel()));
+				this.sumCurrentTime -= i.getProductionTime(getCastle(), i.getLevel());
 				i.productionFinished(this.castle, true);
 			}
 		}
