@@ -646,7 +646,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	@Override
 	public double getProductionTime(Castle castle,int level)
 	{
-		return getType().productionTime;
+		return getType().productionTime * castle.getProductionTimeMultiplier();
 	}
 
 	@Override

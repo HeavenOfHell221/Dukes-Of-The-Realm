@@ -54,7 +54,6 @@ public class ProductionUnit implements Serializable
 			// Si la production est terminé
 			if (this.currentProductionTime <= 0)
 			{
-				//this.caserne.sumTotalTime -= this.currentProduction.getProductionTime(castle, this.currentProduction.getLevel());
 				this.currentProduction.productionFinished(this.castle, false);
 				this.currentProduction = null;
 			}

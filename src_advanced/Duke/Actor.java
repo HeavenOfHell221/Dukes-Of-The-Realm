@@ -133,8 +133,7 @@ public abstract class Actor implements Serializable, IUpdate
 		{
 			Castle castle = it.next();
 			updateFlorin(castle);
-			castle.updateProduction();
-			castle.updateOst(now, pause);
+			castle.update(now, pause);
 		}
 	}
 

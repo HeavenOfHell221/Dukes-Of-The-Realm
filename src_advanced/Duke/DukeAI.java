@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Kingdom;
+import Goals.GeneratorGoal;
 import SimpleGoal.Goal;
 import Utility.Settings;
 
@@ -117,9 +118,9 @@ public class DukeAI extends Actor implements Serializable
 	 */
 	private void putNewGoal(final Castle castle)
 	{
-		// Goal g = getNewGoal(castle, castle.getCharacter());
-		// this.goalMap.put(castle, g);
-		// System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
+		Goal g = GeneratorGoal.getNewGoal(castle);
+		this.goalMap.put(castle, g);
+		//System.out.println(this.name + " -> niveau[" + castle.getLevel() + "] -> " + g);
 	}
 
 	@Override

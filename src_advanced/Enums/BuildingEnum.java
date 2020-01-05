@@ -21,6 +21,8 @@ import static Utility.Settings.WALL_LEVEL_MAX;
 import static Utility.Settings.WALL_PRODUCTION_OFFSET;
 import static Utility.Settings.WALL_PRODUCTION_TIME_PER_LEVEL;
 
+import java.util.Random;
+
 import DukesOfTheRealm.Caserne;
 import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Market;
@@ -89,6 +91,36 @@ public enum BuildingEnum
 			default:
 				return null;
 
+		}
+	}
+	
+	public static BuildingEnum getRandomTypeForAI()
+	{
+		Random rand = new Random();
+		switch (rand.nextInt(15))
+		{
+			case 0:
+			case 1:
+			case 2:
+				return Caserne;
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				return Castle;
+			case 7:
+			case 8:
+				return Miller;
+			case 9: 
+				return Market;
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+				return Wall;
+			default : 
+				return Castle;
 		}
 	}
 }

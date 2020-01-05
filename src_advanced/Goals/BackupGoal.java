@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import DukesOfTheRealm.Castle;
+import Enums.SoldierEnum;
 import SimpleGoal.Goal;
 import Utility.SoldierPack;
 
@@ -45,7 +46,15 @@ public class BackupGoal extends Goal
 			Castle destination = list.get(rand.nextInt(list.size())); // On prend un château au hasard
 			AttackGoal g = new AttackGoal(origin, destination, pack);
 			this.goals.addLast(g);
-			this.goals.addLast(new MultiSoldierGoal(origin, pack));
+			SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0);
+			for(SoldierEnum s : SoldierEnum.values())
+			{
+				if(pack.get(s) > 0)
+				{
+					production.replace(s, pack.get(s) / 2);
+				}
+			}
+			this.goals.addLast(new MultiSoldierGoal(origin, production));
 		}
 	}
 

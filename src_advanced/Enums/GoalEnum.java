@@ -56,10 +56,10 @@ public enum GoalEnum implements Serializable
 			case 1:
 			case 2:
 			case 3:
-				return Production;
 			case 4:
-				return Finance;
+				return Production;
 			case 5:
+				return Finance;
 			case 6:
 			case 7:
 				return Battle;

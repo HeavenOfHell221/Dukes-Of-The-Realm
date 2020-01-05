@@ -13,7 +13,7 @@ public class SoldierGoal extends Goal
 	 *
 	 * @see Enums.SoldierEnum
 	 */
-	private final SoldierEnum type;
+	public final SoldierEnum type;
 
 	/**
 	 * Constructeur de SoldierGoal.
@@ -29,7 +29,13 @@ public class SoldierGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		return castle.addProduction(this.type.getObject());
+		if(castle.getMiller().getVillagerFree() >= type.villager)
+		{
+			return castle.addProduction(this.type.getObject());
+		}
+		else
+		{
+			return false;
+		}
 	}
-
 }
