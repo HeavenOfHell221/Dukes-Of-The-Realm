@@ -17,18 +17,6 @@ import Enums.BuildingEnum;
 public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 {
 	/**
-	 * Constructeur par défaut de BuildingPack.
-	 */
-	public BuildingPack()
-	{
-		super();
-		for (BuildingEnum b : BuildingEnum.values())
-		{
-			put(b, null);
-		}
-	}
-
-	/**
 	 * Constructeur de BuildingPack.
 	 * 
 	 * @param castle

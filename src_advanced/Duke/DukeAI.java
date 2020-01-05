@@ -51,7 +51,7 @@ public class DukeAI extends Actor implements Serializable
 	 * @see Goals.GeneratorGoal#getNewGoalBattle(Castle)
 	 */
 	private Kingdom kingdom;
-
+	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/

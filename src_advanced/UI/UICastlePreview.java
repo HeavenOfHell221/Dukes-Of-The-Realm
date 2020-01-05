@@ -118,10 +118,10 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 */
 	public UICastlePreview()
 	{
-		this.textSoldier = new SoldierPack<>();
-		this.imageSoldier = new SoldierPack<>();
-		this.textBuildingLevel = new BuildingPack<>();
-		this.imageBuilding = new BuildingPack<>();
+		this.textSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.imageSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.textBuildingLevel = new BuildingPack<>(null, null, null, null, null);
+		this.imageBuilding = new BuildingPack<>(null, null, null, null, null);
 		
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_48.png", 48, 48));
 		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_48.png", 48, 48));
@@ -263,7 +263,6 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		
 		setText(this.owner, 24);
 		setText(this.florinIncome, 24);
-		//setText(this.textConveyors, 28);
 
 		for (Text t : this.textSoldier.values())
 		{
@@ -306,7 +305,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		for(BuildingEnum b : BuildingEnum.values())
 		{
 			relocate(this.imageBuilding.get(b), Settings.SCENE_WIDTH * margin + 100, offset + i * multiplier - 30);
-			relocate(this.textBuildingLevel.get(b), Settings.SCENE_WIDTH * margin + 120, offset + i * multiplier  - 12);
+			relocate(this.textBuildingLevel.get(b), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier  - 12);
 			multiplier++;
 		}
 		
@@ -316,14 +315,14 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 			if(s != SoldierEnum.Conveyors)
 			{
 				relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin - 60, offset + i * multiplier - 30);
-				relocate(this.textSoldier.get(s), Settings.SCENE_WIDTH * margin - 40, offset + i * multiplier - 12);
+				relocate(this.textSoldier.get(s), Settings.SCENE_WIDTH * margin - 50, offset + i * multiplier - 12);
 				multiplier++;
 			}
 		}
 		
 		multiplier--;
 		relocate(this.imageSoldier.get(SoldierEnum.Conveyors),  Settings.SCENE_WIDTH * margin + 100, offset + i * multiplier - 33);
-		relocate(this.textSoldier.get(SoldierEnum.Conveyors), Settings.SCENE_WIDTH * margin + 120, offset + i * multiplier  - 12);
+		relocate(this.textSoldier.get(SoldierEnum.Conveyors), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier  - 12);
 		
 		offset -= 20;
 		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin + 20, offset + i * 1.4 + 10);
@@ -365,7 +364,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	private void setText(final Text text, final int font)
 	{
 		text.setFont(new Font(font));
-		text.setWrappingWidth(155);
+		text.setWrappingWidth(160);
 		text.setTextAlignment(TextAlignment.CENTER);
 		text.setFill(Color.WHITE);
 	}

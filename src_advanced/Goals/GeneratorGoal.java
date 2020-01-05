@@ -60,16 +60,16 @@ public class GeneratorGoal implements Serializable
 	{
 		switch (GoalEnum.getRandomType())
 		{
-			/*case Backup:
+			case Backup:
 				return getNewGoalBackup(castle);
 			case Battle:
-				return getNewGoalBattle(castle);*/
-			/*case Finance:
-				return getNewGoalFinance(castle);*/
+				return getNewGoalBattle(castle);
+			case Finance:
+				return getNewGoalFinance(castle);
 			case Production:
 				return getNewGoalProduction(castle);
-			/*case Building:
-				return getNewGoalBuilding(castle);*/
+			case Building:
+				return getNewGoalBuilding(castle);
 			default:
 				break;
 		}
@@ -194,17 +194,59 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalProduction(final Castle castle)
 	{
-		final SoldierPack<Boolean> soldierSelection = new SoldierPack<>();
-		final SoldierPack<Integer> soldierProduction = new SoldierPack<>();
+		final SoldierPack<Boolean> soldierSelection = new SoldierPack<>(false, false, false, false, false, false, false);
+		final SoldierPack<Integer> soldierProduction = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 		final int levelCastle = castle.getLevel();
 		final int levelCaserne = castle.getCaserne().getLevel();
 		
-		for(SoldierEnum s : SoldierEnum.values())
+		int nbVillagerOff = castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight) * SoldierEnum.Knight.villager
+				+ castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Berserker) * SoldierEnum.Berserker.villager
+				+ castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Onager) * SoldierEnum.Onager.villager;
+		
+		int nbVillagerDef = castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Piker) * SoldierEnum.Piker.villager
+				+ castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Archer) * SoldierEnum.Archer.villager;
+		
+		
+		switch(castle.getCharacter())
 		{
-			soldierSelection.replace(s, rand.nextBoolean());
+			case Neutral:
+				if(nbVillagerOff < nbVillagerDef)
+				{
+					
+					soldierSelection.replace(SoldierEnum.Knight, true);
+					soldierSelection.replace(SoldierEnum.Berserker, true);
+					soldierSelection.replace(SoldierEnum.Onager, true);
+				}
+				else
+				{
+					soldierSelection.replace(SoldierEnum.Piker, true);
+					soldierSelection.replace(SoldierEnum.Archer, true);
+				}
+			case Offensive:
+				if(nbVillagerOff < nbVillagerDef * 1.5)
+				{
+					soldierSelection.replace(SoldierEnum.Knight, true);
+					soldierSelection.replace(SoldierEnum.Berserker, true);
+					soldierSelection.replace(SoldierEnum.Onager, true);
+				}
+				else
+				{
+					soldierSelection.replace(SoldierEnum.Piker, true);
+					soldierSelection.replace(SoldierEnum.Archer, true);
+				}
+			case Defensive:
+				if(nbVillagerOff * 1.5 < nbVillagerDef)
+				{
+					soldierSelection.replace(SoldierEnum.Knight, true);
+					soldierSelection.replace(SoldierEnum.Berserker, true);
+					soldierSelection.replace(SoldierEnum.Onager, true);
+				}
+				else
+				{
+					soldierSelection.replace(SoldierEnum.Piker, true);
+					soldierSelection.replace(SoldierEnum.Archer, true);
+				}
 		}
-		soldierSelection.replace(SoldierEnum.Spy, false);
-		soldierSelection.replace(SoldierEnum.Conveyors, false);
 		
 		for(SoldierEnum s : SoldierEnum.values())
 		{

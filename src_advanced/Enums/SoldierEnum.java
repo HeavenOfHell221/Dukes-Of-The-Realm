@@ -108,7 +108,7 @@ public enum SoldierEnum implements Serializable
 	public static SoldierEnum getRandomType()
 	{
 		Random rand = new Random();
-		switch (rand.nextInt(6))
+		switch (rand.nextInt(7))
 		{
 			case 0:
 				return Piker;
@@ -122,6 +122,8 @@ public enum SoldierEnum implements Serializable
 				return Berserker;
 			case 5:
 				return Spy;
+			case 6:
+				return Conveyors;
 			default:
 				return null;
 

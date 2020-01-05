@@ -97,10 +97,10 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	public UIProductionUnitPreview()
 	{
-		this.productSoldier = new SoldierPack<>();
-		this.textCostSoldier = new SoldierPack<>();
-		this.textCostBuilding = new BuildingPack<>();
-		this.upgradeBuilding = new BuildingPack<>();
+		this.productSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.textCostSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.textCostBuilding = new BuildingPack<>(null, null, null, null, null);
+		this.upgradeBuilding = new BuildingPack<>(null, null, null, null, null);
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{

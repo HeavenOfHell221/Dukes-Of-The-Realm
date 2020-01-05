@@ -55,12 +55,12 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 10; // 5
+	public static final int FLORIN_PER_SECOND = 500; // 5
 
 	/**
 	 * Nombre de Florin par seconde de base.
 	 */
-	public static final int FLORIN_PER_SECOND_OFFSET = 5;
+	public static final int FLORIN_PER_SECOND_OFFSET = 10;
 
 	/**
 	 * Pourcentage de réduction des FLORIN_PER_SECOND pour les Baron.
@@ -128,7 +128,7 @@ public class Settings
 	/**
 	 * Offset du niveau du château des Baron (donc le minimum).
 	 */
-	public static final int OFFSET_LEVEL_CASTLE_BARON = 5;
+	public static final int OFFSET_LEVEL_CASTLE_BARON = 1;
 
 	/****************************************************/
 	/******************** Buildings *********************/
@@ -147,7 +147,7 @@ public class Settings
 	/**
 	 * Augmentation du temps d'amélioration pour chaque niveau de château.
 	 */
-	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 3f;
+	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 2f;
 
 	/**
 	 * 
@@ -162,12 +162,12 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final float WALL_PRODUCTION_OFFSET = 6f;
+	public static final float WALL_PRODUCTION_OFFSET = 5f;
 	
 	/**
 	 * 
 	 */
-	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 5f;
+	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 4f;
 	
 	/**
 	 * 
@@ -187,7 +187,7 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 4f;
+	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 3f;
 	
 	/**
 	 * 
@@ -207,7 +207,7 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 4f;
+	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
 	
 	/**
 	 * 
@@ -237,7 +237,7 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 2f;
+	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 1f;
 	
 	/**
 	 * 
@@ -407,7 +407,7 @@ public class Settings
 	/**
 	 * Temps de production de base d'un Conveyors.
 	 */
-	public static final double CONVEYORS_TIME_PRODUCTION = 1d;
+	public static final double CONVEYORS_TIME_PRODUCTION = 2d;
 	
 	/**
 	 *
@@ -442,7 +442,7 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final int CONVEYORS_FLORIN = 100;
+	public static final int CONVEYORS_FLORIN = 200;
 	
 	/**
 	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points d'attaque.

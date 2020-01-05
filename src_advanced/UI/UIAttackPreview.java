@@ -95,11 +95,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 */
 	public UIAttackPreview()
 	{
-		this.soldierPack = new SoldierPack<>();
-		this.upSoldier = new SoldierPack<>();
-		this.downSoldier = new SoldierPack<>();
-		this.imageSoldier = new SoldierPack<>();
-		this.textSoldier = new SoldierPack<>();
+		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
+		this.upSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.downSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.imageSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
+		this.textSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
 
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_64.png", 64, 64));
 		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_64.png", 64, 64));
@@ -228,27 +228,67 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 			{
 				if(this.input.isShift())
 				{
-					for(int i = 0; i < 10; i++)
+					
+					if(s != SoldierEnum.Conveyors)
+					{
+						for(int i = 0; i < 10; i++)
+						{
+							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+							{
+								this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+							}
+						}
+					}
+					else
+					{
+						for(int i = 0; i < 10; i++)
+						{
+							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
+									&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
+							{
+								this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+							}
+						}
+					}
+
+				}
+				else if(this.input.isAlt())
+				{
+					if(s != SoldierEnum.Conveyors)
+					{
+						while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
+					}
+					else
+					{
+						while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
+								&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
+					}
+					
+				}
+				else
+				{
+					if(s != SoldierEnum.Conveyors)
 					{
 						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 						{
 							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
 						}
 					}
-				}
-				else if(this.input.isAlt())
-				{
-					while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+					else
 					{
-						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
+								&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
 					}
-				}
-				else
-				{
-					if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
-					{
-						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
-					}
+					
 				}
 				
 			});
@@ -257,27 +297,67 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 			{
 				if(this.input.isShift())
 				{
-					for(int i = 0; i < 10; i++)
+					if(s != SoldierEnum.Conveyors)
+					{
+						for(int i = 0; i < 10; i++)
+						{
+							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+							{
+								this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+							}
+						}
+					}
+					else
+					{
+						for(int i = 0; i < 10; i++)
+						{
+							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
+									&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
+							{
+								this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+							}
+						}
+					}
+					
+					
+				}
+				else if(this.input.isAlt() && event.getDeltaY() > 0)
+				{
+					if(s != SoldierEnum.Conveyors)
+					{
+						while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
+					}
+					else
+					{
+						while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
+								&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
+					}
+					
+				}
+				else if(event.getDeltaY() > 0)
+				{
+					if(s != SoldierEnum.Conveyors)
 					{
 						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 						{
 							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
 						}
 					}
-				}
-				else if(this.input.isAlt() && event.getDeltaY() > 0)
-				{
-					while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
+					else
 					{
-						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
+								&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
+						{
+							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
+						}
 					}
-				}
-				else if(event.getDeltaY() > 0)
-				{
-					if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
-					{
-						this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
-					}
+					
 				}			
 			});
 
@@ -338,6 +418,8 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.lastCastle.createOst(this.currentCastle, this.soldierPack);
 
+			this.lastCastle.removeFlorin(this.soldierPack.get(SoldierEnum.Conveyors) * Settings.CONVEYORS_FLORIN);
+			
 			reset();
 		});
 	}

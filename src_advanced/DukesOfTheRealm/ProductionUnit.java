@@ -50,6 +50,8 @@ public class ProductionUnit implements Serializable
 			// On retire du temps
 			this.currentProductionTime -= 1 * Time.deltaTime;
 			this.caserne.sumCurrentTime -= 1 * Time.deltaTime;
+			
+			
 
 			// Si la production est terminé
 			if (this.currentProductionTime <= 0)

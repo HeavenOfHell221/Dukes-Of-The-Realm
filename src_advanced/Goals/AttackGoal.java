@@ -59,8 +59,8 @@ public class AttackGoal extends Goal
 			return;
 		}
 
-		SoldierPack<Integer> nbSoldier = new SoldierPack<>();
-		SoldierPack<Integer> realNbSoldier = new SoldierPack<>();
+		SoldierPack<Integer> nbSoldier = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
+		SoldierPack<Integer> realNbSoldier = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 
 		// Nombre d'unité dans la caserne + dans la réserve
 		for (SoldierEnum s : SoldierEnum.values())
@@ -106,7 +106,7 @@ public class AttackGoal extends Goal
 		// Au moment de lancer l'ost
 		if (this.goals.size() == 1)
 		{
-			SoldierPack<Integer> nbSoldier = new SoldierPack<>();
+			SoldierPack<Integer> nbSoldier = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 
 			for (SoldierEnum s : SoldierEnum.values())
 			{
@@ -134,7 +134,7 @@ public class AttackGoal extends Goal
 			// Si nous n'avons plus assez d'unités
 			if (!canSendOst)
 			{
-				SoldierPack<Integer> realNbSoldier = new SoldierPack<>();
+				SoldierPack<Integer> realNbSoldier = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
 
 				for (SoldierEnum s : SoldierEnum.values())
 				{

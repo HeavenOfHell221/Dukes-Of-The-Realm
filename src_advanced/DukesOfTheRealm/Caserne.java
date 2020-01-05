@@ -101,8 +101,12 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		}
 		
 		int count = 0;
-		for(int i :this.buildingPack.values())
+		for(int i : this.buildingPack.values())
 		{
+			for(int k : this.soldierPack.values())
+			{
+				count += k;
+			}
 			count += i;
 		}
 		
@@ -121,8 +125,8 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			this.ratio = 0;
 		}
 		
-		//if(this.castle.getActor().isPlayer())
-			//System.out.println(this.sumCurrentTime + " " + this.sumTotalTime);
+		/*if(this.castle.getActor().isPlayer())
+			System.out.println(this.sumCurrentTime + " " + this.sumTotalTime);*/
 	}
 
 	/*************************************************/
@@ -183,10 +187,10 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			return false;
 		}
-
+		
 		sumTotalTime += p.getProductionTime(getCastle(), p.getLevel());
 		sumCurrentTime += p.getProductionTime(getCastle(), p.getLevel());
-		
+			
 		p.productionStart(this);
 
 		this.mainProductionQueue.addLast(p);
@@ -234,7 +238,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		return Settings.CASERNE_COST * level + (level * level * level * level) / 7;
 	}
 	
-	private void levelUp()
+	public void levelUp()
 	{
 		if(this.level < Settings.CASERNE_LEVEL_MAX)
 		{

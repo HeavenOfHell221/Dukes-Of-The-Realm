@@ -41,7 +41,7 @@ public class Miller implements Serializable, IBuilding, IProduction
 		return Settings.MILLER_COST * (level-1) + level * level  * (level + 1) ;
 	}
 	
-	private void levelUp()
+	public void levelUp()
 	{
 		if(this.level < Settings.MILLER_LEVEL_MAX)
 		{

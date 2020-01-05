@@ -24,6 +24,8 @@ public class Market implements Serializable, IBuilding, IProduction, IUpdate
 	
 	private Castle castle;
 	
+	private int conveyors;
+	
 	public Market(Castle castle)
 	{
 		this.castle = castle;
@@ -37,10 +39,10 @@ public class Market implements Serializable, IBuilding, IProduction, IUpdate
 	@Override
 	public void update(long now, boolean pause)
 	{
-		if(this.castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Conveyors) 
-				+ this.castle.getCaserne().getSoldierPack().get(SoldierEnum.Conveyors) < conveyorsMax)
+		if(conveyors < conveyorsMax)
 		{
 			this.castle.addProduction(new Conveyors());
+			this.conveyors++;
 		}
 	}
 	
@@ -96,6 +98,7 @@ public class Market implements Serializable, IBuilding, IProduction, IUpdate
 		for(int i = 0; i < (this.conveyorsMax - oldConveyorsMax); i++)
 		{
 			this.castle.addProduction(new Conveyors());
+			this.conveyors++;
 		}
 	}
 
@@ -111,5 +114,10 @@ public class Market implements Serializable, IBuilding, IProduction, IUpdate
 	public final int getConveyorsMax()
 	{
 		return conveyorsMax;
+	}
+	
+	public final void removeConveyors()
+	{
+		this.conveyors--;
 	}
 }

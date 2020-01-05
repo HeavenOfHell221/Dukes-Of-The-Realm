@@ -16,6 +16,7 @@ import java.util.Stack;
 
 import Duke.Actor;
 import Enums.BuildingEnum;
+import Enums.CharacterEnum;
 import Enums.SoldierEnum;
 import Interface.IBuilding;
 import Interface.IProduction;
@@ -124,12 +125,17 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/**
 	 * Boolean spécifiant si ce château est acctuellement espionné par le joueur.
 	 */
-	private boolean isSpiedOn = false;
+	private boolean isSpiedOn = true;
 	
 	/**
 	 * Temps avant que ce château ne soit plus considéré comme espionné.
 	 */
 	private long spiedOnTime = 0;
+	
+	/**
+	 * Caractère du château pour les IA.
+	 */
+	private CharacterEnum character;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -183,7 +189,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		setAttackLocations();
 		
 		this.productionTimeMultiplier = (float) ((100f - Math.exp(this.level / 6) - this.level) / 100);
-		
+		this.character = CharacterEnum.getRandomType();
 	}
 
 	/**
@@ -216,11 +222,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		
 		if(this.isSpiedOn)
 		{
-			this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
+			/*this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
 			if(this.spiedOnTime <= 0)
 			{
 				this.isSpiedOn = false;
-			}
+			}*/
 		}
 	}
 	
@@ -302,7 +308,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	public void randomSoldier()
 	{
 		final Random rand = new Random();
-		final int levelSq = this.level * (this.level / 6) + 1;
+		final int levelSq = this.level * (this.level / 5) + 1;
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
@@ -723,5 +729,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	public final boolean isSpiedOn()
 	{
 		return isSpiedOn;
+	}
+
+	/**
+	 * @return the character
+	 */
+	public final CharacterEnum getCharacter()
+	{
+		return character;
 	}
 }

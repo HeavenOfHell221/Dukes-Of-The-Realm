@@ -199,6 +199,11 @@ public class Ost implements IUpdate, Serializable
 						it.remove();
 						Main.nbSoldier--;
 						this.origin.getMiller().addVillager(s.getType().villager);
+						if(s.getType() == SoldierEnum.Conveyors)
+						{
+							this.origin.getMarket().removeConveyors();
+							this.destination.addFlorin(Settings.CONVEYORS_FLORIN);
+						}
 					}
 					else
 					{
@@ -517,9 +522,13 @@ public class Ost implements IUpdate, Serializable
 		{
 			nextType = SoldierEnum.Piker;
 		}
-		else
+		else if(this.soldierPack.get(SoldierEnum.Knight) > 0)
 		{
 			nextType = SoldierEnum.Knight;
+		}
+		else
+		{
+			nextType = SoldierEnum.Conveyors;
 		}
 
 		return nextType;

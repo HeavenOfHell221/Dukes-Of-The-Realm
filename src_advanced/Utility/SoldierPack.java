@@ -14,19 +14,6 @@ import Enums.SoldierEnum;
  */
 public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 {
-
-	/**
-	 * Constructeur par défaut de SoldierPack.
-	 */
-	public SoldierPack()
-	{
-		super();
-		for (SoldierEnum sEnum : SoldierEnum.values())
-		{
-			put(sEnum, null);
-		}
-	}
-
 	/**
 	 * Constructeur par recopie.
 	 * 

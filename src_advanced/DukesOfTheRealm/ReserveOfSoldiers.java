@@ -120,6 +120,8 @@ public class ReserveOfSoldiers implements Serializable
 	 */
 	private void soldierDeath(SoldierEnum s)
 	{
+		if(s == SoldierEnum.Conveyors)
+			System.out.println("bug convoyeur!");
 		this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
 		this.castle.getMiller().addVillager(s.villager);
 		this.HPPack.replace(s, s.HP * this.castle.getWallMultiplicator());
