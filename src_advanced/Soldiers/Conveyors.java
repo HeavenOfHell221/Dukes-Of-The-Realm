@@ -35,7 +35,7 @@ public class Conveyors extends Soldier
 	@Override
 	public void Awake(final Color color)
 	{
-		AddPikerRepresentation();
+		AddConveyorRepresentation();
 		super.Awake(color);
 	}
 }
