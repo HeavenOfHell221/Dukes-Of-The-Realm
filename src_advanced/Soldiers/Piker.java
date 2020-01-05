@@ -47,13 +47,4 @@ public class Piker extends Soldier
 		AddPikerRepresentation();
 		super.Awake(color);
 	}
-	
-	@Override
-	protected void applyDamage(Castle destination)
-	{
-		Random rand = new Random();
-		
-		destination.spiedOn();
-		super.applyDamage(destination);
-	}
 }

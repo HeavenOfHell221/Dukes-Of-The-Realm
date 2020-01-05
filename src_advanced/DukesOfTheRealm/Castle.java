@@ -215,9 +215,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		
 		if(this.isSpiedOn)
 		{
-			System.out.println(this.spiedOnTime);
 			this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
-			System.out.println(this.spiedOnTime);
 			if(this.spiedOnTime <= 0)
 			{
 				this.isSpiedOn = false;
@@ -305,10 +303,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		final Random rand = new Random();
 		final int levelSq = this.level * (this.level / 6) + 1;
 
-		for (SoldierEnum s : SoldierEnum.values())
+		/*for (SoldierEnum s : SoldierEnum.values())
 		{
 			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
-		}
+		}*/
 	}
 
 	/**
@@ -564,7 +562,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		this.isSpiedOn = true;
 		this.spiedOnTime = Settings.GAME_FREQUENCY;
-		this.spiedOnTime *= 60;
+		this.spiedOnTime *= 30;
 	}
 
 	/*************************************************/
