@@ -14,7 +14,7 @@ public class Berserker extends Soldier
 	@Override
 	public void Awake(final Color color)
 	{
-		AddKnightRepresentation();
+		AddBerserkerRepresentation();
 		super.Awake(color);
 	}
 }

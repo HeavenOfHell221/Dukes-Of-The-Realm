@@ -14,7 +14,7 @@ public class Spy extends Soldier
 	@Override
 	public void Awake(final Color color)
 	{
-		AddKnightRepresentation();
+		AddSpyRepresentation();
 		super.Awake(color);
 	}
 }

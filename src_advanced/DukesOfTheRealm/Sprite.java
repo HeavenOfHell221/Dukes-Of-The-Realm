@@ -14,6 +14,12 @@ import static Utility.Settings.DOOR_WIDTH;
 import static Utility.Settings.KNIGHT_REPRESENTATION_SIZE;
 import static Utility.Settings.ONAGER_REPRESENTATION_SIZE;
 import static Utility.Settings.PIKER_REPRESENTATION_RADIUS;
+import static Utility.Settings.ARCHER_REPRESENTATION_SIZE;
+import static Utility.Settings.ARCHER_REPRESENTATION_HEIGHT_POSITION;
+import static Utility.Settings.BERSERKER_REPRESENTATION_SIZE;
+import static Utility.Settings.BERSERKER_REPRESENTATION_THICKNESS;
+import static Utility.Settings.SPY_REPRESENTATION_OUTSIDE_RADIUS;
+import static Utility.Settings.SPY_REPRESENTATION_INSIDE_RADIUS;
 import static Utility.Settings.SOLDIER_SHADOW_COLOR;
 import static Utility.Settings.SOLDIER_SHADOW_OFFSET;
 import static Utility.Settings.SOLDIER_SHADOW_RADIUS;
@@ -26,12 +32,17 @@ import java.io.Serializable;
 
 import DukesOfTheRealm.Castle.Orientation;
 import Utility.Point2D;
+import Utility.Settings;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.ClosePath;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -132,7 +143,7 @@ public abstract class Sprite extends Parent implements Serializable
 	}
 
 	/**
-	 * Ajoute la représentation graphique d'un Piquier à l'écran.
+	 * Crée et ajoute à l'écran une figure de cercle pour représenter graphiquement un Piquier.
 	 */
 	protected final void AddPikerRepresentation()
 	{
@@ -147,7 +158,7 @@ public abstract class Sprite extends Parent implements Serializable
 	}
 
 	/**
-	 * Ajoute la représentation graphique d'un Chevalier à l'écran.
+	 * Crée et ajoute à l'écran une figure de triangle pour représenter graphiquement un Chevalier.
 	 */
 	protected final void AddKnightRepresentation()
 	{
@@ -164,13 +175,70 @@ public abstract class Sprite extends Parent implements Serializable
 	}
 
 	/**
-	 * Ajoute la représentation graphique d'une Catapulte à l'écran.
+	 * Crée et ajoute à l'écran une figure de carré pour représenter graphiquement une Catapulte.
 	 */
 	protected final void AddOnagerRepresentation()
 	{
 		final double s = ONAGER_REPRESENTATION_SIZE;
 		final Rectangle r = new Rectangle(getX(), getY(), s, s);
 		r.setMouseTransparent(true);
+		this.shape = r;
+		updateUIShape();
+		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
+	}
+	
+	/**
+	 * Crée et ajoute à l'écran une figure de cerf-volant pour représenter graphiquement un Archer.
+	 */
+	protected final void AddArcherRepresentation()
+	{
+		final double s = ARCHER_REPRESENTATION_SIZE;
+		final double hp = ARCHER_REPRESENTATION_HEIGHT_POSITION;
+		Path k = new Path(new MoveTo(getX() + s/2, getY()),
+    			new LineTo(getX() - s/2, getY() + hp),
+    			new LineTo(getX() + s/2, getY() + s),
+    			new LineTo(getX() + s, getY() + hp),
+    			new ClosePath()
+    			);
+		k.setMouseTransparent(true);
+		this.shape = k;
+		updateUIShape();
+		addStroke(k, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(k, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
+	}
+	
+	/**
+	 * Crée et ajoute à l'écran une figure de croix pour représenter graphiquement un Berserker.
+	 */
+	protected final void AddBerserkerRepresentation()
+	{
+		final double s = BERSERKER_REPRESENTATION_SIZE;
+		final double t = BERSERKER_REPRESENTATION_THICKNESS;
+		Rectangle r1 = new Rectangle(getX() + t, getY(), t, s);
+    	Rectangle r2 = new Rectangle(getX(), getY() + t, s, t);
+    	Shape p = Shape.union(r1, r2);
+		p.setMouseTransparent(true);
+		this.shape = p;
+		updateUIShape();
+		addStroke(p, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(p, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
+	}
+	
+	/**
+	 * Crée et ajoute à l'écran une figure d'anneau pour représenter graphiquement un Espion.
+	 */
+	protected final void AddSpyRepresentation()
+	{
+		final double r_out = SPY_REPRESENTATION_OUTSIDE_RADIUS;
+		final double r_in = SPY_REPRESENTATION_INSIDE_RADIUS;
+		Circle c1 = new Circle(getX(), getY(), r_out);
+    	Circle c2 = new Circle(getX(), getY(), r_in);
+    	Shape r = Shape.subtract(c1, c2);
+    	r.setMouseTransparent(true);
 		this.shape = r;
 		updateUIShape();
 		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
