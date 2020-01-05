@@ -427,6 +427,21 @@ public class Settings
 	 */
 	public static final int ONAGER_REPRESENTATION_SIZE = SOLDIER_SIZE;
 
+	/* Taille de la représentation d'un Archer (en pixel). */
+
+	public static final int ARCHER_REPRESENTATION_SIZE = SOLDIER_SIZE;
+	public static final int ARCHER_REPRESENTATION_HEIGHT_POSITION = 7*SOLDIER_SIZE/10;
+
+	/* Taille de la représentation d'un Berserker (en pixel). */
+	
+	public static final int BERSERKER_REPRESENTATION_SIZE = SOLDIER_SIZE;
+	public static final int BERSERKER_REPRESENTATION_THICKNESS = SOLDIER_SIZE/3;
+
+	/* Taille de la représentation d'un Spy (en pixel) */
+	
+	public static final int SPY_REPRESENTATION_OUTSIDE_RADIUS = SOLDIER_SIZE/2;
+	public static final int SPY_REPRESENTATION_INSIDE_RADIUS = SOLDIER_SIZE/4;
+
 	/* Paramètres interne pour le visuel des châteaux et des unités */
 
 	public static final double CASTLE_STROKE_THICKNESS = 2.0;

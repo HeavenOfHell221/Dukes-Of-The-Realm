@@ -15,7 +15,7 @@ public class Archer extends Soldier
 	@Override
 	public void Awake(final Color color)
 	{
-		AddKnightRepresentation();
+		AddArcherRepresentation();
 		super.Awake(color);
 	}
 }
