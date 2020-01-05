@@ -152,25 +152,39 @@ public class Settings
 	public static final int CASTLE_LEVEL_MAX = 20;
 
 	public static final int WALL_COST = 200;
+	
 	public static final float WALL_PRODUCTION_OFFSET = 6f;
+	
 	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 5f;
+	
 	public static final int WALL_LEVEL_MAX = 20;
 
 	public static final int CASERNE_COST = 200;
+	
 	public static final float CASERNE_PRODUCTION_OFFSET = 0f;
+	
 	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 4f;
+	
 	public static final int CASERNE_LEVEL_MAX = 10;
 
 	public static final int MILLER_COST = 300;
+	
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
+	
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 4f;
+	
 	public static final int MILLER_LEVEL_MAX = 10;
+	
 	public static final int MILLER_VILLAGER_BASE = 80; // 80
+	
 	public static final int MILLER_VILLAGER_PER_LEVEL = 12;
 
 	public static final int MARKET_COST = 100;
+	
 	public static final float MARKET_PRODUCTION_OFFSET = 2f;
+	
 	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 2f;
+	
 	public static final int MARKET_LEVEL_MAX = 10;
 
 	/****************************************************/
@@ -220,7 +234,7 @@ public class Settings
 	/**
 	 * Dégâts des Onager.
 	 */
-	public static final int ONAGER_DAMAGE = 1;
+	public static final int ONAGER_DAMAGE = 10;
 
 	/**
 	 * Dégâts des Psy.
@@ -253,9 +267,14 @@ public class Settings
 	public static final int ONAGER_COST = 192;
 	
 	/**
-	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart à chaque attaque.
+	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points d'attaque.
 	 */
-	public static final float ONAGER_WALL = 0.5f; 
+	public static final float ONAGER_WALL = 0.05f; 
+	
+	/**
+	 * Probabilité d'un Spy d'espionner le château qu'il attaque pour chacun de ses points d'attaque.
+	 */
+	public static final float SPY_SPY = 0.05f;
 
 	/**
 	 * Coût d'un Psy.
