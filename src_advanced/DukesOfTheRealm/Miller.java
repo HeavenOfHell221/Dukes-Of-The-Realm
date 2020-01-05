@@ -31,7 +31,7 @@ public class Miller implements Serializable, IBuilding, IProduction
 	@Override
 	public double getProductionTime(final Castle castle, int level)
 	{
-		return (0 + 0 * Settings.MILLER_PRODUCTION_TIME_PER_LEVEL) * castle.getProductionTimeMultiplier();
+		return (Settings.MILLER_PRODUCTION_OFFSET + level * Settings.MILLER_PRODUCTION_TIME_PER_LEVEL) * castle.getProductionTimeMultiplier();
 	}
 
 	@Override

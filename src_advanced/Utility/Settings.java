@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 5;
+	public static final int FLORIN_PER_SECOND = 500;
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -165,7 +165,7 @@ public class Settings
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
 	public static final int MILLER_LEVEL_MAX = 20;
-	public static final int MILLER_VILLAGER_BASE = 80; // 80
+	public static final int MILLER_VILLAGER_BASE = 800; // 80
 	public static final int MILLER_VILLAGER_PER_LEVEL = 6;
 
 	public static final int MARKET_COST = 100;

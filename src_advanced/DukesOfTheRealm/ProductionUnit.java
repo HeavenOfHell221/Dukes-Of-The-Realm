@@ -18,11 +18,6 @@ public class ProductionUnit implements Serializable
 	private double currentProductionTime;
 
 	/**
-	 * Le ratio entre le temps restant et le temps total du production.
-	 */
-	private double ratio;
-
-	/**
 	 * Le château à qui appartient cette unité de production.
 	 */
 	private final Castle castle;
@@ -54,25 +49,39 @@ public class ProductionUnit implements Serializable
 		{
 			// On retire du temps
 			this.currentProductionTime -= 1 * Time.deltaTime;
-
-			// On calcul le ration pour le UI
-			//this.ratio = 1 - this.currentProductionTime / this.currentProduction.getProductionTime(this.castle, this.currentProduction.getLevel());
+			this.caserne.sumCurrentTime -= 1 * Time.deltaTime;
 
 			// Si la production est terminé
 			if (this.currentProductionTime <= 0)
 			{
+				//this.caserne.sumTotalTime -= this.currentProduction.getProductionTime(castle, this.currentProduction.getLevel());
 				this.currentProduction.productionFinished(this.castle, false);
 				this.currentProduction = null;
 			}
 		}
 		else
 		{
-			this.ratio = 0;
 			if (this.caserne.getMainProductionQueue().size() > 0)
 			{
 				this.currentProduction = this.caserne.getMainProductionQueue().pollFirst();
 				this.currentProductionTime = this.currentProduction.getProductionTime(this.castle, this.currentProduction.getLevel());
 			}
 		}
+	}
+
+	/**
+	 * @return the currentProductionTime
+	 */
+	public final double getCurrentProductionTime()
+	{
+		return currentProductionTime;
+	}
+
+	/**
+	 * @return the currentProduction
+	 */
+	public final IProduction getCurrentProduction()
+	{
+		return currentProduction;
 	}
 }

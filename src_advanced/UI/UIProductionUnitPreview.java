@@ -156,7 +156,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	@Override
 	public void update(final long now, final boolean pause)
 	{
-		// setFill(this.currentCastle.getRatio());
+		setFill(this.currentCastle.getCaserne().getRatio());
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
@@ -555,7 +555,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		final int height = 80;
 		final int offset = 560;
 
-		final float margin = (float) MARGIN_PERCENTAGE + 0.076f;
+		final float margin = (float) MARGIN_PERCENTAGE + 0.08f;
 
 		int multiplier = 0;
 		int offset2 = 0;

@@ -12,7 +12,7 @@ public interface IProduction
 	/**
 	 * @param castle Le château qui demande cette production.
 	 * @param level Le niveau de la production.
-	 * @return Retourne le temps de production de l'objet.
+	 * @return Retourne le temps de production de l'objet. 
 	 */
 	double getProductionTime(Castle castle, int level);
 

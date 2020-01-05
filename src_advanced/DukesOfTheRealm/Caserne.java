@@ -49,6 +49,11 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	private int level;
 	
 	public int numberProductionUnitAdding = 0;
+	
+	public double ratio = 0;
+	
+	protected double sumCurrentTime = 0;
+	protected double sumTotalTime = 0;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -69,10 +74,10 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 		this.level = 1;
 	}
-
+	
 	public Caserne()
 	{
-
+		
 	}
 
 	/*************************************************/
@@ -81,17 +86,33 @@ public class Caserne implements Serializable, IBuilding, IProduction
 
 	public void updateProduction()
 	{
-		Iterator<ProductionUnit> it = this.productionUnitList.iterator();
-		
-		while(it.hasNext())
+		final Iterator<ProductionUnit> itUnit = this.productionUnitList.iterator();
+		final Iterator<IProduction> itProd = this.mainProductionQueue.iterator();
+
+		while(itUnit.hasNext())
 		{
-			it.next().updateProduction();
+			final ProductionUnit p = itUnit.next();
+			p.updateProduction();
 		}
 		
 		while(this.numberProductionUnitAdding > 0)
 		{
 			this.productionUnitList.add(new ProductionUnit(this.castle, this));
 			this.numberProductionUnitAdding--;
+		}
+		
+		if(sumCurrentTime <= 0)
+		{
+			sumTotalTime = 0;
+		}
+		
+		if(sumTotalTime > 0)
+		{
+			this.ratio = 1 - (sumCurrentTime / sumTotalTime);
+		}
+		else
+		{
+			this.ratio = 0;
 		}
 	}
 
@@ -152,6 +173,9 @@ public class Caserne implements Serializable, IBuilding, IProduction
 			return false;
 		}
 
+		sumTotalTime += p.getProductionTime(getCastle(), p.getLevel());
+		sumCurrentTime += p.getProductionTime(getCastle(), p.getLevel());
+		
 		p.productionStart(this);
 
 		this.mainProductionQueue.addLast(p);
@@ -248,5 +272,13 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	public final Castle getCastle()
 	{
 		return castle;
+	}
+
+	/**
+	 * @return the ratio
+	 */
+	public final double getRatio()
+	{
+		return ratio;
 	}
 }
