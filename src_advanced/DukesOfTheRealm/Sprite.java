@@ -230,9 +230,26 @@ public abstract class Sprite extends Parent implements Serializable
 	}
 	
 	/**
-	 * Crée et ajoute à l'écran une figure d'anneau pour représenter graphiquement un Espion.
+	 * Crée et ajoute à l'écran une figure de lune pour représenter graphiquement un Espion.
 	 */
 	protected final void AddSpyRepresentation()
+	{
+		final double r = CONVEYOR_REPRESENTATION_RADIUS;
+    	Circle c1 = new Circle(getX(), getY(), r);
+    	Circle c2 = new Circle(getX() + r, getY(), r);
+    	Shape m = Shape.subtract(c1, c2);
+    	m.setMouseTransparent(true);
+		this.shape = m;
+		updateUIShape();
+		addStroke(m, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
+		addShadow(m, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
+				SOLDIER_SHADOW_COLOR);
+	}
+	
+	/**
+	 * Crée et ajoute à l'écran une figure d'anneau pour représenter graphiquement un Convoyeur de fonds.
+	 */
+	protected final void AddConveyorRepresentation()
 	{
 		final double r_out = SPY_REPRESENTATION_OUTSIDE_RADIUS;
 		final double r_in = SPY_REPRESENTATION_INSIDE_RADIUS;
@@ -244,23 +261,6 @@ public abstract class Sprite extends Parent implements Serializable
 		updateUIShape();
 		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
-				SOLDIER_SHADOW_COLOR);
-	}
-	
-	/**
-	 * Crée et ajoute à l'écran une figure de lune pour représenter graphiquement un Convoyeur de fonds.
-	 */
-	protected final void AddConveyorRepresentation()
-	{
-		final double r = CONVEYOR_REPRESENTATION_RADIUS;
-    	Circle c1 = new Circle(getX(), getY(), r);
-    	Circle c2 = new Circle(getX() + r, getY(), r);
-    	Shape m = Shape.subtract(c1, c2);
-    	m.setMouseTransparent(true);
-		this.shape = m;
-		updateUIShape();
-		addStroke(m, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
-		addShadow(m, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
 				SOLDIER_SHADOW_COLOR);
 	}
 
