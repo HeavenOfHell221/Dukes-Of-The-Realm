@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 50; // 5
+	public static final int FLORIN_PER_SECOND = 10; // 5
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -380,7 +380,12 @@ public class Settings
 	 *
 	 */
 	public static final int SPY_VILLAGER = 2;
-
+	
+	/**
+	 * 
+	 */
+	public static final int CONVEYORS_FLORIN = 200;
+	
 	/****************************************************/
 	/********************* GRAPHICS *********************/
 	/****************************************************/

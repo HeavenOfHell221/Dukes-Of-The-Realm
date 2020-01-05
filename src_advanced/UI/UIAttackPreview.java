@@ -85,6 +85,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	private final SoldierPack<ImageView> imageSoldier;
 	
 	private Input input;
+	
+	private ImageView imageConveyors;
+	private Button upConveyors;
+	private Button downConveyors;
+	private Text textConveyors;
+	private int nbConveyors;
 
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
@@ -100,6 +106,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		this.downSoldier = new SoldierPack<>();
 		this.imageSoldier = new SoldierPack<>();
 		this.textSoldier = new SoldierPack<>();
+		
+		this.upConveyors = new Button();
+		this.downConveyors = new Button();
+		this.textConveyors = new Text();
+		this.imageConveyors = newImageView("/images/ConvoyeurPreview_64.png", 64, 64);
 
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_64.png", 64, 64));
 		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_64.png", 64, 64));
@@ -108,7 +119,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/BerserkerPreview_64.png", 64, 64));
 		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/SpyPreview_64.png", 64, 64));
 
-		this.background = new Rectangle(340, 530);
+		this.background = new Rectangle(340, 565);
 
 		this.buttonAttack = new Button();
 
@@ -148,6 +159,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.textSoldier.get(s).setText(this.soldierPack.get(s).toString());
 		}
+		this.textConveyors.setText(this.nbConveyors + "");
 	}
 
 	/*************************************************/
@@ -165,6 +177,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			setText(this.textSoldier.get(s), 38);
 		}
+		setText(this.textConveyors, 38);
 	}
 
 	/**
@@ -191,6 +204,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.soldierPack.replace(s, 0);
 		}
+		this.nbConveyors = 0;
 	}
 
 	/**
@@ -215,7 +229,128 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	{
 
 		setStyle(this.buttonAttack, "images/Attack_64.png");
+		setStyle(this.upConveyors, "images/AddSoldierOst_64.png");
+		setStyle(this.downConveyors,  "images/RemoveSoldierOst_64.png");
 
+		this.upConveyors.setOnMousePressed(event ->
+		{
+			if(this.input.isShift())
+			{
+				for(int i = 0; i < 10; i++)
+				{
+					if(this.nbConveyors < this.lastCastle.getMarket().getConveyorsFree() 
+							&& this.lastCastle.getTotalFlorin() > Settings.CONVEYORS_FLORIN * (this.nbConveyors + 1))
+					{
+						this.nbConveyors++;
+					}
+				}
+			}
+			else if(this.input.isAlt())
+			{
+				while(this.nbConveyors < this.lastCastle.getMarket().getConveyorsFree()
+						&& this.lastCastle.getTotalFlorin() > Settings.CONVEYORS_FLORIN * (this.nbConveyors + 1))
+				{
+					this.nbConveyors++;
+				}
+			}
+			else
+			{
+				if(this.nbConveyors < this.lastCastle.getMarket().getConveyorsFree()
+						&& this.lastCastle.getTotalFlorin() > Settings.CONVEYORS_FLORIN * (this.nbConveyors + 1))
+				{
+					this.nbConveyors++;
+				}
+			}	
+		});
+		
+		this.downConveyors.setOnMousePressed(event ->
+		{
+			if(this.input.isShift())
+			{
+				for(int i = 0; i < 10; i++)
+				{
+					if(this.nbConveyors > 0)
+					{
+						this.nbConveyors--;
+					}
+				}
+			}
+			else if(this.input.isAlt())
+			{
+				while(this.nbConveyors > 0)
+				{
+					this.nbConveyors--;
+				}
+			}
+			else
+			{
+				if(this.nbConveyors > 0)
+				{
+					this.nbConveyors--;
+				}
+			}
+		});
+		
+		this.upConveyors.setOnScroll(event ->
+		{
+			if(this.input.isShift())
+			{
+				for(int i = 0; i < 10; i++)
+				{
+					if(this.nbConveyors < this.lastCastle.getMarket().getConveyorsFree()
+							&& this.lastCastle.getTotalFlorin() > Settings.CONVEYORS_FLORIN * (this.nbConveyors + 1))
+					{
+						this.nbConveyors++;
+					}
+				}
+			}
+			else if(this.input.isAlt() && event.getDeltaY() > 0)
+			{
+				while(this.nbConveyors < this.lastCastle.getMarket().getConveyorsFree()
+						&& this.lastCastle.getTotalFlorin() > Settings.CONVEYORS_FLORIN * (this.nbConveyors + 1))
+				{
+					this.nbConveyors++;
+				}
+			}
+			else
+			{
+				if(event.getDeltaY() > 0 && this.nbConveyors < this.lastCastle.getMarket().getConveyorsFree()
+						&& this.lastCastle.getTotalFlorin() > Settings.CONVEYORS_FLORIN * (this.nbConveyors + 1))
+				{
+					this.nbConveyors++;
+				}
+			}
+			
+		});
+		
+		this.downConveyors.setOnScroll(event ->
+		{
+			if(this.input.isShift())
+			{
+				for(int i = 0; i < 10; i++)
+				{
+					if(this.nbConveyors > 0)
+					{
+						this.nbConveyors--;
+					}
+				}
+			}
+			else if(this.input.isAlt() && event.getDeltaY() < 0)
+			{
+				while(this.nbConveyors > 0)
+				{
+					this.nbConveyors--;
+				}
+			}
+			else
+			{
+				if(event.getDeltaY() < 0 && this.nbConveyors > 0)
+				{
+					this.nbConveyors--;
+				}
+			}
+		});
+		
 		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setStyle(this.downSoldier.get(s), "images/RemoveSoldierOst_64.png");
@@ -334,6 +469,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		this.buttonAttack.setOnMousePressed(e ->
 		{
 			this.lastCastle.createOst(this.currentCastle, this.soldierPack);
+			
+			this.lastCastle.removeFlorin(this.nbConveyors * Settings.CONVEYORS_FLORIN);
+			this.lastCastle.getMarket().removeConveyors(this.nbConveyors);
 			reset();
 		});
 	}
@@ -376,6 +514,10 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	{
 		addNode(this.background);
 		addNode(this.buttonAttack);
+		addNode(this.downConveyors);
+		addNode(this.imageConveyors);
+		addNode(this.textConveyors);
+		addNode(this.upConveyors);
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
@@ -389,21 +531,28 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	@Override
 	public void relocateAllNodes()
 	{
-		final int i = 69;
-		final int offset = 530;
+		final int i = 65;
+		final int offset = 490;
 		final float margin = (float) Settings.MARGIN_PERCENTAGE + 0.053f;
 		int multiplier = 0;
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin + 20, 20 + offset + i * multiplier);
-			relocate(this.upSoldier.get(s), Settings.SCENE_WIDTH * margin + 25 + i, 20 + offset + i * multiplier);
-			relocate(this.downSoldier.get(s), Settings.SCENE_WIDTH * margin + 25 + i * 3, 20 + offset + i * multiplier);
-			relocate(this.textSoldier.get(s), Settings.SCENE_WIDTH * margin + 25 + i * 2, 45 + offset + i * multiplier);
+			relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin + 30, 20 + offset + i * multiplier);
+			relocate(this.upSoldier.get(s), Settings.SCENE_WIDTH * margin + 35 + i, 20 + offset + i * multiplier);
+			relocate(this.downSoldier.get(s), Settings.SCENE_WIDTH * margin + 35 + i * 3, 20 + offset + i * multiplier);
+			relocate(this.textSoldier.get(s), Settings.SCENE_WIDTH * margin + 35 + i * 2, 45 + offset + i * multiplier);
 			multiplier++;
 		}
 
-		relocate(this.buttonAttack, Settings.SCENE_WIDTH * margin + 30 + i * 1.5, offset + 440);
+		relocate(this.imageConveyors,  Settings.SCENE_WIDTH * margin + 30, 20 + offset + i * multiplier);
+		relocate(this.upConveyors, Settings.SCENE_WIDTH * margin + 35 + i, 20 + offset + i * multiplier);
+		relocate(this.downConveyors, Settings.SCENE_WIDTH * margin + 35 + i * 3, 20 + offset + i * multiplier);
+		relocate(this.textConveyors, Settings.SCENE_WIDTH * margin + 35 + i * 2, 45 + offset + i * multiplier);
+		
+		multiplier++;
+		
+		relocate(this.buttonAttack, Settings.SCENE_WIDTH * margin + 40 + i * 1.5, offset + i * multiplier +20);
 		relocate(this.background, Settings.SCENE_WIDTH * margin, offset);
 	}
 
@@ -412,6 +561,10 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	{
 		setVisible(this.background, visible);
 		setVisible(this.buttonAttack, visible);
+		setVisible(this.downConveyors, visible);
+		setVisible(this.imageConveyors, visible);
+		setVisible(this.textConveyors, visible);
+		setVisible(this.upConveyors, visible);
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{

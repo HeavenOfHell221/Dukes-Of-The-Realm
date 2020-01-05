@@ -303,10 +303,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		final Random rand = new Random();
 		final int levelSq = this.level * (this.level / 6) + 1;
 
-		/*for (SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
-		}*/
+		}
 	}
 
 	/**
@@ -585,6 +585,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	public ReserveOfSoldiers getReserveOfSoldiers()
 	{
 		return this.reserveOfSoldiers;
+	}
+	
+	public Market getMarket()
+	{
+		return (Market) getBuilding(BuildingEnum.Market);
 	}
 	
 	public Miller getMiller()

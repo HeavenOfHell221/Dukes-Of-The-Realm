@@ -62,33 +62,33 @@ public enum SoldierEnum implements Serializable
 	/**
 	 *
 	 */
-	Piker(PIKER_HP, PIKER_DAMAGE, PIKER_COST, PIKER_TIME_PRODUCTION, PIKER_SPEED, PIKER_VILLAGER, STARTER_PIKER, 10),
+	Piker(PIKER_HP, PIKER_DAMAGE, PIKER_COST, PIKER_TIME_PRODUCTION, PIKER_SPEED, PIKER_VILLAGER, STARTER_PIKER),
 
 	/**
 	 *
 	 */
-	Knight(KNIGHT_HP, KNIGHT_DAMAGE, KNIGHT_COST, KNIGHT_TIME_PRODUCTION, KNIGHT_SPEED, KNIGHT_VILLAGER, STARTER_KNIGHT, 9),
+	Knight(KNIGHT_HP, KNIGHT_DAMAGE, KNIGHT_COST, KNIGHT_TIME_PRODUCTION, KNIGHT_SPEED, KNIGHT_VILLAGER, STARTER_KNIGHT),
 
 	/**
 	 *
 	 */
-	Onager(ONAGER_HP, ONAGER_DAMAGE, ONAGER_COST, ONAGER_TIME_PRODUCTION, ONAGER_SPEED, ONAGER_VILLAGER, STARTER_ONAGER, 7),
+	Onager(ONAGER_HP, ONAGER_DAMAGE, ONAGER_COST, ONAGER_TIME_PRODUCTION, ONAGER_SPEED, ONAGER_VILLAGER, STARTER_ONAGER),
 
 	/**
 	 *
 	 */
-	Archer(ARCHER_HP, ARCHER_DAMAGE, ARCHER_COST, ARCHER_TIME_PRODUCTION, ARCHER_SPEED, ARCHER_VILLAGER, STARTER_ARCHER, 10),
+	Archer(ARCHER_HP, ARCHER_DAMAGE, ARCHER_COST, ARCHER_TIME_PRODUCTION, ARCHER_SPEED, ARCHER_VILLAGER, STARTER_ARCHER),
 
 	/**
 	 *
 	 */
 	Berserker(BERSERKER_HP, BERSERKER_DAMAGE, BERSERKER_COST, BERSERKER_TIME_PRODUCTION, BERSERKER_SPEED, BERSERKER_VILLAGER,
-			STARTER_BERSERKER, 8),
+			STARTER_BERSERKER),
 
 	/**
 	 *
 	 */
-	Spy(SPY_HP, SPY_DAMAGE, SPY_COST, SPY_TIME_PRODUCTION, SPY_SPEED, SPY_VILLAGER, STARTER_SPY, 5);
+	Spy(SPY_HP, SPY_DAMAGE, SPY_COST, SPY_TIME_PRODUCTION, SPY_SPEED, SPY_VILLAGER, STARTER_SPY);
 
 	/**
 	 *
@@ -123,11 +123,6 @@ public enum SoldierEnum implements Serializable
 	/**
 	 *
 	 */
-	public final int priorityDefense;
-
-	/**
-	 *
-	 */
 	public final int starter;
 
 	/**
@@ -141,7 +136,7 @@ public enum SoldierEnum implements Serializable
 	 * @param priorityDefense
 	 */
 	private SoldierEnum(final int HP, final int damage, final int cost, final double productionTime, final int speed, final int villager,
-			final int starter, final int priorityDefense)
+			final int starter)
 	{
 		this.HP = HP;
 		this.damage = damage;
@@ -149,7 +144,6 @@ public enum SoldierEnum implements Serializable
 		this.productionTime = productionTime;
 		this.speed = speed;
 		this.villager = villager;
-		this.priorityDefense = priorityDefense;
 		this.starter = starter;
 	}
 

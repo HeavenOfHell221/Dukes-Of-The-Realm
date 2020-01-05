@@ -14,6 +14,17 @@ public class Market implements Serializable, IBuilding, IProduction
 	 */
 	private int level;
 	
+	/**
+	 * Nombre de convoyeur de fond maximum.
+	 */
+	private int conveyorsMax;
+	
+	/**
+	 * Nombre de convoyeur libre.
+	 */
+	private int conveyorsFree;
+	
+	
 	@Override
 	public double getProductionTime(final Castle castle, int level)
 	{
@@ -54,11 +65,40 @@ public class Market implements Serializable, IBuilding, IProduction
 	public void levelUp()
 	{
 		this.level += 1;
+		increaseConveyors();
+	}
+	
+	private void increaseConveyors()
+	{
+		int oldConveyorsMax = this.conveyorsMax;
+		this.conveyorsMax = (this.level * this.level) / 2 + this.level;
+		this.conveyorsFree += (this.conveyorsMax - oldConveyorsMax);
 	}
 
 	@Override
 	public int getLevel()
 	{
 		return this.level;
+	}
+
+	/**
+	 * @return the conveyorsMax
+	 */
+	public final int getConveyorsMax()
+	{
+		return conveyorsMax;
+	}
+
+	/**
+	 * @return the conveyorsFree
+	 */
+	public final int getConveyorsFree()
+	{
+		return conveyorsFree;
+	}
+
+	public final void removeConveyors(int value)
+	{
+		this.conveyorsFree -= value;
 	}
 }
