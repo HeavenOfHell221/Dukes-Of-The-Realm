@@ -197,7 +197,7 @@ public abstract class Sprite extends Parent implements Serializable
 		final double s = ARCHER_REPRESENTATION_SIZE;
 		final double hp = ARCHER_REPRESENTATION_HEIGHT_POSITION;
 		Path k = new Path(new MoveTo(getX() + s/2, getY()),
-    			new LineTo(getX() - s/2, getY() + hp),
+    			new LineTo(getX(), getY() + hp),
     			new LineTo(getX() + s/2, getY() + s),
     			new LineTo(getX() + s, getY() + hp),
     			new ClosePath()
