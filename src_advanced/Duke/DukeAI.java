@@ -126,7 +126,12 @@ public class DukeAI extends Actor implements Serializable
 	@Override
 	protected void addOrRemoveCastleList()
 	{
-		this.castlesWaitForAdding.forEach(castle -> castle.setRandomCharacter());
+		this.castlesWaitForAdding.forEach(castle -> 
+		{
+			castle.setRandomCharacter();
+			castle.getMiller().resetVillager();
+		});
+		
 
 		this.castlesWaitForDelete.forEach(castle -> this.goalMap.remove(castle));
 

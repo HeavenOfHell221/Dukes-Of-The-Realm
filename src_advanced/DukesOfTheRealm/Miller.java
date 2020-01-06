@@ -65,6 +65,14 @@ public class Miller implements Serializable, IBuilding, IProduction
 
 		}
 	}
+	
+	/**
+	 * Reset le nombre de villageois une fois que le château change de propriétaire.
+	 */
+	public void resetVillager()
+	{
+		this.villagerFree = this.villagerMax;
+	}
 
 	/**
 	 * Recalcul le nombre de villageois maximum et ajoute la différence dans les villageois libre.
