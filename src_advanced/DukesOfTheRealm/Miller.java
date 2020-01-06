@@ -105,4 +105,13 @@ public class Miller implements Serializable, IBuilding, IProduction
 	{
 		this.villagerFree += value;
 	}
+
+	/**
+	 * @return the villagerMax
+	 */
+	public final int getVillagerMax()
+	{
+		return villagerMax;
+	}
+
 }

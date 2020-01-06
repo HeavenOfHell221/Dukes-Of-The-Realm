@@ -42,9 +42,9 @@ public class Baron extends Actor implements Serializable
 	@Override
 	protected void updateFlorin(final Castle castle)
 	{
-		castle.addFlorin((Settings.FLORIN_PER_SECOND 
+		castle.addFlorin(((Settings.FLORIN_PER_SECOND 
 				+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-				+ Math.exp(castle.getLevel() / 4)) * Time.deltaTime * Settings.FLORIN_FACTOR_BARON);
+				+ Math.exp((double)castle.getLevel() / 4d))  )* Settings.FLORIN_FACTOR_BARON* Time.deltaTime);
 	}
 
 	/*************************************************/
@@ -56,9 +56,9 @@ public class Baron extends Actor implements Serializable
 	{
 		if (this.castles.contains(castle))
 		{
-			String tmp = String.format("%.1f", (Settings.FLORIN_PER_SECOND 
+			String tmp = String.format("%.1f", ((Settings.FLORIN_PER_SECOND 
 					+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-					+ Math.exp(castle.getLevel() / 4)) * Settings.FLORIN_FACTOR_BARON);
+					+ Math.exp((double)castle.getLevel() / 4d)) )* Settings.FLORIN_FACTOR_BARON);
 			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";
@@ -71,14 +71,16 @@ public class Baron extends Actor implements Serializable
 
 		for(BuildingEnum b : BuildingEnum.values())
 		{
-			final int k = rand.nextInt(RANDOM_LEVEL_CASTLE_BARON) + OFFSET_LEVEL_CASTLE_BARON;
-			for(int i = 0; i < k; i++)
+			if(b != BuildingEnum.Castle)
 			{
-				castle.getBuilding(b).levelUp();
+				final int k = rand.nextInt(RANDOM_LEVEL_CASTLE_BARON) + OFFSET_LEVEL_CASTLE_BARON;
+				for(int i = 0; i < k; i++)
+				{
+					castle.getBuilding(b).levelUp();
+				}
 			}
-		
 		}
-		
+		castle.setLevel(rand.nextInt(RANDOM_LEVEL_CASTLE_BARON + 5) + 5);
 		castle.addFlorin(rand.nextInt(castle.getLevel() * 200) + castle.getLevel() * 50);
 		castle.randomSoldier();
 		super.addFirstCastle(castle);

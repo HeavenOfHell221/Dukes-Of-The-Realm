@@ -182,7 +182,7 @@ public abstract class Actor implements Serializable, IUpdate
 	{
 		castle.addFlorin((Settings.FLORIN_PER_SECOND 
 				+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-				+ Math.exp(castle.getLevel() / 4)) * Time.deltaTime);
+				+ Math.exp((double)castle.getLevel() / 4d)) * Time.deltaTime);
 	}
 
 	/*************************************************/
@@ -219,7 +219,7 @@ public abstract class Actor implements Serializable, IUpdate
 	{
 		return String.format("%.1f", (float) (Settings.FLORIN_PER_SECOND 
 				+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-				+ Math.exp(castle.getLevel() / 4)))
+				+ Math.exp((double)castle.getLevel() / 4d)))
 				+ " Florin/s";
 	}
 

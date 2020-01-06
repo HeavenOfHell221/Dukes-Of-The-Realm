@@ -52,7 +52,7 @@ public class Onager extends Soldier
 	{
 		Random rand = new Random();
 		
-		if(rand.nextFloat() <= Settings.ONAGER_WALL)
+		if(rand.nextFloat() <= Settings.ONAGER_WALL - 0.001d * destination.getWall().getLevel())
 		{
 			destination.getReserveOfSoldiers().wallMultiplierReduction(destination.getWall().decreaseLevel());
 		}

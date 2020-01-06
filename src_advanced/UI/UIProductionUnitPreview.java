@@ -377,11 +377,12 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			this.productSoldier.get(s).setOnMousePressed(event ->
 			{
-				if(((Miller)this.currentCastle.getBuilding(BuildingEnum.Miller)).getVillagerFree() >= s.villager)
+				if(this.currentCastle.getMiller().getVillagerFree() >= s.villager)
 				{
 					if (this.input.isAlt())
 					{
-						while (addProduction(this.productSoldier.get(s), s.getObject()))
+						while (this.currentCastle.getMiller().getVillagerFree() >= s.villager 
+								&& addProduction(this.productSoldier.get(s), s.getObject()))
 						{
 						}
 					}
@@ -389,7 +390,8 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 					{
 						for (int i = 0; i < 10; i++)
 						{
-							addProduction(this.productSoldier.get(s), s.getObject());
+							if(this.currentCastle.getMiller().getVillagerFree() >= s.villager )
+								addProduction(this.productSoldier.get(s), s.getObject());
 						}
 	
 					}

@@ -220,14 +220,14 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		updateOst(now, pause);
 		getMarket().update(now, pause);
 		
-		if(this.isSpiedOn)
+		/*if(this.isSpiedOn)
 		{
-			/*this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
+			this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
 			if(this.spiedOnTime <= 0)
 			{
 				this.isSpiedOn = false;
-			}*/
-		}
+			}
+		}*/
 	}
 	
 	/**
@@ -275,6 +275,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		caserne.getBuildingPack().replace(BuildingEnum.Castle, caserne.getBuildingPack().get(BuildingEnum.Castle) + 1);
 	}
+	
+	public void setRandomCharacter()
+	{
+		this.character = CharacterEnum.getRandomType();
+	}
 
 	/**
 	 * Choisi aléatoirement une orientation.
@@ -312,7 +317,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(3) * this.level);
+			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(4) * this.level);
 		}
 	}
 
@@ -358,7 +363,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	
 	private void decreaseMultiplier()
 	{
-		this.productionTimeMultiplier = (float) ((100f - Math.exp(this.level / 6) - this.level) / 100);
+		this.productionTimeMultiplier = (float) ((100f - Math.exp((double)(this.level) / 7d) - this.level * 2) / 100);
 	}
 
 	/**

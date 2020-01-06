@@ -198,7 +198,9 @@ public class Ost implements IUpdate, Serializable
 						this.destination.freeAttackLocation(s.getAttackLocation());
 						it.remove();
 						Main.nbSoldier--;
+						
 						this.origin.getMiller().addVillager(s.getType().villager);
+						
 						if(s.getType() == SoldierEnum.Conveyors)
 						{
 							this.origin.getMarket().removeConveyors();

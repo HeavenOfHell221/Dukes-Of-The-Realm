@@ -186,7 +186,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 			}
 			else
 			{
-				addInReserve(getDestination().getReserveOfSoldiers());
+				if(this.type != SoldierEnum.Conveyors)
+					addInReserve(getDestination().getReserveOfSoldiers());
 				this.isDead = true;
 			}
 		}

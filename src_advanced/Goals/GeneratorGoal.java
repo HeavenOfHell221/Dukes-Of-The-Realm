@@ -223,7 +223,7 @@ public class GeneratorGoal implements Serializable
 					soldierSelection.replace(SoldierEnum.Archer, true);
 				}
 			case Offensive:
-				if(nbVillagerOff < nbVillagerDef * 1.5)
+				if(nbVillagerOff < nbVillagerDef * 1.6)
 				{
 					soldierSelection.replace(SoldierEnum.Knight, true);
 					soldierSelection.replace(SoldierEnum.Berserker, true);
@@ -235,7 +235,7 @@ public class GeneratorGoal implements Serializable
 					soldierSelection.replace(SoldierEnum.Archer, true);
 				}
 			case Defensive:
-				if(nbVillagerOff * 1.5 < nbVillagerDef)
+				if(nbVillagerOff * 1.6 < nbVillagerDef)
 				{
 					soldierSelection.replace(SoldierEnum.Knight, true);
 					soldierSelection.replace(SoldierEnum.Berserker, true);

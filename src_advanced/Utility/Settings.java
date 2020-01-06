@@ -55,7 +55,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 500; // 5
+	public static final int FLORIN_PER_SECOND = 10; 
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -65,7 +65,7 @@ public class Settings
 	/**
 	 * Pourcentage de réduction des FLORIN_PER_SECOND pour les Baron.
 	 */
-	public static final float FLORIN_FACTOR_BARON = 0.1f;
+	public static final float FLORIN_FACTOR_BARON = 0.33f;
 
 	/**
 	 * Nombre de position d'attaque possible autour d'un château.
@@ -123,7 +123,7 @@ public class Settings
 	/**
 	 * Plage d'aléatoire pour le niveau du château des Baron
 	 */
-	public static final int RANDOM_LEVEL_CASTLE_BARON = 16;
+	public static final int RANDOM_LEVEL_CASTLE_BARON = 11;
 
 	/**
 	 * Offset du niveau du château des Baron (donc le minimum).
@@ -137,7 +137,7 @@ public class Settings
 	/**
 	 * Augmentation du coût d'amélioration du château (Pour chaque niveau on ajoute LEVEL_UP_COST).
 	 */
-	public static final int CASTLE_COST = 250;
+	public static final int CASTLE_COST = 0;
 
 	/**
 	 * Offset pour le temps d'amélioration du château.
@@ -281,12 +281,12 @@ public class Settings
 	/**
 	 * Dégâts des Piker.
 	 */
-	public static final int PIKER_DAMAGE = 24;
+	public static final int PIKER_DAMAGE = 26;
 
 	/**
 	 * Dégâts des Knight.
 	 */
-	public static final int KNIGHT_DAMAGE = 102;
+	public static final int KNIGHT_DAMAGE = 111;
 
 	/**
 	 * Dégâts des Onager.
@@ -296,17 +296,17 @@ public class Settings
 	/**
 	 * Dégâts des Psy.
 	 */
-	public static final int SPY_DAMAGE = 6;
+	public static final int SPY_DAMAGE = 7;
 
 	/**
 	 * Dégâts des Berserker.
 	 */
-	public static final int BERSERKER_DAMAGE = 72;
+	public static final int BERSERKER_DAMAGE = 78;
 
 	/**
 	 * Dégâts des Archer.
 	 */
-	public static final int ARCHER_DAMAGE = 42;
+	public static final int ARCHER_DAMAGE = 46;
 
 	/**
 	 * Coût d'un Piker.
@@ -352,7 +352,7 @@ public class Settings
 	/**
 	 * Vitesse de déplacement d'un Onager.
 	 */
-	public static final int ONAGER_SPEED = 95; // 35
+	public static final int ONAGER_SPEED = 35; // 35
 
 	/**
 	 * Vitesse de déplacement d'un Psy.

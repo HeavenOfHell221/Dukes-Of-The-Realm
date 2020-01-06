@@ -121,7 +121,10 @@ public class ReserveOfSoldiers implements Serializable
 	private void soldierDeath(SoldierEnum s)
 	{
 		if(s == SoldierEnum.Conveyors)
-			System.out.println("bug convoyeur!");
+		{
+			return;
+		}
+
 		this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
 		this.castle.getMiller().addVillager(s.villager);
 		this.HPPack.replace(s, s.HP * this.castle.getWallMultiplicator());
@@ -134,9 +137,12 @@ public class ReserveOfSoldiers implements Serializable
 	private int getTotal()
 	{
 		int count = 0;
-		for (int i : this.soldierPack.values())
+		for(SoldierEnum s : SoldierEnum.values())
 		{
-			count += i;
+			if(s != SoldierEnum.Conveyors)
+			{
+				count += this.soldierPack.get(s);
+			}
 		}
 		return count;
 	}

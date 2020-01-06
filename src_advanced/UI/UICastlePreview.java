@@ -108,7 +108,9 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	
 	private final BuildingPack<ImageView> imageBuilding;
 	
-
+	private final ImageView imageVillager;
+	private final Text textVillager;
+	
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -139,6 +141,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 		this.imageFlorin = newImageView("/images/FlorinPreview_64.png", 48, 48);
 		this.imageCircle = newImageView("/images/CircleCurrentCastle_96.png", 128, 128);
+		this.imageVillager = newImageView("/images/MillerPreview_48.png", 48, 48);
 		
 		for(BuildingEnum b : BuildingEnum.values())
 		{
@@ -147,6 +150,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 		this.owner = new Text();
 		this.nbFlorin = new Text();
+		this.textVillager = new Text();
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
@@ -205,6 +209,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 			this.florinIncome.setText(this.lastCastle.getActor().florinIncome(this.lastCastle));
 			this.owner.setText(this.lastCastle.getActor().getName());
 			this.nbFlorin.setText((int) this.lastCastle.getTotalFlorin() + "");
+			this.textVillager.setText(this.lastCastle.getMiller().getVillagerFree() + " / " + this.lastCastle.getMiller().getVillagerMax());
 
 			for(BuildingEnum b : BuildingEnum.values())
 			{
@@ -224,7 +229,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		if(this.currentCastle.getActor().isPlayer() || this.currentCastle.isSpiedOn())
 		{
 			this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
-			
+			this.textVillager.setText(this.currentCastle.getMiller().getVillagerFree() + " / " + this.currentCastle.getMiller().getVillagerMax());
 			this.florinIncome.setText(this.currentCastle.getActor().florinIncome(this.currentCastle));
 			
 			for(BuildingEnum b : BuildingEnum.values())
@@ -263,6 +268,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		
 		setText(this.owner, 24);
 		setText(this.florinIncome, 24);
+		setText(this.textVillager, 24);
 
 		for (Text t : this.textSoldier.values())
 		{
@@ -325,8 +331,11 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		relocate(this.textSoldier.get(SoldierEnum.Conveyors), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier  - 12);
 		
 		offset -= 20;
-		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin + 20, offset + i * 1.4 + 10);
-		relocate(this.nbFlorin, Settings.SCENE_WIDTH * margin + 40, offset + i * 1.4 + 35);
+		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin - 60, offset + i * 1.4 + 10);
+		relocate(this.nbFlorin, Settings.SCENE_WIDTH * margin - 50, offset + i * 1.4 + 35);
+		
+		relocate(this.imageVillager, Settings.SCENE_WIDTH * margin - 60 + i * 2.5, offset + i * 1.4 + 10);
+		relocate(this.textVillager, Settings.SCENE_WIDTH * margin - 50 + i * 2.5 + 10, offset + i * 1.4 + 35);
 		
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 77, offset);
 	}
@@ -340,6 +349,8 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		addNode(this.florinIncome);
 		addNode(this.nbFlorin);
 		addNode(this.imageCircle);
+		addNode(this.imageVillager);
+		addNode(this.textVillager);
 
 		for(BuildingEnum b : BuildingEnum.values())
 		{
@@ -375,8 +386,10 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		setVisible(this.background, visible);
 		setVisible(this.imageFlorin, visible);
 		setVisible(this.owner, visible);
-		setVisible(this.florinIncome, visible);
+		setVisible(this.florinIncome, visible); 
 		setVisible(this.nbFlorin, visible);
+		setVisible(this.imageVillager, visible);
+		setVisible(this.textVillager, visible);
 		
 		for(SoldierEnum s : SoldierEnum.values())
 		{

@@ -124,9 +124,6 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			this.ratio = 0;
 		}
-		
-		/*if(this.castle.getActor().isPlayer())
-			System.out.println(this.sumCurrentTime + " " + this.sumTotalTime);*/
 	}
 
 	/*************************************************/

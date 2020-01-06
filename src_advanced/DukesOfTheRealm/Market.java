@@ -85,8 +85,11 @@ public class Market implements Serializable, IBuilding, IProduction, IUpdate
 	
 	public void levelUp()
 	{
-		this.level += 1;
-		increaseConveyors();
+		if(this.level < Settings.MILLER_LEVEL_MAX)
+		{
+			this.level += 1;
+			increaseConveyors();
+		}
 	}
 	
 	private void increaseConveyors()
