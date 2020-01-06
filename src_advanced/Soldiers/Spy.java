@@ -44,7 +44,7 @@ public class Spy extends Soldier
 	{
 		Random rand = new Random();
 		
-		if(rand.nextFloat() <= Settings.SPY_SPY - 0.0005d * destination.getWall().getLevel() - 0.0005d * destination.getLevel())
+		if(rand.nextFloat() <= Settings.SPY_SPY - 0.006d * destination.getWall().getLevel() - 0.006d * destination.getLevel())
 		{
 			destination.spiedOn();
 		}

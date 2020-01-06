@@ -256,12 +256,12 @@ public class Settings
 	/**
 	 * Point de vie des Onager.
 	 */
-	public static final int ONAGER_HP = 19;
+	public static final int ONAGER_HP = 18;
 
 	/**
 	 * Point de vie des Spy.
 	 */
-	public static final int SPY_HP = 6;
+	public static final int SPY_HP = 12;
 
 	/**
 	 * Point de vie des Berserker.
@@ -286,12 +286,12 @@ public class Settings
 	/**
 	 * Dégâts des Onager.
 	 */
-	public static final int ONAGER_DAMAGE = 10;
+	public static final int ONAGER_DAMAGE = 1;
 
 	/**
 	 * Dégâts des Psy.
 	 */
-	public static final int SPY_DAMAGE = 7;
+	public static final int SPY_DAMAGE = 1;
 
 	/**
 	 * Dégâts des Berserker.
@@ -306,7 +306,7 @@ public class Settings
 	/**
 	 * Coût d'un Piker.
 	 */
-	public static final int PIKER_COST = 64;
+	public static final int PIKER_COST = 128;
 
 	/**
 	 * Coût d'un Knight.
@@ -316,38 +316,38 @@ public class Settings
 	/**
 	 * Coût d'un Onager.
 	 */
-	public static final int ONAGER_COST = 192;
+	public static final int ONAGER_COST = 184;
 	
 
 	/**
 	 * Coût d'un Psy.
 	 */
-	public static final int SPY_COST = 80;
+	public static final int SPY_COST = 160;
 
 	/**
 	 * Coût d'un Berserker.
 	 */
-	public static final int BERSERKER_COST = 80;
+	public static final int BERSERKER_COST = 160;
 
 	/**
 	 * Coût d'un Archer.
 	 */
-	public static final int ARCHER_COST = 128;
+	public static final int ARCHER_COST = 256;
 
 	/**
 	 * Vitesse de déplacement d'un Piker.
 	 */
-	public static final int PIKER_SPEED = 65;
+	public static final int PIKER_SPEED = 60;
 
 	/**
 	 * Vitesse de déplacement d'un Knight.
 	 */
-	public static final int KNIGHT_SPEED = 100;
+	public static final int KNIGHT_SPEED = 90;
 
 	/**
 	 * Vitesse de déplacement d'un Onager.
 	 */
-	public static final int ONAGER_SPEED = 35;
+	public static final int ONAGER_SPEED = 30;
 
 	/**
 	 * Vitesse de déplacement d'un Psy.
@@ -357,47 +357,47 @@ public class Settings
 	/**
 	 * Vitesse de déplacement d'un Berserker.
 	 */
-	public static final int BERSERKER_SPEED = 65;
+	public static final int BERSERKER_SPEED = 60;
 
 	/**
 	 * Vitesse de déplacement d'un Archer.
 	 */
-	public static final int ARCHER_SPEED = 55;
+	public static final int ARCHER_SPEED = 50;
 
 	/**
 	 * Vitesse de déplacement d'un Conveyors.
 	 */
-	public static final int CONVEYORS_SPEED = 65;
+	public static final int CONVEYORS_SPEED = 50;
 	
 	/**
 	 * Temps de production de base d'un Piker (en seconde).
 	 */
-	public static final double PIKER_TIME_PRODUCTION = 0.68d;
+	public static final double PIKER_TIME_PRODUCTION = 0.9d;
 
 	/**
 	 * Temps de production de base d'un Knight (en seconde).
 	 */
-	public static final double KNIGHT_TIME_PRODUCTION = 3.08d;
+	public static final double KNIGHT_TIME_PRODUCTION = 4.1d;
 
 	/**
 	 * Temps de production de base d'un Onager (en seconde).
 	 */
-	public static final double ONAGER_TIME_PRODUCTION = 4.5d;
+	public static final double ONAGER_TIME_PRODUCTION = 6d;
 
 	/**
 	 * Temps de production de base d'un Psy.
 	 */
-	public static final double SPY_TIME_PRODUCTION = 1.31d;
+	public static final double SPY_TIME_PRODUCTION = 1.75d;
 
 	/**
 	 * Temps de production de base d'un Berserker.
 	 */
-	public static final double BERSERKER_TIME_PRODUCTION = 1.13d;
+	public static final double BERSERKER_TIME_PRODUCTION = 1.5d;
 
 	/**
 	 * Temps de production de base d'un Archer.
 	 */
-	public static final double ARCHER_TIME_PRODUCTION = 2.25d;
+	public static final double ARCHER_TIME_PRODUCTION = 3d;
 
 	/**
 	 * Temps de production de base d'un Conveyors.
@@ -442,12 +442,12 @@ public class Settings
 	/**
 	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points d'attaque.
 	 */
-	public static final float ONAGER_WALL = 0.05f; 
+	public static final float ONAGER_WALL = 0.66f; 
 	
 	/**
 	 * Probabilité d'un Spy d'espionner le château qu'il attaque pour chacun de ses points d'attaque.
 	 */
-	public static final float SPY_SPY = 0.04f;
+	public static final float SPY_SPY = 0.5f;
 	
 	/****************************************************/
 	/********************* GRAPHICS *********************/
