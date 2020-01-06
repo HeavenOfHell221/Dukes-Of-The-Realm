@@ -55,6 +55,17 @@ public class Player extends Actor implements Serializable
 		switchCastle(castle);
 		castle.startSoldier();
 	}
+	
+	@Override
+	protected void addOrRemoveCastleList()
+	{
+		this.castlesWaitForAdding.forEach(castle -> 
+		{
+			castle.getMiller().resetVillager();
+		});
+		
+		super.addOrRemoveCastleList();
+	}
 
 	@Override
 	public boolean isPlayer()

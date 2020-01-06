@@ -184,7 +184,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 			{
 				attack();
 			}
-			else
+			else if(!this.isStopAttack())
 			{
 				if (this.type != SoldierEnum.Conveyors)
 				{

@@ -71,6 +71,7 @@ public class Miller implements Serializable, IBuilding, IProduction
 	 */
 	public void resetVillager()
 	{
+		this.villagerMax = Settings.MILLER_VILLAGER_BASE + this.level * Settings.MILLER_VILLAGER_PER_LEVEL;
 		this.villagerFree = this.villagerMax;
 	}
 
