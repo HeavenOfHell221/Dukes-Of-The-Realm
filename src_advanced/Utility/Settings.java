@@ -442,12 +442,12 @@ public class Settings
 	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points
 	 * d'attaque.
 	 */
-	public static final float ONAGER_WALL = 0.66f;
+	public static final float ONAGER_WALL = 0.6f;
 
 	/**
 	 * Probabilité d'un Spy d'espionner le château qu'il attaque pour chacun de ses points d'attaque.
 	 */
-	public static final float SPY_SPY = 0.5f;
+	public static final float SPY_SPY = 0.55f;
 
 	/****************************************************/
 	/********************* GRAPHICS *********************/

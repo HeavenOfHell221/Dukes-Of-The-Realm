@@ -121,18 +121,18 @@ public enum BuildingEnum
 	/**
 	 * @return Retourne un bâtiment aléatoire pour l'objectif de production des bâtiments des IA.
 	 * <p>
-	 * Caserne: 3/15
-	 * Castle: 4/15
-	 * Miller: 2/15
-	 * Market: 1/15
-	 * Wall: 5/15
+	 * Caserne: 3/16
+	 * Castle: 5/16
+	 * Miller: 2/16
+	 * Market: 1/16
+	 * Wall: 5/16
 	 * </p>
 	 * @see Goals.GeneratorGoal
 	 */
 	public static BuildingEnum getRandomTypeForAI()
 	{
 		Random rand = new Random();
-		switch (rand.nextInt(15))
+		switch (rand.nextInt(16))
 		{
 			case 0:
 			case 1:
@@ -142,6 +142,7 @@ public enum BuildingEnum
 			case 4:
 			case 5:
 			case 6:
+			case 15:
 				return Castle;
 			case 7:
 			case 8:

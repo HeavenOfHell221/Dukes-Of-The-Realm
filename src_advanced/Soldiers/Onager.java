@@ -53,7 +53,7 @@ public class Onager extends Soldier
 		Random rand = new Random();
 
 		// Détruit le rempart
-		if (rand.nextFloat() <= Settings.ONAGER_WALL - 0.013d * destination.getWall().getLevel())
+		if (rand.nextFloat() <= Settings.ONAGER_WALL - 0.02d * destination.getWall().getLevel())
 		{
 			destination.getReserveOfSoldiers().wallMultiplierReduction(destination.getWall().decreaseLevel());
 		}

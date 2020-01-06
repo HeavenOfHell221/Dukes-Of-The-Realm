@@ -51,7 +51,7 @@ public class Spy extends Soldier
 		Random rand = new Random();
 
 		// Espionnage
-		if (rand.nextFloat() <= Settings.SPY_SPY - 0.006d * destination.getWall().getLevel() - 0.006d * destination.getLevel()
+		if (rand.nextFloat() <= Settings.SPY_SPY - 0.01d * destination.getWall().getLevel() - 0.01d * destination.getLevel()
 				- 0.001d * destination.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Spy))
 		{
 			destination.spiedOn();
