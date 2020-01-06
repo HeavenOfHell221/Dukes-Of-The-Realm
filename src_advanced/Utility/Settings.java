@@ -142,7 +142,7 @@ public class Settings
 	/**
 	 * Augmentation du temps d'amélioration pour chaque niveau de château.
 	 */
-	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 2f;
+	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 3f;
 
 	/**
 	 * Niveaux miximum du château.
@@ -162,7 +162,7 @@ public class Settings
 	/**
 	 * Augmentation du temps de production du rempart pour chaque niveau.
 	 */
-	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 4f;
+	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 5f;
 
 	/**
 	 * Niveau maximum du rempart.
@@ -182,7 +182,7 @@ public class Settings
 	/**
 	 * Augmentation du temps de production de la caserne à chaque niveau.
 	 */
-	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 3f;
+	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 4f;
 
 	/**
 	 * Niveau max de la caserne.
@@ -202,7 +202,7 @@ public class Settings
 	/**
 	 * Augmentation du temps de production du moulin à chaque niveau.
 	 */
-	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
+	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 4f;
 
 	/**
 	 * Niveau maximum du moulin.
@@ -232,7 +232,7 @@ public class Settings
 	/**
 	 * Augmentation du temps du production du marché pour chaque niveau.
 	 */
-	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 1f;
+	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 2f;
 
 	/**
 	 * Niveau maximum du marché.
