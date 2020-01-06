@@ -83,7 +83,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 * Icones représentant les unités sur l'interface.
 	 */
 	private final SoldierPack<ImageView> imageSoldier;
-	
+
 	private Input input;
 
 	/*************************************************/
@@ -149,7 +149,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.textSoldier.get(s).setText(this.soldierPack.get(s).toString());
 		}
-		//this.textConveyors.setText(this.nbConveyors + "");
+		// this.textConveyors.setText(this.nbConveyors + "");
 	}
 
 	/*************************************************/
@@ -167,7 +167,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			setText(this.textSoldier.get(s), 38);
 		}
-		//setText(this.textConveyors, 38);
+		// setText(this.textConveyors, 38);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.soldierPack.replace(s, 0);
 		}
-		//this.nbConveyors = 0;
+		// this.nbConveyors = 0;
 	}
 
 	/**
@@ -226,12 +226,12 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 
 			this.upSoldier.get(s).setOnMousePressed(event ->
 			{
-				if(this.input.isShift())
+				if (this.input.isShift())
 				{
-					
-					if(s != SoldierEnum.Conveyors)
+
+					if (s != SoldierEnum.Conveyors)
 					{
-						for(int i = 0; i < 10; i++)
+						for (int i = 0; i < 10; i++)
 						{
 							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 							{
@@ -241,7 +241,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 					}
 					else
 					{
-						for(int i = 0; i < 10; i++)
+						for (int i = 0; i < 10; i++)
 						{
 							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
 									&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
@@ -252,9 +252,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 					}
 
 				}
-				else if(this.input.isAlt())
+				else if (this.input.isAlt())
 				{
-					if(s != SoldierEnum.Conveyors)
+					if (s != SoldierEnum.Conveyors)
 					{
 						while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 						{
@@ -269,11 +269,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
 						}
 					}
-					
+
 				}
 				else
 				{
-					if(s != SoldierEnum.Conveyors)
+					if (s != SoldierEnum.Conveyors)
 					{
 						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 						{
@@ -288,18 +288,18 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
 						}
 					}
-					
+
 				}
-				
+
 			});
 
 			this.upSoldier.get(s).setOnScroll(event ->
 			{
-				if(this.input.isShift())
+				if (this.input.isShift())
 				{
-					if(s != SoldierEnum.Conveyors)
+					if (s != SoldierEnum.Conveyors)
 					{
-						for(int i = 0; i < 10; i++)
+						for (int i = 0; i < 10; i++)
 						{
 							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 							{
@@ -309,7 +309,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 					}
 					else
 					{
-						for(int i = 0; i < 10; i++)
+						for (int i = 0; i < 10; i++)
 						{
 							if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s)
 									&& (this.soldierPack.get(s) + 1) * Settings.CONVEYORS_FLORIN < this.lastCastle.getTotalFlorin())
@@ -318,12 +318,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 							}
 						}
 					}
-					
-					
+
 				}
-				else if(this.input.isAlt() && event.getDeltaY() > 0)
+				else if (this.input.isAlt() && event.getDeltaY() > 0)
 				{
-					if(s != SoldierEnum.Conveyors)
+					if (s != SoldierEnum.Conveyors)
 					{
 						while (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 						{
@@ -338,11 +337,11 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
 						}
 					}
-					
+
 				}
-				else if(event.getDeltaY() > 0)
+				else if (event.getDeltaY() > 0)
 				{
-					if(s != SoldierEnum.Conveyors)
+					if (s != SoldierEnum.Conveyors)
 					{
 						if (this.soldierPack.get(s) < this.lastCastle.getReserveOfSoldiers().getSoldierPack().get(s))
 						{
@@ -357,22 +356,22 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 							this.soldierPack.replace(s, this.soldierPack.get(s) + 1);
 						}
 					}
-					
-				}			
+
+				}
 			});
 
 			this.downSoldier.get(s).setOnMousePressed(event ->
 			{
-				if(this.input.isShift())
+				if (this.input.isShift())
 				{
-					for(int i = 0; i < 10; i++)
+					for (int i = 0; i < 10; i++)
 					{
 						this.soldierPack.replace(s, this.soldierPack.get(s) > 0 ? this.soldierPack.get(s) - 1 : 0);
 					}
 				}
-				else if(this.input.isAlt())
+				else if (this.input.isAlt())
 				{
-					while(this.soldierPack.get(s) > 0)
+					while (this.soldierPack.get(s) > 0)
 					{
 						this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
 					}
@@ -381,14 +380,14 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 				{
 					this.soldierPack.replace(s, this.soldierPack.get(s) > 0 ? this.soldierPack.get(s) - 1 : 0);
 				}
-				
+
 			});
 
 			this.downSoldier.get(s).setOnScroll(event ->
 			{
-				if(this.input.isShift())
+				if (this.input.isShift())
 				{
-					for(int i = 0; i < 10; i++)
+					for (int i = 0; i < 10; i++)
 					{
 						if (this.soldierPack.get(s) > 0)
 						{
@@ -396,7 +395,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 						}
 					}
 				}
-				else if(this.input.isAlt() && event.getDeltaY() < 0)
+				else if (this.input.isAlt() && event.getDeltaY() < 0)
 				{
 					while (this.soldierPack.get(s) > 0)
 					{
@@ -409,7 +408,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 					{
 						this.soldierPack.replace(s, this.soldierPack.get(s) - 1);
 					}
-				}	
+				}
 			});
 
 		}
@@ -419,7 +418,7 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 			this.lastCastle.createOst(this.currentCastle, this.soldierPack);
 
 			this.lastCastle.removeFlorin(this.soldierPack.get(SoldierEnum.Conveyors) * Settings.CONVEYORS_FLORIN);
-			
+
 			reset();
 		});
 	}
@@ -498,7 +497,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	{
 		setVisible(this.background, visible);
 		setVisible(this.buttonAttack, visible);
-
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{

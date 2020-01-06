@@ -10,16 +10,16 @@ import DukesOfTheRealm.Castle;
 public interface IProduction
 {
 	/**
-	 * @param castle Le château qui demande cette production.
-	 * @param level Le niveau de la production.
-	 * @return Retourne le temps de production de l'objet. 
+	 * @param  castle Le château qui demande cette production.
+	 * @param  level  Le niveau de la production.
+	 * @return        Retourne le temps de production de l'objet.
 	 */
 	double getProductionTime(Castle castle, int level);
 
 	/**
-	 * 
-	 * @param level Le niveau du bâtiment.
-	 * @return        Retourne le coût de l'amélioration.
+	 *
+	 * @param  level Le niveau du bâtiment.
+	 * @return       Retourne le coût de l'amélioration.
 	 */
 	int getProductionCost(int level);
 
@@ -38,6 +38,9 @@ public interface IProduction
 	 * @param caserne La caserne qui produit cette production.
 	 */
 	void productionStart(Caserne caserne);
-	
+
+	/**
+	 * @return Retourne le niveau de la production.
+	 */
 	int getLevel();
 }

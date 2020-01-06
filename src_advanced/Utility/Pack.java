@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Structure de données utilisé pour stocker divers type de variable lié aux unités ou aux bâtiments.
+ * Structure de données utilisé pour stocker divers type de variable lié aux unités ou aux
+ * bâtiments.
  * <p>
- * Cette structure ne contient qu'une HashMap générique qui permet une liberté total dans le choix de la clé et des valeurs pour chaque object instancié.
+ * Cette structure ne contient qu'une HashMap générique qui permet une liberté total dans le choix
+ * de la clé et des valeurs pour chaque object instancié.
  * </p>
+ * 
  * @param <T1> Type générique. Souvent une énumération.
  * @param <T2> Type générique.
  */
@@ -74,5 +77,11 @@ public abstract class Pack<T1, T2> implements Serializable
 	public void putAll(final Map<? extends T1, ? extends T2> m)
 	{
 		this.map.putAll(m);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Pack [map=" + map + "]";
 	}
 }

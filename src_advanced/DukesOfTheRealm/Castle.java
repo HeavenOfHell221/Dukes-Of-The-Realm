@@ -113,25 +113,26 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 
 	/**
 	 * Contient les unités de ce château.
+	 * 
 	 * @see ReserveOfSoldiers
 	 */
 	private ReserveOfSoldiers reserveOfSoldiers;
-	
+
 	/**
 	 * Multiplicateur de durée pour toute production lié à ce château.
 	 */
 	private double productionTimeMultiplier = 1f;
-	
+
 	/**
 	 * Boolean spécifiant si ce château est acctuellement espionné par le joueur.
 	 */
 	private boolean isSpiedOn = false;
-	
+
 	/**
 	 * Temps avant que ce château ne soit plus considéré comme espionné.
 	 */
 	private long spiedOnTime = 0;
-	
+
 	/**
 	 * Caractère du château pour les IA.
 	 */
@@ -211,24 +212,23 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/******************** UPDATE *********************/
 	/*************************************************/
 
-
 	@Override
-	public void update(long now, boolean pause)
+	public void update(final long now, final boolean pause)
 	{
 		updateProduction();
 		updateOst(now, pause);
 		getMarket().update(now, pause);
-		
-		if(this.isSpiedOn)
+
+		if (this.isSpiedOn)
 		{
 			this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
-			if(this.spiedOnTime <= 0)
+			if (this.spiedOnTime <= 0)
 			{
 				this.isSpiedOn = false;
 			}
 		}
 	}
-	
+
 	/**
 	 * Met à jour la caserne.
 	 *
@@ -274,7 +274,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		caserne.getBuildingPack().replace(BuildingEnum.Castle, caserne.getBuildingPack().get(BuildingEnum.Castle) + 1);
 	}
-	
+
+	/**
+	 * Met un caractère aléatoire à ce château.
+	 */
 	public void setRandomCharacter()
 	{
 		this.character = CharacterEnum.getRandomType();
@@ -316,13 +319,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			if(s != SoldierEnum.Conveyors)
+			if (s != SoldierEnum.Conveyors)
 			{
 				int value = rand.nextInt(levelSq) + rand.nextInt(4) * this.level;
 				getReserveOfSoldiers().getSoldierPack().replace(s, value);
 			}
 		}
-	
+
 	}
 
 	/**
@@ -351,23 +354,24 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.shape.setFill(this.myColor);
 	}
 
-	/**
-	 * Augmente de 1 le niveau de ce château.
-	 *
-	 * @see Castle#level
-	 */
+	@Override
 	public void levelUp()
 	{
-		if(this.level < Settings.CASTLE_LEVEL_MAX)
+		if (this.level < Settings.CASTLE_LEVEL_MAX)
 		{
 			this.level += 1;
 			decreaseMultiplier();
 		}
 	}
-	
+
+	/**
+	 * Diminue le multiplicateur de temps de production de ce château.
+	 * 
+	 * @see Castle#productionTimeMultiplier
+	 */
 	private void decreaseMultiplier()
 	{
-		this.productionTimeMultiplier = (double) ((double)(100d - Math.exp((double)(this.level) / 7d) - this.level * 2d) / 100d);
+		this.productionTimeMultiplier = (double) ((double) (100d - Math.exp((double) this.level / 7d) - this.level * 2d) / 100d);
 	}
 
 	/**
@@ -528,6 +532,16 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.attackLocations.push(FreedAttackLocation);
 	}
 
+	/**
+	 * Rend ce château visible au joueur pendant 30 secondes.
+	 */
+	public void spiedOn()
+	{
+		this.isSpiedOn = true;
+		this.spiedOnTime = Settings.GAME_FREQUENCY;
+		this.spiedOnTime *= 30;
+	}
+
 	/*************************************************/
 	/************** DELEGATES METHODS ****************/
 	/*************************************************/
@@ -543,7 +557,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public double getWallMultiplicator()
 	{
-		return ((Wall) getBuilding(BuildingEnum.Wall)).getMultiplicator();
+		return getWall().getMultiplicator();
 	}
 
 	/**
@@ -565,7 +579,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 
 	/**
 	 * Ajoute une production dans la caserne.
-	 * 
+	 *
 	 * @param  p La production ajouté dans la caserne.
 	 * @return   Retourne si la production a bien été rajouté.
 	 */
@@ -573,17 +587,6 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		return getCaserne().addProduction(p);
 	}
-	
-	public void spiedOn()
-	{
-		this.isSpiedOn = true;
-		this.spiedOnTime = Settings.GAME_FREQUENCY;
-		this.spiedOnTime *= 30;
-	}
-
-	/*************************************************/
-	/*************** GETTERS / SETTERS ***************/
-	/*************************************************/
 
 	/**
 	 * @param  key La clé.
@@ -595,6 +598,10 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		return this.buildingPack.get(key);
 	}
 
+	/*************************************************/
+	/*************** GETTERS / SETTERS ***************/
+	/*************************************************/
+
 	/**
 	 * @return La réserve de ce château.
 	 */
@@ -602,29 +609,41 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	{
 		return this.reserveOfSoldiers;
 	}
-	
+
+	/**
+	 * @return Retourne le marché de ce château.
+	 */
 	public Market getMarket()
 	{
 		return (Market) getBuilding(BuildingEnum.Market);
 	}
-	
+
+	/**
+	 * @return Retourne le moulin de ce château.
+	 */
 	public Miller getMiller()
 	{
 		return (Miller) getBuilding(BuildingEnum.Miller);
 	}
 
+	/**
+	 * @return Retourne la caserne de ce château.
+	 */
 	public Caserne getCaserne()
 	{
 		return (Caserne) getBuilding(BuildingEnum.Caserne);
 	}
 
+	/**
+	 * @return Retourne le rempart de ce château.
+	 */
 	public Wall getWall()
 	{
 		return (Wall) getBuilding(BuildingEnum.Wall);
 	}
-	
+
 	@Override
-	public int getProductionCost(int level)
+	public int getProductionCost(final int level)
 	{
 		return CASTLE_COST * level + level * level * level;
 	}
@@ -637,15 +656,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		return this.totalFlorin;
 	}
 
-	/**
-	 * Calcul le temps de production de ce château en fonction de son niveau.
-	 *
-	 * @return Retourne son temps de production.
-	 */
 	@Override
-	public double getProductionTime(Castle castle, int level)
+	public double getProductionTime(final Castle castle, final int level)
 	{
-		return (CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * level) * castle.getProductionTimeMultiplier();
+		return (int) ((CASTLE_PRODUCTION_OFFSET + CASTLE_PRODUCTION_TIME_PER_LEVEL * (double) level)
+				* castle.getProductionTimeMultiplier());
 	}
 
 	/**
@@ -729,7 +744,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public final double getProductionTimeMultiplier()
 	{
-		return productionTimeMultiplier;
+		return this.productionTimeMultiplier;
 	}
 
 	/**
@@ -737,7 +752,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public final boolean isSpiedOn()
 	{
-		return isSpiedOn;
+		return this.isSpiedOn;
 	}
 
 	/**
@@ -745,6 +760,6 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 */
 	public final CharacterEnum getCharacter()
 	{
-		return character;
+		return this.character;
 	}
 }

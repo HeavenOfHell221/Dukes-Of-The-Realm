@@ -9,7 +9,6 @@ import static Utility.Settings.SPY_HP;
 
 import java.io.Serializable;
 
-import Enums.BuildingEnum;
 import Enums.SoldierEnum;
 import Utility.SoldierPack;
 
@@ -21,7 +20,7 @@ public class ReserveOfSoldiers implements Serializable
 	/*************************************************/
 	/******************* ATTRIBUTS *******************/
 	/*************************************************/
-	
+
 	/**
 	 * Référence sur le château qui contient cette réserve.
 	 */
@@ -49,37 +48,31 @@ public class ReserveOfSoldiers implements Serializable
 
 	/**
 	 * Constructeur de ReserveOfSoldier.
-	 * 
+	 *
 	 * @param castle Le château qui contient cette réserve.
 	 */
 	public ReserveOfSoldiers(final Castle castle)
 	{
 		this.castle = castle;
 		this.soldierPack = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
-		this.HPPack = new SoldierPack<>(
-				(PIKER_HP * this.castle.getWallMultiplicator()),
-				(KNIGHT_HP * this.castle.getWallMultiplicator()), 
-				(ONAGER_HP * this.castle.getWallMultiplicator()),
-				(ARCHER_HP * this.castle.getWallMultiplicator()), 
-				(BERSERKER_HP * this.castle.getWallMultiplicator()),
-				(SPY_HP * this.castle.getWallMultiplicator()), 
-				0d);
+		this.HPPack = new SoldierPack<>(PIKER_HP * this.castle.getWallMultiplicator(), KNIGHT_HP * this.castle.getWallMultiplicator(),
+				ONAGER_HP * this.castle.getWallMultiplicator(), ARCHER_HP * this.castle.getWallMultiplicator(),
+				BERSERKER_HP * this.castle.getWallMultiplicator(), SPY_HP * this.castle.getWallMultiplicator(), 0d);
 	}
 
 	/*************************************************/
 	/******************* METHODES ********************/
 	/*************************************************/
-	
+
 	/**
 	 * Retire aléatoirement un point de vie à un type d'unité.
 	 *
-	 * @param typeForce Le type d'unité qu iva perdre un point de vie, aléatoire la 1ère fois et forcé
-	 *                  si on tombe sur un type d'unité où il y en a 0 dans le château attaqué.
+	 * @param typeForce Le type d'unité qui va perdre un point de vie.
 	 */
 	public void randomRemoveHP(final SoldierEnum typeForce)
 	{
 		testRemoveHP();
-		
+
 		if (this.stopAttack)
 		{
 			return;
@@ -104,7 +97,7 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * Teste si on peut encore retirer des points de vie (si il reste des unités dans la réserve).
+	 * Teste si on peut encore retirer des points de vie (s'il reste des unités dans la réserve).
 	 */
 	private void testRemoveHP()
 	{
@@ -113,14 +106,14 @@ public class ReserveOfSoldiers implements Serializable
 			this.stopAttack = true;
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @param s
+	 * Met à jour la réserne dans le cas où un type d'unité meurt.
+	 * @param s Le type d'unité qui perd une unité.
 	 */
-	private void soldierDeath(SoldierEnum s)
+	private void soldierDeath(final SoldierEnum s)
 	{
-		if(s == SoldierEnum.Conveyors)
+		if (s == SoldierEnum.Conveyors)
 		{
 			return;
 		}
@@ -131,15 +124,14 @@ public class ReserveOfSoldiers implements Serializable
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return Retourne le nombre total d'untié dans cette réserve.
 	 */
 	private int getTotal()
 	{
 		int count = 0;
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
-			if(s != SoldierEnum.Conveyors)
+			if (s != SoldierEnum.Conveyors)
 			{
 				count += this.soldierPack.get(s);
 			}
@@ -179,26 +171,37 @@ public class ReserveOfSoldiers implements Serializable
 	{
 		this.stopAttack = false;
 	}
-	
+
 	/**
-	 * 
-	 * @param reduction
+	 * Recalcul les points de vie des unités dans le cas où le niveau du rempart est baissé par des catapultes.
+	 * @param reduction La réduction du multiplicateur du rempart
+	 * @see Wall#multiplier
 	 */
 	public void wallMultiplierReduction(final double reduction)
 	{
 		for (SoldierEnum s : SoldierEnum.values())
-		{		
+		{
 			final double currentHP = s.HP * this.castle.getWallMultiplicator();
 			final double oldHP = s.HP * (this.castle.getWallMultiplicator() + reduction);
 
 			this.HPPack.replace(s, this.HPPack.get(s) - (oldHP - currentHP));
-			
-			if(this.HPPack.get(s) <= 0)
+
+			if (this.HPPack.get(s) <= 0)
 			{
-				soldierDeath(s);	
+				soldierDeath(s);
 			}
 		}
 
+	}
+	
+	/**
+	 * @param key   La clé.
+	 * @param value La nouvelle valeur.
+	 * @see         Utility.Pack#replace(java.lang.Object, java.lang.Object)
+	 */
+	public void replace(final SoldierEnum key, final Integer value)
+	{
+		this.soldierPack.replace(key, value);
 	}
 
 	/*************************************************/
@@ -212,17 +215,7 @@ public class ReserveOfSoldiers implements Serializable
 	{
 		return this.stopAttack;
 	}
-
-	/**
-	 * @param key   La clé.
-	 * @param value La valeur.
-	 * @see         Utility.Pack#replace(java.lang.Object, java.lang.Object)
-	 */
-	public void replace(final SoldierEnum key, final Integer value)
-	{
-		this.soldierPack.replace(key, value);
-	}
-
+	
 	/**
 	 * @return the soldierPack
 	 */

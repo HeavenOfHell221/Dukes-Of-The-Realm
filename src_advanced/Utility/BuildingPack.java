@@ -11,19 +11,19 @@ import Enums.BuildingEnum;
  * Cette structure de donnée permet de ne plus prendre en compte le nombre de type de bâtiment. <br>
  * En itérant sur toutes énumérations de BuildingEnum, on est sûr de parcourir la HashMap entière.
  * </p>
- * 
+ *
  * @see Enums.BuildingEnum
  */
 public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 {
 	/**
 	 * Constructeur de BuildingPack.
-	 * 
-	 * @param castle Un objet pour le château.
+	 *
+	 * @param castle  Un objet pour le château.
 	 * @param caserne Un objet pour la caserne.
-	 * @param market Un objet pour le marché.
-	 * @param miller Un objet pour le moulin.
-	 * @param wall Un objet pour le rempart.
+	 * @param market  Un objet pour le marché.
+	 * @param miller  Un objet pour le moulin.
+	 * @param wall    Un objet pour le rempart.
 	 */
 	public BuildingPack(final T2 castle, final T2 caserne, final T2 market, final T2 miller, final T2 wall)
 	{

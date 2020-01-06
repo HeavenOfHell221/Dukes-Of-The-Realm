@@ -42,7 +42,7 @@ public class MultiSoldierGoal extends Goal
 		}
 
 		while (count > 0)
-		{	
+		{
 			SoldierEnum s = SoldierEnum.getRandomType();
 			if (soldierPack.get(s) > 0)
 			{
@@ -60,13 +60,13 @@ public class MultiSoldierGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		if(this.goals.goal(castle) == false)
+		if (this.goals.goal(castle) == false)
 		{
-			if(castle.getMiller().getVillagerFree() < ((SoldierGoal)goals.peekFirst()).type.villager)
+			if (castle.getMiller().getVillagerFree() < ((SoldierGoal) this.goals.peekFirst()).type.villager)
 			{
-				if(castle.getMiller().getLevel() < BuildingEnum.Miller.maxLevel)
+				if (castle.getMiller().getLevel() < BuildingEnum.Miller.maxLevel)
 				{
-					goals.addFirst(new BuildingGoal(BuildingEnum.Miller));
+					this.goals.addFirst(new BuildingGoal(BuildingEnum.Miller));
 				}
 				else
 				{

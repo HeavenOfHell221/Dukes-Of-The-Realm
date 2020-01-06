@@ -65,7 +65,7 @@ public class Ost implements IUpdate, Serializable
 
 	/**
 	 * Nombre d'unité de l'ost.
-	 * 
+	 *
 	 * @see Utility.SoldierPack
 	 */
 	private final SoldierPack<Integer> soldierPack;
@@ -198,10 +198,10 @@ public class Ost implements IUpdate, Serializable
 						this.destination.freeAttackLocation(s.getAttackLocation());
 						it.remove();
 						Main.nbSoldier--;
-						
+
 						this.origin.getMiller().addVillager(s.getType().villager);
-						
-						if(s.getType() == SoldierEnum.Conveyors)
+
+						if (s.getType() == SoldierEnum.Conveyors)
 						{
 							this.origin.getMarket().removeConveyors();
 							this.destination.addFlorin(Settings.CONVEYORS_FLORIN);
@@ -377,16 +377,20 @@ public class Ost implements IUpdate, Serializable
 								this, this.speed);
 						break;
 					case Archer:
-						soldier = new Archer(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
+						soldier = new Archer(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE),
+								this, this.speed);
 						break;
 					case Berserker:
-						soldier = new Berserker(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
+						soldier = new Berserker(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE),
+								this, this.speed);
 						break;
 					case Spy:
-						soldier = new Spy(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
+						soldier = new Spy(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this,
+								this.speed);
 						break;
 					case Conveyors:
-						soldier = new Conveyors(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE), this, this.speed);
+						soldier = new Conveyors(layer, new Point2D(x, y - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE),
+								this, this.speed);
 						break;
 					default:
 						break;
@@ -409,13 +413,15 @@ public class Ost implements IUpdate, Serializable
 						soldier = new Archer(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
 						break;
 					case Berserker:
-						soldier = new Berserker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
+						soldier = new Berserker(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+								this.speed);
 						break;
 					case Spy:
 						soldier = new Spy(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
 						break;
 					case Conveyors:
-						soldier = new Conveyors(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this, this.speed);
+						soldier = new Conveyors(layer, new Point2D(x, y + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER), this,
+								this.speed);
 						break;
 					default:
 						break;
@@ -437,16 +443,20 @@ public class Ost implements IUpdate, Serializable
 								this, this.speed);
 						break;
 					case Archer:
-						soldier = new Archer(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
+						soldier = new Archer(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y),
+								this, this.speed);
 						break;
 					case Berserker:
-						soldier = new Berserker(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
+						soldier = new Berserker(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y),
+								this, this.speed);
 						break;
 					case Spy:
-						soldier = new Spy(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
+						soldier = new Spy(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this,
+								this.speed);
 						break;
 					case Conveyors:
-						soldier = new Conveyors(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y), this, this.speed);
+						soldier = new Conveyors(layer, new Point2D(x - Settings.GAP_WITH_SOLDIER - Settings.ONAGER_REPRESENTATION_SIZE, y),
+								this, this.speed);
 						break;
 					default:
 						break;
@@ -468,13 +478,15 @@ public class Ost implements IUpdate, Serializable
 						soldier = new Archer(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
 						break;
 					case Berserker:
-						soldier = new Berserker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
+						soldier = new Berserker(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+								this.speed);
 						break;
 					case Spy:
 						soldier = new Spy(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
 						break;
 					case Conveyors:
-						soldier = new Conveyors(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this, this.speed);
+						soldier = new Conveyors(layer, new Point2D(x + Settings.CASTLE_SIZE + Settings.GAP_WITH_SOLDIER, y), this,
+								this.speed);
 						break;
 					default:
 						break;
@@ -524,7 +536,7 @@ public class Ost implements IUpdate, Serializable
 		{
 			nextType = SoldierEnum.Piker;
 		}
-		else if(this.soldierPack.get(SoldierEnum.Knight) > 0)
+		else if (this.soldierPack.get(SoldierEnum.Knight) > 0)
 		{
 			nextType = SoldierEnum.Knight;
 		}

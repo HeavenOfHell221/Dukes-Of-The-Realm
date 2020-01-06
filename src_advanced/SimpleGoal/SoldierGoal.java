@@ -29,7 +29,7 @@ public class SoldierGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		if(castle.getMiller().getVillagerFree() >= type.villager)
+		if (castle.getMiller().getVillagerFree() >= this.type.villager)
 		{
 			return castle.addProduction(this.type.getObject());
 		}

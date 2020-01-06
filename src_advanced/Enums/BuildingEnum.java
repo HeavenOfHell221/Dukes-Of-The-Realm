@@ -31,41 +31,62 @@ import DukesOfTheRealm.Wall;
 import Interface.IBuilding;
 
 /**
- *
- * Enumération contenant les bâtiments.
+ * Enumération contenant les bâtiments et leurs constantes.
  */
 public enum BuildingEnum
 {
 	/**
-	 *
+	 * Représente le château.
 	 */
 	Castle(CASTLE_COST, CASTLE_PRODUCTION_OFFSET, CASTLE_PRODUCTION_TIME_PER_LEVEL, CASTLE_LEVEL_MAX),
 
 	/**
-	 *
+	 * Représente le moulin.
 	 */
 	Miller(MILLER_COST, MILLER_PRODUCTION_OFFSET, MILLER_PRODUCTION_TIME_PER_LEVEL, MILLER_LEVEL_MAX),
 
 	/**
-	 *
+	 * Représente le rempart.
 	 */
 	Wall(WALL_COST, WALL_PRODUCTION_OFFSET, WALL_PRODUCTION_TIME_PER_LEVEL, WALL_LEVEL_MAX),
 
 	/**
-	 *
+	 * Représente la caserne.
 	 */
 	Caserne(CASERNE_COST, CASERNE_PRODUCTION_OFFSET, CASERNE_PRODUCTION_TIME_PER_LEVEL, CASERNE_LEVEL_MAX),
 
 	/**
-	 *
+	 * Représente le marché.
 	 */
 	Market(MARKET_COST, MARKET_PRODUCTION_OFFSET, MARKET_PRODUCTION_TIME_PER_LEVEL, MARKET_LEVEL_MAX);
 
+	/**
+	 * Coût de base du bâtiment.
+	 */
 	public final int cost;
+	
+	/**
+	 * Niveau maximum du bâtiment.
+	 */
 	public final int maxLevel;
+	
+	/**
+	 * Temps de production de base du bâtiment.
+	 */
 	public final float productionTimeOffset;
+	
+	/**
+	 * Temps de production additionnel par niveau du bâtiment.
+	 */
 	public final float productionTimePerLevel;
 
+	/**
+	 * Constructeur de BuildingEnum.
+	 * @param cost Le coût.
+	 * @param productionTimeOffset Le temps de production de base.
+	 * @param productionTimePerLevel Le temps de production additionnel par niveau.
+	 * @param maxLevel Le niveau maximum.
+	 */
 	private BuildingEnum(final int cost, final float productionTimeOffset, final float productionTimePerLevel, final int maxLevel)
 	{
 		this.cost = cost;
@@ -74,6 +95,9 @@ public enum BuildingEnum
 		this.productionTimePerLevel = productionTimePerLevel;
 	}
 
+	/**
+	 * @return Retourne une instance du bâtiment lié à l'énumération.
+	 */
 	public IBuilding getObject()
 	{
 		switch (this)
@@ -93,7 +117,18 @@ public enum BuildingEnum
 
 		}
 	}
-	
+
+	/**
+	 * @return Retourne un bâtiment aléatoire pour l'objectif de production des bâtiments des IA.
+	 * <p>
+	 * Caserne: 3/15
+	 * Castle: 4/15
+	 * Miller: 2/15
+	 * Market: 1/15
+	 * Wall: 5/15
+	 * </p>
+	 * @see Goals.GeneratorGoal
+	 */
 	public static BuildingEnum getRandomTypeForAI()
 	{
 		Random rand = new Random();
@@ -111,7 +146,7 @@ public enum BuildingEnum
 			case 7:
 			case 8:
 				return Miller;
-			case 9: 
+			case 9:
 				return Market;
 			case 10:
 			case 11:
@@ -119,7 +154,7 @@ public enum BuildingEnum
 			case 13:
 			case 14:
 				return Wall;
-			default : 
+			default:
 				return Castle;
 		}
 	}

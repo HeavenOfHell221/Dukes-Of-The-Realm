@@ -186,8 +186,10 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 			}
 			else
 			{
-				if(this.type != SoldierEnum.Conveyors)
+				if (this.type != SoldierEnum.Conveyors)
+				{
 					addInReserve(getDestination().getReserveOfSoldiers());
+				}
 				this.isDead = true;
 			}
 		}
@@ -222,7 +224,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	public void productionStart(final Caserne caserne)
 	{
 		caserne.getSoldierPack().replace(this.type, caserne.getSoldierPack().get(this.type) + 1);
-		((Miller)caserne.getCastle().getBuilding(BuildingEnum.Miller)).removeVillager(this.type.villager);
+		((Miller) caserne.getCastle().getBuilding(BuildingEnum.Miller)).removeVillager(this.type.villager);
 	}
 
 	/**
@@ -549,7 +551,7 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 		if (!isStopAttack())
 		{
 			applyDamage(getDestination());
-			
+
 			if (!getDestination().isStopAttack())
 			{
 				this.isDead = --this.remainingDamage <= 0 ? true : false;
@@ -565,8 +567,8 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 			this.isDead = true;
 		}
 	}
-	
-	protected void applyDamage(Castle destination)
+
+	protected void applyDamage(final Castle destination)
 	{
 		destination.randomRemoveHP();
 	}
@@ -645,13 +647,13 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	/*************************************************/
 
 	@Override
-	public double getProductionTime(Castle castle,int level)
+	public double getProductionTime(final Castle castle, final int level)
 	{
 		return getType().productionTime * castle.getProductionTimeMultiplier();
 	}
 
 	@Override
-	public int getProductionCost(int level)
+	public int getProductionCost(final int level)
 	{
 		return getType().cost;
 	}

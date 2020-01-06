@@ -1,6 +1,5 @@
 package Soldiers;
 
-import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import Enums.SoldierEnum;
 import Utility.Point2D;
@@ -25,7 +24,7 @@ public class Archer extends Soldier
 		super(layer, coord, itsOst);
 		this.type = SoldierEnum.Archer;
 	}
-	
+
 	/**
 	 * Constructeur par défaut de Archer.
 	 */

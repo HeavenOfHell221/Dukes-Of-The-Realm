@@ -1,12 +1,8 @@
 package Soldiers;
 
-import java.util.Random;
-
-import DukesOfTheRealm.Castle;
 import DukesOfTheRealm.Ost;
 import Enums.SoldierEnum;
 import Utility.Point2D;
-import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 

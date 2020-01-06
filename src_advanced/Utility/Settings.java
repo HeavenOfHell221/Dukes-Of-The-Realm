@@ -50,7 +50,7 @@ public class Settings
 	/**
 	 * Nombre de Florin par seconde pour chache niveau de château.
 	 */
-	public static final int FLORIN_PER_SECOND = 10; 
+	public static final int FLORIN_PER_SECOND = 10;
 
 	/**
 	 * Nombre de Florin par seconde de base.
@@ -99,7 +99,7 @@ public class Settings
 	/**
 	 * Nombre de Archer de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_ARCHER = 10; 
+	public static final int STARTER_ARCHER = 10;
 
 	/**
 	 * Nombre de Berserker de base pour le joueur et les IA.
@@ -145,97 +145,97 @@ public class Settings
 	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 2f;
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int CASTLE_LEVEL_MAX = 20;
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int WALL_COST = 200;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float WALL_PRODUCTION_OFFSET = 5f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 4f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int WALL_LEVEL_MAX = 20;
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int CASERNE_COST = 200;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float CASERNE_PRODUCTION_OFFSET = 0f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 3f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int CASERNE_LEVEL_MAX = 10;
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int MILLER_COST = 300;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int MILLER_LEVEL_MAX = 10;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int MILLER_VILLAGER_BASE = 80;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int MILLER_VILLAGER_PER_LEVEL = 12;
 
 	/**
-	 * 
+	 *
 	 */
 	public static final int MARKET_COST = 100;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float MARKET_PRODUCTION_OFFSET = 2f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 1f;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int MARKET_LEVEL_MAX = 10;
 
@@ -317,7 +317,6 @@ public class Settings
 	 * Coût d'un Onager.
 	 */
 	public static final int ONAGER_COST = 184;
-	
 
 	/**
 	 * Coût d'un Psy.
@@ -368,7 +367,7 @@ public class Settings
 	 * Vitesse de déplacement d'un Conveyors.
 	 */
 	public static final int CONVEYORS_SPEED = 50;
-	
+
 	/**
 	 * Temps de production de base d'un Piker (en seconde).
 	 */
@@ -403,7 +402,7 @@ public class Settings
 	 * Temps de production de base d'un Conveyors.
 	 */
 	public static final double CONVEYORS_TIME_PRODUCTION = 2d;
-	
+
 	/**
 	 *
 	 */
@@ -433,22 +432,23 @@ public class Settings
 	 *
 	 */
 	public static final int SPY_VILLAGER = 2;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final int CONVEYORS_FLORIN = 250;
-	
+
 	/**
-	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points d'attaque.
+	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points
+	 * d'attaque.
 	 */
-	public static final float ONAGER_WALL = 0.66f; 
-	
+	public static final float ONAGER_WALL = 0.66f;
+
 	/**
 	 * Probabilité d'un Spy d'espionner le château qu'il attaque pour chacun de ses points d'attaque.
 	 */
 	public static final float SPY_SPY = 0.5f;
-	
+
 	/****************************************************/
 	/********************* GRAPHICS *********************/
 	/****************************************************/
@@ -520,15 +520,15 @@ public class Settings
 	public static final int ARCHER_REPRESENTATION_HEIGHT_POSITION = 7 * SOLDIER_SIZE / 10;
 
 	/* Taille de la représentation d'un Berserker (en pixel). */
-	
+
 	public static final int BERSERKER_REPRESENTATION_SIZE = SOLDIER_SIZE;
 	public static final int BERSERKER_REPRESENTATION_THICKNESS = SOLDIER_SIZE / 3;
 
 	/* Taille de la représentation d'un Spy (en pixel) */
-	
+
 	public static final int SPY_REPRESENTATION_OUTSIDE_RADIUS = SOLDIER_SIZE / 2;
 	public static final int SPY_REPRESENTATION_INSIDE_RADIUS = SOLDIER_SIZE / 4;
-	
+
 	/**
 	 * Taille de la représentation d'un Conveyor (en pixel).
 	 */

@@ -28,7 +28,7 @@ public class Spy extends Soldier
 		super(layer, coord, itsOst);
 		this.type = SoldierEnum.Spy;
 	}
-	
+
 	/**
 	 * Constructeur par défaut de Spy.
 	 */
@@ -44,20 +44,19 @@ public class Spy extends Soldier
 		AddSpyRepresentation();
 		super.Awake(color);
 	}
-	
+
 	@Override
-	protected void applyDamage(Castle destination)
+	protected void applyDamage(final Castle destination)
 	{
 		Random rand = new Random();
-		
-		if(rand.nextFloat() <= (Settings.SPY_SPY 
-				- 0.006d * destination.getWall().getLevel() 
-				- 0.006d * destination.getLevel()
-				- 0.001d * destination.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Spy)))
+
+		// Espionnage
+		if (rand.nextFloat() <= Settings.SPY_SPY - 0.006d * destination.getWall().getLevel() - 0.006d * destination.getLevel()
+				- 0.001d * destination.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Spy))
 		{
 			destination.spiedOn();
 		}
-		
+
 		super.applyDamage(destination);
 	}
 }

@@ -44,8 +44,8 @@ public enum GoalEnum implements Serializable
 	 * Backup: 2/13 <br>
 	 * Building: 3/13 <br>
 	 * </p>
-
-	 * @return           Une catégorie d'objectif.
+	 * 
+	 * @return Une catégorie d'objectif.
 	 */
 	public static GoalEnum getRandomType()
 	{
@@ -71,7 +71,7 @@ public enum GoalEnum implements Serializable
 			case 12:
 				return Building;
 		}
-		
+
 		return Production;
 	}
 }

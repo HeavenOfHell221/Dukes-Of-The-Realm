@@ -29,10 +29,4 @@ public class SaveFlorinGoal extends Goal
 	{
 		return castle.getTotalFlorin() > this.saveAmount;
 	}
-
-	@Override
-	public String toString()
-	{
-		return "SaveFlorinGoal [saveAmount=" + this.saveAmount + "]";
-	}
 }

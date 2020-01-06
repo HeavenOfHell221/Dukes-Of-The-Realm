@@ -23,6 +23,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 
 	/**
 	 * Queue des productions en attente d'être prise par les unités de production.
+	 * 
 	 * @see ProductionUnit
 	 */
 	private ArrayDeque<IProduction> mainProductionQueue;
@@ -46,27 +47,27 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 * Nombre de chaque type de bâtiment dans la queue.
 	 */
 	private BuildingPack<Integer> buildingPack;
-	
+
 	/**
 	 * Niveau de ce bâtiment.
 	 */
 	private int level;
-	
+
 	/**
 	 * Nombre d'unité de production en attente d'être ajouté dans cette caserne.
 	 */
 	public int numberProductionUnitAdding = 0;
-	
+
 	/**
 	 * Ratio entre le temps de production restant et le temps total dans cette caserne.
 	 */
 	public double ratio = 0;
-	
+
 	/**
 	 * Somme du temps restant pour terminer toutes les productions de cette caserne.
 	 */
 	protected double sumCurrentTime = 0;
-	
+
 	/**
 	 * Somme du temps total de toutes les productions de cette caserne.
 	 */
@@ -91,10 +92,10 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.productionUnitList.add(new ProductionUnit(this.castle, this));
 		this.level = 1;
 	}
-	
+
 	public Caserne()
 	{
-		
+
 	}
 
 	/*************************************************/
@@ -102,43 +103,44 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	/*************************************************/
 
 	/**
-	 * Met à jour les unités de production, ajoute les nouvelles unités de production et actualise le ratio.
+	 * Met à jour les unités de production, ajoute les nouvelles unités de production et actualise le
+	 * ratio.
 	 */
 	public void updateProduction()
 	{
 		final Iterator<ProductionUnit> itUnit = this.productionUnitList.iterator();
 
-		while(itUnit.hasNext())
+		while (itUnit.hasNext())
 		{
 			final ProductionUnit p = itUnit.next();
 			p.updateProduction();
 		}
-		
-		while(this.numberProductionUnitAdding > 0)
+
+		while (this.numberProductionUnitAdding > 0)
 		{
 			this.productionUnitList.add(new ProductionUnit(this.castle, this));
 			this.numberProductionUnitAdding--;
 		}
-		
+
 		int count = 0;
-		for(int i : this.buildingPack.values())
+		for (int i : this.buildingPack.values())
 		{
-			for(int k : this.soldierPack.values())
+			for (int k : this.soldierPack.values())
 			{
 				count += k;
 			}
 			count += i;
 		}
-		
-		if(sumCurrentTime <= 0 || count == 0)
+
+		if (this.sumCurrentTime <= 0 || count == 0)
 		{
-			sumTotalTime = 0;
-			sumCurrentTime = 0;
+			this.sumTotalTime = 0;
+			this.sumCurrentTime = 0;
 		}
-		
-		if(sumTotalTime > 0)
+
+		if (this.sumTotalTime > 0)
 		{
-			this.ratio = 1 - (sumCurrentTime / sumTotalTime);
+			this.ratio = 1 - this.sumCurrentTime / this.sumTotalTime;
 		}
 		else
 		{
@@ -204,40 +206,38 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			return false;
 		}
-		
-		sumTotalTime += p.getProductionTime(getCastle(), p.getLevel());
-		sumCurrentTime += p.getProductionTime(getCastle(), p.getLevel());
-			
+
+		this.sumTotalTime += p.getProductionTime(getCastle(), p.getLevel());
+		this.sumCurrentTime += p.getProductionTime(getCastle(), p.getLevel());
+
 		p.productionStart(this);
 
 		this.mainProductionQueue.addLast(p);
 		return true;
 	}
-	
-	/**
-	 * Augmente de 1 le niveau de cette caserne.
-	 */
+
+	@Override
 	public void levelUp()
 	{
-		if(this.level < Settings.CASERNE_LEVEL_MAX)
+		if (this.level < Settings.CASERNE_LEVEL_MAX)
 		{
 			this.level += 1;
-		
-			if(this.level % 2 != 0 || this.level == Settings.CASERNE_LEVEL_MAX)
+
+			if (this.level % 2 != 0 || this.level == Settings.CASERNE_LEVEL_MAX)
 			{
 				this.numberProductionUnitAdding++;
 			}
 		}
 	}
-	
+
 	@Override
 	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		if(!cancel)
+		if (!cancel)
 		{
-			((Caserne)castle.getBuilding(BuildingEnum.Caserne)).levelUp();
+			castle.getCaserne().levelUp();
 		}
-		
+
 		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Caserne,
 				castle.getCaserne().getBuildingPack().get(BuildingEnum.Caserne) - 1);
 	}
@@ -247,7 +247,6 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	{
 		caserne.getBuildingPack().replace(BuildingEnum.Caserne, caserne.getBuildingPack().get(BuildingEnum.Caserne) + 1);
 	}
-
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
@@ -278,19 +277,19 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public double getProductionTime(Castle castle, int level)
+	public double getProductionTime(final Castle castle, final int level)
 	{
-		return (Settings.CASERNE_PRODUCTION_OFFSET + Settings.CASERNE_PRODUCTION_TIME_PER_LEVEL * level) * castle.getProductionTimeMultiplier();
+		return (int) ((double) (Settings.CASERNE_PRODUCTION_OFFSET + Settings.CASERNE_PRODUCTION_TIME_PER_LEVEL * level)
+				* castle.getProductionTimeMultiplier());
 	}
 
 	@Override
 	public int getProductionCost(final int level)
 	{
 		double lvl = level + 2;
-		return (int)((double)(Settings.CASERNE_COST * lvl) + (double)((lvl * lvl * lvl * lvl) / 7d));
+		return (int) ((double) (Settings.CASERNE_COST * lvl) + (double) (lvl * lvl * lvl * lvl / 7d));
 	}
 
-	
 	@Override
 	public void setLevel(final int level)
 	{
@@ -308,7 +307,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	public final Castle getCastle()
 	{
-		return castle;
+		return this.castle;
 	}
 
 	/**
@@ -316,6 +315,6 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	public final double getRatio()
 	{
-		return ratio;
+		return this.ratio;
 	}
 }

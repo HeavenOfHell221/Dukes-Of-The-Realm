@@ -14,21 +14,19 @@ public class SendOstGoal extends Goal
 	private Castle destination;
 
 	/**
-	 * Contient le nombre d'unité dans l'ost;
+	 * Contient le nombre d'unité dans l'ost.
 	 */
-	private final SoldierPack soldierPack;
+	private final SoldierPack<Integer> soldierPack;
 
 	/**
 	 * Constructeur de SendOStGoal.
 	 *
 	 * @param destination Le château destination de l'ost.
-	 * @param nbPikers    Le nombre de Piker à envoyer dans l'ost.
-	 * @param nbKnights   Le nombre de Knight à envoyer dans l'ost.
-	 * @param nbOnagers   Le nombre de Onager à envoyer dans l'ost.
+	 * @param soldierPack Le nombre d'unité dans l'ost.
 	 * @see               Goals.AttackGoal
 	 * @see               Goals.BackupGoal
 	 */
-	public SendOstGoal(final Castle destination, final SoldierPack soldierPack)
+	public SendOstGoal(final Castle destination, final SoldierPack<Integer> soldierPack)
 	{
 		this.destination = destination;
 		this.soldierPack = soldierPack;

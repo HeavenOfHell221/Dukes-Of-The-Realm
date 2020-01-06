@@ -162,7 +162,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			if (this.textCostSoldier.get(s).isVisible())
 			{
-				if(((Miller)this.currentCastle.getBuilding(BuildingEnum.Miller)).getVillagerFree() < s.villager)
+				if (((Miller) this.currentCastle.getBuilding(BuildingEnum.Miller)).getVillagerFree() < s.villager)
 				{
 					this.textCostSoldier.get(s).setText("Miller");
 				}
@@ -182,18 +182,18 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 			if (this.textCostBuilding.get(b).isVisible())
 			{
 				final int level = this.currentCastle.getBuilding(b).getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b);
-				if(level >= b.maxLevel)
+				if (level >= b.maxLevel)
 				{
 					this.textCostBuilding.get(b).setText("MAX");
 					return;
 				}
-				
+
 				int price = 0;
 				if (this.input.isShift())
 				{
 					for (int i = 0; i < 10; i++)
 					{
-						if(level + i < b.maxLevel)
+						if (level + i < b.maxLevel)
 						{
 							price += ((IProduction) this.currentCastle.getBuilding(b)).getProductionCost(level + i);
 						}
@@ -203,7 +203,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				}
 				else
 				{
-					price = ((IProduction)this.currentCastle.getBuilding(b)).getProductionCost(level);
+					price = ((IProduction) this.currentCastle.getBuilding(b)).getProductionCost(level);
 					this.textCostBuilding.get(b).setText(price + "");
 				}
 			}
@@ -235,7 +235,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 *
 	 * @param t Le texte à initialiser.
 	 */
-	private void setText(final Text t, int font)
+	private void setText(final Text t, final int font)
 	{
 		t.setFont(new Font(font));
 		t.setFill(Color.ORANGERED);
@@ -377,11 +377,11 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			this.productSoldier.get(s).setOnMousePressed(event ->
 			{
-				if(this.currentCastle.getMiller().getVillagerFree() >= s.villager)
+				if (this.currentCastle.getMiller().getVillagerFree() >= s.villager)
 				{
 					if (this.input.isAlt())
 					{
-						while (this.currentCastle.getMiller().getVillagerFree() >= s.villager 
+						while (this.currentCastle.getMiller().getVillagerFree() >= s.villager
 								&& addProduction(this.productSoldier.get(s), s.getObject()))
 						{
 						}
@@ -390,16 +390,18 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 					{
 						for (int i = 0; i < 10; i++)
 						{
-							if(this.currentCastle.getMiller().getVillagerFree() >= s.villager )
+							if (this.currentCastle.getMiller().getVillagerFree() >= s.villager)
+							{
 								addProduction(this.productSoldier.get(s), s.getObject());
+							}
 						}
-	
+
 					}
 					else
 					{
 						addProduction(this.productSoldier.get(s), s.getObject());
 					}
-				}			
+				}
 			});
 
 			this.productSoldier.get(s).setOnMouseEntered(event -> this.textCostSoldier.get(s).setVisible(true));
@@ -412,17 +414,17 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 			this.upgradeBuilding.get(b).setOnMousePressed(event ->
 			{
 				final int level = this.currentCastle.getBuilding(b).getLevel() + this.currentCastle.getCaserne().getBuildingPack().get(b);
-				if(level >= b.maxLevel)
+				if (level >= b.maxLevel)
 				{
 					return;
 				}
-				
+
 				IProduction prod = (IProduction) b.getObject();
 				((IBuilding) prod).setLevel(level);
 				if (this.input.isAlt())
 				{
 					int i = 0;
-					while ((level + i) < b.maxLevel && addProduction(this.upgradeBuilding.get(b), prod))
+					while (level + i < b.maxLevel && addProduction(this.upgradeBuilding.get(b), prod))
 					{
 						i++;
 						((IBuilding) prod).setLevel(level + i);
@@ -432,7 +434,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 				{
 					for (int i = 0; i < 10; i++)
 					{
-						if((level + i) < b.maxLevel)
+						if (level + i < b.maxLevel)
 						{
 							addProduction(this.upgradeBuilding.get(b), prod);
 						}
@@ -539,7 +541,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			if(s != SoldierEnum.Conveyors)
+			if (s != SoldierEnum.Conveyors)
 			{
 				addNode(this.productSoldier.get(s));
 				addNode(this.textCostSoldier.get(s));

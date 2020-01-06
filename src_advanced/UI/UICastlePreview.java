@@ -1,11 +1,6 @@
 package UI;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import Duke.Actor;
 import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.Market;
 import Enums.BuildingEnum;
 import Enums.SoldierEnum;
 import Interface.IUI;
@@ -100,17 +95,17 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Icones des unités.
 	 */
 	private final SoldierPack<ImageView> imageSoldier;
-	
+
 	/**
-	 * Textes des niveaux des bâtiments 
+	 * Textes des niveaux des bâtiments
 	 */
 	private final BuildingPack<Text> textBuildingLevel;
-	
+
 	private final BuildingPack<ImageView> imageBuilding;
-	
+
 	private final ImageView imageVillager;
 	private final Text textVillager;
-	
+
 	/*************************************************/
 	/***************** CONSTRUCTEURS *****************/
 	/*************************************************/
@@ -124,7 +119,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		this.imageSoldier = new SoldierPack<>(null, null, null, null, null, null, null);
 		this.textBuildingLevel = new BuildingPack<>(null, null, null, null, null);
 		this.imageBuilding = new BuildingPack<>(null, null, null, null, null);
-		
+
 		this.imageSoldier.replace(SoldierEnum.Piker, newImageView("/images/PikerPreview_48.png", 48, 48));
 		this.imageSoldier.replace(SoldierEnum.Knight, newImageView("/images/KnightPreview_48.png", 48, 48));
 		this.imageSoldier.replace(SoldierEnum.Onager, newImageView("/images/OnagerPreview_48.png", 48, 48));
@@ -132,7 +127,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		this.imageSoldier.replace(SoldierEnum.Berserker, newImageView("/images/BerserkerPreview_48.png", 48, 48));
 		this.imageSoldier.replace(SoldierEnum.Spy, newImageView("/images/SpyPreview_48.png", 48, 48));
 		this.imageSoldier.replace(SoldierEnum.Conveyors, newImageView("/images/ConvoyeurPreview_48.png", 48, 48));
-		
+
 		this.imageBuilding.replace(BuildingEnum.Castle, newImageView("/images/CastlePreview_48.png", 48, 48));
 		this.imageBuilding.replace(BuildingEnum.Caserne, newImageView("/images/CasernePreview_48.png", 48, 48));
 		this.imageBuilding.replace(BuildingEnum.Miller, newImageView("/images/MillerPreview_48.png", 48, 48));
@@ -142,8 +137,8 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		this.imageFlorin = newImageView("/images/FlorinPreview_64.png", 48, 48);
 		this.imageCircle = newImageView("/images/CircleCurrentCastle_96.png", 128, 128);
 		this.imageVillager = newImageView("/images/MillerPreview_48.png", 48, 48);
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			this.textBuildingLevel.replace(b, new Text());
 		}
@@ -195,44 +190,46 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 * Si le UI d'attaque est activé on affiche les données du château qui envoi l'ost (soit le
 	 * lastCastle).
 	 * </p>
+	 * 
 	 * @param now Le now de la méthode update.
-	 * @see UICastlePreview#update(long, boolean)
+	 * @see       UICastlePreview#update(long, boolean)
 	 */
-	private void updateTexts(long now)
+	private void updateTexts(final long now)
 	{
 		this.background.setHeight(460);
 		setAllVisible(true);
-		
+
 		// Si c'est une attaque, on montre le château qui lance l'attaque
-		if(this.attackVisible)
+		if (this.attackVisible)
 		{
 			this.florinIncome.setText(this.lastCastle.getActor().florinIncome(this.lastCastle));
 			this.owner.setText(this.lastCastle.getActor().getName());
 			this.nbFlorin.setText((int) this.lastCastle.getTotalFlorin() + "");
 			this.textVillager.setText(this.lastCastle.getMiller().getVillagerFree() + " / " + this.lastCastle.getMiller().getVillagerMax());
 
-			for(BuildingEnum b : BuildingEnum.values())
+			for (BuildingEnum b : BuildingEnum.values())
 			{
 				this.textBuildingLevel.get(b).setText(this.lastCastle.getBuilding(b).getLevel() + "");
 			}
-			
+
 			for (SoldierEnum s : SoldierEnum.values())
 			{
 				this.textSoldier.get(s).setText(this.currentCastle.getReserveOfSoldiers().getSoldierPack().get(s).toString());
 			}
 			return;
 		}
-		
+
 		this.owner.setText(this.currentCastle.getActor().getName());
-		
+
 		// Si c'est un château du joueur ou un château espionné
-		if(this.currentCastle.getActor().isPlayer() || this.currentCastle.isSpiedOn())
+		if (this.currentCastle.getActor().isPlayer() || this.currentCastle.isSpiedOn())
 		{
 			this.nbFlorin.setText((int) this.currentCastle.getTotalFlorin() + "");
-			this.textVillager.setText(this.currentCastle.getMiller().getVillagerFree() + " / " + this.currentCastle.getMiller().getVillagerMax());
+			this.textVillager
+					.setText(this.currentCastle.getMiller().getVillagerFree() + " / " + this.currentCastle.getMiller().getVillagerMax());
 			this.florinIncome.setText(this.currentCastle.getActor().florinIncome(this.currentCastle));
-			
-			for(BuildingEnum b : BuildingEnum.values())
+
+			for (BuildingEnum b : BuildingEnum.values())
 			{
 				this.textBuildingLevel.get(b).setText(this.currentCastle.getBuilding(b).getLevel() + "");
 			}
@@ -261,11 +258,11 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	 */
 	private void setAllTexts()
 	{
-		for(BuildingEnum b : BuildingEnum.values())
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			setText(this.textBuildingLevel.get(b), 28);
 		}
-		
+
 		setText(this.owner, 24);
 		setText(this.florinIncome, 24);
 		setText(this.textVillager, 24);
@@ -306,37 +303,37 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 
 		relocate(this.owner, Settings.SCENE_WIDTH * margin, offset + i * 0);
 		relocate(this.florinIncome, Settings.SCENE_WIDTH * margin, offset + i * 1 - 15);
-		
+
 		int multiplier = 3;
-		for(BuildingEnum b : BuildingEnum.values())
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			relocate(this.imageBuilding.get(b), Settings.SCENE_WIDTH * margin + 100, offset + i * multiplier - 30);
-			relocate(this.textBuildingLevel.get(b), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier  - 12);
+			relocate(this.textBuildingLevel.get(b), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier - 12);
 			multiplier++;
 		}
-		
+
 		multiplier = 3;
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			if(s != SoldierEnum.Conveyors)
+			if (s != SoldierEnum.Conveyors)
 			{
 				relocate(this.imageSoldier.get(s), Settings.SCENE_WIDTH * margin - 60, offset + i * multiplier - 30);
 				relocate(this.textSoldier.get(s), Settings.SCENE_WIDTH * margin - 50, offset + i * multiplier - 12);
 				multiplier++;
 			}
 		}
-		
+
 		multiplier--;
-		relocate(this.imageSoldier.get(SoldierEnum.Conveyors),  Settings.SCENE_WIDTH * margin + 100, offset + i * multiplier - 33);
-		relocate(this.textSoldier.get(SoldierEnum.Conveyors), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier  - 12);
-		
+		relocate(this.imageSoldier.get(SoldierEnum.Conveyors), Settings.SCENE_WIDTH * margin + 100, offset + i * multiplier - 33);
+		relocate(this.textSoldier.get(SoldierEnum.Conveyors), Settings.SCENE_WIDTH * margin + 110, offset + i * multiplier - 12);
+
 		offset -= 20;
 		relocate(this.imageFlorin, Settings.SCENE_WIDTH * margin - 60, offset + i * 1.4 + 10);
 		relocate(this.nbFlorin, Settings.SCENE_WIDTH * margin - 50, offset + i * 1.4 + 35);
-		
+
 		relocate(this.imageVillager, Settings.SCENE_WIDTH * margin - 60 + i * 2.5, offset + i * 1.4 + 10);
 		relocate(this.textVillager, Settings.SCENE_WIDTH * margin - 50 + i * 2.5 + 10, offset + i * 1.4 + 35);
-		
+
 		relocate(this.background, Settings.SCENE_WIDTH * margin - 77, offset);
 	}
 
@@ -352,13 +349,13 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		addNode(this.imageVillager);
 		addNode(this.textVillager);
 
-		for(BuildingEnum b : BuildingEnum.values())
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			addNode(this.textBuildingLevel.get(b));
 			addNode(this.imageBuilding.get(b));
 		}
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			addNode(this.textSoldier.get(s));
 			addNode(this.imageSoldier.get(s));
@@ -386,18 +383,18 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 		setVisible(this.background, visible);
 		setVisible(this.imageFlorin, visible);
 		setVisible(this.owner, visible);
-		setVisible(this.florinIncome, visible); 
+		setVisible(this.florinIncome, visible);
 		setVisible(this.nbFlorin, visible);
 		setVisible(this.imageVillager, visible);
 		setVisible(this.textVillager, visible);
-		
-		for(SoldierEnum s : SoldierEnum.values())
+
+		for (SoldierEnum s : SoldierEnum.values())
 		{
 			setVisible(this.imageSoldier.get(s), visible);
 			setVisible(this.textSoldier.get(s), visible);
 		}
-		
-		for(BuildingEnum b : BuildingEnum.values())
+
+		for (BuildingEnum b : BuildingEnum.values())
 		{
 			setVisible(this.textBuildingLevel.get(b), visible);
 			setVisible(this.imageBuilding.get(b), visible);

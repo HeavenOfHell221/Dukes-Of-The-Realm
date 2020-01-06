@@ -1,6 +1,5 @@
 package Duke;
 
-import static Utility.Settings.FLORIN_FACTOR_BARON;
 import static Utility.Settings.OFFSET_LEVEL_CASTLE_BARON;
 import static Utility.Settings.RANDOM_LEVEL_CASTLE_BARON;
 
@@ -42,9 +41,9 @@ public class Baron extends Actor implements Serializable
 	@Override
 	protected void updateFlorin(final Castle castle)
 	{
-		castle.addFlorin(((Settings.FLORIN_PER_SECOND 
-				+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-				+ Math.exp((double)castle.getLevel() / 4d))  )* Settings.FLORIN_FACTOR_BARON* Time.deltaTime);
+		castle.addFlorin(
+				(Settings.FLORIN_PER_SECOND + castle.getLevel() * Settings.FLORIN_PER_SECOND + Math.exp((double) castle.getLevel() / 4d))
+						* Settings.FLORIN_FACTOR_BARON * Time.deltaTime);
 	}
 
 	/*************************************************/
@@ -56,9 +55,8 @@ public class Baron extends Actor implements Serializable
 	{
 		if (this.castles.contains(castle))
 		{
-			String tmp = String.format("%.1f", ((Settings.FLORIN_PER_SECOND 
-					+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-					+ Math.exp((double)castle.getLevel() / 4d)) )* Settings.FLORIN_FACTOR_BARON);
+			String tmp = String.format("%.1f", (Settings.FLORIN_PER_SECOND + castle.getLevel() * Settings.FLORIN_PER_SECOND
+					+ Math.exp((double) castle.getLevel() / 4d)) * Settings.FLORIN_FACTOR_BARON);
 			return tmp + " Florin/s";
 		}
 		return " -- Florin/s";
@@ -69,12 +67,12 @@ public class Baron extends Actor implements Serializable
 	{
 		final Random rand = new Random();
 
-		for(BuildingEnum b : BuildingEnum.values())
+		for (BuildingEnum b : BuildingEnum.values())
 		{
-			if(b != BuildingEnum.Castle && b != BuildingEnum.Wall)
+			if (b != BuildingEnum.Castle && b != BuildingEnum.Wall)
 			{
 				final int k = rand.nextInt(RANDOM_LEVEL_CASTLE_BARON) + OFFSET_LEVEL_CASTLE_BARON;
-				for(int i = 0; i < k; i++)
+				for (int i = 0; i < k; i++)
 				{
 					castle.getBuilding(b).levelUp();
 				}

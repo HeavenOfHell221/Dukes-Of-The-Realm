@@ -5,6 +5,9 @@ import java.io.Serializable;
 import Interface.IProduction;
 import Utility.Time;
 
+/**
+ * Représente une unité de production qui est capable de produire les productions de la caserne une par une.
+ */
 public class ProductionUnit implements Serializable
 {
 	/**
@@ -28,7 +31,9 @@ public class ProductionUnit implements Serializable
 	private final Caserne caserne;
 
 	/**
-	 *
+	 * Constructeur de ProductionUnit.
+	 * @param castle Le château à qui appartient cette unité de production.
+	 * @param caserne La caserne qui contient cette unité de production.
 	 */
 	public ProductionUnit(final Castle castle, final Caserne caserne)
 	{
@@ -39,8 +44,8 @@ public class ProductionUnit implements Serializable
 	}
 
 	/**
-	 * Met à jour à chaque update le temps qu'il reste pour la production en cours (si elle existe). Une
-	 * fois la production terminé, si c'est une unité elle serra ajouté à la réserve, si c'est un
+	 * Met à jour à chaque update le temps qu'il reste pour la production en cours (si elle existe). <br>
+	 * Une fois la production terminé, si c'est une unité elle serra ajouté à la réserve, si c'est un
 	 * bâtiment il serra amélioré.
 	 */
 	public void updateProduction()
@@ -50,8 +55,6 @@ public class ProductionUnit implements Serializable
 			// On retire du temps
 			this.currentProductionTime -= 1 * Time.deltaTime;
 			this.caserne.sumCurrentTime -= 1 * Time.deltaTime;
-			
-			
 
 			// Si la production est terminé
 			if (this.currentProductionTime <= 0)
@@ -75,7 +78,7 @@ public class ProductionUnit implements Serializable
 	 */
 	public final double getCurrentProductionTime()
 	{
-		return currentProductionTime;
+		return this.currentProductionTime;
 	}
 
 	/**
@@ -83,6 +86,6 @@ public class ProductionUnit implements Serializable
 	 */
 	public final IProduction getCurrentProduction()
 	{
-		return currentProduction;
+		return this.currentProduction;
 	}
 }

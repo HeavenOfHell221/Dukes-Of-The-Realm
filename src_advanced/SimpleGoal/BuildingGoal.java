@@ -14,15 +14,15 @@ public class BuildingGoal extends Goal
 	/**
 	 * Le bâtiment qu'on veut améliorer.
 	 */
-	private BuildingEnum building;
-	
+	private final BuildingEnum building;
+
 	/**
 	 * Constucteur de BuildingGoal
 	 *
 	 * @param castle Le château qu'on veut améliorer.
 	 * @see          Goals.GeneratorGoal
 	 */
-	public BuildingGoal(BuildingEnum building)
+	public BuildingGoal(final BuildingEnum building)
 	{
 		this.building = building;
 	}
@@ -30,23 +30,17 @@ public class BuildingGoal extends Goal
 	@Override
 	public boolean goal(final Castle castle)
 	{
-		IBuilding b = building.getObject();
-		final int level = castle.getBuilding(building).getLevel();
-		
-		if(level < building.maxLevel)
+		IBuilding b = this.building.getObject();
+		final int level = (castle.getBuilding(this.building).getLevel() + castle.getCaserne().getBuildingPack().get(this.building));
+
+		if (level < this.building.maxLevel)
 		{
 			b.setLevel(level);
-			return castle.addProduction((IProduction)b);
+			return castle.addProduction((IProduction) b);
 		}
 		else
 		{
 			return true;
 		}
-	}
-
-	@Override
-	public String toString()
-	{
-		return "BuildingGoal [building=" + building + "]";
 	}
 }

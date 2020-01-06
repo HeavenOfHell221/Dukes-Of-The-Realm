@@ -180,9 +180,9 @@ public abstract class Actor implements Serializable, IUpdate
 	 */
 	protected void updateFlorin(final Castle castle)
 	{
-		castle.addFlorin((Settings.FLORIN_PER_SECOND 
-				+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-				+ Math.exp((double)castle.getLevel() / 4d)) * Time.deltaTime);
+		castle.addFlorin(
+				(Settings.FLORIN_PER_SECOND + castle.getLevel() * Settings.FLORIN_PER_SECOND + Math.exp((double) castle.getLevel() / 4d))
+						* Time.deltaTime);
 	}
 
 	/*************************************************/
@@ -217,10 +217,8 @@ public abstract class Actor implements Serializable, IUpdate
 	 */
 	public String florinIncome(final Castle castle)
 	{
-		return String.format("%.1f", (float) (Settings.FLORIN_PER_SECOND 
-				+ castle.getLevel() * Settings.FLORIN_PER_SECOND
-				+ Math.exp((double)castle.getLevel() / 4d)))
-				+ " Florin/s";
+		return String.format("%.1f", (float) (Settings.FLORIN_PER_SECOND + castle.getLevel() * Settings.FLORIN_PER_SECOND
+				+ Math.exp((double) castle.getLevel() / 4d))) + " Florin/s";
 	}
 
 	/**

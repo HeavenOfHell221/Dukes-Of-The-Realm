@@ -24,7 +24,7 @@ public class Berserker extends Soldier
 		super(layer, coord, itsOst);
 		this.type = SoldierEnum.Berserker;
 	}
-	
+
 	/**
 	 * Constructeur par défaut de Berserker.
 	 */

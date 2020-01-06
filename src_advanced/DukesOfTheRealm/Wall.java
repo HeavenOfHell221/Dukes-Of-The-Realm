@@ -24,16 +24,6 @@ public class Wall implements Serializable, IBuilding, IProduction
 	 * Le multiplicateur de point de vie du rempart.
 	 */
 	private double multiplier;
-	
-	/**
-	 * 
-	 */
-	private final double const1 = 0.05d;
-	
-	/**
-	 * 
-	 */
-	private final double const2 = 0.15d;
 
 	/**
 	 * Constructeur par défaut de Wall.
@@ -44,49 +34,51 @@ public class Wall implements Serializable, IBuilding, IProduction
 		this.multiplier = 1;
 	}
 
-	/**
-	 * Augmente d'un niveau le rempart et augmente le multiplicateur en fonction du nouveau niveau.
-	 * 
-	 * @see Wall#level
-	 */
+	@Override
 	public void levelUp()
 	{
-		if(this.level < WALL_LEVEL_MAX)
+		if (this.level < WALL_LEVEL_MAX)
 		{
 			this.level += 1;
 			increaseMultiplicator();
-		}	
+		}
 	}
 
 	/**
-	 * Incrémente le multiplicateur en fonction du niveau.
-	 * 
+	 * Incrémente le multiplicateur en fonction du niveau de ce bâtiment.
+	 *
 	 * @see Wall#multiplier
 	 */
 	private void increaseMultiplicator()
 	{
 		if (this.level <= 10)
 		{
-			this.multiplier += const1;
+			this.multiplier += 0.05d;
 		}
 		else
 		{
-			this.multiplier += const2;
+			this.multiplier += 0.15d;
 		}
 	}
-	
+
+	/**
+	 * Réduire le multiplicateur de ce rempart suite à une destruction par des catapultes.
+	 * 
+	 * @return Retourne la différence entre l'ancien multiplicateur et le nouveau.
+	 * @see Soldiers.Onager
+	 */
 	public double decreaseLevel()
-	{	
+	{
 		double oldMultiplier = this.multiplier;
-		if(this.level > 0)
+		if (this.level > 0)
 		{
 			if (this.level <= 10)
 			{
-				this.multiplier -= const1;
+				this.multiplier -= 0.05d;
 			}
 			else
 			{
-				this.multiplier -= const2;
+				this.multiplier -= 0.15d;
 			}
 			this.level -= 1;
 		}
@@ -95,12 +87,10 @@ public class Wall implements Serializable, IBuilding, IProduction
 			this.multiplier = 1f;
 			return 0;
 		}
-		return (oldMultiplier - this.multiplier);
+		return oldMultiplier - this.multiplier;
 	}
 
-	/**
-	 * @return the level
-	 */
+
 	@Override
 	public final int getLevel()
 	{
@@ -126,17 +116,16 @@ public class Wall implements Serializable, IBuilding, IProduction
 	{
 		return Settings.WALL_COST * (level + 1) + level * level * (level / 2);
 	}
-		
+
 	@Override
 	public void productionFinished(final Castle castle, final boolean cancel)
 	{
-		if(!cancel)
+		if (!cancel)
 		{
-			((Wall)castle.getBuilding(BuildingEnum.Wall)).levelUp();
+			castle.getWall().levelUp();
 		}
-	
-		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Wall,
-				castle.getCaserne().getBuildingPack().get(BuildingEnum.Wall) - 1);
+
+		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Wall, castle.getCaserne().getBuildingPack().get(BuildingEnum.Wall) - 1);
 	}
 
 	@Override
@@ -150,10 +139,4 @@ public class Wall implements Serializable, IBuilding, IProduction
 	{
 		this.level = level;
 	}
-
-	@Override
-	public String toString()
-	{
-		return "Wall [level=" + level + ", multiplicator=" + multiplier + "]";
-	}	
 }

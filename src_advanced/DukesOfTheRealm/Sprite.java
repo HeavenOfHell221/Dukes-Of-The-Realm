@@ -1,5 +1,9 @@
 package DukesOfTheRealm;
 
+import static Utility.Settings.ARCHER_REPRESENTATION_HEIGHT_POSITION;
+import static Utility.Settings.ARCHER_REPRESENTATION_SIZE;
+import static Utility.Settings.BERSERKER_REPRESENTATION_SIZE;
+import static Utility.Settings.BERSERKER_REPRESENTATION_THICKNESS;
 import static Utility.Settings.CASTLE_SHADOW_COLOR;
 import static Utility.Settings.CASTLE_SHADOW_OFFSET;
 import static Utility.Settings.CASTLE_SHADOW_RADIUS;
@@ -8,19 +12,13 @@ import static Utility.Settings.CASTLE_SIZE;
 import static Utility.Settings.CASTLE_STROKE_COLOR;
 import static Utility.Settings.CASTLE_STROKE_THICKNESS;
 import static Utility.Settings.CASTLE_STROKE_TYPE;
+import static Utility.Settings.CONVEYOR_REPRESENTATION_RADIUS;
 import static Utility.Settings.DOOR_HEIGHT;
 import static Utility.Settings.DOOR_POSITION;
 import static Utility.Settings.DOOR_WIDTH;
 import static Utility.Settings.KNIGHT_REPRESENTATION_SIZE;
 import static Utility.Settings.ONAGER_REPRESENTATION_SIZE;
 import static Utility.Settings.PIKER_REPRESENTATION_RADIUS;
-import static Utility.Settings.ARCHER_REPRESENTATION_SIZE;
-import static Utility.Settings.ARCHER_REPRESENTATION_HEIGHT_POSITION;
-import static Utility.Settings.BERSERKER_REPRESENTATION_SIZE;
-import static Utility.Settings.BERSERKER_REPRESENTATION_THICKNESS;
-import static Utility.Settings.SPY_REPRESENTATION_OUTSIDE_RADIUS;
-import static Utility.Settings.SPY_REPRESENTATION_INSIDE_RADIUS;
-import static Utility.Settings.CONVEYOR_REPRESENTATION_RADIUS;
 import static Utility.Settings.SOLDIER_SHADOW_COLOR;
 import static Utility.Settings.SOLDIER_SHADOW_OFFSET;
 import static Utility.Settings.SOLDIER_SHADOW_RADIUS;
@@ -28,12 +26,13 @@ import static Utility.Settings.SOLDIER_SHADOW_SIZE;
 import static Utility.Settings.SOLDIER_STROKE_COLOR;
 import static Utility.Settings.SOLDIER_STROKE_THICKNESS;
 import static Utility.Settings.SOLDIER_STROKE_TYPE;
+import static Utility.Settings.SPY_REPRESENTATION_INSIDE_RADIUS;
+import static Utility.Settings.SPY_REPRESENTATION_OUTSIDE_RADIUS;
 
 import java.io.Serializable;
 
 import DukesOfTheRealm.Castle.Orientation;
 import Utility.Point2D;
-import Utility.Settings;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
@@ -50,7 +49,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 
 /**
- * Représente un élément graphique à l'écran
+ * Représente un élément graphique à l'écran.
  */
 public abstract class Sprite extends Parent implements Serializable
 {
@@ -189,7 +188,7 @@ public abstract class Sprite extends Parent implements Serializable
 		addShadow(r, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
 				SOLDIER_SHADOW_COLOR);
 	}
-	
+
 	/**
 	 * Crée et ajoute à l'écran une figure de cerf-volant pour représenter graphiquement un Archer.
 	 */
@@ -197,12 +196,8 @@ public abstract class Sprite extends Parent implements Serializable
 	{
 		final double s = ARCHER_REPRESENTATION_SIZE;
 		final double hp = ARCHER_REPRESENTATION_HEIGHT_POSITION;
-		Path k = new Path(new MoveTo(getX() + s/2, getY()),
-    			new LineTo(getX(), getY() + hp),
-    			new LineTo(getX() + s/2, getY() + s),
-    			new LineTo(getX() + s, getY() + hp),
-    			new ClosePath()
-    			);
+		Path k = new Path(new MoveTo(getX() + s / 2, getY()), new LineTo(getX(), getY() + hp), new LineTo(getX() + s / 2, getY() + s),
+				new LineTo(getX() + s, getY() + hp), new ClosePath());
 		k.setMouseTransparent(true);
 		this.shape = k;
 		updateUIShape();
@@ -210,7 +205,7 @@ public abstract class Sprite extends Parent implements Serializable
 		addShadow(k, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
 				SOLDIER_SHADOW_COLOR);
 	}
-	
+
 	/**
 	 * Crée et ajoute à l'écran une figure de croix pour représenter graphiquement un Berserker.
 	 */
@@ -219,8 +214,8 @@ public abstract class Sprite extends Parent implements Serializable
 		final double s = BERSERKER_REPRESENTATION_SIZE;
 		final double t = BERSERKER_REPRESENTATION_THICKNESS;
 		Rectangle r1 = new Rectangle(getX() + t, getY(), t, s);
-    	Rectangle r2 = new Rectangle(getX(), getY() + t, s, t);
-    	Shape p = Shape.union(r1, r2);
+		Rectangle r2 = new Rectangle(getX(), getY() + t, s, t);
+		Shape p = Shape.union(r1, r2);
 		p.setMouseTransparent(true);
 		this.shape = p;
 		updateUIShape();
@@ -228,35 +223,36 @@ public abstract class Sprite extends Parent implements Serializable
 		addShadow(p, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
 				SOLDIER_SHADOW_COLOR);
 	}
-	
+
 	/**
 	 * Crée et ajoute à l'écran une figure de lune pour représenter graphiquement un Espion.
 	 */
 	protected final void AddSpyRepresentation()
 	{
 		final double r = CONVEYOR_REPRESENTATION_RADIUS;
-    	Circle c1 = new Circle(getX(), getY(), r);
-    	Circle c2 = new Circle(getX() + r, getY(), r);
-    	Shape m = Shape.subtract(c1, c2);
-    	m.setMouseTransparent(true);
+		Circle c1 = new Circle(getX(), getY(), r);
+		Circle c2 = new Circle(getX() + r, getY(), r);
+		Shape m = Shape.subtract(c1, c2);
+		m.setMouseTransparent(true);
 		this.shape = m;
 		updateUIShape();
 		addStroke(m, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);
 		addShadow(m, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_SIZE, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_OFFSET, SOLDIER_SHADOW_RADIUS,
 				SOLDIER_SHADOW_COLOR);
 	}
-	
+
 	/**
-	 * Crée et ajoute à l'écran une figure d'anneau pour représenter graphiquement un Convoyeur de fonds.
+	 * Crée et ajoute à l'écran une figure d'anneau pour représenter graphiquement un Convoyeur de
+	 * fonds.
 	 */
 	protected final void AddConveyorRepresentation()
 	{
 		final double r_out = SPY_REPRESENTATION_OUTSIDE_RADIUS;
 		final double r_in = SPY_REPRESENTATION_INSIDE_RADIUS;
 		Circle c1 = new Circle(getX(), getY(), r_out);
-    	Circle c2 = new Circle(getX(), getY(), r_in);
-    	Shape r = Shape.subtract(c1, c2);
-    	r.setMouseTransparent(true);
+		Circle c2 = new Circle(getX(), getY(), r_in);
+		Shape r = Shape.subtract(c1, c2);
+		r.setMouseTransparent(true);
 		this.shape = r;
 		updateUIShape();
 		addStroke(r, SOLDIER_STROKE_THICKNESS, SOLDIER_STROKE_TYPE, SOLDIER_STROKE_COLOR);

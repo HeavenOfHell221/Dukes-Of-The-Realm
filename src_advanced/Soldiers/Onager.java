@@ -46,17 +46,18 @@ public class Onager extends Soldier
 		AddOnagerRepresentation();
 		super.Awake(color);
 	}
-	
+
 	@Override
-	protected void applyDamage(Castle destination)
+	protected void applyDamage(final Castle destination)
 	{
 		Random rand = new Random();
-		
-		if(rand.nextFloat() <= Settings.ONAGER_WALL - 0.013d * destination.getWall().getLevel())
+
+		// Détruit le rempart
+		if (rand.nextFloat() <= Settings.ONAGER_WALL - 0.013d * destination.getWall().getLevel())
 		{
 			destination.getReserveOfSoldiers().wallMultiplierReduction(destination.getWall().decreaseLevel());
 		}
-		
+
 		super.applyDamage(destination);
 	}
 }

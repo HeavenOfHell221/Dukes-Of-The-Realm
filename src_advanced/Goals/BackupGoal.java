@@ -30,9 +30,7 @@ public class BackupGoal extends Goal
 	 * </p>
 	 *
 	 * @param origin    Le château qui va envoyer du renfort.
-	 * @param nbPikers  Le nombre de Piker à envoyer.
-	 * @param nbKnights Le nombre de Knight à envoyer.
-	 * @param nbOnagers Le nombre de Onager à envoyer.
+	 * @param pack Le nombre d'unité pour chaque type à envoyer en renfort.
 	 */
 	public BackupGoal(final Castle origin, final SoldierPack<Integer> pack)
 	{
@@ -47,9 +45,9 @@ public class BackupGoal extends Goal
 			AttackGoal g = new AttackGoal(origin, destination, pack);
 			this.goals.addLast(g);
 			SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
-			for(SoldierEnum s : SoldierEnum.values())
+			for (SoldierEnum s : SoldierEnum.values())
 			{
-				if(pack.get(s) > 0)
+				if (pack.get(s) > 0)
 				{
 					production.replace(s, pack.get(s) / 2);
 				}

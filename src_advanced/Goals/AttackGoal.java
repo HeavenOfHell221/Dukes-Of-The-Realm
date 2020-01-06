@@ -53,7 +53,7 @@ public class AttackGoal extends Goal
 		this.castleOrigin = castleOrigin;
 		this.soldierPack = soldierPack;
 		this.castleDestination = castleDestination;
-		
+
 		if (castleOrigin.getOst() != null)
 		{
 			return;
@@ -80,7 +80,7 @@ public class AttackGoal extends Goal
 		{
 			count += i;
 		}
-		
+
 		// Si y'a des unités à produire avant d'envoyer l'ost
 		if (count > 0)
 		{
@@ -88,11 +88,11 @@ public class AttackGoal extends Goal
 		}
 
 		this.goals.addLast(new SendOstGoal(castleDestination, soldierPack));
-		
+
 		SoldierPack<Integer> production = new SoldierPack<>(0, 0, 0, 0, 0, 0, 0);
-		for(SoldierEnum s : SoldierEnum.values())
+		for (SoldierEnum s : SoldierEnum.values())
 		{
-			if(soldierPack.get(s) > 0)
+			if (soldierPack.get(s) > 0)
 			{
 				production.replace(s, soldierPack.get(s) / 2);
 			}
@@ -151,40 +151,21 @@ public class AttackGoal extends Goal
 	}
 
 	/**
-	 *
-	 * @return
-	 */
-	private SoldierPack<Integer> getReserveSoldierPack()
-	{
-		return this.castleOrigin.getReserveOfSoldiers().getSoldierPack();
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	private SoldierPack<Integer> getCaserneSoldierPack()
-	{
-		return this.castleOrigin.getCaserne().getSoldierPack();
-	}
-
-	/**
-	 *
-	 * @param  s
-	 * @return
+	 * @param  s Le type d'unité qu'on veut.
+	 * @return Retourne le nombre d'unité de type s de la réserve du château d'origine.
 	 */
 	private int getReserveSoldier(final SoldierEnum s)
 	{
-		return getReserveSoldierPack().get(s);
+		return this.castleOrigin.getReserveOfSoldiers().getSoldierPack().get(s);
 	}
 
 	/**
 	 *
-	 * @param  s
-	 * @return
+	 * @param  s Le type d'unité qu'on veut.
+	 * @return Retourne le nombre d'unité de type s de la caserne du château d'origine.
 	 */
 	private int getCaserneSoldier(final SoldierEnum s)
 	{
-		return getCaserneSoldierPack().get(s);
+		return this.castleOrigin.getCaserne().getSoldierPack().get(s);
 	}
 }
