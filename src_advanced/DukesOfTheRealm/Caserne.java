@@ -13,7 +13,7 @@ import Utility.Settings;
 import Utility.SoldierPack;
 
 /**
- * Gère la production des unités et l'amélioration du château.
+ * Gère la production des unités et l'amélioration des bâtiments.
  */
 public class Caserne implements Serializable, IBuilding, IProduction
 {
@@ -23,6 +23,7 @@ public class Caserne implements Serializable, IBuilding, IProduction
 
 	/**
 	 * Queue des productions en attente d'être prise par les unités de production.
+	 * @see ProductionUnit
 	 */
 	private ArrayDeque<IProduction> mainProductionQueue;
 
@@ -46,13 +47,29 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	 */
 	private BuildingPack<Integer> buildingPack;
 	
+	/**
+	 * Niveau de ce bâtiment.
+	 */
 	private int level;
 	
+	/**
+	 * Nombre d'unité de production en attente d'être ajouté dans cette caserne.
+	 */
 	public int numberProductionUnitAdding = 0;
 	
+	/**
+	 * Ratio entre le temps de production restant et le temps total dans cette caserne.
+	 */
 	public double ratio = 0;
 	
+	/**
+	 * Somme du temps restant pour terminer toutes les productions de cette caserne.
+	 */
 	protected double sumCurrentTime = 0;
+	
+	/**
+	 * Somme du temps total de toutes les productions de cette caserne.
+	 */
 	protected double sumTotalTime = 0;
 
 	/*************************************************/
@@ -84,6 +101,9 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	/******************** UPDATE *********************/
 	/*************************************************/
 
+	/**
+	 * Met à jour les unités de production, ajoute les nouvelles unités de production et actualise le ratio.
+	 */
 	public void updateProduction()
 	{
 		final Iterator<ProductionUnit> itUnit = this.productionUnitList.iterator();
@@ -193,6 +213,41 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		this.mainProductionQueue.addLast(p);
 		return true;
 	}
+	
+	/**
+	 * Augmente de 1 le niveau de cette caserne.
+	 */
+	public void levelUp()
+	{
+		if(this.level < Settings.CASERNE_LEVEL_MAX)
+		{
+			this.level += 1;
+		
+			if(this.level % 2 != 0 || this.level == Settings.CASERNE_LEVEL_MAX)
+			{
+				this.numberProductionUnitAdding++;
+			}
+		}
+	}
+	
+	@Override
+	public void productionFinished(final Castle castle, final boolean cancel)
+	{
+		if(!cancel)
+		{
+			((Caserne)castle.getBuilding(BuildingEnum.Caserne)).levelUp();
+		}
+		
+		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Caserne,
+				castle.getCaserne().getBuildingPack().get(BuildingEnum.Caserne) - 1);
+	}
+
+	@Override
+	public void productionStart(final Caserne caserne)
+	{
+		caserne.getBuildingPack().replace(BuildingEnum.Caserne, caserne.getBuildingPack().get(BuildingEnum.Caserne) + 1);
+	}
+
 
 	/*************************************************/
 	/*************** GETTERS / SETTERS ***************/
@@ -229,43 +284,13 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	}
 
 	@Override
-	public int getProductionCost(int level)
+	public int getProductionCost(final int level)
 	{
-		level += 2;
-		return Settings.CASERNE_COST * level + (level * level * level * level) / 7;
+		double lvl = level + 2;
+		return (int)((double)(Settings.CASERNE_COST * lvl) + (double)((lvl * lvl * lvl * lvl) / 7d));
 	}
+
 	
-	public void levelUp()
-	{
-		if(this.level < Settings.CASERNE_LEVEL_MAX)
-		{
-			this.level += 1;
-		
-			if(this.level % 2 != 0 || this.level == Settings.CASERNE_LEVEL_MAX)
-			{
-				this.numberProductionUnitAdding++;
-			}
-		}
-	}
-
-	@Override
-	public void productionFinished(final Castle castle, final boolean cancel)
-	{
-		if(!cancel)
-		{
-			((Caserne)castle.getBuilding(BuildingEnum.Caserne)).levelUp();
-		}
-		
-		castle.getCaserne().getBuildingPack().replace(BuildingEnum.Caserne,
-				castle.getCaserne().getBuildingPack().get(BuildingEnum.Caserne) - 1);
-	}
-
-	@Override
-	public void productionStart(final Caserne caserne)
-	{
-		caserne.getBuildingPack().replace(BuildingEnum.Caserne, caserne.getBuildingPack().get(BuildingEnum.Caserne) + 1);
-	}
-
 	@Override
 	public void setLevel(final int level)
 	{

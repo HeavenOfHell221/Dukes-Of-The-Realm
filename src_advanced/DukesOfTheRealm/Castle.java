@@ -125,7 +125,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/**
 	 * Boolean spécifiant si ce château est acctuellement espionné par le joueur.
 	 */
-	private boolean isSpiedOn = true;
+	private boolean isSpiedOn = false;
 	
 	/**
 	 * Temps avant que ce château ne soit plus considéré comme espionné.
@@ -316,8 +316,13 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 
 		for (SoldierEnum s : SoldierEnum.values())
 		{
-			getReserveOfSoldiers().getSoldierPack().replace(s, rand.nextInt(levelSq) + rand.nextInt(4) * this.level);
+			if(s != SoldierEnum.Conveyors)
+			{
+				int value = rand.nextInt(levelSq) + rand.nextInt(4) * this.level;
+				getReserveOfSoldiers().getSoldierPack().replace(s, value);
+			}
 		}
+	
 	}
 
 	/**

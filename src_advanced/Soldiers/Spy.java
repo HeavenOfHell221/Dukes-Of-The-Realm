@@ -10,6 +10,9 @@ import Utility.Settings;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * Représente une unité de type Spy.
+ */
 public class Spy extends Soldier
 {
 	/**
@@ -26,6 +29,9 @@ public class Spy extends Soldier
 		this.type = SoldierEnum.Spy;
 	}
 	
+	/**
+	 * Constructeur par défaut de Spy.
+	 */
 	public Spy()
 	{
 		super();
@@ -44,7 +50,10 @@ public class Spy extends Soldier
 	{
 		Random rand = new Random();
 		
-		if(rand.nextFloat() <= Settings.SPY_SPY - 0.006d * destination.getWall().getLevel() - 0.006d * destination.getLevel())
+		if(rand.nextFloat() <= (Settings.SPY_SPY 
+				- 0.006d * destination.getWall().getLevel() 
+				- 0.006d * destination.getLevel()
+				- 0.001d * destination.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Spy)))
 		{
 			destination.spiedOn();
 		}

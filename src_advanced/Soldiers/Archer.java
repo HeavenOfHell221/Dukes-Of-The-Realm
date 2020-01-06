@@ -7,6 +7,9 @@ import Utility.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * Représente une unité de type Archer.
+ */
 public class Archer extends Soldier
 {
 	/**
@@ -23,6 +26,9 @@ public class Archer extends Soldier
 		this.type = SoldierEnum.Archer;
 	}
 	
+	/**
+	 * Constructeur par défaut de Archer.
+	 */
 	public Archer()
 	{
 		super();

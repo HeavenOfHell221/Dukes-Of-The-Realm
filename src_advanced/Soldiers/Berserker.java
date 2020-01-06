@@ -6,6 +6,9 @@ import Utility.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * Représente une unité de type Berserker.
+ */
 public class Berserker extends Soldier
 {
 	/**
@@ -22,6 +25,9 @@ public class Berserker extends Soldier
 		this.type = SoldierEnum.Berserker;
 	}
 	
+	/**
+	 * Constructeur par défaut de Berserker.
+	 */
 	public Berserker()
 	{
 		super();

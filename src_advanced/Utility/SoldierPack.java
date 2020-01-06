@@ -28,13 +28,13 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 	/**
 	 * Constructeur de SoldierPack.
 	 * 
-	 * @param piker     Un nombre pour le Piker.
-	 * @param knight    Un nombre pour le Knight.
-	 * @param onager    Un nombre pour l'Onager.
-	 * @param archer    Un nombre pour l'Archer.
-	 * @param berserker Un nombre pour le Berserker.
-	 * @param spy       Un nombre pour le Spy.
-	 * @param conveyors Un nombee pour le Conveyors.
+	 * @param piker     Un objet pour le Piker.
+	 * @param knight    Un objet pour le Knight.
+	 * @param onager    Un objet pour l'Onager.
+	 * @param archer    Un objet pour l'Archer.
+	 * @param berserker Un objet pour le Berserker.
+	 * @param spy       Un objet pour le Spy.
+	 * @param conveyors Un objet pour le Conveyors.
 	 */
 	public SoldierPack(final T2 piker, final T2 knight, final T2 onager, final T2 archer, final T2 berserker, final T2 spy, final T2 conveyors)
 	{
@@ -54,6 +54,11 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 		super.replace(soldierEnum, value);
 	}
 
+	/**
+	 * Récupère la valeur associé à la clé en paramètre.
+	 * @param soldierEnum La clé associé à la valeur qu'on veut.
+	 * @return La valeur.
+	 */
 	public T2 get(final SoldierEnum soldierEnum)
 	{
 		return super.get(soldierEnum);

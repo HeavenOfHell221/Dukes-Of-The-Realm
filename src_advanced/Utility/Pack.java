@@ -40,7 +40,7 @@ public abstract class Pack<T1, T2> implements Serializable
 
 	/**
 	 * @param key   La clé.
-	 * @param value La valeur.
+	 * @param value La valeur qu'on veut associer à la clé.
 	 * @see         java.util.HashMap#put(java.lang.Object, java.lang.Object)
 	 */
 	public void put(final T1 key, final T2 value)
@@ -74,11 +74,5 @@ public abstract class Pack<T1, T2> implements Serializable
 	public void putAll(final Map<? extends T1, ? extends T2> m)
 	{
 		this.map.putAll(m);
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Pack [map=" + map + "]";
 	}
 }

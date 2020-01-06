@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
- * Classe représentant un soldat de type Piquier.
+ * Classe représentant une unité de type Piquier.
  *
  * @see Soldier
  */

@@ -19,11 +19,11 @@ public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 	/**
 	 * Constructeur de BuildingPack.
 	 * 
-	 * @param castle
-	 * @param caserne
-	 * @param market
-	 * @param miller
-	 * @param wall
+	 * @param castle Un objet pour le château.
+	 * @param caserne Un objet pour la caserne.
+	 * @param market Un objet pour le marché.
+	 * @param miller Un objet pour le moulin.
+	 * @param wall Un objet pour le rempart.
 	 */
 	public BuildingPack(final T2 castle, final T2 caserne, final T2 market, final T2 miller, final T2 wall)
 	{
@@ -50,5 +50,4 @@ public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 	{
 		super.replace(key, value);
 	}
-
 }

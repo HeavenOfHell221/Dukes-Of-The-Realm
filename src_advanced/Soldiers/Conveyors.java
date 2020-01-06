@@ -6,6 +6,9 @@ import Utility.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * Représente une unité de type Conveyors.
+ */
 public class Conveyors extends Soldier
 {
 
@@ -24,7 +27,7 @@ public class Conveyors extends Soldier
 	}
 
 	/**
-	 * Constructeur par défaut.
+	 * Constructeur par défaut de Conveyors.
 	 */
 	public Conveyors()
 	{

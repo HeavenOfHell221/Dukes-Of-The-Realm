@@ -104,7 +104,7 @@ public class Settings
 	/**
 	 * Nombre de Berserker de base pour le joueur et les IA.
 	 */
-	public static final int STARTER_BERSERKER = 20;
+	public static final int STARTER_BERSERKER = 10;
 
 	/**
 	 * Nombte de Spy de base pour le joueur et les IA.
