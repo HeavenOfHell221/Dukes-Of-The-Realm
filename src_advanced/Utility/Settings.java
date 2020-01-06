@@ -36,12 +36,12 @@ public class Settings
 	/**
 	 * Nombre d'IA.
 	 */
-	public static final int AI_NUMBER = 5;
+	public static final int AI_NUMBER = 6;
 
 	/**
 	 * Nombre de Baron.
 	 */
-	public static final int BARON_NUMBER = 6;
+	public static final int BARON_NUMBER = 5;
 
 	/****************************************************/
 	/********************** CASTLE **********************/
