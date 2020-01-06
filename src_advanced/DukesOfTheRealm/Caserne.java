@@ -192,6 +192,8 @@ public class Caserne implements Serializable, IBuilding, IProduction
 		{
 			this.mainProductionQueue.clear();
 		}
+		this.sumCurrentTime = 0;
+		this.sumTotalTime = 0;
 	}
 
 	/**
