@@ -34,7 +34,6 @@ public interface IProduction
 	/**
 	 * Ajoute 1 à l'amélioration ou au type d'unité qui va être produit.
 	 *
-	 * @param castle  Le château à qui appartient la production qui commence.
 	 * @param caserne La caserne qui produit cette production.
 	 */
 	void productionStart(Caserne caserne);

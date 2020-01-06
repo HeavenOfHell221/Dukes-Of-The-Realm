@@ -19,7 +19,7 @@ public class BuildingGoal extends Goal
 	/**
 	 * Constucteur de BuildingGoal
 	 *
-	 * @param castle Le château qu'on veut améliorer.
+	 * @param building Le bâtiment qu'on veut améliorer.
 	 * @see          Goals.GeneratorGoal
 	 */
 	public BuildingGoal(final BuildingEnum building)

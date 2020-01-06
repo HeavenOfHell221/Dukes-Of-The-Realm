@@ -82,10 +82,24 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 */
 	private Input input;
 
+	/**
+	 * Textes des coûts des unités.
+	 */
 	private final SoldierPack<Text> textCostSoldier;
+	
+	/**
+	 * Textes des coûts des bâtiments.
+	 */
 	private final BuildingPack<Text> textCostBuilding;
 
+	/**
+	 * Boutons de production des unités.
+	 */
 	private final SoldierPack<Button> productSoldier;
+	
+	/**
+	 * Boutons de production des bâtiments.
+	 */
 	private final BuildingPack<Button> upgradeBuilding;
 
 	/*************************************************/
@@ -162,7 +176,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 		{
 			if (this.textCostSoldier.get(s).isVisible())
 			{
-				if (((Miller) this.currentCastle.getBuilding(BuildingEnum.Miller)).getVillagerFree() < s.villager)
+				if (this.currentCastle.getMiller().getVillagerFree() < s.villager)
 				{
 					this.textCostSoldier.get(s).setText("Miller");
 				}
@@ -234,6 +248,7 @@ public final class UIProductionUnitPreview extends Parent implements IUpdate, IU
 	 * Initialise un texte avec des paramètres prédéfinis.
 	 *
 	 * @param t Le texte à initialiser.
+	 * @param font Le taille du texte.
 	 */
 	private void setText(final Text t, final int font)
 	{

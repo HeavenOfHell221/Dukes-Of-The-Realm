@@ -91,6 +91,9 @@ public class UIManager extends Parent implements IUI, IUpdate
 	 */
 	private final ImageView imagePause;
 
+	/**
+	 * Gère les saisies clavier du joueur.
+	 */
 	private Input input;
 
 	/*************************************************/

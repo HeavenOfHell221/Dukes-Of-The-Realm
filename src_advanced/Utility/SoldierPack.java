@@ -18,7 +18,7 @@ public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 	/**
 	 * Constructeur par recopie.
 	 *
-	 * @param soldierPack Le SoldierPack qu'on recopie.
+	 * @param s Le SoldierPack qu'on recopie.
 	 */
 	public SoldierPack(final SoldierPack<T2> s)
 	{

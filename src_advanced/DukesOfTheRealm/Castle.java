@@ -427,7 +427,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	 * @return             Retourne true si l'ost a été crée, false sinon.
 	 * @see                Ost
 	 * @see                Ost#start()
-	 * @see                ReserveOfSoldiers#removeSoldiers(int, int, int)
+	 * @see                ReserveOfSoldiers#removeSoldiers(SoldierPack)
 	 */
 	public boolean createOst(final Castle destination, final SoldierPack<Integer> soldierPack)
 	{
@@ -546,6 +546,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/************** DELEGATES METHODS ****************/
 	/*************************************************/
 
+	/**
+	 * @param soldierPack Le nombre d'unité à retier pour chaque type.
+	 * @return Retourne true si l'action est reussi, false sinon.
+	 * @see ReserveOfSoldiers#removeSoldiers(SoldierPack)
+	 */
 	public boolean removeSoldiers(final SoldierPack<Integer> soldierPack)
 	{
 		return getReserveOfSoldiers().removeSoldiers(soldierPack);

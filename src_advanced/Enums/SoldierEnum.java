@@ -141,6 +141,7 @@ public enum SoldierEnum implements Serializable
 	 * @param productionTime Le temps de production.
 	 * @param speed La vitesse de déplacement.
 	 * @param villager Le nombre de villageois nécéssaire.
+	 * @param starter Le nombre de base d'unité pour le joueur et les IA.
 	 */
 	private SoldierEnum(final int HP, final int damage, final int cost, final double productionTime, final int speed, final int villager,
 			final int starter)

@@ -4,7 +4,7 @@ public interface IBuilding
 {
 	/**
 	 * Initialise le niveau de ce bâtiment au niveau voulu.
-	 * @param level
+	 * @param level Le niveau que l'ont souhaite.
 	 */
 	void setLevel(int level);
 

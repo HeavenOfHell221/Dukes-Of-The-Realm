@@ -130,7 +130,7 @@ public class Settings
 	/****************************************************/
 
 	/**
-	 * Augmentation du coût d'amélioration du château (Pour chaque niveau on ajoute LEVEL_UP_COST).
+	 * Coût de base du château.
 	 */
 	public static final int CASTLE_COST = 250;
 
@@ -145,97 +145,97 @@ public class Settings
 	public static final float CASTLE_PRODUCTION_TIME_PER_LEVEL = 2f;
 
 	/**
-	 *
+	 * Niveaux miximum du château.
 	 */
 	public static final int CASTLE_LEVEL_MAX = 20;
 
 	/**
-	 *
+	 * Coût de base du rempart.
 	 */
 	public static final int WALL_COST = 200;
 
 	/**
-	 *
+	 * Offset pour le temps de production du rempart.
 	 */
 	public static final float WALL_PRODUCTION_OFFSET = 5f;
 
 	/**
-	 *
+	 * Augmentation du temps de production du rempart pour chaque niveau.
 	 */
 	public static final float WALL_PRODUCTION_TIME_PER_LEVEL = 4f;
 
 	/**
-	 *
+	 * Niveau maximum du rempart.
 	 */
 	public static final int WALL_LEVEL_MAX = 20;
 
 	/**
-	 *
+	 * Coût de base de la caserne.
 	 */
 	public static final int CASERNE_COST = 200;
 
 	/**
-	 *
+	 * Offset sur le temps de production de la caserne.
 	 */
 	public static final float CASERNE_PRODUCTION_OFFSET = 0f;
 
 	/**
-	 *
+	 * Augmentation du temps de production de la caserne à chaque niveau.
 	 */
 	public static final float CASERNE_PRODUCTION_TIME_PER_LEVEL = 3f;
 
 	/**
-	 *
+	 * Niveau max de la caserne.
 	 */
 	public static final int CASERNE_LEVEL_MAX = 10;
 
 	/**
-	 *
+	 * Coût de base du moulin.
 	 */
 	public static final int MILLER_COST = 300;
 
 	/**
-	 *
+	 * Offset sur le temps de production du moulin.
 	 */
 	public static final float MILLER_PRODUCTION_OFFSET = 1f;
 
 	/**
-	 *
+	 * Augmentation du temps de production du moulin à chaque niveau.
 	 */
 	public static final float MILLER_PRODUCTION_TIME_PER_LEVEL = 3f;
 
 	/**
-	 *
+	 * Niveau maximum du moulin.
 	 */
 	public static final int MILLER_LEVEL_MAX = 10;
 
 	/**
-	 *
+	 * Villageois de base du moulin.
 	 */
 	public static final int MILLER_VILLAGER_BASE = 80;
 
 	/**
-	 *
+	 * Augmentation du nombre de villagois pour chaque niveau du moulin.
 	 */
 	public static final int MILLER_VILLAGER_PER_LEVEL = 12;
 
 	/**
-	 *
+	 * Coût de base du marché.
 	 */
 	public static final int MARKET_COST = 100;
 
 	/**
-	 *
+	 * Offset sur le temps de production du marché.
 	 */
 	public static final float MARKET_PRODUCTION_OFFSET = 2f;
 
 	/**
-	 *
+	 * Augmentation du temps du production du marché pour chaque niveau.
 	 */
 	public static final float MARKET_PRODUCTION_TIME_PER_LEVEL = 1f;
 
 	/**
-	 *
+	 * Niveau maximum du marché.
 	 */
 	public static final int MARKET_LEVEL_MAX = 10;
 
@@ -404,37 +404,37 @@ public class Settings
 	public static final double CONVEYORS_TIME_PRODUCTION = 2d;
 
 	/**
-	 *
+	 * Nombre de villageois occupé par un Piker.
 	 */
 	public static final int PIKER_VILLAGER = 1;
 
 	/**
-	 *
+	 * Nombre de villageois occupé par un Knight.
 	 */
 	public static final int KNIGHT_VILLAGER = 2;
 
 	/**
-	 *
+	 * Nombre de villageois occupé par un Onager.
 	 */
 	public static final int ONAGER_VILLAGER = 3;
 
 	/**
-	 *
+	 * Nombre de villageois occupé par un Archer.
 	 */
 	public static final int ARCHER_VILLAGER = 1;
 
 	/**
-	 *
+	 * Nombre de villageois occupé par un Berserker.
 	 */
 	public static final int BERSERKER_VILLAGER = 1;
 
 	/**
-	 *
+	 * Nombre de villageois occupé par Spy.
 	 */
 	public static final int SPY_VILLAGER = 2;
 
 	/**
-	 *
+	 * Nombre de Florin que transporte 1 Conveyor.
 	 */
 	public static final int CONVEYORS_FLORIN = 250;
 

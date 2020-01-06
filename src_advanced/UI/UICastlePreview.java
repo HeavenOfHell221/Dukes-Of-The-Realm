@@ -65,7 +65,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	/**
 	 * Référence sur le château courant.
 	 *
-	 * @see UICastlePreview#updateTexts()
+	 * @see UICastlePreview#update(long, boolean)
 	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private Castle currentCastle;
@@ -73,7 +73,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	/**
 	 * Référence sur l'ancien château courant.
 	 *
-	 * @see UICastlePreview#updateTexts()
+	 * @see UICastlePreview#update(long, boolean)
 	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private Castle lastCastle;
@@ -81,7 +81,7 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	/**
 	 * Boolean spécifiant si l'interface d'attaque est visible ou non.
 	 *
-	 * @see UICastlePreview#updateTexts()
+	 * @see UICastlePreview#update(long, boolean)
 	 * @see UICastlePreview#switchCastle(Castle, boolean, boolean)
 	 */
 	private boolean attackVisible = false;
@@ -97,13 +97,23 @@ public final class UICastlePreview extends Parent implements IUI, IUpdate
 	private final SoldierPack<ImageView> imageSoldier;
 
 	/**
-	 * Textes des niveaux des bâtiments
+	 * Textes des niveaux des bâtiments.
 	 */
 	private final BuildingPack<Text> textBuildingLevel;
 
+	/**
+	 * Icones des bâtiments.
+	 */
 	private final BuildingPack<ImageView> imageBuilding;
 
+	/**
+	 * Icone du nombre de villageois.
+	 */
 	private final ImageView imageVillager;
+	
+	/**
+	 * Texte du nombre de villageois.
+	 */
 	private final Text textVillager;
 
 	/*************************************************/

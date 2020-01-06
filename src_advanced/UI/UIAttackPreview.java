@@ -84,6 +84,9 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 	 */
 	private final SoldierPack<ImageView> imageSoldier;
 
+	/**
+	 * Gère les saisies claier du joueur.
+	 */
 	private Input input;
 
 	/*************************************************/
@@ -149,7 +152,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.textSoldier.get(s).setText(this.soldierPack.get(s).toString());
 		}
-		// this.textConveyors.setText(this.nbConveyors + "");
 	}
 
 	/*************************************************/
@@ -167,7 +169,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			setText(this.textSoldier.get(s), 38);
 		}
-		// setText(this.textConveyors, 38);
 	}
 
 	/**
@@ -194,7 +195,6 @@ public final class UIAttackPreview extends Parent implements IUpdate, IUI
 		{
 			this.soldierPack.replace(s, 0);
 		}
-		// this.nbConveyors = 0;
 	}
 
 	/**

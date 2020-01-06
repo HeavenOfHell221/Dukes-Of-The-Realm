@@ -142,7 +142,7 @@ public class ReserveOfSoldiers implements Serializable
 	/**
 	 * Retire, après avoir lancé une ost par exemple, un certain nombre d'unité dans la réserve.
 	 *
-	 * @param  soldierPack Le nombre d'unité à retirer pour chaque type.
+	 * @param  s Le nombre d'unité à retirer pour chaque type.
 	 * @return             Retourne true si tout c'est bien passé, retourne false si on ne peut pas
 	 *                     retirer toutes les unités désirées.
 	 */

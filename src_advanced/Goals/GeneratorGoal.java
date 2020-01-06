@@ -214,11 +214,11 @@ public class GeneratorGoal implements Serializable
 		{
 			// Piker / Archer
 			case 0:
-				soldierPack.replace(SoldierEnum.Piker, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Piker));
-				soldierPack.replace(SoldierEnum.Archer, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Archer));
+				soldierPack.replace(SoldierEnum.Piker, (int) (castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Piker) / 2d));
+				soldierPack.replace(SoldierEnum.Archer, (int) (castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Archer) / 2d));
 				// Full Knight
 			case 1:
-				soldierPack.replace(SoldierEnum.Knight, castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight));
+				soldierPack.replace(SoldierEnum.Knight, (int) (castle.getReserveOfSoldiers().getSoldierPack().get(SoldierEnum.Knight) / 2d));
 			default:
 				break;
 		}
@@ -229,7 +229,6 @@ public class GeneratorGoal implements Serializable
 	 * Génère un objectif visant à produire des unités.
 	 *
 	 * @param  castle    Le château qui aurra l'objectif à accomplir.
-	 * @param  character Le caractère du château qui aura cette objectif.
 	 * @return           Un objectif.
 	 */
 	private static Goal getNewGoalProduction(final Castle castle)
