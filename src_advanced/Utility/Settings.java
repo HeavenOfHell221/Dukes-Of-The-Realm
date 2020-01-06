@@ -29,11 +29,6 @@ public class Settings
 	public static final int GAME_FREQUENCY = 1000 * 1000 * 1000;
 
 	/**
-	 * Nombre de type d'unité.
-	 */
-	public static final int NB_TYPES_OF_TROOPS = 6;
-
-	/**
 	 * Nombre d'unités qui apparaissent simultanément.
 	 */
 	public static final int SIMULTANEOUS_SPAWNS = 3;
@@ -137,7 +132,7 @@ public class Settings
 	/**
 	 * Augmentation du coût d'amélioration du château (Pour chaque niveau on ajoute LEVEL_UP_COST).
 	 */
-	public static final int CASTLE_COST = 0;
+	public static final int CASTLE_COST = 250;
 
 	/**
 	 * Offset pour le temps d'amélioration du château.
@@ -217,7 +212,7 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final int MILLER_VILLAGER_BASE = 80; // 80
+	public static final int MILLER_VILLAGER_BASE = 80;
 	
 	/**
 	 * 
@@ -352,7 +347,7 @@ public class Settings
 	/**
 	 * Vitesse de déplacement d'un Onager.
 	 */
-	public static final int ONAGER_SPEED = 35; // 35
+	public static final int ONAGER_SPEED = 35;
 
 	/**
 	 * Vitesse de déplacement d'un Psy.
@@ -442,7 +437,7 @@ public class Settings
 	/**
 	 * 
 	 */
-	public static final int CONVEYORS_FLORIN = 200;
+	public static final int CONVEYORS_FLORIN = 250;
 	
 	/**
 	 * Probabilité d'un Onager de baisser de 1 le niveau d'un rempart pour chacun de ses points d'attaque.
@@ -452,7 +447,7 @@ public class Settings
 	/**
 	 * Probabilité d'un Spy d'espionner le château qu'il attaque pour chacun de ses points d'attaque.
 	 */
-	public static final float SPY_SPY = 0.05f;
+	public static final float SPY_SPY = 0.04f;
 	
 	/****************************************************/
 	/********************* GRAPHICS *********************/

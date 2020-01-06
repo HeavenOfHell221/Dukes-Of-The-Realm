@@ -120,7 +120,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/**
 	 * Multiplicateur de durée pour toute production lié à ce château.
 	 */
-	private float productionTimeMultiplier = 1f;
+	private double productionTimeMultiplier = 1f;
 	
 	/**
 	 * Boolean spécifiant si ce château est acctuellement espionné par le joueur.
@@ -187,9 +187,8 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		this.orientation = setOrientation();
 		startTransient(pane);
 		setAttackLocations();
-		
-		this.productionTimeMultiplier = (float) ((100f - Math.exp(this.level / 6) - this.level) / 100);
-		this.character = CharacterEnum.getRandomType();
+		decreaseMultiplier();
+		setRandomCharacter();
 	}
 
 	/**
@@ -220,14 +219,14 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 		updateOst(now, pause);
 		getMarket().update(now, pause);
 		
-		/*if(this.isSpiedOn)
+		if(this.isSpiedOn)
 		{
 			this.spiedOnTime -= Settings.GAME_FREQUENCY * Time.deltaTime;
 			if(this.spiedOnTime <= 0)
 			{
 				this.isSpiedOn = false;
 			}
-		}*/
+		}
 	}
 	
 	/**
@@ -363,7 +362,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	
 	private void decreaseMultiplier()
 	{
-		this.productionTimeMultiplier = (float) ((100f - Math.exp((double)(this.level) / 7d) - this.level * 2) / 100);
+		this.productionTimeMultiplier = (double) ((double)(100d - Math.exp((double)(this.level) / 7d) - this.level * 2d) / 100d);
 	}
 
 	/**
@@ -723,7 +722,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/**
 	 * @return the productionTimeMultiplier
 	 */
-	public final float getProductionTimeMultiplier()
+	public final double getProductionTimeMultiplier()
 	{
 		return productionTimeMultiplier;
 	}

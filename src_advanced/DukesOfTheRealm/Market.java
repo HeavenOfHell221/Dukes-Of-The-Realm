@@ -96,7 +96,7 @@ public class Market implements Serializable, IBuilding, IProduction, IUpdate
 	{
 		int oldConveyorsMax = this.conveyorsMax;
 		
-		this.conveyorsMax = (this.level * this.level) / 2 + this.level;
+		this.conveyorsMax = (int)((double)((this.level * this.level)) / 2d) + this.level;
 
 		for(int i = 0; i < (this.conveyorsMax - oldConveyorsMax); i++)
 		{
