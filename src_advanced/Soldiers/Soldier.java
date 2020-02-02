@@ -192,6 +192,10 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 				}
 				this.isDead = true;
 			}
+			else
+			{
+				this.isDead = true;
+			}
 		}
 	}
 
