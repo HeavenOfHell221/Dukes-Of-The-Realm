@@ -26,6 +26,11 @@ public class DukeAI extends Actor implements Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1487582880367394061L;
+
+	/**
 	 * Dernière fois que ce Duke à vérifié ses objectifs.
 	 *
 	 * @see DukeAI#time(long, boolean)

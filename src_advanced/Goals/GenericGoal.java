@@ -18,6 +18,10 @@ import SimpleGoal.Goal;
 public class GenericGoal implements Serializable, IGoal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 450554640560982676L;
+	/**
 	 * Queue des objectifs à réussir. Lorsqu'un objectif est réussi, il est retiré et on passe au
 	 * suivant jusqu'à ce que la queue soit vide.
 	 */

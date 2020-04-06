@@ -16,6 +16,11 @@ import Utility.Settings;
 public class Wall implements Serializable, IBuilding, IProduction
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5206645818410906677L;
+
+	/**
 	 * Le niveau du rempart, de base à 0.
 	 */
 	private int level;

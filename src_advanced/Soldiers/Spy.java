@@ -16,6 +16,11 @@ import javafx.scene.paint.Color;
 public class Spy extends Soldier
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 842503430978284887L;
+
+	/**
 	 * Constructeur Spy
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

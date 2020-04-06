@@ -11,6 +11,11 @@ import Utility.Time;
 public class ProductionUnit implements Serializable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1484891348612841770L;
+
+	/**
 	 * Production en cours.
 	 */
 	private IProduction currentProduction;

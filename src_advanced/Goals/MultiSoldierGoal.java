@@ -14,6 +14,10 @@ import Utility.SoldierPack;
 public class MultiSoldierGoal extends Goal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3736730122848296557L;
+	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
 	 *
 	 * @see GenericGoal

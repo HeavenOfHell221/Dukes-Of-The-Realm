@@ -31,6 +31,11 @@ public abstract class Actor implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7156261709604943228L;
+
+	/**
 	 * Le nom de cet acteur.
 	 */
 	protected String name = "";

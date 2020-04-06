@@ -15,6 +15,11 @@ import Utility.Settings;
 public class Market implements Serializable, IBuilding, IProduction, IUpdate
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8689431943181542466L;
+
+	/**
 	 * Le niveau de ce bâtiment.
 	 */
 	private int level;

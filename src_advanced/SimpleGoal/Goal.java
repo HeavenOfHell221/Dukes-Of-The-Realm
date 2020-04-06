@@ -10,6 +10,11 @@ import Interface.IGoal;
  */
 public abstract class Goal implements IGoal, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3657554747099806154L;
+
 	@Override
 	public abstract boolean goal(final Castle castle);
 }

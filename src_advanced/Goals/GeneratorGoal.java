@@ -24,8 +24,14 @@ public class GeneratorGoal implements Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4895815065254712313L;
+
+	/**
 	 * Instance de la classe GeneratorGoal. Utilisé comme singleton.
 	 */
+	@SuppressWarnings("unused")
 	private final static GeneratorGoal instance = new GeneratorGoal();
 
 	/**
@@ -110,7 +116,6 @@ public class GeneratorGoal implements Serializable
 	 */
 	private static Goal getNewGoalBattle(final Castle castle)
 	{
-		final double lvl = castle.getLevel();
 		final DukeAI actor = (DukeAI) castle.getActor();
 		final Actor actorTarget = actor.getKingdom().getRandomActor(actor);
 

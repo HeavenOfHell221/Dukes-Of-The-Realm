@@ -12,6 +12,10 @@ public class BuildingGoal extends Goal
 {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7019412282396109749L;
+	/**
 	 * Le bâtiment qu'on veut améliorer.
 	 */
 	private final BuildingEnum building;

@@ -15,6 +15,10 @@ import Utility.SoldierPack;
 public class BackupGoal extends Goal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -320381642236607431L;
+	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
 	 *
 	 * @see GenericGoal

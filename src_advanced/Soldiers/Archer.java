@@ -12,6 +12,11 @@ import javafx.scene.paint.Color;
 public class Archer extends Soldier
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1871619679668756468L;
+
+	/**
 	 * Constructeur Archer
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

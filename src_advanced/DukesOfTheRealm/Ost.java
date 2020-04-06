@@ -31,6 +31,11 @@ public class Ost implements IUpdate, Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2482470068302393111L;
+
+	/**
 	 * Référence sur le château d'origine de l'ost.
 	 */
 	private final Castle origin;

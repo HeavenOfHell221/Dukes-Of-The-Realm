@@ -18,6 +18,11 @@ import javafx.scene.paint.Color;
 public class Onager extends Soldier
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1008642104658799238L;
+
+	/**
 	 * Constructeur Onager
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

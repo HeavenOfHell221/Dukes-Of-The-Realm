@@ -16,6 +16,11 @@ import Enums.SoldierEnum;
 public class SoldierPack<T2> extends Pack<SoldierEnum, T2>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5707640078436098007L;
+
+	/**
 	 * Constructeur par recopie.
 	 *
 	 * @param s Le SoldierPack qu'on recopie.

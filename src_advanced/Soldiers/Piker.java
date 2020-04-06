@@ -15,6 +15,11 @@ public class Piker extends Soldier
 {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1963637020994006321L;
+
+	/**
 	 * Constructeur Piker
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

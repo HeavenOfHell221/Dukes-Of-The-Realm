@@ -12,6 +12,11 @@ import Utility.SoldierPack;
 public class AttackGoal extends Goal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8049628693100820419L;
+
+	/**
 	 * Queue des objectifs à accomplir pour accomplir cet objectif.
 	 *
 	 * @see GenericGoal

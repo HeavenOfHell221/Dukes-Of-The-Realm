@@ -13,6 +13,11 @@ public class Conveyors extends Soldier
 {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7938467365941785692L;
+
+	/**
 	 * Constructeur Conveyors
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

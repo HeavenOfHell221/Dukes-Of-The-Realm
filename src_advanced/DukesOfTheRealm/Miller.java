@@ -13,6 +13,11 @@ import Utility.Settings;
 public class Miller implements Serializable, IBuilding, IProduction
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1727216935932254499L;
+
+	/**
 	 * Nombre de villageois maximum de ce moulin.
 	 */
 	private int villagerMax;

@@ -22,6 +22,11 @@ public class Caserne implements Serializable, IBuilding, IProduction
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4706367329220531906L;
+
+	/**
 	 * Queue des productions en attente d'être prise par les unités de production.
 	 * 
 	 * @see ProductionUnit

@@ -22,6 +22,11 @@ public class ReserveOfSoldiers implements Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6076305320392608249L;
+
+	/**
 	 * Référence sur le château qui contient cette réserve.
 	 */
 	private final Castle castle;

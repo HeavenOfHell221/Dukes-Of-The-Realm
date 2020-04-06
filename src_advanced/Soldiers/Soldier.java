@@ -33,6 +33,11 @@ public abstract class Soldier extends Sprite implements Serializable, IUpdate, I
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5537879438271965557L;
+
+	/**
 	 * Le type du soldat : Piquier / Chevalier / Catapulte.
 	 */
 	protected SoldierEnum type;

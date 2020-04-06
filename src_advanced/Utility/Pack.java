@@ -19,6 +19,10 @@ import java.util.Map;
 public abstract class Pack<T1, T2> implements Serializable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4931677851906417498L;
+	/**
 	 * HashMap générique permettant de mettre n'importe quel type comme clé ou comme valeur.
 	 */
 	protected final HashMap<T1, T2> map;

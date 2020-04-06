@@ -9,6 +9,10 @@ import Enums.SoldierEnum;
 public class SoldierGoal extends Goal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5320950676287893253L;
+	/**
 	 * Le type de l'unité que l'ont veut créer.
 	 *
 	 * @see Enums.SoldierEnum

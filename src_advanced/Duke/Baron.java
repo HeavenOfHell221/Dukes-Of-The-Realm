@@ -27,6 +27,11 @@ public class Baron extends Actor implements Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1652555118689464878L;
+
+	/**
 	 * Constructeur par défaut de Baron.
 	 */
 	public Baron()

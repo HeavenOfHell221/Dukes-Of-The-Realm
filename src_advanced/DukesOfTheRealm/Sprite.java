@@ -59,6 +59,11 @@ public abstract class Sprite extends Parent implements Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3923819290424112493L;
+
+	/**
 	 * Le Pane sur lequel afficher le sprite.
 	 */
 	protected transient Pane canvas;

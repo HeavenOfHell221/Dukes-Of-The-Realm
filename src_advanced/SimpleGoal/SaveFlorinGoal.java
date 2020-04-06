@@ -8,6 +8,10 @@ import DukesOfTheRealm.Castle;
 public class SaveFlorinGoal extends Goal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1698784490106841593L;
+	/**
 	 * Nombre de Florin à avoir en réserve pour accomplir cette objectif.
 	 */
 	private final int saveAmount;

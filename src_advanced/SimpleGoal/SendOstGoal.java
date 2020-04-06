@@ -9,6 +9,11 @@ import Utility.SoldierPack;
 public class SendOstGoal extends Goal
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8259251014216315240L;
+
+	/**
 	 * Le château destination de l'ost.
 	 */
 	private Castle destination;

@@ -40,6 +40,11 @@ public class Kingdom extends Parent implements Serializable, IUpdate
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8539779669851930253L;
+
+	/**
 	 * Liste des acteurs (joueur, IA et baron) du royaume.
 	 *
 	 * @see Kingdom#update(long now, boolean pause)

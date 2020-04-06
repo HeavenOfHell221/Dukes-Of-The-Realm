@@ -4,7 +4,6 @@ import static Utility.Settings.MARGIN_PERCENTAGE;
 import static Utility.Settings.SCENE_WIDTH;
 
 import DukesOfTheRealm.Castle;
-import DukesOfTheRealm.Miller;
 import Enums.BuildingEnum;
 import Enums.SoldierEnum;
 import Interface.IBuilding;

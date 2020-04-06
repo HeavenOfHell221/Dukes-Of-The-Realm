@@ -23,6 +23,11 @@ public class Player extends Actor implements Serializable
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6232359327578311209L;
+
+	/**
 	 * Constructeur par défaut de Player.
 	 */
 	public Player()

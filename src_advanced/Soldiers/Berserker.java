@@ -12,6 +12,11 @@ import javafx.scene.paint.Color;
 public class Berserker extends Soldier
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6025311348886622558L;
+
+	/**
 	 * Constructeur Berserker
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

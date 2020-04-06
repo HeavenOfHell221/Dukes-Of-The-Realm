@@ -15,6 +15,11 @@ public class Knight extends Soldier
 {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7623963236950027731L;
+
+	/**
 	 * Constructeur Knight
 	 *
 	 * @param layer  Le Pane pour afficher la réprésentation graphique de ce soldat.

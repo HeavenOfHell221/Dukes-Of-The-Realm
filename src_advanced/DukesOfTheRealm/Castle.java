@@ -45,6 +45,11 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/*************************************************/
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4879805189545207295L;
+
+	/**
 	 * Enum contenant les différentes orientations pour les portes et les unités.
 	 */
 	public enum Orientation
@@ -88,6 +93,7 @@ public class Castle extends Sprite implements Serializable, IBuilding, IProducti
 	/**
 	 * La représentation graphique de la porte du château.
 	 */
+	@SuppressWarnings("unused")
 	private transient Rectangle door;
 
 	/**

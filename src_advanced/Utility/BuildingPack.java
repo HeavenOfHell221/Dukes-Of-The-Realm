@@ -17,6 +17,11 @@ import Enums.BuildingEnum;
 public class BuildingPack<T2> extends Pack<BuildingEnum, T2>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5278385714445261076L;
+
+	/**
 	 * Constructeur de BuildingPack.
 	 *
 	 * @param castle  Un objet pour le château.
